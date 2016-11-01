@@ -10,18 +10,17 @@ import UIKit
 import CoreBluetooth
 
 //MARK:- delegate
-protocol GodManagerDelegate {
-    func godManager(didDiscoverPeripheral peripheralTuple: ())
+public protocol GodManagerDelegate {
+    func godManager(didDiscoverPeripheral peripheral: CBPeripheral, withRSSI RSSI: NSNumber, peripheralName name: String)
 }
 
-class GodManager: NSObject {
+public class GodManager: NSObject {
     
     fileprivate var delegate: GodManagerDelegate?       //代理
     
-    //数据结构
-    fileprivate var peripheralTupleList = [(RSSI: NSNumber, peripheral: CBPeripheral)]()
     
-    //Mark:- 扫描设备
+    
+    //Mark:- 扫描设备----------------------
     public func scanDevice(){
 
         let queue = DispatchQueue.global(qos: .default)
@@ -33,22 +32,23 @@ class GodManager: NSObject {
 
 extension GodManager: CBCentralManagerDelegate{
     
-    func centralManagerDidUpdateState(_ central: CBCentralManager) {
+    public func centralManagerDidUpdateState(_ central: CBCentralManager) {
         
     }
     
-    func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
+    public func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
         
     }
     
-    func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
+    public func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
         
     }
     
-    func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
+    public func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
         
     }
-    func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
-        delegate?.godManager(didDiscoverPeripheral: peripheral ,RSSI: RSSI)
+    public func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
+        
+        delegate?.godManager(didDiscoverPeripheral: peripheral, withRSSI: RSSI, peripheralName: advertisementData["kCBAdvDataLocalName"] as! String)
     }
 }

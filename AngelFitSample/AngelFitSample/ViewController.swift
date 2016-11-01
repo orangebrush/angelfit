@@ -7,19 +7,37 @@
 //
 
 import UIKit
-
+import AngelFit
+import CoreBluetooth
 class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+    
+        config()
+        createContents()
     }
 
+    private func config(){
+        
+    }
+    
+    private func createContents(){
+        
+        let godManger = GodManager()
+        godManger.scanDevice()
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        
     }
 
 
 }
 
+extension ViewController:GodManagerDelegate{
+   func godManager(didDiscoverPeripheral peripheral: CBPeripheral, withRSSI RSSI: NSNumber, peripheralName name: String){
+       print(name);
+    }
+}

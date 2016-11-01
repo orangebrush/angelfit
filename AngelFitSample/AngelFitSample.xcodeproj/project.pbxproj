@@ -34,6 +34,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		222E7D681DC841BB001BA04A /* AngelFit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AngelFit.framework; path = "../../../Library/Developer/Xcode/DerivedData/workspace-ahuxhnatpnhbopadzzbrpkmbmics/Build/Products/Debug-iphoneos/AngelFit.framework"; sourceTree = "<group>"; };
 		BE1F53531DC834E600EAD9BA /* AngelFitSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AngelFitSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE1F53561DC834E600EAD9BA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BE1F53581DC834E600EAD9BA /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -74,6 +75,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		222E7D671DC841BB001BA04A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				222E7D681DC841BB001BA04A /* AngelFit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		BE1F534A1DC834E600EAD9BA = {
 			isa = PBXGroup;
 			children = (
@@ -81,6 +90,7 @@
 				BE1F536A1DC834E600EAD9BA /* AngelFitSampleTests */,
 				BE1F53751DC834E600EAD9BA /* AngelFitSampleUITests */,
 				BE1F53541DC834E600EAD9BA /* Products */,
+				222E7D671DC841BB001BA04A /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -358,7 +368,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -402,7 +412,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -414,9 +424,11 @@
 		BE1F537C1DC834E600EAD9BA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = T65EE75V48;
 				INFOPLIST_FILE = AngelFitSample/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.orangebrush.AngelFitSample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -427,9 +439,11 @@
 		BE1F537D1DC834E600EAD9BA /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = T65EE75V48;
 				INFOPLIST_FILE = AngelFitSample/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.orangebrush.AngelFitSample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -514,6 +528,7 @@
 				BE1F537D1DC834E600EAD9BA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		BE1F537E1DC834E600EAD9BA /* Build configuration list for PBXNativeTarget "AngelFitSampleTests" */ = {
 			isa = XCConfigurationList;
@@ -522,6 +537,7 @@
 				BE1F53801DC834E600EAD9BA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		BE1F53811DC834E600EAD9BA /* Build configuration list for PBXNativeTarget "AngelFitSampleUITests" */ = {
 			isa = XCConfigurationList;
@@ -530,6 +546,7 @@
 				BE1F53831DC834E600EAD9BA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
