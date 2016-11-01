@@ -16,24 +16,67 @@ public protocol GodManagerDelegate {
 
 public class GodManager: NSObject {
     
-    fileprivate var delegate: GodManagerDelegate?       //代理
+    private var centralManager: CBCentralManager?   //蓝牙管理中心
+    private var service: CBService{
+        return CBMutableService(type: MainUUID.service, primary: true)
+    }                                               //蓝牙服务
+    open var delegate: GodManagerDelegate?          //GodMangager代理
     
     
+    //MARK:- ---------------------------------
+    override public init() {
+        super.init()
+        
+        config()
+    }
     
-    //Mark:- 扫描设备----------------------
-    public func scanDevice(){
+    private func config(){
+        
+        let queue = DispatchQueue.global(priority: .high)
+        centralManager = CBCentralManager(delegate: self, queue: queue)
+    }
 
-        let queue = DispatchQueue.global(qos: .default)
-        let manager = CBCentralManager(delegate: self, queue: queue)
-        manager.scanForPeripherals(withServices: [MainUUID.service], options: [CBCentralManagerScanOptionAllowDuplicatesKey:true])
+    //Mark:- 开始扫描
+    public func startScan(){
+        
+        centralManager?.scanForPeripherals(withServices: [service.uuid], options: nil)
 
+        //3秒后停止扫描
+        delay(3){
+            self.stopScan()
+        }
+    }
+    
+    //MARK:- 结束扫描
+    public func stopScan(){
+        
+        centralManager?.stopScan()
     }
 }
 
 extension GodManager: CBCentralManagerDelegate{
     
-    public func centralManagerDidUpdateState(_ central: CBCentralManager) {
+    public func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
         
+        delegate?.godManager(didDiscoverPeripheral: peripheral, withRSSI: RSSI, peripheralName: advertisementData["kCBAdvDataLocalName"] as! String)
+    }
+    
+    public func centralManagerDidUpdateState(_ central: CBCentralManager) {
+
+        switch central.state {
+        case .unknown:
+            print("godManager-unknown")
+        case .resetting:
+            print("godManager-resetting")
+        case .unsupported:
+            print("godManager-unsupported")
+        case .unauthorized:
+            print("godManager-unauthorized")
+        case .poweredOff:
+            print("godManager-poweredOff")
+        case .poweredOn:
+            print("godManager-poweredOn")
+        }
     }
     
     public func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
@@ -47,8 +90,8 @@ extension GodManager: CBCentralManagerDelegate{
     public func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
         
     }
-    public func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
-        
-        delegate?.godManager(didDiscoverPeripheral: peripheral, withRSSI: RSSI, peripheralName: advertisementData["kCBAdvDataLocalName"] as! String)
+    
+    public func centralManager(_ central: CBCentralManager, willRestoreState dict: [String : Any]) {
+     
     }
 }

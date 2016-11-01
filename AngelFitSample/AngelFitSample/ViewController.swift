@@ -10,6 +10,8 @@ import UIKit
 import AngelFit
 import CoreBluetooth
 class ViewController: UIViewController {
+    
+    let godManager = GodManager()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,24 +22,29 @@ class ViewController: UIViewController {
 
     private func config(){
         
+        godManager.delegate = self
     }
     
     private func createContents(){
-        
-        let godManger = GodManager()
-        godManger.scanDevice()
+     
+        print("end createContents")
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        
     }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
 
-
+        godManager.startScan()
+    }
 }
 
-extension ViewController:GodManagerDelegate{
-   func godManager(didDiscoverPeripheral peripheral: CBPeripheral, withRSSI RSSI: NSNumber, peripheralName name: String){
-       print(name);
+//MARK:- GodManager 代理实现
+extension ViewController: GodManagerDelegate{
+    func godManager(didDiscoverPeripheral peripheral: CBPeripheral, withRSSI RSSI: NSNumber, peripheralName name: String){
+        print(name)
+        print(peripheral)
+        print(RSSI)
     }
 }
