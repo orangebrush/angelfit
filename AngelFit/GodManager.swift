@@ -14,7 +14,7 @@ public protocol GodManagerDelegate {
     func godManager(didDiscoverPeripheral peripheral: CBPeripheral, withRSSI RSSI: NSNumber, peripheralName name: String)
 }
 
-public class GodManager: NSObject {
+public final class GodManager: NSObject {
     
     private var centralManager: CBCentralManager?   //蓝牙管理中心
     private var service: CBService{
