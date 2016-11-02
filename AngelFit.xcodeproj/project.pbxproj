@@ -47,6 +47,8 @@
 		32C1037C1DC9DDCC0001D415 /* User+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C103601DC9DDCC0001D415 /* User+CoreDataClass.swift */; };
 		32C1037D1DC9DDCC0001D415 /* User+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C103611DC9DDCC0001D415 /* User+CoreDataProperties.swift */; };
 		BE1F53971DC84FC500EAD9BA /* Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1F53961DC84FC500EAD9BA /* Time.swift */; };
+		BEF78B901DC9E2A000A2D528 /* CoreDataConfigure.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF78B8F1DC9E2A000A2D528 /* CoreDataConfigure.swift */; };
+		BEF78B921DC9E4CA00A2D528 /* CoreDataHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF78B911DC9E4CA00A2D528 /* CoreDataHandler.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -102,6 +104,8 @@
 		32C103601DC9DDCC0001D415 /* User+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "User+CoreDataClass.swift"; sourceTree = "<group>"; };
 		32C103611DC9DDCC0001D415 /* User+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "User+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		BE1F53961DC84FC500EAD9BA /* Time.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Time.swift; sourceTree = "<group>"; };
+		BEF78B8F1DC9E2A000A2D528 /* CoreDataConfigure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataConfigure.swift; sourceTree = "<group>"; };
+		BEF78B911DC9E4CA00A2D528 /* CoreDataHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataHandler.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -222,6 +226,8 @@
 				32C103601DC9DDCC0001D415 /* User+CoreDataClass.swift */,
 				32C103611DC9DDCC0001D415 /* User+CoreDataProperties.swift */,
 				32C1033B1DC988130001D415 /* Model.xcdatamodeld */,
+				BEF78B8F1DC9E2A000A2D528 /* CoreDataConfigure.swift */,
+				BEF78B911DC9E4CA00A2D528 /* CoreDataHandler.swift */,
 			);
 			name = coredata;
 			sourceTree = "<group>";
@@ -357,6 +363,7 @@
 				32C103661DC9DDCC0001D415 /* Alarm+CoreDataClass.swift in Sources */,
 				32C1036E1DC9DDCC0001D415 /* HeartRateData+CoreDataClass.swift in Sources */,
 				32C1036F1DC9DDCC0001D415 /* HeartRateData+CoreDataProperties.swift in Sources */,
+				BEF78B901DC9E2A000A2D528 /* CoreDataConfigure.swift in Sources */,
 				32C1036C1DC9DDCC0001D415 /* SleepItem+CoreDataClass.swift in Sources */,
 				32C103641DC9DDCC0001D415 /* Unit+CoreDataClass.swift in Sources */,
 				32C1037C1DC9DDCC0001D415 /* User+CoreDataClass.swift in Sources */,
@@ -370,6 +377,7 @@
 				32C1036D1DC9DDCC0001D415 /* SleepItem+CoreDataProperties.swift in Sources */,
 				222B89A11DC732C80056861C /* GodManager.swift in Sources */,
 				32C103681DC9DDCC0001D415 /* SleepData+CoreDataClass.swift in Sources */,
+				BEF78B921DC9E4CA00A2D528 /* CoreDataHandler.swift in Sources */,
 				32C103761DC9DDCC0001D415 /* HandGesture+CoreDataClass.swift in Sources */,
 				32C1033D1DC988130001D415 /* Model.xcdatamodeld in Sources */,
 				32C103711DC9DDCC0001D415 /* SportData+CoreDataProperties.swift in Sources */,
