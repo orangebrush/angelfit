@@ -12,6 +12,8 @@
 		222B89961DC7325B0056861C /* AngelFit.h in Headers */ = {isa = PBXBuildFile; fileRef = 222B89881DC7325B0056861C /* AngelFit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		222B89A11DC732C80056861C /* GodManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222B89A01DC732C80056861C /* GodManager.swift */; };
 		222B89A31DC735B70056861C /* UUIDConfigure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222B89A21DC735B70056861C /* UUIDConfigure.swift */; };
+		222E7D731DC87A55001BA04A /* PeripheralManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222E7D721DC87A55001BA04A /* PeripheralManager.swift */; };
+		222E7D781DC88AA7001BA04A /* ViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222E7D771DC88AA7001BA04A /* ViewController+Extension.swift */; };
 		2292C3E61DC83C0B00B7472E /* GodManager.swift in Headers */ = {isa = PBXBuildFile; fileRef = 222B89A01DC732C80056861C /* GodManager.swift */; settings = {ATTRIBUTES = (Public, ); }; };
 		BE1F53971DC84FC500EAD9BA /* Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1F53961DC84FC500EAD9BA /* Time.swift */; };
 /* End PBXBuildFile section */
@@ -35,6 +37,8 @@
 		222B89951DC7325B0056861C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		222B89A01DC732C80056861C /* GodManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GodManager.swift; sourceTree = "<group>"; };
 		222B89A21DC735B70056861C /* UUIDConfigure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UUIDConfigure.swift; sourceTree = "<group>"; };
+		222E7D721DC87A55001BA04A /* PeripheralManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PeripheralManager.swift; sourceTree = "<group>"; };
+		222E7D771DC88AA7001BA04A /* ViewController+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ViewController+Extension.swift"; sourceTree = "<group>"; };
 		BE1F53961DC84FC500EAD9BA /* Time.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Time.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -79,6 +83,7 @@
 			isa = PBXGroup;
 			children = (
 				222B899F1DC732AC0056861C /* BleModule */,
+				222E7D741DC88A44001BA04A /* Extentsion */,
 				BE1F53951DC84FA800EAD9BA /* SupportingFiles */,
 				222B89881DC7325B0056861C /* AngelFit.h */,
 				222B89891DC7325B0056861C /* Info.plist */,
@@ -104,10 +109,19 @@
 			name = BleModule;
 			sourceTree = "<group>";
 		};
+		222E7D741DC88A44001BA04A /* Extentsion */ = {
+			isa = PBXGroup;
+			children = (
+				222E7D771DC88AA7001BA04A /* ViewController+Extension.swift */,
+			);
+			name = Extentsion;
+			sourceTree = "<group>";
+		};
 		BE1F53951DC84FA800EAD9BA /* SupportingFiles */ = {
 			isa = PBXGroup;
 			children = (
 				BE1F53961DC84FC500EAD9BA /* Time.swift */,
+				222E7D721DC87A55001BA04A /* PeripheralManager.swift */,
 			);
 			name = SupportingFiles;
 			sourceTree = "<group>";
@@ -226,8 +240,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				222E7D731DC87A55001BA04A /* PeripheralManager.swift in Sources */,
 				BE1F53971DC84FC500EAD9BA /* Time.swift in Sources */,
 				222B89A11DC732C80056861C /* GodManager.swift in Sources */,
+				222E7D781DC88AA7001BA04A /* ViewController+Extension.swift in Sources */,
 				222B89A31DC735B70056861C /* UUIDConfigure.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

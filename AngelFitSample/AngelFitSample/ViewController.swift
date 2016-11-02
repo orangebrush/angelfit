@@ -10,6 +10,8 @@ import UIKit
 import AngelFit
 import CoreBluetooth
 class ViewController: UIViewController {
+    @IBOutlet weak var myTableView: UITableView!
+    fileprivate var peripheralTuple = [(name: String, RSSI: NSNumber, peripheral: CBPeripheral)]()
     
     let godManager = GodManager()
 
@@ -33,10 +35,12 @@ class ViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
+    @IBAction func scanDevice(_ sender: Any) {
+         godManager.startScan()
+    }
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-
-        godManager.startScan()
+    @IBAction func bandDevice(_ sender: Any) {
+        
     }
 }
 
@@ -46,5 +50,39 @@ extension ViewController: GodManagerDelegate{
         print(name)
         print(peripheral)
         print(RSSI)
+        let res = Thread.isMainThread ? "main" : "global"
+        print(res)
+        peripheralTuple.append((name, RSSI, peripheral))
+        myTableView.reloadData()
+    }
+    func godManager(didUpdateCentralState state: GodManagerState) {
+        print(state)
+    }
+    func godManager(didUpdateConnectState state: GodManagerConnectState, withPeripheral peripheral: CBPeripheral, withError error: Error?) {
+        print(state)
+        if state == .connect{
+        
+        }
+    }
+}
+extension ViewController:UITableViewDelegate, UITableViewDataSource{
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return peripheralTuple.count
+    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let element = peripheralTuple[indexPath.row]
+        godManager.connect(element.peripheral)
+    }
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let identy = "cell"
+        var cell:UITableViewCell? = tableView.dequeueReusableCell(withIdentifier: identy)
+        if cell == nil{
+            cell = UITableViewCell(style: .value1, reuseIdentifier: identy)
+        }
+        let element = peripheralTuple[indexPath.row]
+        cell?.textLabel?.text = element.name
+        cell?.detailTextLabel?.text = "\(element.RSSI)"
+        return cell!
     }
 }

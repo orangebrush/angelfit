@@ -1,14 +1,17 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11134" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11106"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="AngelFitSample" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -16,11 +19,53 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="qdt-uS-nVq">
+                                <rect key="frame" x="0.0" y="20" width="375" height="587"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="K2g-Tk-DbS"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="DWt-7q-yPO"/>
+                                </connections>
+                            </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WNU-E9-0CC">
+                                <rect key="frame" x="195" y="612" width="165" height="45"/>
+                                <state key="normal" title="绑定"/>
+                                <connections>
+                                    <action selector="bandDevice:" destination="BYZ-38-t0r" eventType="touchUpInside" id="WTd-Gf-nW8"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yhn-xj-5Nb">
+                                <rect key="frame" x="15" y="612" width="165" height="45"/>
+                                <state key="normal" title="扫描"/>
+                                <connections>
+                                    <action selector="scanDevice:" destination="BYZ-38-t0r" eventType="touchUpInside" id="dhO-vF-b5j"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="WNU-E9-0CC" firstAttribute="top" secondItem="qdt-uS-nVq" secondAttribute="bottom" constant="5" id="4fD-fa-H7h"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="qdt-uS-nVq" secondAttribute="bottom" constant="60" id="HF7-MS-twx"/>
+                            <constraint firstItem="WNU-E9-0CC" firstAttribute="leading" secondItem="Yhn-xj-5Nb" secondAttribute="trailing" constant="15" id="Mx4-rN-ten"/>
+                            <constraint firstAttribute="trailing" secondItem="WNU-E9-0CC" secondAttribute="trailing" constant="15" id="NPo-gR-ZjT"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="WNU-E9-0CC" secondAttribute="bottom" constant="10" id="Oy9-2F-Gbh"/>
+                            <constraint firstAttribute="trailing" secondItem="qdt-uS-nVq" secondAttribute="trailing" id="S19-b4-tEV"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Yhn-xj-5Nb" secondAttribute="bottom" constant="10" id="SMO-vO-BvX"/>
+                            <constraint firstItem="qdt-uS-nVq" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="a9i-dM-nJN"/>
+                            <constraint firstItem="Yhn-xj-5Nb" firstAttribute="top" secondItem="qdt-uS-nVq" secondAttribute="bottom" constant="5" id="cPM-Y4-uQo"/>
+                            <constraint firstItem="Yhn-xj-5Nb" firstAttribute="width" secondItem="WNU-E9-0CC" secondAttribute="width" id="d1B-dk-YCE"/>
+                            <constraint firstItem="Yhn-xj-5Nb" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="15" id="fCo-AW-VMr"/>
+                            <constraint firstItem="qdt-uS-nVq" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="i3b-qd-qL3"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="myTableView" destination="qdt-uS-nVq" id="ImE-nu-lET"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="116" y="122.78860569715144"/>
         </scene>
     </scenes>
 </document>
