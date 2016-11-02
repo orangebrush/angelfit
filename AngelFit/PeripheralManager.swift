@@ -10,8 +10,6 @@ import UIKit
 import CoreBluetooth
 public class PeripheralManager: NSObject {
 
-    
-    
     private static var __once: () = {
         singleton.instance = PeripheralManager()
     }()
@@ -20,8 +18,8 @@ public class PeripheralManager: NSObject {
         didSet{
             peripheralCharMap.forEach(){
                 UUID, peripheral in
-    
-                guard let charMap = peripheralCharMap[UUID] else{
+
+                guard peripheralCharMap[UUID] != nil else{
                     let charMap = [CharacteristicType: CBCharacteristic]()
                     peripheralCharMap[UUID] = charMap
                     return

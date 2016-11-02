@@ -15,6 +15,37 @@
 		222E7D731DC87A55001BA04A /* PeripheralManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222E7D721DC87A55001BA04A /* PeripheralManager.swift */; };
 		222E7D781DC88AA7001BA04A /* ViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222E7D771DC88AA7001BA04A /* ViewController+Extension.swift */; };
 		2292C3E61DC83C0B00B7472E /* GodManager.swift in Headers */ = {isa = PBXBuildFile; fileRef = 222B89A01DC732C80056861C /* GodManager.swift */; settings = {ATTRIBUTES = (Public, ); }; };
+		32C103371DC9741D0001D415 /* BindingPeripherals.plist in Resources */ = {isa = PBXBuildFile; fileRef = 32C103361DC9741D0001D415 /* BindingPeripherals.plist */; };
+		32C103391DC974410001D415 /* GodFS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C103381DC974410001D415 /* GodFS.swift */; };
+		32C1033D1DC988130001D415 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 32C1033B1DC988130001D415 /* Model.xcdatamodeld */; };
+		32C103621DC9DDCC0001D415 /* LostFind+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C103461DC9DDCC0001D415 /* LostFind+CoreDataClass.swift */; };
+		32C103631DC9DDCC0001D415 /* LostFind+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C103471DC9DDCC0001D415 /* LostFind+CoreDataProperties.swift */; };
+		32C103641DC9DDCC0001D415 /* Unit+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C103481DC9DDCC0001D415 /* Unit+CoreDataClass.swift */; };
+		32C103651DC9DDCC0001D415 /* Unit+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C103491DC9DDCC0001D415 /* Unit+CoreDataProperties.swift */; };
+		32C103661DC9DDCC0001D415 /* Alarm+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C1034A1DC9DDCC0001D415 /* Alarm+CoreDataClass.swift */; };
+		32C103671DC9DDCC0001D415 /* Alarm+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C1034B1DC9DDCC0001D415 /* Alarm+CoreDataProperties.swift */; };
+		32C103681DC9DDCC0001D415 /* SleepData+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C1034C1DC9DDCC0001D415 /* SleepData+CoreDataClass.swift */; };
+		32C103691DC9DDCC0001D415 /* SleepData+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C1034D1DC9DDCC0001D415 /* SleepData+CoreDataProperties.swift */; };
+		32C1036A1DC9DDCC0001D415 /* LongSit+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C1034E1DC9DDCC0001D415 /* LongSit+CoreDataClass.swift */; };
+		32C1036B1DC9DDCC0001D415 /* LongSit+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C1034F1DC9DDCC0001D415 /* LongSit+CoreDataProperties.swift */; };
+		32C1036C1DC9DDCC0001D415 /* SleepItem+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C103501DC9DDCC0001D415 /* SleepItem+CoreDataClass.swift */; };
+		32C1036D1DC9DDCC0001D415 /* SleepItem+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C103511DC9DDCC0001D415 /* SleepItem+CoreDataProperties.swift */; };
+		32C1036E1DC9DDCC0001D415 /* HeartRateData+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C103521DC9DDCC0001D415 /* HeartRateData+CoreDataClass.swift */; };
+		32C1036F1DC9DDCC0001D415 /* HeartRateData+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C103531DC9DDCC0001D415 /* HeartRateData+CoreDataProperties.swift */; };
+		32C103701DC9DDCC0001D415 /* SportData+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C103541DC9DDCC0001D415 /* SportData+CoreDataClass.swift */; };
+		32C103711DC9DDCC0001D415 /* SportData+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C103551DC9DDCC0001D415 /* SportData+CoreDataProperties.swift */; };
+		32C103721DC9DDCC0001D415 /* Device+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C103561DC9DDCC0001D415 /* Device+CoreDataClass.swift */; };
+		32C103731DC9DDCC0001D415 /* Device+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C103571DC9DDCC0001D415 /* Device+CoreDataProperties.swift */; };
+		32C103741DC9DDCC0001D415 /* SportItem+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C103581DC9DDCC0001D415 /* SportItem+CoreDataClass.swift */; };
+		32C103751DC9DDCC0001D415 /* SportItem+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C103591DC9DDCC0001D415 /* SportItem+CoreDataProperties.swift */; };
+		32C103761DC9DDCC0001D415 /* HandGesture+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C1035A1DC9DDCC0001D415 /* HandGesture+CoreDataClass.swift */; };
+		32C103771DC9DDCC0001D415 /* HandGesture+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C1035B1DC9DDCC0001D415 /* HandGesture+CoreDataProperties.swift */; };
+		32C103781DC9DDCC0001D415 /* Notice+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C1035C1DC9DDCC0001D415 /* Notice+CoreDataClass.swift */; };
+		32C103791DC9DDCC0001D415 /* Notice+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C1035D1DC9DDCC0001D415 /* Notice+CoreDataProperties.swift */; };
+		32C1037A1DC9DDCC0001D415 /* HeartRateItem+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C1035E1DC9DDCC0001D415 /* HeartRateItem+CoreDataClass.swift */; };
+		32C1037B1DC9DDCC0001D415 /* HeartRateItem+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C1035F1DC9DDCC0001D415 /* HeartRateItem+CoreDataProperties.swift */; };
+		32C1037C1DC9DDCC0001D415 /* User+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C103601DC9DDCC0001D415 /* User+CoreDataClass.swift */; };
+		32C1037D1DC9DDCC0001D415 /* User+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C103611DC9DDCC0001D415 /* User+CoreDataProperties.swift */; };
 		BE1F53971DC84FC500EAD9BA /* Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1F53961DC84FC500EAD9BA /* Time.swift */; };
 /* End PBXBuildFile section */
 
@@ -39,6 +70,37 @@
 		222B89A21DC735B70056861C /* UUIDConfigure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UUIDConfigure.swift; sourceTree = "<group>"; };
 		222E7D721DC87A55001BA04A /* PeripheralManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PeripheralManager.swift; sourceTree = "<group>"; };
 		222E7D771DC88AA7001BA04A /* ViewController+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ViewController+Extension.swift"; sourceTree = "<group>"; };
+		32C103361DC9741D0001D415 /* BindingPeripherals.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = BindingPeripherals.plist; sourceTree = "<group>"; };
+		32C103381DC974410001D415 /* GodFS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GodFS.swift; sourceTree = "<group>"; };
+		32C1033C1DC988130001D415 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		32C103461DC9DDCC0001D415 /* LostFind+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "LostFind+CoreDataClass.swift"; sourceTree = "<group>"; };
+		32C103471DC9DDCC0001D415 /* LostFind+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "LostFind+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		32C103481DC9DDCC0001D415 /* Unit+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Unit+CoreDataClass.swift"; sourceTree = "<group>"; };
+		32C103491DC9DDCC0001D415 /* Unit+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Unit+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		32C1034A1DC9DDCC0001D415 /* Alarm+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Alarm+CoreDataClass.swift"; sourceTree = "<group>"; };
+		32C1034B1DC9DDCC0001D415 /* Alarm+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Alarm+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		32C1034C1DC9DDCC0001D415 /* SleepData+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SleepData+CoreDataClass.swift"; sourceTree = "<group>"; };
+		32C1034D1DC9DDCC0001D415 /* SleepData+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SleepData+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		32C1034E1DC9DDCC0001D415 /* LongSit+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "LongSit+CoreDataClass.swift"; sourceTree = "<group>"; };
+		32C1034F1DC9DDCC0001D415 /* LongSit+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "LongSit+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		32C103501DC9DDCC0001D415 /* SleepItem+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SleepItem+CoreDataClass.swift"; sourceTree = "<group>"; };
+		32C103511DC9DDCC0001D415 /* SleepItem+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SleepItem+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		32C103521DC9DDCC0001D415 /* HeartRateData+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HeartRateData+CoreDataClass.swift"; sourceTree = "<group>"; };
+		32C103531DC9DDCC0001D415 /* HeartRateData+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HeartRateData+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		32C103541DC9DDCC0001D415 /* SportData+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SportData+CoreDataClass.swift"; sourceTree = "<group>"; };
+		32C103551DC9DDCC0001D415 /* SportData+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SportData+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		32C103561DC9DDCC0001D415 /* Device+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Device+CoreDataClass.swift"; sourceTree = "<group>"; };
+		32C103571DC9DDCC0001D415 /* Device+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Device+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		32C103581DC9DDCC0001D415 /* SportItem+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SportItem+CoreDataClass.swift"; sourceTree = "<group>"; };
+		32C103591DC9DDCC0001D415 /* SportItem+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SportItem+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		32C1035A1DC9DDCC0001D415 /* HandGesture+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HandGesture+CoreDataClass.swift"; sourceTree = "<group>"; };
+		32C1035B1DC9DDCC0001D415 /* HandGesture+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HandGesture+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		32C1035C1DC9DDCC0001D415 /* Notice+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Notice+CoreDataClass.swift"; sourceTree = "<group>"; };
+		32C1035D1DC9DDCC0001D415 /* Notice+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Notice+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		32C1035E1DC9DDCC0001D415 /* HeartRateItem+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HeartRateItem+CoreDataClass.swift"; sourceTree = "<group>"; };
+		32C1035F1DC9DDCC0001D415 /* HeartRateItem+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HeartRateItem+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		32C103601DC9DDCC0001D415 /* User+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "User+CoreDataClass.swift"; sourceTree = "<group>"; };
+		32C103611DC9DDCC0001D415 /* User+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "User+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		BE1F53961DC84FC500EAD9BA /* Time.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Time.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -85,6 +147,8 @@
 				222B899F1DC732AC0056861C /* BleModule */,
 				222E7D741DC88A44001BA04A /* Extentsion */,
 				BE1F53951DC84FA800EAD9BA /* SupportingFiles */,
+				32C103351DC973D80001D415 /* fs */,
+				32C1033A1DC987CC0001D415 /* coredata */,
 				222B89881DC7325B0056861C /* AngelFit.h */,
 				222B89891DC7325B0056861C /* Info.plist */,
 			);
@@ -115,6 +179,51 @@
 				222E7D771DC88AA7001BA04A /* ViewController+Extension.swift */,
 			);
 			name = Extentsion;
+			sourceTree = "<group>";
+		};
+		32C103351DC973D80001D415 /* fs */ = {
+			isa = PBXGroup;
+			children = (
+				32C103381DC974410001D415 /* GodFS.swift */,
+				32C103361DC9741D0001D415 /* BindingPeripherals.plist */,
+			);
+			name = fs;
+			sourceTree = "<group>";
+		};
+		32C1033A1DC987CC0001D415 /* coredata */ = {
+			isa = PBXGroup;
+			children = (
+				32C103461DC9DDCC0001D415 /* LostFind+CoreDataClass.swift */,
+				32C103471DC9DDCC0001D415 /* LostFind+CoreDataProperties.swift */,
+				32C103481DC9DDCC0001D415 /* Unit+CoreDataClass.swift */,
+				32C103491DC9DDCC0001D415 /* Unit+CoreDataProperties.swift */,
+				32C1034A1DC9DDCC0001D415 /* Alarm+CoreDataClass.swift */,
+				32C1034B1DC9DDCC0001D415 /* Alarm+CoreDataProperties.swift */,
+				32C1034C1DC9DDCC0001D415 /* SleepData+CoreDataClass.swift */,
+				32C1034D1DC9DDCC0001D415 /* SleepData+CoreDataProperties.swift */,
+				32C1034E1DC9DDCC0001D415 /* LongSit+CoreDataClass.swift */,
+				32C1034F1DC9DDCC0001D415 /* LongSit+CoreDataProperties.swift */,
+				32C103501DC9DDCC0001D415 /* SleepItem+CoreDataClass.swift */,
+				32C103511DC9DDCC0001D415 /* SleepItem+CoreDataProperties.swift */,
+				32C103521DC9DDCC0001D415 /* HeartRateData+CoreDataClass.swift */,
+				32C103531DC9DDCC0001D415 /* HeartRateData+CoreDataProperties.swift */,
+				32C103541DC9DDCC0001D415 /* SportData+CoreDataClass.swift */,
+				32C103551DC9DDCC0001D415 /* SportData+CoreDataProperties.swift */,
+				32C103561DC9DDCC0001D415 /* Device+CoreDataClass.swift */,
+				32C103571DC9DDCC0001D415 /* Device+CoreDataProperties.swift */,
+				32C103581DC9DDCC0001D415 /* SportItem+CoreDataClass.swift */,
+				32C103591DC9DDCC0001D415 /* SportItem+CoreDataProperties.swift */,
+				32C1035A1DC9DDCC0001D415 /* HandGesture+CoreDataClass.swift */,
+				32C1035B1DC9DDCC0001D415 /* HandGesture+CoreDataProperties.swift */,
+				32C1035C1DC9DDCC0001D415 /* Notice+CoreDataClass.swift */,
+				32C1035D1DC9DDCC0001D415 /* Notice+CoreDataProperties.swift */,
+				32C1035E1DC9DDCC0001D415 /* HeartRateItem+CoreDataClass.swift */,
+				32C1035F1DC9DDCC0001D415 /* HeartRateItem+CoreDataProperties.swift */,
+				32C103601DC9DDCC0001D415 /* User+CoreDataClass.swift */,
+				32C103611DC9DDCC0001D415 /* User+CoreDataProperties.swift */,
+				32C1033B1DC988130001D415 /* Model.xcdatamodeld */,
+			);
+			name = coredata;
 			sourceTree = "<group>";
 		};
 		BE1F53951DC84FA800EAD9BA /* SupportingFiles */ = {
@@ -189,7 +298,7 @@
 				TargetAttributes = {
 					222B89841DC7325B0056861C = {
 						CreatedOnToolsVersion = 8.1;
-						DevelopmentTeam = T65EE75V48;
+						DevelopmentTeam = NWGF84NL9Q;
 						LastSwiftMigration = 0810;
 						ProvisioningStyle = Automatic;
 					};
@@ -223,6 +332,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				32C103371DC9741D0001D415 /* BindingPeripherals.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -240,11 +350,41 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				32C103701DC9DDCC0001D415 /* SportData+CoreDataClass.swift in Sources */,
+				32C103741DC9DDCC0001D415 /* SportItem+CoreDataClass.swift in Sources */,
 				222E7D731DC87A55001BA04A /* PeripheralManager.swift in Sources */,
+				32C1037D1DC9DDCC0001D415 /* User+CoreDataProperties.swift in Sources */,
+				32C103661DC9DDCC0001D415 /* Alarm+CoreDataClass.swift in Sources */,
+				32C1036E1DC9DDCC0001D415 /* HeartRateData+CoreDataClass.swift in Sources */,
+				32C1036F1DC9DDCC0001D415 /* HeartRateData+CoreDataProperties.swift in Sources */,
+				32C1036C1DC9DDCC0001D415 /* SleepItem+CoreDataClass.swift in Sources */,
+				32C103641DC9DDCC0001D415 /* Unit+CoreDataClass.swift in Sources */,
+				32C1037C1DC9DDCC0001D415 /* User+CoreDataClass.swift in Sources */,
+				32C103651DC9DDCC0001D415 /* Unit+CoreDataProperties.swift in Sources */,
 				BE1F53971DC84FC500EAD9BA /* Time.swift in Sources */,
+				32C103721DC9DDCC0001D415 /* Device+CoreDataClass.swift in Sources */,
+				32C103751DC9DDCC0001D415 /* SportItem+CoreDataProperties.swift in Sources */,
+				32C103631DC9DDCC0001D415 /* LostFind+CoreDataProperties.swift in Sources */,
+				32C1037A1DC9DDCC0001D415 /* HeartRateItem+CoreDataClass.swift in Sources */,
+				32C1037B1DC9DDCC0001D415 /* HeartRateItem+CoreDataProperties.swift in Sources */,
+				32C1036D1DC9DDCC0001D415 /* SleepItem+CoreDataProperties.swift in Sources */,
 				222B89A11DC732C80056861C /* GodManager.swift in Sources */,
+				32C103681DC9DDCC0001D415 /* SleepData+CoreDataClass.swift in Sources */,
+				32C103761DC9DDCC0001D415 /* HandGesture+CoreDataClass.swift in Sources */,
+				32C1033D1DC988130001D415 /* Model.xcdatamodeld in Sources */,
+				32C103711DC9DDCC0001D415 /* SportData+CoreDataProperties.swift in Sources */,
+				32C1036B1DC9DDCC0001D415 /* LongSit+CoreDataProperties.swift in Sources */,
+				32C103771DC9DDCC0001D415 /* HandGesture+CoreDataProperties.swift in Sources */,
 				222E7D781DC88AA7001BA04A /* ViewController+Extension.swift in Sources */,
+				32C1036A1DC9DDCC0001D415 /* LongSit+CoreDataClass.swift in Sources */,
 				222B89A31DC735B70056861C /* UUIDConfigure.swift in Sources */,
+				32C103671DC9DDCC0001D415 /* Alarm+CoreDataProperties.swift in Sources */,
+				32C103781DC9DDCC0001D415 /* Notice+CoreDataClass.swift in Sources */,
+				32C103621DC9DDCC0001D415 /* LostFind+CoreDataClass.swift in Sources */,
+				32C103731DC9DDCC0001D415 /* Device+CoreDataProperties.swift in Sources */,
+				32C103391DC974410001D415 /* GodFS.swift in Sources */,
+				32C103691DC9DDCC0001D415 /* SleepData+CoreDataProperties.swift in Sources */,
+				32C103791DC9DDCC0001D415 /* Notice+CoreDataProperties.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -372,7 +512,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = T65EE75V48;
+				DEVELOPMENT_TEAM = NWGF84NL9Q;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -394,7 +534,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = T65EE75V48;
+				DEVELOPMENT_TEAM = NWGF84NL9Q;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -466,6 +606,20 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		32C1033B1DC988130001D415 /* Model.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				32C1033C1DC988130001D415 /* Model.xcdatamodel */,
+			);
+			currentVersion = 32C1033C1DC988130001D415 /* Model.xcdatamodel */;
+			name = Model.xcdatamodeld;
+			path = coredata/Model.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 222B897C1DC7325B0056861C /* Project object */;
 }

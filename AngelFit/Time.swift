@@ -7,16 +7,16 @@
 //
 
 import Foundation
-typealias Task = (_ cancel: Bool)->()
-func delay(_ time: TimeInterval, task: @escaping ()->()) -> Task?{
+typealias TimeTask = (_ cancel: Bool)->()
+func delay(_ time: TimeInterval, task: @escaping ()->()) -> TimeTask?{
     func dispathLater(_ block: @escaping ()->()){
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + Double(Int64(time * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC), execute: block)
     }
     
     var closure: (()->())? = task
-    var result: Task?
+    var result: TimeTask?
     
-    let delayedClosure: Task = {
+    let delayedClosure: TimeTask = {
         cancel in
         if let internalClosure = closure {
             if !cancel {
@@ -38,6 +38,6 @@ func delay(_ time: TimeInterval, task: @escaping ()->()) -> Task?{
     return result
 }
 
-func cancel(_ task: Task?){
+func cancel(_ task: TimeTask?){
     task?(true)
 }
