@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="11232" systemVersion="16A323" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="11232" systemVersion="16B2555" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Alarm" representedClassName=".Alarm" syncable="YES">
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="duration" optional="YES" attributeType="Integer 16" usesScalarValueType="YES" syncable="YES"/>
@@ -23,12 +23,12 @@
         <attribute name="version" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="alarm" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Alarm" syncable="YES"/>
         <relationship name="handGesture" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="HandGesture" syncable="YES"/>
-        <relationship name="heartRateData" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="HeartRateData" syncable="YES"/>
+        <relationship name="heartRateData" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="HeartRateData" syncable="YES"/>
         <relationship name="longSit" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="LongSit" syncable="YES"/>
         <relationship name="lostFind" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="LostFind" syncable="YES"/>
         <relationship name="notice" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Notice" syncable="YES"/>
-        <relationship name="sleepData" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SleepData" syncable="YES"/>
-        <relationship name="sportData" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SportData" syncable="YES"/>
+        <relationship name="sleepData" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SleepData" syncable="YES"/>
+        <relationship name="sportData" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SportData" syncable="YES"/>
         <relationship name="unit" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Unit" syncable="YES"/>
         <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="devices" inverseEntity="User" syncable="YES"/>
     </entity>
@@ -127,19 +127,19 @@
         <relationship name="devices" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Device" inverseName="user" inverseEntity="Device" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Device" positionX="-27" positionY="32" width="119" height="358"/>
-        <element name="User" positionX="-36" positionY="-189" width="128" height="163"/>
-        <element name="LongSit" positionX="-459" positionY="162" width="128" height="103"/>
-        <element name="Notice" positionX="-432" positionY="282" width="128" height="103"/>
-        <element name="Unit" positionX="-405" positionY="414" width="128" height="133"/>
-        <element name="LostFind" positionX="295" positionY="354" width="128" height="58"/>
-        <element name="Alarm" positionX="117" positionY="-96" width="128" height="148"/>
-        <element name="HandGesture" positionX="279" positionY="-28" width="128" height="73"/>
-        <element name="SportData" positionX="-200" positionY="479" width="128" height="178"/>
-        <element name="SportItem" positionX="-198" positionY="698" width="128" height="148"/>
-        <element name="SleepData" positionX="-36" positionY="479" width="128" height="178"/>
-        <element name="SleepItem" positionX="-38" positionY="698" width="128" height="103"/>
+        <element name="Alarm" positionX="259" positionY="59" width="128" height="148"/>
+        <element name="Device" positionX="-101" positionY="36" width="200" height="358"/>
+        <element name="HandGesture" positionX="259" positionY="242" width="128" height="73"/>
         <element name="HeartRateData" positionX="135" positionY="477" width="128" height="223"/>
-        <element name="HeartRateItem" positionX="133" positionY="732" width="128" height="103"/>
+        <element name="HeartRateItem" positionX="133" positionY="725" width="128" height="103"/>
+        <element name="LongSit" positionX="-380" positionY="117" width="128" height="103"/>
+        <element name="LostFind" positionX="259" positionY="354" width="128" height="58"/>
+        <element name="Notice" positionX="-380" positionY="243" width="128" height="103"/>
+        <element name="SleepData" positionX="-36" positionY="479" width="128" height="178"/>
+        <element name="SleepItem" positionX="-38" positionY="725" width="128" height="103"/>
+        <element name="SportData" positionX="-200" positionY="479" width="128" height="178"/>
+        <element name="SportItem" positionX="-198" positionY="725" width="128" height="148"/>
+        <element name="Unit" positionX="-378" positionY="360" width="128" height="133"/>
+        <element name="User" positionX="-101" positionY="-207" width="128" height="163"/>
     </elements>
 </model>

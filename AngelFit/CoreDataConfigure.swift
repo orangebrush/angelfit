@@ -9,4 +9,3 @@
 import UIKit
 import CoreData
 
-let context = NSManagedObjectContext(concurrencyType: NSManagedObjectContextConcurrencyType.mainQueueConcurrencyType)
