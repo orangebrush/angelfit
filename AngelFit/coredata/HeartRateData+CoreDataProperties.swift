@@ -2,8 +2,8 @@
 //  HeartRateData+CoreDataProperties.swift
 //  AngelFit
 //
-//  Created by YiGan on 02/11/2016.
-//  Copyright © 2016 aiju_huangjing1. All rights reserved.
+//  Created by ganyi on 2016/11/3.
+//  Copyright © 2016年 aiju_huangjing1. All rights reserved.
 //
 
 import Foundation
@@ -15,17 +15,17 @@ extension HeartRateData {
         return NSFetchRequest<HeartRateData>(entityName: "HeartRateData");
     }
 
-    @NSManaged public var id: Int16
+    @NSManaged public var aerobicMinutes: Int16
+    @NSManaged public var aerobicThreshold: Int16
+    @NSManaged public var burnFatMinutes: Int16
+    @NSManaged public var burnFatThreshold: Int16
     @NSManaged public var date: NSDate?
+    @NSManaged public var id: Int16
     @NSManaged public var itemCount: Int16
+    @NSManaged public var limitMinutes: Int16
+    @NSManaged public var limitThreshold: Int16
     @NSManaged public var minuteOffset: Int16
     @NSManaged public var silentHeartRate: Int16
-    @NSManaged public var burnFatThreshold: Int16
-    @NSManaged public var aerobicThreshold: Int16
-    @NSManaged public var limitThreshold: Int16
-    @NSManaged public var burnFatMinutes: Int16
-    @NSManaged public var aerobicMinutes: Int16
-    @NSManaged public var limitMinutes: Int16
     @NSManaged public var heartRateItem: NSSet?
 
 }

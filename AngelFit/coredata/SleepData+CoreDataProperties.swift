@@ -2,8 +2,8 @@
 //  SleepData+CoreDataProperties.swift
 //  AngelFit
 //
-//  Created by YiGan on 02/11/2016.
-//  Copyright © 2016 aiju_huangjing1. All rights reserved.
+//  Created by ganyi on 2016/11/3.
+//  Copyright © 2016年 aiju_huangjing1. All rights reserved.
 //
 
 import Foundation
@@ -15,14 +15,14 @@ extension SleepData {
         return NSFetchRequest<SleepData>(entityName: "SleepData");
     }
 
-    @NSManaged public var id: Int16
     @NSManaged public var date: NSDate?
+    @NSManaged public var deepSleepCount: Int16
+    @NSManaged public var endDate: NSDate?
+    @NSManaged public var id: Int16
     @NSManaged public var itemCount: Int16
     @NSManaged public var lightSleepCount: Int16
-    @NSManaged public var deepSleepCount: Int16
-    @NSManaged public var wakeCount: Int16
     @NSManaged public var totalMinute: Int16
-    @NSManaged public var endDate: NSDate?
+    @NSManaged public var wakeCount: Int16
     @NSManaged public var sleepItem: NSSet?
 
 }

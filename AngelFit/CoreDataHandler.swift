@@ -194,6 +194,9 @@ extension CoreDataHandler{
     //初始化 device
     func insertDevice() -> Bool{
         let device = NSEntityDescription.insertNewObject(forEntityName: "Device", into: context) as! Device
-        
+
+        let user = NSEntityDescription.entity(forEntityName: "User", in: context) as! User
+        user.addToDevices(device)
+        return true
     }
 }

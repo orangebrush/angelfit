@@ -2,8 +2,8 @@
 //  LongSit+CoreDataProperties.swift
 //  AngelFit
 //
-//  Created by YiGan on 02/11/2016.
-//  Copyright © 2016 aiju_huangjing1. All rights reserved.
+//  Created by ganyi on 2016/11/3.
+//  Copyright © 2016年 aiju_huangjing1. All rights reserved.
 //
 
 import Foundation
@@ -16,9 +16,9 @@ extension LongSit {
         return NSFetchRequest<LongSit>(entityName: "LongSit");
     }
 
-    @NSManaged public var startDate: NSDate?
     @NSManaged public var endDate: NSDate?
     @NSManaged public var interval: Int16
     @NSManaged public var repetitions: Bool
+    @NSManaged public var startDate: NSDate?
 
 }

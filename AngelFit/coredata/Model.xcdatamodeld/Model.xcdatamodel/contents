@@ -23,12 +23,12 @@
         <attribute name="version" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="alarm" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Alarm" syncable="YES"/>
         <relationship name="handGesture" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="HandGesture" syncable="YES"/>
-        <relationship name="heartRateData" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="HeartRateData" syncable="YES"/>
+        <relationship name="heartRateDatas" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="HeartRateData" syncable="YES"/>
         <relationship name="longSit" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="LongSit" syncable="YES"/>
         <relationship name="lostFind" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="LostFind" syncable="YES"/>
         <relationship name="notice" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Notice" syncable="YES"/>
-        <relationship name="sleepData" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SleepData" syncable="YES"/>
-        <relationship name="sportData" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SportData" syncable="YES"/>
+        <relationship name="sleepDatas" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SleepData" syncable="YES"/>
+        <relationship name="sportDatas" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SportData" syncable="YES"/>
         <relationship name="unit" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Unit" syncable="YES"/>
         <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="devices" inverseEntity="User" syncable="YES"/>
     </entity>

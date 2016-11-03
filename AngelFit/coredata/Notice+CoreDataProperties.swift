@@ -2,8 +2,8 @@
 //  Notice+CoreDataProperties.swift
 //  AngelFit
 //
-//  Created by YiGan on 02/11/2016.
-//  Copyright © 2016 aiju_huangjing1. All rights reserved.
+//  Created by ganyi on 2016/11/3.
+//  Copyright © 2016年 aiju_huangjing1. All rights reserved.
 //
 
 import Foundation
@@ -16,9 +16,9 @@ extension Notice {
         return NSFetchRequest<Notice>(entityName: "Notice");
     }
 
-    @NSManaged public var notifySwitch: Bool
-    @NSManaged public var notifyItem: Int16
-    @NSManaged public var callSwitch: Bool
     @NSManaged public var callDelay: Int16
+    @NSManaged public var callSwitch: Bool
+    @NSManaged public var notifyItem: Int16
+    @NSManaged public var notifySwitch: Bool
 
 }

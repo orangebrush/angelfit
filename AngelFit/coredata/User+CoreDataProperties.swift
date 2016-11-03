@@ -2,8 +2,8 @@
 //  User+CoreDataProperties.swift
 //  AngelFit
 //
-//  Created by YiGan on 02/11/2016.
-//  Copyright © 2016 aiju_huangjing1. All rights reserved.
+//  Created by ganyi on 2016/11/3.
+//  Copyright © 2016年 aiju_huangjing1. All rights reserved.
 //
 
 import Foundation
@@ -15,13 +15,13 @@ extension User {
         return NSFetchRequest<User>(entityName: "User");
     }
 
-    @NSManaged public var userId: Int16
-    @NSManaged public var height: Int16
-    @NSManaged public var weight: Int16
-    @NSManaged public var gender: String?
     @NSManaged public var birthday: NSDate?
-    @NSManaged public var goalStep: Int16
+    @NSManaged public var gender: String?
     @NSManaged public var goalSleep: Int16
+    @NSManaged public var goalStep: Int16
+    @NSManaged public var height: Int16
+    @NSManaged public var userId: Int16
+    @NSManaged public var weight: Int16
     @NSManaged public var devices: NSSet?
 
 }

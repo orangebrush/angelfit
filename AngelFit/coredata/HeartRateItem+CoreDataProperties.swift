@@ -2,8 +2,8 @@
 //  HeartRateItem+CoreDataProperties.swift
 //  AngelFit
 //
-//  Created by YiGan on 02/11/2016.
-//  Copyright © 2016 aiju_huangjing1. All rights reserved.
+//  Created by ganyi on 2016/11/3.
+//  Copyright © 2016年 aiju_huangjing1. All rights reserved.
 //
 
 import Foundation
@@ -15,9 +15,9 @@ extension HeartRateItem {
         return NSFetchRequest<HeartRateItem>(entityName: "HeartRateItem");
     }
 
+    @NSManaged public var data: Int16
     @NSManaged public var id: Int16
     @NSManaged public var offset: Int16
-    @NSManaged public var data: Int16
     @NSManaged public var heartRateData: HeartRateData?
 
 }
