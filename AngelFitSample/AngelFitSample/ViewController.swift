@@ -13,7 +13,9 @@ class ViewController: UIViewController {
     @IBOutlet weak var myTableView: UITableView!
     fileprivate var peripheralTuple = [(name: String, RSSI: NSNumber, peripheral: CBPeripheral)]()
     
-    let godManager = GodManager()
+    fileprivate let godManager = GodManager()
+    
+    fileprivate let handler = CoreDataHandler()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,18 +31,39 @@ class ViewController: UIViewController {
     
     private func createContents(){
      
-        print("end createContents")
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
     @IBAction func scanDevice(_ sender: Any) {
-         godManager.startScan()
+//         godManager.startScan()
+        let device = handler.insertDevice(withMacAddress: "textMacAddress", withItems: ["battLevel": 4])
+        device?.bandStatus = 222
+        
+        
+        if let device2 = handler.selectDevice(userId: 1, withMacAddress: "textMacAddress"){
+            print("ddddddddddd")
+            print(device2)
+            device2.bandStatus = 333
+            print("bbbbbbbbbbb")
+            
+            if let device3 = handler.selectDevice(userId: 1, withMacAddress: "textMacAddress") {
+                print("cccccccccc")
+                print(device3)
+                print("oooooooooooo")
+            }
+        }
     }
     
     @IBAction func bandDevice(_ sender: Any) {
         
+        handler.deleteDevice(withMacAddress: "textMacAddress")
+        
+        let device = handler.selectDevice(userId: 1, withMacAddress: "textMacAddress")
+        print("uuuuuuuuuuu")
+        print(device)
+        print("nnnnnnnnnnn")
     }
 }
 

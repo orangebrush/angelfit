@@ -4,12 +4,12 @@
 
   },
   "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
-    "60154674589A839113548E6CA5F06D491810DFCE" : 9223372036854775807,
+    "E9CDAD31FBE564EB5D84C2311B85DDB8D080DE94" : 9223372036854775807,
     "8671E1697BD3AC7375D594AB502C86E42B633068" : 9223372036854775807
   },
   "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "7EA38984-D62E-4F74-9D40-681E2BC360A9",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
-    "60154674589A839113548E6CA5F06D491810DFCE" : "",
+    "E9CDAD31FBE564EB5D84C2311B85DDB8D080DE94" : "",
     "8671E1697BD3AC7375D594AB502C86E42B633068" : "angelfit\/"
   },
   "DVTSourceControlWorkspaceBlueprintNameKey" : "workspace",
@@ -17,14 +17,14 @@
   "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "workspace.xcworkspace",
   "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
     {
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/ganyi0127\/geometryrush.git",
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "60154674589A839113548E6CA5F06D491810DFCE"
-    },
-    {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/orangebrush\/angelfit.git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "8671E1697BD3AC7375D594AB502C86E42B633068"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/ganyi0127\/geometryrush.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "E9CDAD31FBE564EB5D84C2311B85DDB8D080DE94"
     }
   ]
 }
