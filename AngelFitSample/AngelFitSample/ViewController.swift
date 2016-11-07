@@ -87,6 +87,10 @@ extension ViewController: GodManagerDelegate{
         
         }
     }
+    
+    func godManager(didConnectedPeripheral peripheral: CBPeripheral, connectState isSuccess: Bool) {
+        print("connect \(peripheral)--\(isSuccess)")
+    }
 }
 extension ViewController:UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

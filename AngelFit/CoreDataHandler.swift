@@ -853,7 +853,7 @@ extension CoreDataHandler{
 //MARK:- SleepData
 extension CoreDataHandler{
     
-    //插入 sportData
+    //插入 sleepData
     public func insertSleepData(userId id: Int16 = 1, withMacAddress macAddress: String, withDate date: Date = Date(), withItems items: [String: Any]? = nil) -> SleepData?{
         
         //判断当前日期sleepData是否存在
@@ -916,7 +916,7 @@ extension CoreDataHandler{
         commit()
     }
     
-    //删除 sportData
+    //删除 sleepData
     public func deleteSleepData(userId id: Int16 = 1, withMacAddress macAddress: String, withDate date: Date){
         guard let sleepData = selectSleepData(userId: id, withMacAddress: macAddress, withDate: date, withDayRange: 0).first else {
             return
@@ -925,7 +925,7 @@ extension CoreDataHandler{
         commit()
     }
     
-    //插入 sportItem
+    //插入 sleepItem
     public func createSleepItem(userId id: Int16 = 1, withMacAddress macAddress: String, withDate date: Date, withItemId itemId: Int16) -> SleepItem?{
         //判断sportItem是否存在
         var sleepItem = selectSleepItem(userId: id, withMacAddress: macAddress, withDate: date, withItemId: itemId)
@@ -951,7 +951,7 @@ extension CoreDataHandler{
         return sleepItem
     }
     
-    //获取 sportItem
+    //获取 sleepItem
     private func selectSleepItem(userId id: Int16 = 1, withMacAddress macAddress: String, withDate date: Date, withItemId itemId: Int16) -> SleepItem?{
         
         let request: NSFetchRequest<SleepItem> = SleepItem.fetchRequest()
@@ -974,7 +974,7 @@ extension CoreDataHandler{
 //MARK:- HeartRateData
 extension CoreDataHandler{
     
-    //插入 sportData
+    //插入 heartRateData
     public func insertHeartRateData(userId id: Int16 = 1, withMacAddress macAddress: String, withDate date: Date = Date(), withItems items: [String: Any]? = nil) -> HeartRateData?{
         
         //判断当前日期heartRateData是否存在
@@ -1011,7 +1011,7 @@ extension CoreDataHandler{
         return heartRateData
     }
     
-    //获取 sleepData
+    //获取 heartRateData
     public func selectHeartRateData(userId id: Int16 = 1, withMacAddress macAddress: String, withDate date: Date = Date(), withDayRange dayRange: Int = 0) -> [HeartRateData]{
         //根据用户设备列表获取设备
         let request: NSFetchRequest<HeartRateData> = HeartRateData.fetchRequest()
@@ -1028,7 +1028,7 @@ extension CoreDataHandler{
         return []
     }
     
-    //更新 sleepData
+    //更新 heartRateData
     public func updateHeartRateData(userId id: Int16 = 1, withMacAddress macAddress: String, withDate date: Date, withItems items: [String: Any]){
         guard let heartRateData = selectHeartRateData(userId: id, withMacAddress: macAddress, withDate: date, withDayRange: 0).first else {
             return
@@ -1037,7 +1037,7 @@ extension CoreDataHandler{
         commit()
     }
     
-    //删除 sportData
+    //删除 heartRateData
     public func deleteHeartRateData(userId id: Int16 = 1, withMacAddress macAddress: String, withDate date: Date){
         guard let heartRateData = selectHeartRateData(userId: id, withMacAddress: macAddress, withDate: date, withDayRange: 0).first else {
             return
@@ -1046,7 +1046,7 @@ extension CoreDataHandler{
         commit()
     }
     
-    //插入 sportItem
+    //插入 heartRateItem
     public func createHeartRateItem(userId id: Int16 = 1, withMacAddress macAddress: String, withDate date: Date, withItemId itemId: Int16) -> HeartRateItem?{
         //判断sportItem是否存在
         var heartRateItem = selectHeartRateItem(userId: id, withMacAddress: macAddress, withDate: date, withItemId: itemId)
@@ -1072,7 +1072,7 @@ extension CoreDataHandler{
         return heartRateItem
     }
     
-    //获取 sportItem
+    //获取 heartRateItem
     private func selectHeartRateItem(userId id: Int16 = 1, withMacAddress macAddress: String, withDate date: Date, withItemId itemId: Int16) -> HeartRateItem?{
         
         let request: NSFetchRequest<HeartRateItem> = HeartRateItem.fetchRequest()

@@ -27,9 +27,13 @@ public enum GodManagerConnectState: Int{
 //MARK:- delegate
 
 public protocol GodManagerDelegate {
+    //搜索设备
     func godManager(didDiscoverPeripheral peripheral: CBPeripheral, withRSSI RSSI: NSNumber, peripheralName name: String)
     func godManager(didUpdateCentralState state:GodManagerState)
     func godManager(didUpdateConnectState state:GodManagerConnectState,withPeripheral peripheral:CBPeripheral, withError error:Error?)
+    
+    //连接设备
+    func godManager(didConnectedPeripheral peripheral: CBPeripheral, connectState isSuccess: Bool)                  //连接完成
 }
 
 public final class GodManager: NSObject {
@@ -39,8 +43,15 @@ public final class GodManager: NSObject {
         return CBMutableService(type: MainUUID.service, primary: true)
     }                                               //蓝牙服务
     public var delegate: GodManagerDelegate?          //GodMangager代理
+    public var isAutoReconnect: Bool = true               //自动重连
     
-    //MARK:- ---------------------------------
+    //MARK:- init ++++++++++++++++++++++++++++
+    private static let __once = GodManager()
+    public class func share() -> GodManager{
+        return __once
+    }
+    
+    //MARK:- init ----------------------------
     override public init() {
         super.init()
         
@@ -83,10 +94,9 @@ extension GodManager: CBCentralManagerDelegate{
         DispatchQueue.main.async {
             self.delegate?.godManager(didDiscoverPeripheral: peripheral, withRSSI: RSSI, peripheralName: advertisementData["kCBAdvDataLocalName"] as! String)
         }
-       
     }
     
-   
+    //连接状态改变
     public func centralManagerDidUpdateState(_ central: CBCentralManager) {
 
         var state = GodManagerState(rawValue: central.state.rawValue)
@@ -96,7 +106,13 @@ extension GodManager: CBCentralManagerDelegate{
         
     }
     
+    //连接断开
     public func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
+        //自动重连
+        if isAutoReconnect {
+            central.connect(peripheral, options: nil)
+        }
+        
          DispatchQueue.main.async {
             self.delegate?.godManager(didUpdateConnectState: .disConnect, withPeripheral: peripheral, withError: error)
         }
@@ -134,4 +150,67 @@ extension GodManager: CBCentralManagerDelegate{
 }
 extension GodManager:CBPeripheralDelegate{
 
+    public func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
+        guard let err = error else {
+            peripheral.services?.forEach(){
+                service in
+                peripheral.discoverCharacteristics(nil, for: service)
+            }
+            return
+        }
+        
+        print("发现服务error:\n error:\(err)\n")
+        DispatchQueue.main.async {
+            
+            let name = peripheral.name ?? ""
+            
+            let alertController = UIAlertController(title: "Error", message: "\(name)\n连接服务失败", preferredStyle: .alert)
+            let action = UIAlertAction(title: "返回", style: .default, handler: nil)
+            alertController.addAction(action)
+            
+        }
+    }
+    
+    public func peripheral(_ peripheral: CBPeripheral, didUpdateNotificationStateFor characteristic: CBCharacteristic, error: Error?) {
+        
+    }
+    
+    //获取设备特征
+    public func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
+        guard let err = error else{
+            
+            let characteristicList = service.characteristics
+            
+            if let characteristics = characteristicList {
+                for characteristic in characteristics {
+                    switch characteristic.uuid {
+                    case MainUUID.read:
+                        PeripheralManager.share().peripheralCharMap[peripheral.identifier.uuidString]![.read] = characteristic
+                        peripheral.setNotifyValue(true, for: characteristic)
+                    case MainUUID.write:
+                        PeripheralManager.share().peripheralCharMap[peripheral.identifier.uuidString]![.write] = characteristic
+                    case MainUUID.bigWrite:
+                        PeripheralManager.share().peripheralCharMap[peripheral.identifier.uuidString]![.bigWrite] = characteristic
+                    case MainUUID.bigRead:
+                        PeripheralManager.share().peripheralCharMap[peripheral.identifier.uuidString]![.bigRead] = characteristic
+                        peripheral.setNotifyValue(true, for: characteristic)
+                        
+                    default:
+                        print("otherUUID:\(characteristic.descriptors)")
+                    }
+                }
+            }
+            
+            //连接设备完成 回调
+            DispatchQueue.main.async {
+                
+                self.delegate?.godManager(didConnectedPeripheral: peripheral, connectState: true)
+            }
+            return
+        }
+        
+        DispatchQueue.main.async {
+            self.delegate?.godManager(didConnectedPeripheral: peripheral, connectState: false)
+        }
+    }
 }

@@ -19,6 +19,8 @@
 		32C103391DC974410001D415 /* GodFS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C103381DC974410001D415 /* GodFS.swift */; };
 		32C1033D1DC988130001D415 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 32C1033B1DC988130001D415 /* Model.xcdatamodeld */; };
 		BE1F53971DC84FC500EAD9BA /* Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1F53961DC84FC500EAD9BA /* Time.swift */; };
+		BEB057301DD025D500B80678 /* Peripheral+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB0572F1DD025D500B80678 /* Peripheral+Extension.swift */; };
+		BEB057321DD02E1700B80678 /* AngelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB057311DD02E1700B80678 /* AngelManager.swift */; };
 		BEF78B901DC9E2A000A2D528 /* CoreDataConfigure.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF78B8F1DC9E2A000A2D528 /* CoreDataConfigure.swift */; };
 		BEF78B921DC9E4CA00A2D528 /* CoreDataHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF78B911DC9E4CA00A2D528 /* CoreDataHandler.swift */; };
 		BEF78BD71DCB45B800A2D528 /* Device+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF78BD51DCB45B800A2D528 /* Device+CoreDataClass.swift */; };
@@ -76,6 +78,8 @@
 		32C103381DC974410001D415 /* GodFS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GodFS.swift; sourceTree = "<group>"; };
 		32C1033C1DC988130001D415 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		BE1F53961DC84FC500EAD9BA /* Time.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Time.swift; sourceTree = "<group>"; };
+		BEB0572F1DD025D500B80678 /* Peripheral+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Peripheral+Extension.swift"; sourceTree = "<group>"; };
+		BEB057311DD02E1700B80678 /* AngelManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AngelManager.swift; sourceTree = "<group>"; };
 		BEF78B8F1DC9E2A000A2D528 /* CoreDataConfigure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataConfigure.swift; sourceTree = "<group>"; };
 		BEF78B911DC9E4CA00A2D528 /* CoreDataHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataHandler.swift; sourceTree = "<group>"; };
 		BEF78BD51DCB45B800A2D528 /* Device+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Device+CoreDataClass.swift"; path = "coredata/Device+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -173,6 +177,7 @@
 			children = (
 				222B89A01DC732C80056861C /* GodManager.swift */,
 				222B89A21DC735B70056861C /* UUIDConfigure.swift */,
+				BEB057311DD02E1700B80678 /* AngelManager.swift */,
 			);
 			name = BleModule;
 			sourceTree = "<group>";
@@ -181,6 +186,7 @@
 			isa = PBXGroup;
 			children = (
 				222E7D771DC88AA7001BA04A /* ViewController+Extension.swift */,
+				BEB0572F1DD025D500B80678 /* Peripheral+Extension.swift */,
 			);
 			name = Extentsion;
 			sourceTree = "<group>";
@@ -389,8 +395,10 @@
 				BEF78BFF1DCB45E100A2D528 /* SleepItem+CoreDataClass.swift in Sources */,
 				32C103391DC974410001D415 /* GodFS.swift in Sources */,
 				BEF78C061DCB45E100A2D528 /* HandGesture+CoreDataProperties.swift in Sources */,
+				BEB057301DD025D500B80678 /* Peripheral+Extension.swift in Sources */,
 				BEF78C0A1DCB45E100A2D528 /* Notice+CoreDataProperties.swift in Sources */,
 				BEF78BD71DCB45B800A2D528 /* Device+CoreDataClass.swift in Sources */,
+				BEB057321DD02E1700B80678 /* AngelManager.swift in Sources */,
 				BEF78C051DCB45E100A2D528 /* HandGesture+CoreDataClass.swift in Sources */,
 				BEF78BF71DCB45E100A2D528 /* SleepData+CoreDataClass.swift in Sources */,
 			);

@@ -10,20 +10,27 @@ import Foundation
 import CoreBluetooth
 class GodFS {
     
-    private static let __once = GodFS()
-    
     //MARK: init--------------------------------------------
+    private static let __once = GodFS()
     class var share: GodFS {
         return __once
     }
     
-    private let fileName = "BindingPeripherals"                             //文件名
+    //file name
+    private let fileName = "BindingPeripherals"
+    //file bundle's path
     private var filePath: String!{
         return Bundle.main.path(forResource: fileName, ofType: "plist")!
-    }                                                                       //文件路径
-    var bindingList: [String]{
+    }
+    
+    /*
+     
+     get UUIDStrings from plist file
+ 
+     */
+    var UUIDStringList: [String]{
         return readDictionary()
-    }                                                                       //获取绑定的手环_uuidString列表
+    }
     
     //MARK:- 获取文档路径
     private func documentPath() -> String{
@@ -32,7 +39,7 @@ class GodFS {
         return path + "/" + fileName + ".plist"
     }
     
-    //MARK:- 读取路径信息
+    //MARK:- 读取文档信息
     private func readDictionary() -> [String]{
         let fileManager = FileManager.default
         let fileExist = fileManager.fileExists(atPath: documentPath())
@@ -64,6 +71,33 @@ class GodFS {
         
         let newResult = NSArray(array: result)
         if newResult.write(toFile: documentPath(), atomically: true){
+            return true
+        }
+        return false
+    }
+    
+    //MARK:- delete uuidstring
+    func delete(UUIDString uuidString: String) -> Bool{
+        
+        var result = readDictionary()
+        guard result.contains(uuidString) else {
+            return false
+        }
+        
+        guard let index = result.index(of: uuidString) else {
+            return false
+        }
+        
+        result.remove(at: index)
+        
+        return true
+    }
+    
+    //MARK:- determine if device by UUID is banding
+    func select(UUIDString uuidString: String) -> Bool{
+        
+        var result = readDictionary()
+        if result.contains(uuidString) {
             return true
         }
         return false
