@@ -73,7 +73,6 @@ public class AngelManager: NSObject {
         let data = Data(bytes: UnsafePointer<UInt8>(val), count: val.count)
         
         if let characteristic = PeripheralManager.share().currentPeripheralChar?[.write]{
-            
             peripheral?.writeValue(data, for: characteristic, type: writeType)
         }
     }
