@@ -18,7 +18,7 @@ public class PeripheralManager: NSObject {
         static var instance:PeripheralManager! = nil
     }
     
-    class func share() -> PeripheralManager{
+    public class func share() -> PeripheralManager{
         
         _ = PeripheralManager.__once
         return singleton.instance
@@ -32,14 +32,16 @@ public class PeripheralManager: NSObject {
     //所有设备列表
     var peripheralMap = [String:CBPeripheral](){
         didSet{
-            peripheralCharMap.forEach(){
-                UUID, peripheral in
-
-                guard peripheralCharMap[UUID] != nil else{
-                    let charMap = [CharacteristicType: CBCharacteristic]()
-                    peripheralCharMap[UUID] = charMap
-                    return
-                }
+            
+            guard let uuid = UUID else {
+                return
+            }
+            
+            //当设备为新添加设备时，为设备添加空的特征字典
+            guard peripheralCharMap[uuid] != nil else{
+                let charMap = [CharacteristicType: CBCharacteristic]()
+                peripheralCharMap[uuid] = charMap
+                return
             }
         }
     }//key: uuid, value: peripheral
@@ -47,8 +49,17 @@ public class PeripheralManager: NSObject {
     //所有设备特征列表
     var peripheralCharMap = [String:[CharacteristicType:CBCharacteristic]]()
     
-    //切换
-    public var UUID: String?
+    //切换 peripheralMap -> key
+    public var UUID: String? {
+        
+        didSet{
+            guard let uuid = UUID else {
+                return
+            }
+            
+            _ = add(newUUIDString: uuid)
+        }
+    }
     
     //获取当前设备特征
     public var currentPeripheralChar:[CharacteristicType:CBCharacteristic]?{
@@ -74,21 +85,21 @@ public class PeripheralManager: NSObject {
      */
     //获取绑定设备列表
     public func selectUUIDStringList() -> [String]{
-        return GodFS.share.UUIDStringList
+        return GodFS.share().UUIDStringList
     }
     
     //添加绑定设备
     public func add(newUUIDString uuidString: String) -> Bool{
-        return GodFS.share.add(newUUIDString: uuidString)
+        return GodFS.share().add(newUUIDString: uuidString)
     }
     
     //删除绑定设备
     public func delete(UUIDString uuidString: String) -> Bool{
-        return GodFS.share.delete(UUIDString: uuidString)
+        return GodFS.share().delete(UUIDString: uuidString)
     }
     
     //判断是否绑定
     public func select(UUIDString uuidString: String) -> Bool{
-        return GodFS.share.select(UUIDString: uuidString)
+        return GodFS.share().select(UUIDString: uuidString)
     }
 }

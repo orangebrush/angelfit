@@ -7,6 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SF2C.h"
+#import "CFunc.h"
+#include "protocol.h"
+#include <stdio.h>
+#include "protocol_health.h"
+#include "CDataManager.h"
+#include "protocol_data.h"
+#include "protocol_sync_config.h"
+#include "protocol_set_alarm.h"
 
 //! Project version number for AngelFit.
 FOUNDATION_EXPORT double AngelFitVersionNumber;

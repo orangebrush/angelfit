@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="11232" systemVersion="16B2555" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="11542" systemVersion="16B2555" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Alarm" representedClassName=".Alarm" syncable="YES">
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="duration" optional="YES" attributeType="Integer 16" usesScalarValueType="YES" syncable="YES"/>
@@ -60,7 +60,8 @@
     <entity name="LongSit" representedClassName=".LongSit" syncable="YES">
         <attribute name="endDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="interval" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="repetitions" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="isOpen" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="repetitions" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="startDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
     </entity>
     <entity name="LostFind" representedClassName=".LostFind" syncable="YES">
@@ -136,7 +137,7 @@
         <element name="HandGesture" positionX="259" positionY="242" width="128" height="73"/>
         <element name="HeartRateData" positionX="162" positionY="477" width="128" height="238"/>
         <element name="HeartRateItem" positionX="160" positionY="770" width="128" height="103"/>
-        <element name="LongSit" positionX="-380" positionY="117" width="128" height="103"/>
+        <element name="LongSit" positionX="-380" positionY="117" width="128" height="118"/>
         <element name="LostFind" positionX="259" positionY="354" width="128" height="58"/>
         <element name="Notice" positionX="-380" positionY="243" width="128" height="103"/>
         <element name="SleepData" positionX="-38" positionY="488" width="128" height="193"/>

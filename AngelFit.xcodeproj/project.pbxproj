@@ -14,7 +14,81 @@
 		222B89A31DC735B70056861C /* UUIDConfigure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222B89A21DC735B70056861C /* UUIDConfigure.swift */; };
 		222E7D731DC87A55001BA04A /* PeripheralManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222E7D721DC87A55001BA04A /* PeripheralManager.swift */; };
 		222E7D781DC88AA7001BA04A /* ViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222E7D771DC88AA7001BA04A /* ViewController+Extension.swift */; };
+		2238E0E81DDC370300211F82 /* InterfaceListManager.swift in Headers */ = {isa = PBXBuildFile; fileRef = 22DF62601DDC2FB30080B77A /* InterfaceListManager.swift */; settings = {ATTRIBUTES = (Public, ); }; };
+		2238E0EB1DDC3CC200211F82 /* CDataManager.c in Sources */ = {isa = PBXBuildFile; fileRef = 2238E0E91DDC3CC200211F82 /* CDataManager.c */; };
+		2238E0EC1DDC3CC200211F82 /* CDataManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 2238E0EA1DDC3CC200211F82 /* CDataManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2238E0EF1DDDB0CC00211F82 /* LongSit+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2238E0ED1DDDB0CC00211F82 /* LongSit+CoreDataClass.swift */; };
+		2238E0F01DDDB0CC00211F82 /* LongSit+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2238E0EE1DDDB0CC00211F82 /* LongSit+CoreDataProperties.swift */; };
 		2292C3E61DC83C0B00B7472E /* GodManager.swift in Headers */ = {isa = PBXBuildFile; fileRef = 222B89A01DC732C80056861C /* GodManager.swift */; settings = {ATTRIBUTES = (Public, ); }; };
+		22DF61A31DD99CD40080B77A /* app_timer.c in Sources */ = {isa = PBXBuildFile; fileRef = 22DF61731DD99CD40080B77A /* app_timer.c */; };
+		22DF61A41DD99CD40080B77A /* app_timer.h in Headers */ = {isa = PBXBuildFile; fileRef = 22DF61741DD99CD40080B77A /* app_timer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		22DF61A51DD99CD40080B77A /* config.h in Headers */ = {isa = PBXBuildFile; fileRef = 22DF61751DD99CD40080B77A /* config.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		22DF61A61DD99CD40080B77A /* debug.h in Headers */ = {isa = PBXBuildFile; fileRef = 22DF61761DD99CD40080B77A /* debug.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		22DF61A71DD99CD40080B77A /* define.h in Headers */ = {isa = PBXBuildFile; fileRef = 22DF61771DD99CD40080B77A /* define.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		22DF61A81DD99CD40080B77A /* error.h in Headers */ = {isa = PBXBuildFile; fileRef = 22DF61781DD99CD40080B77A /* error.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		22DF61A91DD99CD40080B77A /* error_ios.h in Headers */ = {isa = PBXBuildFile; fileRef = 22DF61791DD99CD40080B77A /* error_ios.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		22DF61AA1DD99CD40080B77A /* include.h in Headers */ = {isa = PBXBuildFile; fileRef = 22DF617A1DD99CD40080B77A /* include.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		22DF61AB1DD99CD40080B77A /* mem.c in Sources */ = {isa = PBXBuildFile; fileRef = 22DF617B1DD99CD40080B77A /* mem.c */; };
+		22DF61AC1DD99CD40080B77A /* mem.h in Headers */ = {isa = PBXBuildFile; fileRef = 22DF617C1DD99CD40080B77A /* mem.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		22DF61AD1DD99CD40080B77A /* protocol.c in Sources */ = {isa = PBXBuildFile; fileRef = 22DF617D1DD99CD40080B77A /* protocol.c */; };
+		22DF61AE1DD99CD40080B77A /* protocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 22DF617E1DD99CD40080B77A /* protocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		22DF61AF1DD99CD40080B77A /* protocol_data.c in Sources */ = {isa = PBXBuildFile; fileRef = 22DF617F1DD99CD40080B77A /* protocol_data.c */; };
+		22DF61B01DD99CD40080B77A /* protocol_data.h in Headers */ = {isa = PBXBuildFile; fileRef = 22DF61801DD99CD40080B77A /* protocol_data.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		22DF61B11DD99CD40080B77A /* protocol_exec.c in Sources */ = {isa = PBXBuildFile; fileRef = 22DF61811DD99CD40080B77A /* protocol_exec.c */; };
+		22DF61B21DD99CD40080B77A /* protocol_exec.h in Headers */ = {isa = PBXBuildFile; fileRef = 22DF61821DD99CD40080B77A /* protocol_exec.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		22DF61B31DD99CD40080B77A /* protocol_func_table.c in Sources */ = {isa = PBXBuildFile; fileRef = 22DF61831DD99CD40080B77A /* protocol_func_table.c */; };
+		22DF61B41DD99CD40080B77A /* protocol_func_table.h in Headers */ = {isa = PBXBuildFile; fileRef = 22DF61841DD99CD40080B77A /* protocol_func_table.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		22DF61B51DD99CD40080B77A /* protocol_health.c in Sources */ = {isa = PBXBuildFile; fileRef = 22DF61851DD99CD40080B77A /* protocol_health.c */; };
+		22DF61B61DD99CD40080B77A /* protocol_health.h in Headers */ = {isa = PBXBuildFile; fileRef = 22DF61861DD99CD40080B77A /* protocol_health.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		22DF61B71DD99CD40080B77A /* protocol_health_resolve_heart_rate.c in Sources */ = {isa = PBXBuildFile; fileRef = 22DF61871DD99CD40080B77A /* protocol_health_resolve_heart_rate.c */; };
+		22DF61B81DD99CD40080B77A /* protocol_health_resolve_heart_rate.h in Headers */ = {isa = PBXBuildFile; fileRef = 22DF61881DD99CD40080B77A /* protocol_health_resolve_heart_rate.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		22DF61B91DD99CD40080B77A /* protocol_health_resolve_sleep.c in Sources */ = {isa = PBXBuildFile; fileRef = 22DF61891DD99CD40080B77A /* protocol_health_resolve_sleep.c */; };
+		22DF61BA1DD99CD40080B77A /* protocol_health_resolve_sleep.h in Headers */ = {isa = PBXBuildFile; fileRef = 22DF618A1DD99CD40080B77A /* protocol_health_resolve_sleep.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		22DF61BB1DD99CD40080B77A /* protocol_health_resolve_sport.c in Sources */ = {isa = PBXBuildFile; fileRef = 22DF618B1DD99CD40080B77A /* protocol_health_resolve_sport.c */; };
+		22DF61BC1DD99CD40080B77A /* protocol_health_resolve_sport.h in Headers */ = {isa = PBXBuildFile; fileRef = 22DF618C1DD99CD40080B77A /* protocol_health_resolve_sport.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		22DF61BD1DD99CD40080B77A /* protocol_send_notice.c in Sources */ = {isa = PBXBuildFile; fileRef = 22DF618D1DD99CD40080B77A /* protocol_send_notice.c */; };
+		22DF61BE1DD99CD40080B77A /* protocol_send_notice.h in Headers */ = {isa = PBXBuildFile; fileRef = 22DF618E1DD99CD40080B77A /* protocol_send_notice.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		22DF61BF1DD99CD40080B77A /* protocol_set_alarm.c in Sources */ = {isa = PBXBuildFile; fileRef = 22DF618F1DD99CD40080B77A /* protocol_set_alarm.c */; };
+		22DF61C01DD99CD40080B77A /* protocol_set_alarm.h in Headers */ = {isa = PBXBuildFile; fileRef = 22DF61901DD99CD40080B77A /* protocol_set_alarm.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		22DF61C11DD99CD40080B77A /* protocol_status.c in Sources */ = {isa = PBXBuildFile; fileRef = 22DF61911DD99CD40080B77A /* protocol_status.c */; };
+		22DF61C21DD99CD40080B77A /* protocol_status.h in Headers */ = {isa = PBXBuildFile; fileRef = 22DF61921DD99CD40080B77A /* protocol_status.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		22DF61C31DD99CD40080B77A /* protocol_switch_data.c in Sources */ = {isa = PBXBuildFile; fileRef = 22DF61931DD99CD40080B77A /* protocol_switch_data.c */; };
+		22DF61C41DD99CD40080B77A /* protocol_switch_data.h in Headers */ = {isa = PBXBuildFile; fileRef = 22DF61941DD99CD40080B77A /* protocol_switch_data.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		22DF61C51DD99CD40080B77A /* protocol_sync_activity.c in Sources */ = {isa = PBXBuildFile; fileRef = 22DF61951DD99CD40080B77A /* protocol_sync_activity.c */; };
+		22DF61C61DD99CD40080B77A /* protocol_sync_activity.h in Headers */ = {isa = PBXBuildFile; fileRef = 22DF61961DD99CD40080B77A /* protocol_sync_activity.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		22DF61C71DD99CD40080B77A /* protocol_sync_activity_resolve.c in Sources */ = {isa = PBXBuildFile; fileRef = 22DF61971DD99CD40080B77A /* protocol_sync_activity_resolve.c */; };
+		22DF61C81DD99CD40080B77A /* protocol_sync_activity_resolve.h in Headers */ = {isa = PBXBuildFile; fileRef = 22DF61981DD99CD40080B77A /* protocol_sync_activity_resolve.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		22DF61C91DD99CD40080B77A /* protocol_sync_config.c in Sources */ = {isa = PBXBuildFile; fileRef = 22DF61991DD99CD40080B77A /* protocol_sync_config.c */; };
+		22DF61CA1DD99CD40080B77A /* protocol_sync_config.h in Headers */ = {isa = PBXBuildFile; fileRef = 22DF619A1DD99CD40080B77A /* protocol_sync_config.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		22DF61CB1DD99CD40080B77A /* protocol_util.c in Sources */ = {isa = PBXBuildFile; fileRef = 22DF619B1DD99CD40080B77A /* protocol_util.c */; };
+		22DF61CC1DD99CD40080B77A /* protocol_util.h in Headers */ = {isa = PBXBuildFile; fileRef = 22DF619C1DD99CD40080B77A /* protocol_util.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		22DF61CD1DD99CD40080B77A /* protocol_val.h in Headers */ = {isa = PBXBuildFile; fileRef = 22DF619D1DD99CD40080B77A /* protocol_val.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		22DF61CE1DD99CD40080B77A /* protocol_write.c in Sources */ = {isa = PBXBuildFile; fileRef = 22DF619E1DD99CD40080B77A /* protocol_write.c */; };
+		22DF61CF1DD99CD40080B77A /* protocol_write.h in Headers */ = {isa = PBXBuildFile; fileRef = 22DF619F1DD99CD40080B77A /* protocol_write.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		22DF61D01DD99CD40080B77A /* vbus.c in Sources */ = {isa = PBXBuildFile; fileRef = 22DF61A01DD99CD40080B77A /* vbus.c */; };
+		22DF61D11DD99CD40080B77A /* vbus.h in Headers */ = {isa = PBXBuildFile; fileRef = 22DF61A11DD99CD40080B77A /* vbus.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		22DF61D21DD99CD40080B77A /* vbus_evt_app.h in Headers */ = {isa = PBXBuildFile; fileRef = 22DF61A21DD99CD40080B77A /* vbus_evt_app.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		22DF61DA1DD99EA20080B77A /* GCDAsyncSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 22DF61D41DD99EA20080B77A /* GCDAsyncSocket.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		22DF61DB1DD99EA20080B77A /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 22DF61D51DD99EA20080B77A /* GCDAsyncSocket.m */; };
+		22DF61DC1DD99EA20080B77A /* SocketLog.h in Headers */ = {isa = PBXBuildFile; fileRef = 22DF61D61DD99EA20080B77A /* SocketLog.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		22DF61DD1DD99EA20080B77A /* SocketLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 22DF61D71DD99EA20080B77A /* SocketLog.m */; };
+		22DF61DE1DD99EA20080B77A /* SocketLogC.h in Headers */ = {isa = PBXBuildFile; fileRef = 22DF61D81DD99EA20080B77A /* SocketLogC.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		22DF61DF1DD99EA20080B77A /* SocketLogC.m in Sources */ = {isa = PBXBuildFile; fileRef = 22DF61D91DD99EA20080B77A /* SocketLogC.m */; };
+		22DF62031DD9B63C0080B77A /* CBridgingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DF61FD1DD9B63C0080B77A /* CBridgingManager.swift */; };
+		22DF62071DD9B6900080B77A /* SF2C.c in Sources */ = {isa = PBXBuildFile; fileRef = 22DF62051DD9B6900080B77A /* SF2C.c */; };
+		22DF62081DD9B6900080B77A /* SF2C.h in Headers */ = {isa = PBXBuildFile; fileRef = 22DF62061DD9B6900080B77A /* SF2C.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		22DF623A1DDAA8260080B77A /* Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DF62391DDAA8260080B77A /* Timer.swift */; };
+		22DF62401DDAFF2A0080B77A /* CBridgingManager+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DF623F1DDAFF2A0080B77A /* CBridgingManager+Extension.swift */; };
+		22DF62431DDB06E10080B77A /* CFunc.c in Sources */ = {isa = PBXBuildFile; fileRef = 22DF62411DDB06E10080B77A /* CFunc.c */; };
+		22DF62441DDB06E10080B77A /* CFunc.h in Headers */ = {isa = PBXBuildFile; fileRef = 22DF62421DDB06E10080B77A /* CFunc.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		22DF62581DDBE9440080B77A /* Protocol_ios.h in Headers */ = {isa = PBXBuildFile; fileRef = 22DF62521DDBE9440080B77A /* Protocol_ios.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		22DF62591DDBE9440080B77A /* Protocol_ios.m in Sources */ = {isa = PBXBuildFile; fileRef = 22DF62531DDBE9440080B77A /* Protocol_ios.m */; };
+		22DF625A1DDBE9440080B77A /* Protocol_ios_port.c in Sources */ = {isa = PBXBuildFile; fileRef = 22DF62541DDBE9440080B77A /* Protocol_ios_port.c */; };
+		22DF625B1DDBE9440080B77A /* Protocol_ios_port.h in Headers */ = {isa = PBXBuildFile; fileRef = 22DF62551DDBE9440080B77A /* Protocol_ios_port.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		22DF625C1DDBE9440080B77A /* Protocol_model.h in Headers */ = {isa = PBXBuildFile; fileRef = 22DF62561DDBE9440080B77A /* Protocol_model.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		22DF625D1DDBE9440080B77A /* Protocol_model.m in Sources */ = {isa = PBXBuildFile; fileRef = 22DF62571DDBE9440080B77A /* Protocol_model.m */; };
+		22DF625E1DDBFA530080B77A /* PeripheralManager.swift in Headers */ = {isa = PBXBuildFile; fileRef = 222E7D721DC87A55001BA04A /* PeripheralManager.swift */; settings = {ATTRIBUTES = (Public, ); }; };
+		22DF62611DDC2FB30080B77A /* InterfaceListManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DF62601DDC2FB30080B77A /* InterfaceListManager.swift */; };
 		32C103371DC9741D0001D415 /* BindingPeripherals.plist in Resources */ = {isa = PBXBuildFile; fileRef = 32C103361DC9741D0001D415 /* BindingPeripherals.plist */; };
 		32C103391DC974410001D415 /* GodFS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C103381DC974410001D415 /* GodFS.swift */; };
 		32C1033D1DC988130001D415 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 32C1033B1DC988130001D415 /* Model.xcdatamodeld */; };
@@ -39,8 +113,6 @@
 		BEF78BFE1DCB45E100A2D528 /* SportData+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF78BE41DCB45E100A2D528 /* SportData+CoreDataProperties.swift */; };
 		BEF78BFF1DCB45E100A2D528 /* SleepItem+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF78BE51DCB45E100A2D528 /* SleepItem+CoreDataClass.swift */; };
 		BEF78C001DCB45E100A2D528 /* SleepItem+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF78BE61DCB45E100A2D528 /* SleepItem+CoreDataProperties.swift */; };
-		BEF78C011DCB45E100A2D528 /* LongSit+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF78BE71DCB45E100A2D528 /* LongSit+CoreDataClass.swift */; };
-		BEF78C021DCB45E100A2D528 /* LongSit+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF78BE81DCB45E100A2D528 /* LongSit+CoreDataProperties.swift */; };
 		BEF78C031DCB45E100A2D528 /* Unit+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF78BE91DCB45E100A2D528 /* Unit+CoreDataClass.swift */; };
 		BEF78C041DCB45E100A2D528 /* Unit+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF78BEA1DCB45E100A2D528 /* Unit+CoreDataProperties.swift */; };
 		BEF78C051DCB45E100A2D528 /* HandGesture+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF78BEB1DCB45E100A2D528 /* HandGesture+CoreDataClass.swift */; };
@@ -74,6 +146,78 @@
 		222B89A21DC735B70056861C /* UUIDConfigure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UUIDConfigure.swift; sourceTree = "<group>"; };
 		222E7D721DC87A55001BA04A /* PeripheralManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PeripheralManager.swift; sourceTree = "<group>"; };
 		222E7D771DC88AA7001BA04A /* ViewController+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ViewController+Extension.swift"; sourceTree = "<group>"; };
+		2238E0E91DDC3CC200211F82 /* CDataManager.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = CDataManager.c; sourceTree = "<group>"; };
+		2238E0EA1DDC3CC200211F82 /* CDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDataManager.h; sourceTree = "<group>"; };
+		2238E0ED1DDDB0CC00211F82 /* LongSit+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "LongSit+CoreDataClass.swift"; path = "coredata/LongSit+CoreDataClass.swift"; sourceTree = "<group>"; };
+		2238E0EE1DDDB0CC00211F82 /* LongSit+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "LongSit+CoreDataProperties.swift"; path = "coredata/LongSit+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		22DF61731DD99CD40080B77A /* app_timer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = app_timer.c; sourceTree = "<group>"; };
+		22DF61741DD99CD40080B77A /* app_timer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = app_timer.h; sourceTree = "<group>"; };
+		22DF61751DD99CD40080B77A /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
+		22DF61761DD99CD40080B77A /* debug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = debug.h; sourceTree = "<group>"; };
+		22DF61771DD99CD40080B77A /* define.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = define.h; sourceTree = "<group>"; };
+		22DF61781DD99CD40080B77A /* error.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = error.h; sourceTree = "<group>"; };
+		22DF61791DD99CD40080B77A /* error_ios.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = error_ios.h; sourceTree = "<group>"; };
+		22DF617A1DD99CD40080B77A /* include.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = include.h; sourceTree = "<group>"; };
+		22DF617B1DD99CD40080B77A /* mem.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mem.c; sourceTree = "<group>"; };
+		22DF617C1DD99CD40080B77A /* mem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mem.h; sourceTree = "<group>"; };
+		22DF617D1DD99CD40080B77A /* protocol.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = protocol.c; sourceTree = "<group>"; };
+		22DF617E1DD99CD40080B77A /* protocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = protocol.h; sourceTree = "<group>"; };
+		22DF617F1DD99CD40080B77A /* protocol_data.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = protocol_data.c; sourceTree = "<group>"; };
+		22DF61801DD99CD40080B77A /* protocol_data.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = protocol_data.h; sourceTree = "<group>"; };
+		22DF61811DD99CD40080B77A /* protocol_exec.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = protocol_exec.c; sourceTree = "<group>"; };
+		22DF61821DD99CD40080B77A /* protocol_exec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = protocol_exec.h; sourceTree = "<group>"; };
+		22DF61831DD99CD40080B77A /* protocol_func_table.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = protocol_func_table.c; sourceTree = "<group>"; };
+		22DF61841DD99CD40080B77A /* protocol_func_table.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = protocol_func_table.h; sourceTree = "<group>"; };
+		22DF61851DD99CD40080B77A /* protocol_health.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = protocol_health.c; sourceTree = "<group>"; };
+		22DF61861DD99CD40080B77A /* protocol_health.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = protocol_health.h; sourceTree = "<group>"; };
+		22DF61871DD99CD40080B77A /* protocol_health_resolve_heart_rate.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = protocol_health_resolve_heart_rate.c; sourceTree = "<group>"; };
+		22DF61881DD99CD40080B77A /* protocol_health_resolve_heart_rate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = protocol_health_resolve_heart_rate.h; sourceTree = "<group>"; };
+		22DF61891DD99CD40080B77A /* protocol_health_resolve_sleep.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = protocol_health_resolve_sleep.c; sourceTree = "<group>"; };
+		22DF618A1DD99CD40080B77A /* protocol_health_resolve_sleep.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = protocol_health_resolve_sleep.h; sourceTree = "<group>"; };
+		22DF618B1DD99CD40080B77A /* protocol_health_resolve_sport.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = protocol_health_resolve_sport.c; sourceTree = "<group>"; };
+		22DF618C1DD99CD40080B77A /* protocol_health_resolve_sport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = protocol_health_resolve_sport.h; sourceTree = "<group>"; };
+		22DF618D1DD99CD40080B77A /* protocol_send_notice.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = protocol_send_notice.c; sourceTree = "<group>"; };
+		22DF618E1DD99CD40080B77A /* protocol_send_notice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = protocol_send_notice.h; sourceTree = "<group>"; };
+		22DF618F1DD99CD40080B77A /* protocol_set_alarm.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = protocol_set_alarm.c; sourceTree = "<group>"; };
+		22DF61901DD99CD40080B77A /* protocol_set_alarm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = protocol_set_alarm.h; sourceTree = "<group>"; };
+		22DF61911DD99CD40080B77A /* protocol_status.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = protocol_status.c; sourceTree = "<group>"; };
+		22DF61921DD99CD40080B77A /* protocol_status.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = protocol_status.h; sourceTree = "<group>"; };
+		22DF61931DD99CD40080B77A /* protocol_switch_data.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = protocol_switch_data.c; sourceTree = "<group>"; };
+		22DF61941DD99CD40080B77A /* protocol_switch_data.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = protocol_switch_data.h; sourceTree = "<group>"; };
+		22DF61951DD99CD40080B77A /* protocol_sync_activity.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = protocol_sync_activity.c; sourceTree = "<group>"; };
+		22DF61961DD99CD40080B77A /* protocol_sync_activity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = protocol_sync_activity.h; sourceTree = "<group>"; };
+		22DF61971DD99CD40080B77A /* protocol_sync_activity_resolve.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = protocol_sync_activity_resolve.c; sourceTree = "<group>"; };
+		22DF61981DD99CD40080B77A /* protocol_sync_activity_resolve.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = protocol_sync_activity_resolve.h; sourceTree = "<group>"; };
+		22DF61991DD99CD40080B77A /* protocol_sync_config.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = protocol_sync_config.c; sourceTree = "<group>"; };
+		22DF619A1DD99CD40080B77A /* protocol_sync_config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = protocol_sync_config.h; sourceTree = "<group>"; };
+		22DF619B1DD99CD40080B77A /* protocol_util.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = protocol_util.c; sourceTree = "<group>"; };
+		22DF619C1DD99CD40080B77A /* protocol_util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = protocol_util.h; sourceTree = "<group>"; };
+		22DF619D1DD99CD40080B77A /* protocol_val.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = protocol_val.h; sourceTree = "<group>"; };
+		22DF619E1DD99CD40080B77A /* protocol_write.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = protocol_write.c; sourceTree = "<group>"; };
+		22DF619F1DD99CD40080B77A /* protocol_write.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = protocol_write.h; sourceTree = "<group>"; };
+		22DF61A01DD99CD40080B77A /* vbus.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vbus.c; sourceTree = "<group>"; };
+		22DF61A11DD99CD40080B77A /* vbus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vbus.h; sourceTree = "<group>"; };
+		22DF61A21DD99CD40080B77A /* vbus_evt_app.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vbus_evt_app.h; sourceTree = "<group>"; };
+		22DF61D41DD99EA20080B77A /* GCDAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDAsyncSocket.h; sourceTree = "<group>"; };
+		22DF61D51DD99EA20080B77A /* GCDAsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncSocket.m; sourceTree = "<group>"; };
+		22DF61D61DD99EA20080B77A /* SocketLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SocketLog.h; sourceTree = "<group>"; };
+		22DF61D71DD99EA20080B77A /* SocketLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SocketLog.m; sourceTree = "<group>"; };
+		22DF61D81DD99EA20080B77A /* SocketLogC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SocketLogC.h; sourceTree = "<group>"; };
+		22DF61D91DD99EA20080B77A /* SocketLogC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SocketLogC.m; sourceTree = "<group>"; };
+		22DF61FD1DD9B63C0080B77A /* CBridgingManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CBridgingManager.swift; sourceTree = "<group>"; };
+		22DF62051DD9B6900080B77A /* SF2C.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = SF2C.c; sourceTree = "<group>"; };
+		22DF62061DD9B6900080B77A /* SF2C.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SF2C.h; sourceTree = "<group>"; };
+		22DF62391DDAA8260080B77A /* Timer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Timer.swift; sourceTree = "<group>"; };
+		22DF623F1DDAFF2A0080B77A /* CBridgingManager+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CBridgingManager+Extension.swift"; sourceTree = "<group>"; };
+		22DF62411DDB06E10080B77A /* CFunc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = CFunc.c; sourceTree = "<group>"; };
+		22DF62421DDB06E10080B77A /* CFunc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CFunc.h; sourceTree = "<group>"; };
+		22DF62521DDBE9440080B77A /* Protocol_ios.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Protocol_ios.h; sourceTree = "<group>"; };
+		22DF62531DDBE9440080B77A /* Protocol_ios.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Protocol_ios.m; sourceTree = "<group>"; };
+		22DF62541DDBE9440080B77A /* Protocol_ios_port.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Protocol_ios_port.c; sourceTree = "<group>"; };
+		22DF62551DDBE9440080B77A /* Protocol_ios_port.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Protocol_ios_port.h; sourceTree = "<group>"; };
+		22DF62561DDBE9440080B77A /* Protocol_model.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Protocol_model.h; sourceTree = "<group>"; };
+		22DF62571DDBE9440080B77A /* Protocol_model.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Protocol_model.m; sourceTree = "<group>"; };
+		22DF62601DDC2FB30080B77A /* InterfaceListManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InterfaceListManager.swift; sourceTree = "<group>"; };
 		32C103361DC9741D0001D415 /* BindingPeripherals.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = BindingPeripherals.plist; sourceTree = "<group>"; };
 		32C103381DC974410001D415 /* GodFS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GodFS.swift; sourceTree = "<group>"; };
 		32C1033C1DC988130001D415 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
@@ -98,8 +242,6 @@
 		BEF78BE41DCB45E100A2D528 /* SportData+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "SportData+CoreDataProperties.swift"; path = "coredata/SportData+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		BEF78BE51DCB45E100A2D528 /* SleepItem+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "SleepItem+CoreDataClass.swift"; path = "coredata/SleepItem+CoreDataClass.swift"; sourceTree = "<group>"; };
 		BEF78BE61DCB45E100A2D528 /* SleepItem+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "SleepItem+CoreDataProperties.swift"; path = "coredata/SleepItem+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		BEF78BE71DCB45E100A2D528 /* LongSit+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "LongSit+CoreDataClass.swift"; path = "coredata/LongSit+CoreDataClass.swift"; sourceTree = "<group>"; };
-		BEF78BE81DCB45E100A2D528 /* LongSit+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "LongSit+CoreDataProperties.swift"; path = "coredata/LongSit+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		BEF78BE91DCB45E100A2D528 /* Unit+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Unit+CoreDataClass.swift"; path = "coredata/Unit+CoreDataClass.swift"; sourceTree = "<group>"; };
 		BEF78BEA1DCB45E100A2D528 /* Unit+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Unit+CoreDataProperties.swift"; path = "coredata/Unit+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		BEF78BEB1DCB45E100A2D528 /* HandGesture+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "HandGesture+CoreDataClass.swift"; path = "coredata/HandGesture+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -152,6 +294,11 @@
 		222B89871DC7325B0056861C /* AngelFit */ = {
 			isa = PBXGroup;
 			children = (
+				22DF625F1DDC2F5E0080B77A /* APIList */,
+				22DF62511DDBE9440080B77A /* iOSManager */,
+				22DF61F81DD9B63C0080B77A /* TimeManager */,
+				22DF61D31DD99EA20080B77A /* SocketLog */,
+				22DF61721DD99CD40080B77A /* Protocol_c */,
 				222B899F1DC732AC0056861C /* BleModule */,
 				222E7D741DC88A44001BA04A /* Extentsion */,
 				BE1F53951DC84FA800EAD9BA /* SupportingFiles */,
@@ -191,6 +338,111 @@
 			name = Extentsion;
 			sourceTree = "<group>";
 		};
+		22DF61721DD99CD40080B77A /* Protocol_c */ = {
+			isa = PBXGroup;
+			children = (
+				22DF61731DD99CD40080B77A /* app_timer.c */,
+				22DF61741DD99CD40080B77A /* app_timer.h */,
+				22DF61751DD99CD40080B77A /* config.h */,
+				22DF61761DD99CD40080B77A /* debug.h */,
+				22DF61771DD99CD40080B77A /* define.h */,
+				22DF61781DD99CD40080B77A /* error.h */,
+				22DF61791DD99CD40080B77A /* error_ios.h */,
+				22DF617A1DD99CD40080B77A /* include.h */,
+				22DF617B1DD99CD40080B77A /* mem.c */,
+				22DF617C1DD99CD40080B77A /* mem.h */,
+				22DF617D1DD99CD40080B77A /* protocol.c */,
+				22DF617E1DD99CD40080B77A /* protocol.h */,
+				22DF617F1DD99CD40080B77A /* protocol_data.c */,
+				22DF61801DD99CD40080B77A /* protocol_data.h */,
+				22DF61811DD99CD40080B77A /* protocol_exec.c */,
+				22DF61821DD99CD40080B77A /* protocol_exec.h */,
+				22DF61831DD99CD40080B77A /* protocol_func_table.c */,
+				22DF61841DD99CD40080B77A /* protocol_func_table.h */,
+				22DF61851DD99CD40080B77A /* protocol_health.c */,
+				22DF61861DD99CD40080B77A /* protocol_health.h */,
+				22DF61871DD99CD40080B77A /* protocol_health_resolve_heart_rate.c */,
+				22DF61881DD99CD40080B77A /* protocol_health_resolve_heart_rate.h */,
+				22DF61891DD99CD40080B77A /* protocol_health_resolve_sleep.c */,
+				22DF618A1DD99CD40080B77A /* protocol_health_resolve_sleep.h */,
+				22DF618B1DD99CD40080B77A /* protocol_health_resolve_sport.c */,
+				22DF618C1DD99CD40080B77A /* protocol_health_resolve_sport.h */,
+				22DF618D1DD99CD40080B77A /* protocol_send_notice.c */,
+				22DF618E1DD99CD40080B77A /* protocol_send_notice.h */,
+				22DF618F1DD99CD40080B77A /* protocol_set_alarm.c */,
+				22DF61901DD99CD40080B77A /* protocol_set_alarm.h */,
+				22DF61911DD99CD40080B77A /* protocol_status.c */,
+				22DF61921DD99CD40080B77A /* protocol_status.h */,
+				22DF61931DD99CD40080B77A /* protocol_switch_data.c */,
+				22DF61941DD99CD40080B77A /* protocol_switch_data.h */,
+				22DF61951DD99CD40080B77A /* protocol_sync_activity.c */,
+				22DF61961DD99CD40080B77A /* protocol_sync_activity.h */,
+				22DF61971DD99CD40080B77A /* protocol_sync_activity_resolve.c */,
+				22DF61981DD99CD40080B77A /* protocol_sync_activity_resolve.h */,
+				22DF61991DD99CD40080B77A /* protocol_sync_config.c */,
+				22DF619A1DD99CD40080B77A /* protocol_sync_config.h */,
+				22DF619B1DD99CD40080B77A /* protocol_util.c */,
+				22DF619C1DD99CD40080B77A /* protocol_util.h */,
+				22DF619D1DD99CD40080B77A /* protocol_val.h */,
+				22DF619E1DD99CD40080B77A /* protocol_write.c */,
+				22DF619F1DD99CD40080B77A /* protocol_write.h */,
+				22DF61A01DD99CD40080B77A /* vbus.c */,
+				22DF61A11DD99CD40080B77A /* vbus.h */,
+				22DF61A21DD99CD40080B77A /* vbus_evt_app.h */,
+			);
+			path = Protocol_c;
+			sourceTree = "<group>";
+		};
+		22DF61D31DD99EA20080B77A /* SocketLog */ = {
+			isa = PBXGroup;
+			children = (
+				22DF61D41DD99EA20080B77A /* GCDAsyncSocket.h */,
+				22DF61D51DD99EA20080B77A /* GCDAsyncSocket.m */,
+				22DF61D61DD99EA20080B77A /* SocketLog.h */,
+				22DF61D71DD99EA20080B77A /* SocketLog.m */,
+				22DF61D81DD99EA20080B77A /* SocketLogC.h */,
+				22DF61D91DD99EA20080B77A /* SocketLogC.m */,
+			);
+			path = SocketLog;
+			sourceTree = "<group>";
+		};
+		22DF61F81DD9B63C0080B77A /* TimeManager */ = {
+			isa = PBXGroup;
+			children = (
+				22DF62391DDAA8260080B77A /* Timer.swift */,
+				22DF61FD1DD9B63C0080B77A /* CBridgingManager.swift */,
+				22DF623F1DDAFF2A0080B77A /* CBridgingManager+Extension.swift */,
+				2238E0E91DDC3CC200211F82 /* CDataManager.c */,
+				2238E0EA1DDC3CC200211F82 /* CDataManager.h */,
+				22DF62051DD9B6900080B77A /* SF2C.c */,
+				22DF62061DD9B6900080B77A /* SF2C.h */,
+				22DF62411DDB06E10080B77A /* CFunc.c */,
+				22DF62421DDB06E10080B77A /* CFunc.h */,
+			);
+			path = TimeManager;
+			sourceTree = "<group>";
+		};
+		22DF62511DDBE9440080B77A /* iOSManager */ = {
+			isa = PBXGroup;
+			children = (
+				22DF62521DDBE9440080B77A /* Protocol_ios.h */,
+				22DF62531DDBE9440080B77A /* Protocol_ios.m */,
+				22DF62541DDBE9440080B77A /* Protocol_ios_port.c */,
+				22DF62551DDBE9440080B77A /* Protocol_ios_port.h */,
+				22DF62561DDBE9440080B77A /* Protocol_model.h */,
+				22DF62571DDBE9440080B77A /* Protocol_model.m */,
+			);
+			path = iOSManager;
+			sourceTree = "<group>";
+		};
+		22DF625F1DDC2F5E0080B77A /* APIList */ = {
+			isa = PBXGroup;
+			children = (
+				22DF62601DDC2FB30080B77A /* InterfaceListManager.swift */,
+			);
+			path = APIList;
+			sourceTree = "<group>";
+		};
 		32C103351DC973D80001D415 /* fs */ = {
 			isa = PBXGroup;
 			children = (
@@ -203,6 +455,8 @@
 		32C1033A1DC987CC0001D415 /* coredata */ = {
 			isa = PBXGroup;
 			children = (
+				2238E0ED1DDDB0CC00211F82 /* LongSit+CoreDataClass.swift */,
+				2238E0EE1DDDB0CC00211F82 /* LongSit+CoreDataProperties.swift */,
 				BEF78BD91DCB45E100A2D528 /* HeartRateData+CoreDataClass.swift */,
 				BEF78BDA1DCB45E100A2D528 /* HeartRateData+CoreDataProperties.swift */,
 				BEF78BDB1DCB45E100A2D528 /* SportItem+CoreDataClass.swift */,
@@ -217,8 +471,6 @@
 				BEF78BE41DCB45E100A2D528 /* SportData+CoreDataProperties.swift */,
 				BEF78BE51DCB45E100A2D528 /* SleepItem+CoreDataClass.swift */,
 				BEF78BE61DCB45E100A2D528 /* SleepItem+CoreDataProperties.swift */,
-				BEF78BE71DCB45E100A2D528 /* LongSit+CoreDataClass.swift */,
-				BEF78BE81DCB45E100A2D528 /* LongSit+CoreDataProperties.swift */,
 				BEF78BE91DCB45E100A2D528 /* Unit+CoreDataClass.swift */,
 				BEF78BEA1DCB45E100A2D528 /* Unit+CoreDataProperties.swift */,
 				BEF78BEB1DCB45E100A2D528 /* HandGesture+CoreDataClass.swift */,
@@ -254,6 +506,45 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2238E0EC1DDC3CC200211F82 /* CDataManager.h in Headers */,
+				22DF62581DDBE9440080B77A /* Protocol_ios.h in Headers */,
+				22DF625C1DDBE9440080B77A /* Protocol_model.h in Headers */,
+				22DF625B1DDBE9440080B77A /* Protocol_ios_port.h in Headers */,
+				22DF62441DDB06E10080B77A /* CFunc.h in Headers */,
+				22DF61A51DD99CD40080B77A /* config.h in Headers */,
+				22DF61A61DD99CD40080B77A /* debug.h in Headers */,
+				22DF61CD1DD99CD40080B77A /* protocol_val.h in Headers */,
+				22DF61CC1DD99CD40080B77A /* protocol_util.h in Headers */,
+				22DF61D11DD99CD40080B77A /* vbus.h in Headers */,
+				22DF61AC1DD99CD40080B77A /* mem.h in Headers */,
+				22DF61B01DD99CD40080B77A /* protocol_data.h in Headers */,
+				22DF61A71DD99CD40080B77A /* define.h in Headers */,
+				22DF61AE1DD99CD40080B77A /* protocol.h in Headers */,
+				22DF61A81DD99CD40080B77A /* error.h in Headers */,
+				22DF61A91DD99CD40080B77A /* error_ios.h in Headers */,
+				22DF61DC1DD99EA20080B77A /* SocketLog.h in Headers */,
+				22DF61C41DD99CD40080B77A /* protocol_switch_data.h in Headers */,
+				22DF61D21DD99CD40080B77A /* vbus_evt_app.h in Headers */,
+				22DF61A41DD99CD40080B77A /* app_timer.h in Headers */,
+				22DF61B61DD99CD40080B77A /* protocol_health.h in Headers */,
+				22DF61B21DD99CD40080B77A /* protocol_exec.h in Headers */,
+				22DF61DE1DD99EA20080B77A /* SocketLogC.h in Headers */,
+				22DF61AA1DD99CD40080B77A /* include.h in Headers */,
+				22DF61C61DD99CD40080B77A /* protocol_sync_activity.h in Headers */,
+				22DF61CF1DD99CD40080B77A /* protocol_write.h in Headers */,
+				22DF61C21DD99CD40080B77A /* protocol_status.h in Headers */,
+				22DF61BC1DD99CD40080B77A /* protocol_health_resolve_sport.h in Headers */,
+				22DF61C01DD99CD40080B77A /* protocol_set_alarm.h in Headers */,
+				22DF61CA1DD99CD40080B77A /* protocol_sync_config.h in Headers */,
+				22DF61B81DD99CD40080B77A /* protocol_health_resolve_heart_rate.h in Headers */,
+				22DF62081DD9B6900080B77A /* SF2C.h in Headers */,
+				22DF61BE1DD99CD40080B77A /* protocol_send_notice.h in Headers */,
+				22DF61DA1DD99EA20080B77A /* GCDAsyncSocket.h in Headers */,
+				22DF61BA1DD99CD40080B77A /* protocol_health_resolve_sleep.h in Headers */,
+				22DF61C81DD99CD40080B77A /* protocol_sync_activity_resolve.h in Headers */,
+				2238E0E81DDC370300211F82 /* InterfaceListManager.swift in Headers */,
+				22DF625E1DDBFA530080B77A /* PeripheralManager.swift in Headers */,
+				22DF61B41DD99CD40080B77A /* protocol_func_table.h in Headers */,
 				222B89961DC7325B0056861C /* AngelFit.h in Headers */,
 				2292C3E61DC83C0B00B7472E /* GodManager.swift in Headers */,
 			);
@@ -364,43 +655,76 @@
 			files = (
 				BEF78BFD1DCB45E100A2D528 /* SportData+CoreDataClass.swift in Sources */,
 				222E7D731DC87A55001BA04A /* PeripheralManager.swift in Sources */,
+				22DF62031DD9B63C0080B77A /* CBridgingManager.swift in Sources */,
 				BEF78C0B1DCB45E100A2D528 /* LostFind+CoreDataClass.swift in Sources */,
+				22DF61CE1DD99CD40080B77A /* protocol_write.c in Sources */,
+				22DF61BD1DD99CD40080B77A /* protocol_send_notice.c in Sources */,
 				BEF78BD81DCB45B800A2D528 /* Device+CoreDataProperties.swift in Sources */,
+				22DF61B71DD99CD40080B77A /* protocol_health_resolve_heart_rate.c in Sources */,
 				BEF78C031DCB45E100A2D528 /* Unit+CoreDataClass.swift in Sources */,
+				22DF61AB1DD99CD40080B77A /* mem.c in Sources */,
+				22DF61A31DD99CD40080B77A /* app_timer.c in Sources */,
 				BEF78B901DC9E2A000A2D528 /* CoreDataConfigure.swift in Sources */,
 				BEF78C071DCB45E100A2D528 /* Alarm+CoreDataClass.swift in Sources */,
+				22DF61B31DD99CD40080B77A /* protocol_func_table.c in Sources */,
 				BEF78C001DCB45E100A2D528 /* SleepItem+CoreDataProperties.swift in Sources */,
+				22DF61C71DD99CD40080B77A /* protocol_sync_activity_resolve.c in Sources */,
+				22DF61B51DD99CD40080B77A /* protocol_health.c in Sources */,
 				BE1F53971DC84FC500EAD9BA /* Time.swift in Sources */,
 				222B89A11DC732C80056861C /* GodManager.swift in Sources */,
+				22DF61BF1DD99CD40080B77A /* protocol_set_alarm.c in Sources */,
 				BEF78C041DCB45E100A2D528 /* Unit+CoreDataProperties.swift in Sources */,
+				22DF61DD1DD99EA20080B77A /* SocketLog.m in Sources */,
+				22DF62401DDAFF2A0080B77A /* CBridgingManager+Extension.swift in Sources */,
 				BEF78BFC1DCB45E100A2D528 /* HeartRateItem+CoreDataProperties.swift in Sources */,
-				BEF78C021DCB45E100A2D528 /* LongSit+CoreDataProperties.swift in Sources */,
 				BEF78C0C1DCB45E100A2D528 /* LostFind+CoreDataProperties.swift in Sources */,
-				BEF78C011DCB45E100A2D528 /* LongSit+CoreDataClass.swift in Sources */,
+				22DF61CB1DD99CD40080B77A /* protocol_util.c in Sources */,
 				BEF78BF51DCB45E100A2D528 /* SportItem+CoreDataClass.swift in Sources */,
 				BEF78B921DC9E4CA00A2D528 /* CoreDataHandler.swift in Sources */,
 				BEF78BF31DCB45E100A2D528 /* HeartRateData+CoreDataClass.swift in Sources */,
+				22DF61C91DD99CD40080B77A /* protocol_sync_config.c in Sources */,
+				22DF61BB1DD99CD40080B77A /* protocol_health_resolve_sport.c in Sources */,
+				22DF623A1DDAA8260080B77A /* Timer.swift in Sources */,
+				22DF61D01DD99CD40080B77A /* vbus.c in Sources */,
 				32C1033D1DC988130001D415 /* Model.xcdatamodeld in Sources */,
+				22DF61AD1DD99CD40080B77A /* protocol.c in Sources */,
 				222E7D781DC88AA7001BA04A /* ViewController+Extension.swift in Sources */,
 				BEF78BFA1DCB45E100A2D528 /* User+CoreDataProperties.swift in Sources */,
+				22DF62071DD9B6900080B77A /* SF2C.c in Sources */,
 				222B89A31DC735B70056861C /* UUIDConfigure.swift in Sources */,
+				22DF61DB1DD99EA20080B77A /* GCDAsyncSocket.m in Sources */,
 				BEF78C081DCB45E100A2D528 /* Alarm+CoreDataProperties.swift in Sources */,
 				BEF78BFE1DCB45E100A2D528 /* SportData+CoreDataProperties.swift in Sources */,
 				BEF78BF61DCB45E100A2D528 /* SportItem+CoreDataProperties.swift in Sources */,
+				2238E0EF1DDDB0CC00211F82 /* LongSit+CoreDataClass.swift in Sources */,
+				2238E0F01DDDB0CC00211F82 /* LongSit+CoreDataProperties.swift in Sources */,
 				BEF78C091DCB45E100A2D528 /* Notice+CoreDataClass.swift in Sources */,
 				BEF78BFB1DCB45E100A2D528 /* HeartRateItem+CoreDataClass.swift in Sources */,
 				BEF78BF81DCB45E100A2D528 /* SleepData+CoreDataProperties.swift in Sources */,
 				BEF78BF41DCB45E100A2D528 /* HeartRateData+CoreDataProperties.swift in Sources */,
+				22DF625A1DDBE9440080B77A /* Protocol_ios_port.c in Sources */,
+				22DF62431DDB06E10080B77A /* CFunc.c in Sources */,
+				22DF625D1DDBE9440080B77A /* Protocol_model.m in Sources */,
+				22DF61C31DD99CD40080B77A /* protocol_switch_data.c in Sources */,
 				BEF78BF91DCB45E100A2D528 /* User+CoreDataClass.swift in Sources */,
+				22DF61AF1DD99CD40080B77A /* protocol_data.c in Sources */,
+				22DF61B11DD99CD40080B77A /* protocol_exec.c in Sources */,
+				22DF61DF1DD99EA20080B77A /* SocketLogC.m in Sources */,
 				BEF78BFF1DCB45E100A2D528 /* SleepItem+CoreDataClass.swift in Sources */,
+				22DF62591DDBE9440080B77A /* Protocol_ios.m in Sources */,
 				32C103391DC974410001D415 /* GodFS.swift in Sources */,
 				BEF78C061DCB45E100A2D528 /* HandGesture+CoreDataProperties.swift in Sources */,
 				BEB057301DD025D500B80678 /* Peripheral+Extension.swift in Sources */,
 				BEF78C0A1DCB45E100A2D528 /* Notice+CoreDataProperties.swift in Sources */,
 				BEF78BD71DCB45B800A2D528 /* Device+CoreDataClass.swift in Sources */,
 				BEB057321DD02E1700B80678 /* AngelManager.swift in Sources */,
+				22DF62611DDC2FB30080B77A /* InterfaceListManager.swift in Sources */,
 				BEF78C051DCB45E100A2D528 /* HandGesture+CoreDataClass.swift in Sources */,
+				22DF61B91DD99CD40080B77A /* protocol_health_resolve_sleep.c in Sources */,
+				22DF61C51DD99CD40080B77A /* protocol_sync_activity.c in Sources */,
 				BEF78BF71DCB45E100A2D528 /* SleepData+CoreDataClass.swift in Sources */,
+				22DF61C11DD99CD40080B77A /* protocol_status.c in Sources */,
+				2238E0EB1DDC3CC200211F82 /* CDataManager.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -464,7 +788,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -511,7 +835,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -534,11 +858,13 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = AngelFit/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = NotificationTest.AngelFit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_INSTALL_OBJC_HEADER = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
@@ -556,11 +882,13 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = AngelFit/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = NotificationTest.AngelFit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_INSTALL_OBJC_HEADER = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;

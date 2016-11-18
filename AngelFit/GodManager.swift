@@ -34,16 +34,18 @@ public protocol GodManagerDelegate {
     
     //连接设备
     func godManager(didConnectedPeripheral peripheral: CBPeripheral, connectState isSuccess: Bool)                  //连接完成
+    func godManager(bindingPeripheralsUUID UUIDList:[String])           //返回已绑定设备列表
 }
 
 public final class GodManager: NSObject {
     
-    private var centralManager: CBCentralManager?   //蓝牙管理中心
+    fileprivate var centralManager: CBCentralManager?   //蓝牙管理中心
     fileprivate var service: CBService{
         return CBMutableService(type: MainUUID.service, primary: true)
     }                                               //蓝牙服务
     public var delegate: GodManagerDelegate?          //GodMangager代理
     public var isAutoReconnect: Bool = true               //自动重连
+    fileprivate var task:TimeTask?
     
     //MARK:- init ++++++++++++++++++++++++++++
     private static let __once = GodManager()
@@ -62,6 +64,12 @@ public final class GodManager: NSObject {
         
         let queue = DispatchQueue.global(priority: .high)
         centralManager = CBCentralManager(delegate: self, queue: queue)
+        
+        //初始化蓝牙底层通讯配置
+        CBridgingManager.share()
+        
+        //初始化创建默认id=1的用户
+        CoreDataHandler().insertUser()
     }
 
     //Mark:- 开始扫描
@@ -83,11 +91,12 @@ public final class GodManager: NSObject {
     //MARK:- 连接设备
     public func connect(_ peripheral:CBPeripheral){
         centralManager?.connect(peripheral, options: nil)
+
     }
     
 }
 
-
+//MARK:- 中心蓝牙管理delegate
 extension GodManager: CBCentralManagerDelegate{
     
     public func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
@@ -103,15 +112,76 @@ extension GodManager: CBCentralManagerDelegate{
         DispatchQueue.main.async {
             self.delegate?.godManager(didUpdateCentralState: state!)
         }
+        guard state == .poweredOn else {
+            cancel(task)
+            return
+        }
+        print("蓝牙状态更新: \(state)")
+        print("调用重连")
+        self.loop()
         
+    }
+    
+    //loop
+    private func loop(){
+    
+        guard let peripheral = PeripheralManager.share().currentPeripheral else{
+            print("未能获取到设备")
+            
+            cancel(task)
+            
+            //弹出绑定设备列表
+            let uuidStringList = PeripheralManager.share().selectUUIDStringList()
+            
+            delegate?.godManager(bindingPeripheralsUUID: uuidStringList)
+            
+            
+            //获取最近使用的UUID
+            guard let nearUUIDString = uuidStringList.last else{
+                return
+            }
+            
+            guard let nearPeripheralUUID = UUID(uuidString: nearUUIDString) else{
+                return
+            }
+            
+            guard let peripheralList = centralManager?.retrievePeripherals(withIdentifiers: [nearPeripheralUUID]), !peripheralList.isEmpty else{
+                return
+            }
+            
+            connect(peripheralList[0])
+            
+            return
+        }
+        
+        guard peripheral.state == .connected else {
+            print("正在重连: \(peripheral)")
+            
+            task = delay(2){
+                //...
+
+                self.connect(peripheral)
+                self.loop()
+            }
+            return
+        }
+        print("设备已连接")
+        cancel(task)
     }
     
     //连接断开
     public func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
         //自动重连
-        if isAutoReconnect {
-            central.connect(peripheral, options: nil)
-        }
+//        if isAutoReconnect {
+//            central.connect(peripheral, options: nil)
+//        }
+       
+        
+        var ret_code:UInt32 = 0
+        vbus_tx_evt(VBUS_EVT_BASE_APP_SET, SET_BLE_EVT_DISCONNECT, &ret_code)
+        
+        print("调用重连")
+        self.loop()
         
          DispatchQueue.main.async {
             self.delegate?.godManager(didUpdateConnectState: .disConnect, withPeripheral: peripheral, withError: error)
@@ -120,22 +190,28 @@ extension GodManager: CBCentralManagerDelegate{
     
     public func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
         
+        print("\(PeripheralManager.share().UUID)连接成功")
+        cancel(task)
+        
         //init currentPeripheral
-        PeripheralManager.share().peripheralMap[peripheral.identifier.uuidString] = peripheral
-        PeripheralManager.share().UUID = peripheral.identifier.uuidString
+        PeripheralManager.share().UUID = peripheral.identifier.uuidString                           //1.
+        PeripheralManager.share().peripheralMap[peripheral.identifier.uuidString] = peripheral      //2.
         
         //discoverServices
         peripheral.discoverServices(nil)
-//        peripheral.delegate = self
+        peripheral.delegate = self
+        
+        var ret_code:UInt32 = 0
+        vbus_tx_evt(VBUS_EVT_BASE_APP_SET, SET_BLE_EVT_CONNECT, &ret_code)
         
         //callback
         DispatchQueue.main.async {
              self.delegate?.godManager(didUpdateConnectState: .connect, withPeripheral: peripheral, withError: nil)
         }
-       
     }
     
     public func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
+        print("\(peripheral.name)连接失败")
         PeripheralManager.share().peripheralMap[peripheral.identifier.uuidString] = nil
         DispatchQueue.main.async {
            self.delegate?.godManager(didUpdateConnectState: .failed, withPeripheral: peripheral, withError: error)
@@ -148,10 +224,13 @@ extension GodManager: CBCentralManagerDelegate{
     }
     
 }
+
+//MARK:- 设备delegate
 extension GodManager:CBPeripheralDelegate{
 
     public func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
         guard let err = error else {
+            print("1.\(peripheral.name)发现服务成功")
             peripheral.services?.forEach(){
                 service in
                 peripheral.discoverCharacteristics(nil, for: service)
@@ -182,6 +261,7 @@ extension GodManager:CBPeripheralDelegate{
             let characteristicList = service.characteristics
             
             if let characteristics = characteristicList {
+                print("2.\(peripheral.name)发现特征成功")
                 for characteristic in characteristics {
                     switch characteristic.uuid {
                     case MainUUID.read:
@@ -203,7 +283,9 @@ extension GodManager:CBPeripheralDelegate{
             
             //连接设备完成 回调
             DispatchQueue.main.async {
-                
+            //MARK:- 通知C库已连接上设备
+//                var ret_code:UInt32 = 0
+//                vbus_tx_evt(VBUS_EVT_BASE_APP_SET, SET_BLE_EVT_CONNECT, &ret_code);
                 self.delegate?.godManager(didConnectedPeripheral: peripheral, connectState: true)
             }
             return
@@ -213,4 +295,20 @@ extension GodManager:CBPeripheralDelegate{
             self.delegate?.godManager(didConnectedPeripheral: peripheral, connectState: false)
         }
     }
+    
+    //MARK:- 接收数据
+    public func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
+        
+        guard let data = characteristic.value else {
+            return
+        }
+        
+        let length = (data as NSData).length
+        
+        var val: [UInt8] = Array(repeating: 0x00, count: length)
+        (data as NSData).getBytes(&val, length: val.count)
+        protocol_receive_data(val,UInt16(length));
+        print("3.\(peripheral.name)接收蓝牙数据成功 \n \(val)")
+    }
+    
 }

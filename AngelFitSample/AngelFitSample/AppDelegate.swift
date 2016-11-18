@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import AngelFit
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 

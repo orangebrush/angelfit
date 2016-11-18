@@ -12,7 +12,7 @@ class GodFS {
     
     //MARK: init--------------------------------------------
     private static let __once = GodFS()
-    class var share: GodFS {
+    class func share() -> GodFS {
         return __once
     }
     
@@ -20,7 +20,7 @@ class GodFS {
     private let fileName = "BindingPeripherals"
     //file bundle's path
     private var filePath: String!{
-        return Bundle.main.path(forResource: fileName, ofType: "plist")!
+        return Bundle.main.path(forResource: "/Frameworks/AngelFit.framework/" + fileName, ofType: "plist")!
     }
     
     /*
@@ -65,6 +65,9 @@ class GodFS {
         
         var result = readDictionary()
         if result.contains(uuidString) {
+            let oldIndex = result.index(of: uuidString)
+            result.remove(at: oldIndex!)
+            result.append(uuidString)
             return false
         }
         result.append(uuidString)

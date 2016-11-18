@@ -20,6 +20,10 @@ public class AngelManager: NSObject {
         case activated  //实时数据请求
     }
     
+    typealias alarmBlock1 = ((_ date:Date)->())
+    typealias alarmBlock2 = ((_ success:Date)->())
+    typealias alarmBlock3 = ((_ date:Date)->())
+
     var actionMap:[ActionType:[UInt8]]?{
         let map:[ActionType:[UInt8]] = [.binding:[0x04, 0x01, 0x01, 0x83, 0x55, 0xaa],
                                         .unbinding:[0x04, 0x02, 0x55, 0xaa, 0x55, 0xaa],
@@ -93,13 +97,9 @@ public class AngelManager: NSObject {
     }
     
     /*
-     API
+     API 用户调用
      */
     
-    //固件升级
-    public func updateDevice(closure: (_ success: Bool)->()){
-        
-    }
 }
 
 extension AngelManager: CBPeripheralDelegate{

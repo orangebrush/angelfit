@@ -51,8 +51,8 @@ public class CoreDataHandler {
     
     //MARK:- 加载编译后数据模型路径 momd
     lazy var managedObjectModel: NSManagedObjectModel = {
-        
-        let modelURL = Bundle.main.url(forResource: "frameworks/AngelFit.framework/Model", withExtension: "momd")!
+        print(Bundle.main)
+        let modelURL = Bundle.main.url(forResource: "Frameworks/AngelFit.framework/Model", withExtension: "momd")!
         return NSManagedObjectModel(contentsOf: modelURL)!
     }()
     
@@ -614,7 +614,9 @@ extension CoreDataHandler{
             if let dict = items {
                 handGesture?.setValuesForKeys(dict)
             }
-            commit()
+            guard commit() else{
+                return nil
+            }
             return handGesture
         }
         
@@ -898,9 +900,9 @@ extension CoreDataHandler{
         let endDate = translate(date, withDayOffset: dayRange) as! NSDate
         let predicate = NSPredicate(format: "device.user.userId = \(id) AND device.macAddress = '\(macAddress)' AND date >= '\(startDate)' AND date <= '\(endDate)'", "")
         request.predicate = predicate
+    
         do{
             let resultList = try context.fetch(request)
-            return resultList
         }catch let error{
             print(error)
         }
@@ -925,7 +927,7 @@ extension CoreDataHandler{
         commit()
     }
     
-    //插入 sleepItem
+    //插入 sleepItem @params: itemId: 详细数据index
     public func createSleepItem(userId id: Int16 = 1, withMacAddress macAddress: String, withDate date: Date, withItemId itemId: Int16) -> SleepItem?{
         //判断sportItem是否存在
         var sleepItem = selectSleepItem(userId: id, withMacAddress: macAddress, withDate: date, withItemId: itemId)

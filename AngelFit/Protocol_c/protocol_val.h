@@ -1,0 +1,47 @@
+//
+//  protocol_val.h
+//  BLEProject
+//
+//  Created by aiju on 16/3/16.
+//  Copyright © 2016年 aiju_huangjing1. All rights reserved.
+//
+
+#ifndef protocol_val_h
+#define protocol_val_h
+
+
+//app控制取值
+#define PROTOCOL_VAL_APP_CONTROL_MUSIC_START    0x00
+#define PROTOCOL_VAL_APP_CONTROL_MUSIC_STOP     0x01
+
+#define PROTOCOL_VAL_APP_CONTROL_PHOTO_START    0x00
+#define PROTOCOL_VAL_APP_CONTROL_PHOTO_STOP     0x01
+
+#define PROTOCOL_VAL_APP_CONTROL_FIND_DEVICE_START    0x00
+#define PROTOCOL_VAL_APP_CONTROL_FIND_DEVICE_STOP     0x01
+
+
+#define PROTOCOL_VAL_OTA_SUCCESS                    0x00
+#define PROTOCOL_VAL_OTA_REPLY_LOW_BATT             0x01
+#define PROTOCOL_VAL_OTA_REPLY_NOT_SUPPORT          0x02
+
+
+#define PROTOCOL_VAL_BLE_CONTROL_EVT_MUSIC_START    0x01
+#define PROTOCOL_VAL_BLE_CONTROL_EVT_MUSIC_PAUSE    0x02
+#define PROTOCOL_VAL_BLE_CONTROL_EVT_MUSIC_STOP     0x03
+#define PROTOCOL_VAL_BLE_CONTROL_EVT_MUSIC_LAST     0x04
+#define PROTOCOL_VAL_BLE_CONTROL_EVT_MUSIC_NEXT     0x05
+#define PROTOCOL_VAL_BLE_CONTROL_EVT_PHOTO_SINGLE_SHOT  0x06
+#define PROTOCOL_VAL_BLE_CONTROL_EVT_PHOTO_BURST        0x07
+#define PROTOCOL_VAL_BLE_CONTROL_EVT_VOLUME_UP          0x08
+#define PROTOCOL_VAL_BLE_CONTROL_EVT_BOLUME_DOWN        0x09
+
+
+
+
+
+
+
+
+
+#endif /* protocol_val_h */
