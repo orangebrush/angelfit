@@ -46,33 +46,49 @@ extension CBridgingManager{
         //MARK:- 基础功能
         swiftSendSetTime = {
             //:-设置时间（接口实现）
-            InterfaceListManager().setTime()
+            AngelManager.share()?.setDate(){
+                success in
+            }
         }
+        
+        //MARK:- 设备信息回调
         swiftDeviceInfo = { data in
             
-            let deviceInfoStruct:protocol_device_info = data.assumingMemoryBound(to: protocol_device_info.self).pointee
+            let deviceInfo = data.assumingMemoryBound(to: protocol_device_info.self).pointee
             
-            let deviceInfo = deviceInfoStruct
+            //保存数据库
+            guard let macAddress = self.currentMacAddress else {
+                return
+            }
             
+            let coreDataHandler = CoreDataHandler()
+            let device = coreDataHandler.selectDevice(withMacAddress: macAddress)
+            device?.bandStatus = Int16(deviceInfo.batt_status)
+            device?.battLevel = Int16(deviceInfo.batt_level)
+            device?.version = "\(deviceInfo.version)"
+            device?.pairFlag = "\(deviceInfo.pair_flag)"
+            device?.rebootFlag = Int16(deviceInfo.reboot_flag)
+            device?.model = "\(deviceInfo.mode)"
+            device?.deviceId = Int16(deviceInfo.device_id)
+            guard coreDataHandler.commit() else{
+                return
+            }
         }
+        
         swiftFuncTable = { data in
             
         }
+        
         swiftMacAddress = { data  in
             
             let macStruct:protocol_device_mac = data.assumingMemoryBound(to: protocol_device_mac.self).pointee
-            
             let macCList = macStruct.mac_addr
-            
             let macList = [macCList.0, macCList.1, macCList.2, macCList.3, macCList.4, macCList.5]
-            
             let macAddress = macList.map(){String($0,radix:16)}.reduce(""){$0+$1}.uppercased()
+            self.currentMacAddress = macAddress
             
             //保存macAddress到数据库
-            let device = CoreDataHandler().insertDevice(withMacAddress: macAddress)
+            _ = CoreDataHandler().insertDevice(withMacAddress: macAddress)
         }
-
-
-        
     }
 }

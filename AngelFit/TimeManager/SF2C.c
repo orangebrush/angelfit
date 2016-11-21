@@ -53,6 +53,7 @@ static uint32_t protocol_ios_vbus_control_asdk(VBUS_EVT_BASE evt_base,VBUS_EVT_T
 {
     manageData(evt_base, evt_type , data, size, error_code);
    // [ASDKShareControl Protocol_ios_vbusWith:evt_base and:evt_type andData:data andSize:size andRetCode:error_code];
+    
     return SUCCESS;
 }
 static uint32_t protocol_ios_vbus_init()

@@ -108,17 +108,23 @@ extension GodManager: CBCentralManagerDelegate{
     //连接状态改变
     public func centralManagerDidUpdateState(_ central: CBCentralManager) {
 
-        var state = GodManagerState(rawValue: central.state.rawValue)
+        let state = GodManagerState(rawValue: central.state.rawValue)
         DispatchQueue.main.async {
             self.delegate?.godManager(didUpdateCentralState: state!)
         }
+        
+        print("蓝牙状态更新: \(state)")
+        //判断蓝牙是否可用
         guard state == .poweredOn else {
             cancel(task)
             return
         }
-        print("蓝牙状态更新: \(state)")
-        print("调用重连")
-        self.loop()
+        
+        //自动重连
+        if isAutoReconnect{            
+            print("调用重连")
+            self.loop()
+        }
         
     }
     
@@ -172,20 +178,20 @@ extension GodManager: CBCentralManagerDelegate{
     //连接断开
     public func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
         //自动重连
-//        if isAutoReconnect {
-//            central.connect(peripheral, options: nil)
-//        }
+        if isAutoReconnect {
+
+            print("调用重连")
+            self.loop()
+            
+            DispatchQueue.main.async {
+                self.delegate?.godManager(didUpdateConnectState: .disConnect, withPeripheral: peripheral, withError: error)
+            }
+        }
        
-        
+        //通知设备已断开
         var ret_code:UInt32 = 0
         vbus_tx_evt(VBUS_EVT_BASE_APP_SET, SET_BLE_EVT_DISCONNECT, &ret_code)
         
-        print("调用重连")
-        self.loop()
-        
-         DispatchQueue.main.async {
-            self.delegate?.godManager(didUpdateConnectState: .disConnect, withPeripheral: peripheral, withError: error)
-        }
     }
     
     public func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {

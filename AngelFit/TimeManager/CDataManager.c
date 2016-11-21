@@ -61,6 +61,7 @@ extern void c_send_set_time(){
 }
 #pragma mark 处理C返回的数据
 void manageData(VBUS_EVT_BASE evt_base,VBUS_EVT_TYPE evt_type,void * __nonnull data,uint32_t size,uint32_t * __nonnull error_code){
+    
     DEBUG_INFO("VBUS EVT , base = %s,type = %s",protocol_util_vbus_base_to_str(evt_base),protocol_util_vbus_evt_to_str(evt_type));
      uint32_t ret_code;
     

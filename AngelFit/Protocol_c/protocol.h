@@ -354,7 +354,7 @@
         uint8_t end_hour;
         uint8_t end_minute;    //   结束时间
         uint16_t interval;     // 间隔
-        uint16_t repetitions;       //重复
+        uint8_t repetitions;       //重复
     };
 
     //防丢

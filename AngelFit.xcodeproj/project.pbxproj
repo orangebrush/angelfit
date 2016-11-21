@@ -14,11 +14,9 @@
 		222B89A31DC735B70056861C /* UUIDConfigure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222B89A21DC735B70056861C /* UUIDConfigure.swift */; };
 		222E7D731DC87A55001BA04A /* PeripheralManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222E7D721DC87A55001BA04A /* PeripheralManager.swift */; };
 		222E7D781DC88AA7001BA04A /* ViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222E7D771DC88AA7001BA04A /* ViewController+Extension.swift */; };
-		2238E0E81DDC370300211F82 /* InterfaceListManager.swift in Headers */ = {isa = PBXBuildFile; fileRef = 22DF62601DDC2FB30080B77A /* InterfaceListManager.swift */; settings = {ATTRIBUTES = (Public, ); }; };
+		2238E0E81DDC370300211F82 /* AngelManager.swift in Headers */ = {isa = PBXBuildFile; fileRef = 22DF62601DDC2FB30080B77A /* AngelManager.swift */; settings = {ATTRIBUTES = (Public, ); }; };
 		2238E0EB1DDC3CC200211F82 /* CDataManager.c in Sources */ = {isa = PBXBuildFile; fileRef = 2238E0E91DDC3CC200211F82 /* CDataManager.c */; };
 		2238E0EC1DDC3CC200211F82 /* CDataManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 2238E0EA1DDC3CC200211F82 /* CDataManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		2238E0EF1DDDB0CC00211F82 /* LongSit+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2238E0ED1DDDB0CC00211F82 /* LongSit+CoreDataClass.swift */; };
-		2238E0F01DDDB0CC00211F82 /* LongSit+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2238E0EE1DDDB0CC00211F82 /* LongSit+CoreDataProperties.swift */; };
 		2292C3E61DC83C0B00B7472E /* GodManager.swift in Headers */ = {isa = PBXBuildFile; fileRef = 222B89A01DC732C80056861C /* GodManager.swift */; settings = {ATTRIBUTES = (Public, ); }; };
 		22DF61A31DD99CD40080B77A /* app_timer.c in Sources */ = {isa = PBXBuildFile; fileRef = 22DF61731DD99CD40080B77A /* app_timer.c */; };
 		22DF61A41DD99CD40080B77A /* app_timer.h in Headers */ = {isa = PBXBuildFile; fileRef = 22DF61741DD99CD40080B77A /* app_timer.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -88,41 +86,48 @@
 		22DF625C1DDBE9440080B77A /* Protocol_model.h in Headers */ = {isa = PBXBuildFile; fileRef = 22DF62561DDBE9440080B77A /* Protocol_model.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		22DF625D1DDBE9440080B77A /* Protocol_model.m in Sources */ = {isa = PBXBuildFile; fileRef = 22DF62571DDBE9440080B77A /* Protocol_model.m */; };
 		22DF625E1DDBFA530080B77A /* PeripheralManager.swift in Headers */ = {isa = PBXBuildFile; fileRef = 222E7D721DC87A55001BA04A /* PeripheralManager.swift */; settings = {ATTRIBUTES = (Public, ); }; };
-		22DF62611DDC2FB30080B77A /* InterfaceListManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DF62601DDC2FB30080B77A /* InterfaceListManager.swift */; };
+		22DF62611DDC2FB30080B77A /* AngelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DF62601DDC2FB30080B77A /* AngelManager.swift */; };
+		32060CF81DE28409007BC7B3 /* AngelModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32060CF71DE28409007BC7B3 /* AngelModel.swift */; };
 		32C103371DC9741D0001D415 /* BindingPeripherals.plist in Resources */ = {isa = PBXBuildFile; fileRef = 32C103361DC9741D0001D415 /* BindingPeripherals.plist */; };
 		32C103391DC974410001D415 /* GodFS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C103381DC974410001D415 /* GodFS.swift */; };
 		32C1033D1DC988130001D415 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 32C1033B1DC988130001D415 /* Model.xcdatamodeld */; };
+		32E2E0D31DE2EDC000DC2C89 /* Notice+CoreDataClass2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E0B51DE2EDBF00DC2C89 /* Notice+CoreDataClass2.swift */; };
+		32E2E0D41DE2EDC000DC2C89 /* Notice+CoreDataProperties2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E0B61DE2EDBF00DC2C89 /* Notice+CoreDataProperties2.swift */; };
+		32E2E0D71DE2EDC000DC2C89 /* HeartRateData+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E0B91DE2EDBF00DC2C89 /* HeartRateData+CoreDataClass.swift */; };
+		32E2E0D81DE2EDC000DC2C89 /* HeartRateData+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E0BA1DE2EDBF00DC2C89 /* HeartRateData+CoreDataProperties.swift */; };
+		32E2E0D91DE2EDC000DC2C89 /* SleepItem+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E0BB1DE2EDBF00DC2C89 /* SleepItem+CoreDataClass.swift */; };
+		32E2E0DA1DE2EDC000DC2C89 /* SleepItem+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E0BC1DE2EDBF00DC2C89 /* SleepItem+CoreDataProperties.swift */; };
+		32E2E0DB1DE2EDC000DC2C89 /* SportItem+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E0BD1DE2EDBF00DC2C89 /* SportItem+CoreDataClass.swift */; };
+		32E2E0DC1DE2EDC000DC2C89 /* SportItem+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E0BE1DE2EDBF00DC2C89 /* SportItem+CoreDataProperties.swift */; };
+		32E2E0DD1DE2EDC000DC2C89 /* User+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E0BF1DE2EDC000DC2C89 /* User+CoreDataClass.swift */; };
+		32E2E0DE1DE2EDC000DC2C89 /* User+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E0C01DE2EDC000DC2C89 /* User+CoreDataProperties.swift */; };
+		32E2E0DF1DE2EDC000DC2C89 /* Alarm+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E0C11DE2EDC000DC2C89 /* Alarm+CoreDataClass.swift */; };
+		32E2E0E01DE2EDC000DC2C89 /* Alarm+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E0C21DE2EDC000DC2C89 /* Alarm+CoreDataProperties.swift */; };
+		32E2E0E11DE2EDC000DC2C89 /* SilentDistrube+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E0C31DE2EDC000DC2C89 /* SilentDistrube+CoreDataClass.swift */; };
+		32E2E0E21DE2EDC000DC2C89 /* SilentDistrube+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E0C41DE2EDC000DC2C89 /* SilentDistrube+CoreDataProperties.swift */; };
+		32E2E0E31DE2EDC000DC2C89 /* HeartRateItem+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E0C51DE2EDC000DC2C89 /* HeartRateItem+CoreDataClass.swift */; };
+		32E2E0E41DE2EDC000DC2C89 /* HeartRateItem+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E0C61DE2EDC000DC2C89 /* HeartRateItem+CoreDataProperties.swift */; };
+		32E2E0E51DE2EDC000DC2C89 /* LostFind+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E0C71DE2EDC000DC2C89 /* LostFind+CoreDataClass.swift */; };
+		32E2E0E61DE2EDC000DC2C89 /* LostFind+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E0C81DE2EDC000DC2C89 /* LostFind+CoreDataProperties.swift */; };
+		32E2E0E71DE2EDC000DC2C89 /* SportData+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E0C91DE2EDC000DC2C89 /* SportData+CoreDataClass.swift */; };
+		32E2E0E81DE2EDC000DC2C89 /* SportData+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E0CA1DE2EDC000DC2C89 /* SportData+CoreDataProperties.swift */; };
+		32E2E0EB1DE2EDC000DC2C89 /* SleepData+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E0CD1DE2EDC000DC2C89 /* SleepData+CoreDataClass.swift */; };
+		32E2E0EC1DE2EDC000DC2C89 /* SleepData+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E0CE1DE2EDC000DC2C89 /* SleepData+CoreDataProperties.swift */; };
+		32E2E0ED1DE2EDC000DC2C89 /* LongSit+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E0CF1DE2EDC000DC2C89 /* LongSit+CoreDataClass.swift */; };
+		32E2E0EE1DE2EDC000DC2C89 /* LongSit+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E0D01DE2EDC000DC2C89 /* LongSit+CoreDataProperties.swift */; };
+		32E2E0EF1DE2EDC000DC2C89 /* Unit+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E0D11DE2EDC000DC2C89 /* Unit+CoreDataClass.swift */; };
+		32E2E0F01DE2EDC000DC2C89 /* Unit+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E0D21DE2EDC000DC2C89 /* Unit+CoreDataProperties.swift */; };
+		32E2E0FF1DE2F8F900DC2C89 /* HandGesture+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E0FD1DE2F8F900DC2C89 /* HandGesture+CoreDataClass.swift */; };
+		32E2E1001DE2F8F900DC2C89 /* HandGesture+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E0FE1DE2F8F900DC2C89 /* HandGesture+CoreDataProperties.swift */; };
+		32E2E1031DE2FB4C00DC2C89 /* HeartInterval+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E1011DE2FB4C00DC2C89 /* HeartInterval+CoreDataClass.swift */; };
+		32E2E1041DE2FB4C00DC2C89 /* HeartInterval+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E1021DE2FB4C00DC2C89 /* HeartInterval+CoreDataProperties.swift */; };
+		32E2E1071DE2FF4B00DC2C89 /* Device+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E1051DE2FF4B00DC2C89 /* Device+CoreDataClass.swift */; };
+		32E2E1081DE2FF4B00DC2C89 /* Device+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E1061DE2FF4B00DC2C89 /* Device+CoreDataProperties.swift */; };
 		BE1F53971DC84FC500EAD9BA /* Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1F53961DC84FC500EAD9BA /* Time.swift */; };
 		BEB057301DD025D500B80678 /* Peripheral+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB0572F1DD025D500B80678 /* Peripheral+Extension.swift */; };
-		BEB057321DD02E1700B80678 /* AngelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB057311DD02E1700B80678 /* AngelManager.swift */; };
+		BEB057321DD02E1700B80678 /* AngelManager+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB057311DD02E1700B80678 /* AngelManager+Extension.swift */; };
 		BEF78B901DC9E2A000A2D528 /* CoreDataConfigure.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF78B8F1DC9E2A000A2D528 /* CoreDataConfigure.swift */; };
 		BEF78B921DC9E4CA00A2D528 /* CoreDataHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF78B911DC9E4CA00A2D528 /* CoreDataHandler.swift */; };
-		BEF78BD71DCB45B800A2D528 /* Device+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF78BD51DCB45B800A2D528 /* Device+CoreDataClass.swift */; };
-		BEF78BD81DCB45B800A2D528 /* Device+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF78BD61DCB45B800A2D528 /* Device+CoreDataProperties.swift */; };
-		BEF78BF31DCB45E100A2D528 /* HeartRateData+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF78BD91DCB45E100A2D528 /* HeartRateData+CoreDataClass.swift */; };
-		BEF78BF41DCB45E100A2D528 /* HeartRateData+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF78BDA1DCB45E100A2D528 /* HeartRateData+CoreDataProperties.swift */; };
-		BEF78BF51DCB45E100A2D528 /* SportItem+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF78BDB1DCB45E100A2D528 /* SportItem+CoreDataClass.swift */; };
-		BEF78BF61DCB45E100A2D528 /* SportItem+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF78BDC1DCB45E100A2D528 /* SportItem+CoreDataProperties.swift */; };
-		BEF78BF71DCB45E100A2D528 /* SleepData+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF78BDD1DCB45E100A2D528 /* SleepData+CoreDataClass.swift */; };
-		BEF78BF81DCB45E100A2D528 /* SleepData+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF78BDE1DCB45E100A2D528 /* SleepData+CoreDataProperties.swift */; };
-		BEF78BF91DCB45E100A2D528 /* User+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF78BDF1DCB45E100A2D528 /* User+CoreDataClass.swift */; };
-		BEF78BFA1DCB45E100A2D528 /* User+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF78BE01DCB45E100A2D528 /* User+CoreDataProperties.swift */; };
-		BEF78BFB1DCB45E100A2D528 /* HeartRateItem+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF78BE11DCB45E100A2D528 /* HeartRateItem+CoreDataClass.swift */; };
-		BEF78BFC1DCB45E100A2D528 /* HeartRateItem+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF78BE21DCB45E100A2D528 /* HeartRateItem+CoreDataProperties.swift */; };
-		BEF78BFD1DCB45E100A2D528 /* SportData+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF78BE31DCB45E100A2D528 /* SportData+CoreDataClass.swift */; };
-		BEF78BFE1DCB45E100A2D528 /* SportData+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF78BE41DCB45E100A2D528 /* SportData+CoreDataProperties.swift */; };
-		BEF78BFF1DCB45E100A2D528 /* SleepItem+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF78BE51DCB45E100A2D528 /* SleepItem+CoreDataClass.swift */; };
-		BEF78C001DCB45E100A2D528 /* SleepItem+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF78BE61DCB45E100A2D528 /* SleepItem+CoreDataProperties.swift */; };
-		BEF78C031DCB45E100A2D528 /* Unit+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF78BE91DCB45E100A2D528 /* Unit+CoreDataClass.swift */; };
-		BEF78C041DCB45E100A2D528 /* Unit+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF78BEA1DCB45E100A2D528 /* Unit+CoreDataProperties.swift */; };
-		BEF78C051DCB45E100A2D528 /* HandGesture+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF78BEB1DCB45E100A2D528 /* HandGesture+CoreDataClass.swift */; };
-		BEF78C061DCB45E100A2D528 /* HandGesture+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF78BEC1DCB45E100A2D528 /* HandGesture+CoreDataProperties.swift */; };
-		BEF78C071DCB45E100A2D528 /* Alarm+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF78BED1DCB45E100A2D528 /* Alarm+CoreDataClass.swift */; };
-		BEF78C081DCB45E100A2D528 /* Alarm+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF78BEE1DCB45E100A2D528 /* Alarm+CoreDataProperties.swift */; };
-		BEF78C091DCB45E100A2D528 /* Notice+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF78BEF1DCB45E100A2D528 /* Notice+CoreDataClass.swift */; };
-		BEF78C0A1DCB45E100A2D528 /* Notice+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF78BF01DCB45E100A2D528 /* Notice+CoreDataProperties.swift */; };
-		BEF78C0B1DCB45E100A2D528 /* LostFind+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF78BF11DCB45E100A2D528 /* LostFind+CoreDataClass.swift */; };
-		BEF78C0C1DCB45E100A2D528 /* LostFind+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF78BF21DCB45E100A2D528 /* LostFind+CoreDataProperties.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -148,8 +153,6 @@
 		222E7D771DC88AA7001BA04A /* ViewController+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ViewController+Extension.swift"; sourceTree = "<group>"; };
 		2238E0E91DDC3CC200211F82 /* CDataManager.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = CDataManager.c; sourceTree = "<group>"; };
 		2238E0EA1DDC3CC200211F82 /* CDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDataManager.h; sourceTree = "<group>"; };
-		2238E0ED1DDDB0CC00211F82 /* LongSit+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "LongSit+CoreDataClass.swift"; path = "coredata/LongSit+CoreDataClass.swift"; sourceTree = "<group>"; };
-		2238E0EE1DDDB0CC00211F82 /* LongSit+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "LongSit+CoreDataProperties.swift"; path = "coredata/LongSit+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		22DF61731DD99CD40080B77A /* app_timer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = app_timer.c; sourceTree = "<group>"; };
 		22DF61741DD99CD40080B77A /* app_timer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = app_timer.h; sourceTree = "<group>"; };
 		22DF61751DD99CD40080B77A /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
@@ -217,41 +220,48 @@
 		22DF62551DDBE9440080B77A /* Protocol_ios_port.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Protocol_ios_port.h; sourceTree = "<group>"; };
 		22DF62561DDBE9440080B77A /* Protocol_model.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Protocol_model.h; sourceTree = "<group>"; };
 		22DF62571DDBE9440080B77A /* Protocol_model.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Protocol_model.m; sourceTree = "<group>"; };
-		22DF62601DDC2FB30080B77A /* InterfaceListManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InterfaceListManager.swift; sourceTree = "<group>"; };
+		22DF62601DDC2FB30080B77A /* AngelManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AngelManager.swift; sourceTree = "<group>"; };
+		32060CF71DE28409007BC7B3 /* AngelModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AngelModel.swift; sourceTree = "<group>"; };
 		32C103361DC9741D0001D415 /* BindingPeripherals.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = BindingPeripherals.plist; sourceTree = "<group>"; };
 		32C103381DC974410001D415 /* GodFS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GodFS.swift; sourceTree = "<group>"; };
 		32C1033C1DC988130001D415 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		32E2E0B51DE2EDBF00DC2C89 /* Notice+CoreDataClass2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Notice+CoreDataClass2.swift"; sourceTree = "<group>"; };
+		32E2E0B61DE2EDBF00DC2C89 /* Notice+CoreDataProperties2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Notice+CoreDataProperties2.swift"; sourceTree = "<group>"; };
+		32E2E0B91DE2EDBF00DC2C89 /* HeartRateData+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HeartRateData+CoreDataClass.swift"; sourceTree = "<group>"; };
+		32E2E0BA1DE2EDBF00DC2C89 /* HeartRateData+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HeartRateData+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		32E2E0BB1DE2EDBF00DC2C89 /* SleepItem+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SleepItem+CoreDataClass.swift"; sourceTree = "<group>"; };
+		32E2E0BC1DE2EDBF00DC2C89 /* SleepItem+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SleepItem+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		32E2E0BD1DE2EDBF00DC2C89 /* SportItem+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SportItem+CoreDataClass.swift"; sourceTree = "<group>"; };
+		32E2E0BE1DE2EDBF00DC2C89 /* SportItem+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SportItem+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		32E2E0BF1DE2EDC000DC2C89 /* User+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "User+CoreDataClass.swift"; sourceTree = "<group>"; };
+		32E2E0C01DE2EDC000DC2C89 /* User+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "User+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		32E2E0C11DE2EDC000DC2C89 /* Alarm+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Alarm+CoreDataClass.swift"; sourceTree = "<group>"; };
+		32E2E0C21DE2EDC000DC2C89 /* Alarm+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Alarm+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		32E2E0C31DE2EDC000DC2C89 /* SilentDistrube+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SilentDistrube+CoreDataClass.swift"; sourceTree = "<group>"; };
+		32E2E0C41DE2EDC000DC2C89 /* SilentDistrube+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SilentDistrube+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		32E2E0C51DE2EDC000DC2C89 /* HeartRateItem+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HeartRateItem+CoreDataClass.swift"; sourceTree = "<group>"; };
+		32E2E0C61DE2EDC000DC2C89 /* HeartRateItem+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HeartRateItem+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		32E2E0C71DE2EDC000DC2C89 /* LostFind+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "LostFind+CoreDataClass.swift"; sourceTree = "<group>"; };
+		32E2E0C81DE2EDC000DC2C89 /* LostFind+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "LostFind+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		32E2E0C91DE2EDC000DC2C89 /* SportData+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SportData+CoreDataClass.swift"; sourceTree = "<group>"; };
+		32E2E0CA1DE2EDC000DC2C89 /* SportData+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SportData+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		32E2E0CD1DE2EDC000DC2C89 /* SleepData+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SleepData+CoreDataClass.swift"; sourceTree = "<group>"; };
+		32E2E0CE1DE2EDC000DC2C89 /* SleepData+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SleepData+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		32E2E0CF1DE2EDC000DC2C89 /* LongSit+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "LongSit+CoreDataClass.swift"; sourceTree = "<group>"; };
+		32E2E0D01DE2EDC000DC2C89 /* LongSit+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "LongSit+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		32E2E0D11DE2EDC000DC2C89 /* Unit+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Unit+CoreDataClass.swift"; sourceTree = "<group>"; };
+		32E2E0D21DE2EDC000DC2C89 /* Unit+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Unit+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		32E2E0FD1DE2F8F900DC2C89 /* HandGesture+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HandGesture+CoreDataClass.swift"; sourceTree = "<group>"; };
+		32E2E0FE1DE2F8F900DC2C89 /* HandGesture+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HandGesture+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		32E2E1011DE2FB4C00DC2C89 /* HeartInterval+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HeartInterval+CoreDataClass.swift"; sourceTree = "<group>"; };
+		32E2E1021DE2FB4C00DC2C89 /* HeartInterval+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HeartInterval+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		32E2E1051DE2FF4B00DC2C89 /* Device+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Device+CoreDataClass.swift"; sourceTree = "<group>"; };
+		32E2E1061DE2FF4B00DC2C89 /* Device+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Device+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		BE1F53961DC84FC500EAD9BA /* Time.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Time.swift; sourceTree = "<group>"; };
 		BEB0572F1DD025D500B80678 /* Peripheral+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Peripheral+Extension.swift"; sourceTree = "<group>"; };
-		BEB057311DD02E1700B80678 /* AngelManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AngelManager.swift; sourceTree = "<group>"; };
+		BEB057311DD02E1700B80678 /* AngelManager+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "AngelManager+Extension.swift"; path = "../AngelManager+Extension.swift"; sourceTree = "<group>"; };
 		BEF78B8F1DC9E2A000A2D528 /* CoreDataConfigure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataConfigure.swift; sourceTree = "<group>"; };
 		BEF78B911DC9E4CA00A2D528 /* CoreDataHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataHandler.swift; sourceTree = "<group>"; };
-		BEF78BD51DCB45B800A2D528 /* Device+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Device+CoreDataClass.swift"; path = "coredata/Device+CoreDataClass.swift"; sourceTree = "<group>"; };
-		BEF78BD61DCB45B800A2D528 /* Device+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Device+CoreDataProperties.swift"; path = "coredata/Device+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		BEF78BD91DCB45E100A2D528 /* HeartRateData+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "HeartRateData+CoreDataClass.swift"; path = "coredata/HeartRateData+CoreDataClass.swift"; sourceTree = "<group>"; };
-		BEF78BDA1DCB45E100A2D528 /* HeartRateData+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "HeartRateData+CoreDataProperties.swift"; path = "coredata/HeartRateData+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		BEF78BDB1DCB45E100A2D528 /* SportItem+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "SportItem+CoreDataClass.swift"; path = "coredata/SportItem+CoreDataClass.swift"; sourceTree = "<group>"; };
-		BEF78BDC1DCB45E100A2D528 /* SportItem+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "SportItem+CoreDataProperties.swift"; path = "coredata/SportItem+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		BEF78BDD1DCB45E100A2D528 /* SleepData+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "SleepData+CoreDataClass.swift"; path = "coredata/SleepData+CoreDataClass.swift"; sourceTree = "<group>"; };
-		BEF78BDE1DCB45E100A2D528 /* SleepData+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "SleepData+CoreDataProperties.swift"; path = "coredata/SleepData+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		BEF78BDF1DCB45E100A2D528 /* User+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "User+CoreDataClass.swift"; path = "coredata/User+CoreDataClass.swift"; sourceTree = "<group>"; };
-		BEF78BE01DCB45E100A2D528 /* User+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "User+CoreDataProperties.swift"; path = "coredata/User+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		BEF78BE11DCB45E100A2D528 /* HeartRateItem+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "HeartRateItem+CoreDataClass.swift"; path = "coredata/HeartRateItem+CoreDataClass.swift"; sourceTree = "<group>"; };
-		BEF78BE21DCB45E100A2D528 /* HeartRateItem+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "HeartRateItem+CoreDataProperties.swift"; path = "coredata/HeartRateItem+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		BEF78BE31DCB45E100A2D528 /* SportData+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "SportData+CoreDataClass.swift"; path = "coredata/SportData+CoreDataClass.swift"; sourceTree = "<group>"; };
-		BEF78BE41DCB45E100A2D528 /* SportData+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "SportData+CoreDataProperties.swift"; path = "coredata/SportData+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		BEF78BE51DCB45E100A2D528 /* SleepItem+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "SleepItem+CoreDataClass.swift"; path = "coredata/SleepItem+CoreDataClass.swift"; sourceTree = "<group>"; };
-		BEF78BE61DCB45E100A2D528 /* SleepItem+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "SleepItem+CoreDataProperties.swift"; path = "coredata/SleepItem+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		BEF78BE91DCB45E100A2D528 /* Unit+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Unit+CoreDataClass.swift"; path = "coredata/Unit+CoreDataClass.swift"; sourceTree = "<group>"; };
-		BEF78BEA1DCB45E100A2D528 /* Unit+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Unit+CoreDataProperties.swift"; path = "coredata/Unit+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		BEF78BEB1DCB45E100A2D528 /* HandGesture+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "HandGesture+CoreDataClass.swift"; path = "coredata/HandGesture+CoreDataClass.swift"; sourceTree = "<group>"; };
-		BEF78BEC1DCB45E100A2D528 /* HandGesture+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "HandGesture+CoreDataProperties.swift"; path = "coredata/HandGesture+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		BEF78BED1DCB45E100A2D528 /* Alarm+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Alarm+CoreDataClass.swift"; path = "coredata/Alarm+CoreDataClass.swift"; sourceTree = "<group>"; };
-		BEF78BEE1DCB45E100A2D528 /* Alarm+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Alarm+CoreDataProperties.swift"; path = "coredata/Alarm+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		BEF78BEF1DCB45E100A2D528 /* Notice+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Notice+CoreDataClass.swift"; path = "coredata/Notice+CoreDataClass.swift"; sourceTree = "<group>"; };
-		BEF78BF01DCB45E100A2D528 /* Notice+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Notice+CoreDataProperties.swift"; path = "coredata/Notice+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		BEF78BF11DCB45E100A2D528 /* LostFind+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "LostFind+CoreDataClass.swift"; path = "coredata/LostFind+CoreDataClass.swift"; sourceTree = "<group>"; };
-		BEF78BF21DCB45E100A2D528 /* LostFind+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "LostFind+CoreDataProperties.swift"; path = "coredata/LostFind+CoreDataProperties.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -324,7 +334,6 @@
 			children = (
 				222B89A01DC732C80056861C /* GodManager.swift */,
 				222B89A21DC735B70056861C /* UUIDConfigure.swift */,
-				BEB057311DD02E1700B80678 /* AngelManager.swift */,
 			);
 			name = BleModule;
 			sourceTree = "<group>";
@@ -412,6 +421,7 @@
 				22DF62391DDAA8260080B77A /* Timer.swift */,
 				22DF61FD1DD9B63C0080B77A /* CBridgingManager.swift */,
 				22DF623F1DDAFF2A0080B77A /* CBridgingManager+Extension.swift */,
+				BEB057311DD02E1700B80678 /* AngelManager+Extension.swift */,
 				2238E0E91DDC3CC200211F82 /* CDataManager.c */,
 				2238E0EA1DDC3CC200211F82 /* CDataManager.h */,
 				22DF62051DD9B6900080B77A /* SF2C.c */,
@@ -438,7 +448,8 @@
 		22DF625F1DDC2F5E0080B77A /* APIList */ = {
 			isa = PBXGroup;
 			children = (
-				22DF62601DDC2FB30080B77A /* InterfaceListManager.swift */,
+				22DF62601DDC2FB30080B77A /* AngelManager.swift */,
+				32060CF71DE28409007BC7B3 /* AngelModel.swift */,
 			);
 			path = APIList;
 			sourceTree = "<group>";
@@ -455,34 +466,38 @@
 		32C1033A1DC987CC0001D415 /* coredata */ = {
 			isa = PBXGroup;
 			children = (
-				2238E0ED1DDDB0CC00211F82 /* LongSit+CoreDataClass.swift */,
-				2238E0EE1DDDB0CC00211F82 /* LongSit+CoreDataProperties.swift */,
-				BEF78BD91DCB45E100A2D528 /* HeartRateData+CoreDataClass.swift */,
-				BEF78BDA1DCB45E100A2D528 /* HeartRateData+CoreDataProperties.swift */,
-				BEF78BDB1DCB45E100A2D528 /* SportItem+CoreDataClass.swift */,
-				BEF78BDC1DCB45E100A2D528 /* SportItem+CoreDataProperties.swift */,
-				BEF78BDD1DCB45E100A2D528 /* SleepData+CoreDataClass.swift */,
-				BEF78BDE1DCB45E100A2D528 /* SleepData+CoreDataProperties.swift */,
-				BEF78BDF1DCB45E100A2D528 /* User+CoreDataClass.swift */,
-				BEF78BE01DCB45E100A2D528 /* User+CoreDataProperties.swift */,
-				BEF78BE11DCB45E100A2D528 /* HeartRateItem+CoreDataClass.swift */,
-				BEF78BE21DCB45E100A2D528 /* HeartRateItem+CoreDataProperties.swift */,
-				BEF78BE31DCB45E100A2D528 /* SportData+CoreDataClass.swift */,
-				BEF78BE41DCB45E100A2D528 /* SportData+CoreDataProperties.swift */,
-				BEF78BE51DCB45E100A2D528 /* SleepItem+CoreDataClass.swift */,
-				BEF78BE61DCB45E100A2D528 /* SleepItem+CoreDataProperties.swift */,
-				BEF78BE91DCB45E100A2D528 /* Unit+CoreDataClass.swift */,
-				BEF78BEA1DCB45E100A2D528 /* Unit+CoreDataProperties.swift */,
-				BEF78BEB1DCB45E100A2D528 /* HandGesture+CoreDataClass.swift */,
-				BEF78BEC1DCB45E100A2D528 /* HandGesture+CoreDataProperties.swift */,
-				BEF78BED1DCB45E100A2D528 /* Alarm+CoreDataClass.swift */,
-				BEF78BEE1DCB45E100A2D528 /* Alarm+CoreDataProperties.swift */,
-				BEF78BEF1DCB45E100A2D528 /* Notice+CoreDataClass.swift */,
-				BEF78BF01DCB45E100A2D528 /* Notice+CoreDataProperties.swift */,
-				BEF78BF11DCB45E100A2D528 /* LostFind+CoreDataClass.swift */,
-				BEF78BF21DCB45E100A2D528 /* LostFind+CoreDataProperties.swift */,
-				BEF78BD51DCB45B800A2D528 /* Device+CoreDataClass.swift */,
-				BEF78BD61DCB45B800A2D528 /* Device+CoreDataProperties.swift */,
+				32E2E1051DE2FF4B00DC2C89 /* Device+CoreDataClass.swift */,
+				32E2E1061DE2FF4B00DC2C89 /* Device+CoreDataProperties.swift */,
+				32E2E1011DE2FB4C00DC2C89 /* HeartInterval+CoreDataClass.swift */,
+				32E2E1021DE2FB4C00DC2C89 /* HeartInterval+CoreDataProperties.swift */,
+				32E2E0FD1DE2F8F900DC2C89 /* HandGesture+CoreDataClass.swift */,
+				32E2E0FE1DE2F8F900DC2C89 /* HandGesture+CoreDataProperties.swift */,
+				32E2E0B51DE2EDBF00DC2C89 /* Notice+CoreDataClass2.swift */,
+				32E2E0B61DE2EDBF00DC2C89 /* Notice+CoreDataProperties2.swift */,
+				32E2E0B91DE2EDBF00DC2C89 /* HeartRateData+CoreDataClass.swift */,
+				32E2E0BA1DE2EDBF00DC2C89 /* HeartRateData+CoreDataProperties.swift */,
+				32E2E0BB1DE2EDBF00DC2C89 /* SleepItem+CoreDataClass.swift */,
+				32E2E0BC1DE2EDBF00DC2C89 /* SleepItem+CoreDataProperties.swift */,
+				32E2E0BD1DE2EDBF00DC2C89 /* SportItem+CoreDataClass.swift */,
+				32E2E0BE1DE2EDBF00DC2C89 /* SportItem+CoreDataProperties.swift */,
+				32E2E0BF1DE2EDC000DC2C89 /* User+CoreDataClass.swift */,
+				32E2E0C01DE2EDC000DC2C89 /* User+CoreDataProperties.swift */,
+				32E2E0C11DE2EDC000DC2C89 /* Alarm+CoreDataClass.swift */,
+				32E2E0C21DE2EDC000DC2C89 /* Alarm+CoreDataProperties.swift */,
+				32E2E0C31DE2EDC000DC2C89 /* SilentDistrube+CoreDataClass.swift */,
+				32E2E0C41DE2EDC000DC2C89 /* SilentDistrube+CoreDataProperties.swift */,
+				32E2E0C51DE2EDC000DC2C89 /* HeartRateItem+CoreDataClass.swift */,
+				32E2E0C61DE2EDC000DC2C89 /* HeartRateItem+CoreDataProperties.swift */,
+				32E2E0C71DE2EDC000DC2C89 /* LostFind+CoreDataClass.swift */,
+				32E2E0C81DE2EDC000DC2C89 /* LostFind+CoreDataProperties.swift */,
+				32E2E0C91DE2EDC000DC2C89 /* SportData+CoreDataClass.swift */,
+				32E2E0CA1DE2EDC000DC2C89 /* SportData+CoreDataProperties.swift */,
+				32E2E0CD1DE2EDC000DC2C89 /* SleepData+CoreDataClass.swift */,
+				32E2E0CE1DE2EDC000DC2C89 /* SleepData+CoreDataProperties.swift */,
+				32E2E0CF1DE2EDC000DC2C89 /* LongSit+CoreDataClass.swift */,
+				32E2E0D01DE2EDC000DC2C89 /* LongSit+CoreDataProperties.swift */,
+				32E2E0D11DE2EDC000DC2C89 /* Unit+CoreDataClass.swift */,
+				32E2E0D21DE2EDC000DC2C89 /* Unit+CoreDataProperties.swift */,
 				32C1033B1DC988130001D415 /* Model.xcdatamodeld */,
 				BEF78B8F1DC9E2A000A2D528 /* CoreDataConfigure.swift */,
 				BEF78B911DC9E4CA00A2D528 /* CoreDataHandler.swift */,
@@ -542,7 +557,7 @@
 				22DF61DA1DD99EA20080B77A /* GCDAsyncSocket.h in Headers */,
 				22DF61BA1DD99CD40080B77A /* protocol_health_resolve_sleep.h in Headers */,
 				22DF61C81DD99CD40080B77A /* protocol_sync_activity_resolve.h in Headers */,
-				2238E0E81DDC370300211F82 /* InterfaceListManager.swift in Headers */,
+				2238E0E81DDC370300211F82 /* AngelManager.swift in Headers */,
 				22DF625E1DDBFA530080B77A /* PeripheralManager.swift in Headers */,
 				22DF61B41DD99CD40080B77A /* protocol_func_table.h in Headers */,
 				222B89961DC7325B0056861C /* AngelFit.h in Headers */,
@@ -653,77 +668,82 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BEF78BFD1DCB45E100A2D528 /* SportData+CoreDataClass.swift in Sources */,
 				222E7D731DC87A55001BA04A /* PeripheralManager.swift in Sources */,
 				22DF62031DD9B63C0080B77A /* CBridgingManager.swift in Sources */,
-				BEF78C0B1DCB45E100A2D528 /* LostFind+CoreDataClass.swift in Sources */,
 				22DF61CE1DD99CD40080B77A /* protocol_write.c in Sources */,
 				22DF61BD1DD99CD40080B77A /* protocol_send_notice.c in Sources */,
-				BEF78BD81DCB45B800A2D528 /* Device+CoreDataProperties.swift in Sources */,
 				22DF61B71DD99CD40080B77A /* protocol_health_resolve_heart_rate.c in Sources */,
-				BEF78C031DCB45E100A2D528 /* Unit+CoreDataClass.swift in Sources */,
+				32E2E0E41DE2EDC000DC2C89 /* HeartRateItem+CoreDataProperties.swift in Sources */,
 				22DF61AB1DD99CD40080B77A /* mem.c in Sources */,
+				32E2E0DD1DE2EDC000DC2C89 /* User+CoreDataClass.swift in Sources */,
 				22DF61A31DD99CD40080B77A /* app_timer.c in Sources */,
 				BEF78B901DC9E2A000A2D528 /* CoreDataConfigure.swift in Sources */,
-				BEF78C071DCB45E100A2D528 /* Alarm+CoreDataClass.swift in Sources */,
+				32060CF81DE28409007BC7B3 /* AngelModel.swift in Sources */,
+				32E2E1081DE2FF4B00DC2C89 /* Device+CoreDataProperties.swift in Sources */,
 				22DF61B31DD99CD40080B77A /* protocol_func_table.c in Sources */,
-				BEF78C001DCB45E100A2D528 /* SleepItem+CoreDataProperties.swift in Sources */,
+				32E2E0EE1DE2EDC000DC2C89 /* LongSit+CoreDataProperties.swift in Sources */,
+				32E2E0E61DE2EDC000DC2C89 /* LostFind+CoreDataProperties.swift in Sources */,
 				22DF61C71DD99CD40080B77A /* protocol_sync_activity_resolve.c in Sources */,
 				22DF61B51DD99CD40080B77A /* protocol_health.c in Sources */,
+				32E2E0EF1DE2EDC000DC2C89 /* Unit+CoreDataClass.swift in Sources */,
+				32E2E1071DE2FF4B00DC2C89 /* Device+CoreDataClass.swift in Sources */,
 				BE1F53971DC84FC500EAD9BA /* Time.swift in Sources */,
 				222B89A11DC732C80056861C /* GodManager.swift in Sources */,
+				32E2E0E01DE2EDC000DC2C89 /* Alarm+CoreDataProperties.swift in Sources */,
 				22DF61BF1DD99CD40080B77A /* protocol_set_alarm.c in Sources */,
-				BEF78C041DCB45E100A2D528 /* Unit+CoreDataProperties.swift in Sources */,
 				22DF61DD1DD99EA20080B77A /* SocketLog.m in Sources */,
 				22DF62401DDAFF2A0080B77A /* CBridgingManager+Extension.swift in Sources */,
-				BEF78BFC1DCB45E100A2D528 /* HeartRateItem+CoreDataProperties.swift in Sources */,
-				BEF78C0C1DCB45E100A2D528 /* LostFind+CoreDataProperties.swift in Sources */,
 				22DF61CB1DD99CD40080B77A /* protocol_util.c in Sources */,
-				BEF78BF51DCB45E100A2D528 /* SportItem+CoreDataClass.swift in Sources */,
 				BEF78B921DC9E4CA00A2D528 /* CoreDataHandler.swift in Sources */,
-				BEF78BF31DCB45E100A2D528 /* HeartRateData+CoreDataClass.swift in Sources */,
 				22DF61C91DD99CD40080B77A /* protocol_sync_config.c in Sources */,
 				22DF61BB1DD99CD40080B77A /* protocol_health_resolve_sport.c in Sources */,
+				32E2E0D31DE2EDC000DC2C89 /* Notice+CoreDataClass2.swift in Sources */,
 				22DF623A1DDAA8260080B77A /* Timer.swift in Sources */,
 				22DF61D01DD99CD40080B77A /* vbus.c in Sources */,
 				32C1033D1DC988130001D415 /* Model.xcdatamodeld in Sources */,
+				32E2E0DB1DE2EDC000DC2C89 /* SportItem+CoreDataClass.swift in Sources */,
+				32E2E0DE1DE2EDC000DC2C89 /* User+CoreDataProperties.swift in Sources */,
+				32E2E1031DE2FB4C00DC2C89 /* HeartInterval+CoreDataClass.swift in Sources */,
 				22DF61AD1DD99CD40080B77A /* protocol.c in Sources */,
+				32E2E0EB1DE2EDC000DC2C89 /* SleepData+CoreDataClass.swift in Sources */,
+				32E2E0D91DE2EDC000DC2C89 /* SleepItem+CoreDataClass.swift in Sources */,
 				222E7D781DC88AA7001BA04A /* ViewController+Extension.swift in Sources */,
-				BEF78BFA1DCB45E100A2D528 /* User+CoreDataProperties.swift in Sources */,
 				22DF62071DD9B6900080B77A /* SF2C.c in Sources */,
 				222B89A31DC735B70056861C /* UUIDConfigure.swift in Sources */,
 				22DF61DB1DD99EA20080B77A /* GCDAsyncSocket.m in Sources */,
-				BEF78C081DCB45E100A2D528 /* Alarm+CoreDataProperties.swift in Sources */,
-				BEF78BFE1DCB45E100A2D528 /* SportData+CoreDataProperties.swift in Sources */,
-				BEF78BF61DCB45E100A2D528 /* SportItem+CoreDataProperties.swift in Sources */,
-				2238E0EF1DDDB0CC00211F82 /* LongSit+CoreDataClass.swift in Sources */,
-				2238E0F01DDDB0CC00211F82 /* LongSit+CoreDataProperties.swift in Sources */,
-				BEF78C091DCB45E100A2D528 /* Notice+CoreDataClass.swift in Sources */,
-				BEF78BFB1DCB45E100A2D528 /* HeartRateItem+CoreDataClass.swift in Sources */,
-				BEF78BF81DCB45E100A2D528 /* SleepData+CoreDataProperties.swift in Sources */,
-				BEF78BF41DCB45E100A2D528 /* HeartRateData+CoreDataProperties.swift in Sources */,
+				32E2E0DA1DE2EDC000DC2C89 /* SleepItem+CoreDataProperties.swift in Sources */,
+				32E2E0FF1DE2F8F900DC2C89 /* HandGesture+CoreDataClass.swift in Sources */,
+				32E2E1001DE2F8F900DC2C89 /* HandGesture+CoreDataProperties.swift in Sources */,
+				32E2E0E21DE2EDC000DC2C89 /* SilentDistrube+CoreDataProperties.swift in Sources */,
+				32E2E0D71DE2EDC000DC2C89 /* HeartRateData+CoreDataClass.swift in Sources */,
+				32E2E1041DE2FB4C00DC2C89 /* HeartInterval+CoreDataProperties.swift in Sources */,
 				22DF625A1DDBE9440080B77A /* Protocol_ios_port.c in Sources */,
 				22DF62431DDB06E10080B77A /* CFunc.c in Sources */,
+				32E2E0E71DE2EDC000DC2C89 /* SportData+CoreDataClass.swift in Sources */,
 				22DF625D1DDBE9440080B77A /* Protocol_model.m in Sources */,
+				32E2E0DF1DE2EDC000DC2C89 /* Alarm+CoreDataClass.swift in Sources */,
 				22DF61C31DD99CD40080B77A /* protocol_switch_data.c in Sources */,
-				BEF78BF91DCB45E100A2D528 /* User+CoreDataClass.swift in Sources */,
 				22DF61AF1DD99CD40080B77A /* protocol_data.c in Sources */,
 				22DF61B11DD99CD40080B77A /* protocol_exec.c in Sources */,
+				32E2E0D81DE2EDC000DC2C89 /* HeartRateData+CoreDataProperties.swift in Sources */,
+				32E2E0D41DE2EDC000DC2C89 /* Notice+CoreDataProperties2.swift in Sources */,
 				22DF61DF1DD99EA20080B77A /* SocketLogC.m in Sources */,
-				BEF78BFF1DCB45E100A2D528 /* SleepItem+CoreDataClass.swift in Sources */,
 				22DF62591DDBE9440080B77A /* Protocol_ios.m in Sources */,
+				32E2E0E31DE2EDC000DC2C89 /* HeartRateItem+CoreDataClass.swift in Sources */,
+				32E2E0E11DE2EDC000DC2C89 /* SilentDistrube+CoreDataClass.swift in Sources */,
 				32C103391DC974410001D415 /* GodFS.swift in Sources */,
-				BEF78C061DCB45E100A2D528 /* HandGesture+CoreDataProperties.swift in Sources */,
+				32E2E0E81DE2EDC000DC2C89 /* SportData+CoreDataProperties.swift in Sources */,
+				32E2E0EC1DE2EDC000DC2C89 /* SleepData+CoreDataProperties.swift in Sources */,
 				BEB057301DD025D500B80678 /* Peripheral+Extension.swift in Sources */,
-				BEF78C0A1DCB45E100A2D528 /* Notice+CoreDataProperties.swift in Sources */,
-				BEF78BD71DCB45B800A2D528 /* Device+CoreDataClass.swift in Sources */,
-				BEB057321DD02E1700B80678 /* AngelManager.swift in Sources */,
-				22DF62611DDC2FB30080B77A /* InterfaceListManager.swift in Sources */,
-				BEF78C051DCB45E100A2D528 /* HandGesture+CoreDataClass.swift in Sources */,
+				BEB057321DD02E1700B80678 /* AngelManager+Extension.swift in Sources */,
+				22DF62611DDC2FB30080B77A /* AngelManager.swift in Sources */,
 				22DF61B91DD99CD40080B77A /* protocol_health_resolve_sleep.c in Sources */,
+				32E2E0ED1DE2EDC000DC2C89 /* LongSit+CoreDataClass.swift in Sources */,
+				32E2E0DC1DE2EDC000DC2C89 /* SportItem+CoreDataProperties.swift in Sources */,
 				22DF61C51DD99CD40080B77A /* protocol_sync_activity.c in Sources */,
-				BEF78BF71DCB45E100A2D528 /* SleepData+CoreDataClass.swift in Sources */,
+				32E2E0F01DE2EDC000DC2C89 /* Unit+CoreDataProperties.swift in Sources */,
 				22DF61C11DD99CD40080B77A /* protocol_status.c in Sources */,
+				32E2E0E51DE2EDC000DC2C89 /* LostFind+CoreDataClass.swift in Sources */,
 				2238E0EB1DDC3CC200211F82 /* CDataManager.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

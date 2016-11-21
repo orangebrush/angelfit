@@ -105,7 +105,7 @@ public class CoreDataHandler {
     }
     
     // MARK: - Core Data Saving support
-    public func commit () -> Bool{
+    public func commit() -> Bool{
         if context.hasChanges {
             do {
                 try context.save()
@@ -115,6 +115,14 @@ public class CoreDataHandler {
                 print(error)
                 abort()
             }
+        }
+        return false
+    }
+    
+    public func reset() -> Bool{
+        if context.hasChanges {
+            context.reset()
+            return true
         }
         return false
     }
@@ -271,8 +279,10 @@ extension CoreDataHandler{
         guard device == nil else{
             if let dict = items {
                 device?.setValuesForKeys(dict)
+                guard commit() else{
+                    return nil
+                }
             }
-            commit()
             return device
         }
         
@@ -284,17 +294,30 @@ extension CoreDataHandler{
         //创建设备模型
         device = NSEntityDescription.insertNewObject(forEntityName: "Device", into: context) as! Device
         device?.macAddress = macAddress
+        device?.landscape = true
         
         if let dict = items {
             device?.setValuesForKeys(dict)
         }
-        commit()
+        guard commit() else{
+            return nil
+        }
         
         //为用户添加设备
         user.addToDevices(device!)
         guard commit() else {
             return nil
         }
+        
+        //初始化设备信息
+        _ = insertUnit(userId: id, withMacAddress: macAddress, withItems: nil)
+        _ = insertLongSit(userId: id, withMacAddress: macAddress, withItems: nil)
+        _ = insertAlarm(userId: id, withMacAddress: macAddress, withItems: nil)
+        _ = insertNotice(userId: id, withMacAddress: macAddress, withItems: nil)
+        _ = insertHandGesture(userId: id, withMacAddress: macAddress, withItems: nil)
+        _ = insertLostFind(userId: id, withMacAddress: macAddress, withItems: nil)
+        _ = insertSilent(userId: id, withMacAddress: macAddress, withItems: nil)
+        _ = insertHeartInterval(userId: id, withMacAddress: macAddress, withItems: nil)
         
         return device
     }
@@ -498,6 +521,12 @@ extension CoreDataHandler{
         }
         
         unit = NSEntityDescription.insertNewObject(forEntityName: "Unit", into: context) as! Unit
+        unit?.distance = 0x01
+        unit?.weight = 0x01
+        unit?.temperature = 0x01
+        unit?.stride = 70 //默认步长=70cm
+        unit?.language = 0x01
+        unit?.timeFormat = 0x01
         
         if let dict = items{
             unit?.setValuesForKeys(dict)
@@ -527,7 +556,7 @@ extension CoreDataHandler{
             return
         }
         unit.setValuesForKeys(items)
-        commit()
+        _ = commit()
     }
     
     //删除 unit
@@ -536,7 +565,150 @@ extension CoreDataHandler{
             return
         }
         context.delete(unit)
-        commit()
+        _ = commit()
+    }
+}
+
+//MARK:- SilentDistrube
+extension CoreDataHandler{
+    //插入 silentDistrube
+    public func insertSilent(userId id: Int16 = 1, withMacAddress macAddress: String, withItems items: [String: Any]? = nil) -> SilentDistrube?{
+        
+        //判断silentMode是否存在
+        var silentDistrube = selectSilentDistrube(userId: id, withMacAddress: macAddress)
+        guard silentDistrube == nil else {
+            if let dict = items{
+                silentDistrube?.setValuesForKeys(dict)
+                guard commit() else{
+                    return nil
+                }
+            }
+            return silentDistrube
+        }
+        
+        //判断设备是否存在
+        guard let device = selectDevice(userId: id, withMacAddress: macAddress) else {
+            return nil
+        }
+        
+        silentDistrube = NSEntityDescription.insertNewObject(forEntityName: "SilentDistrube", into: context) as! SilentDistrube
+        silentDistrube?.isOpen = false
+        silentDistrube?.startHour = 0
+        silentDistrube?.startMinute = 0
+        silentDistrube?.endHour = 0
+        silentDistrube?.endMinute = 0
+        
+        if let dict = items{
+            silentDistrube?.setValuesForKeys(dict)
+        }
+        guard commit() else {
+            return nil
+        }
+        
+        //为设备添加单位数据
+        device.silentDistrube = silentDistrube
+        guard commit() else {
+            return nil
+        }
+        return silentDistrube
+    }
+    
+    //获取 unit
+    public func selectSilentDistrube(userId id: Int16 = 1, withMacAddress macAddress: String) -> SilentDistrube?{
+        //根据设备获取单位模型
+        guard let device = selectDevice(userId: id, withMacAddress: macAddress) else {
+            return nil
+        }
+        return device.silentDistrube
+    }
+    
+    //更新 unit
+    public func updateSilentDistrube(userId id: Int16 = 1, withMacAddress macAddress: String, withItems items: [String: Any]){
+        guard let silentDistrube = selectSilentDistrube(userId: id, withMacAddress: macAddress) else {
+            return
+        }
+        silentDistrube.setValuesForKeys(items)
+        _ = commit()
+    }
+    
+    //删除 unit
+    public func deleteSilentDistrube(userId id: Int16 = 1, withMacAddress macAddress: String){
+        guard let silentDistrube = selectSilentDistrube(userId: id, withMacAddress: macAddress) else {
+            return
+        }
+        context.delete(silentDistrube)
+        _ = commit()
+    }
+}
+
+//MARK:- HeartInterval
+extension CoreDataHandler{
+    //插入 heartInterval
+    public func insertHeartInterval(userId id: Int16 = 1, withMacAddress macAddress: String, withItems items: [String: Any]? = nil) -> HeartInterval?{
+        
+        //判断heartInterval是否存在
+        var heartInterval = selectHeartInterval(userId: id, withMacAddress: macAddress)
+        guard heartInterval == nil else {
+            if let dict = items{
+                heartInterval?.setValuesForKeys(dict)
+                guard commit() else{
+                    return nil
+                }
+            }
+            return heartInterval
+        }
+        
+        //判断设备是否存在
+        guard let device = selectDevice(userId: id, withMacAddress: macAddress) else {
+            return nil
+        }
+        
+        heartInterval = NSEntityDescription.insertNewObject(forEntityName: "HeartInterval", into: context) as! HeartInterval
+        heartInterval?.aerobic = 0
+        heartInterval?.burnFat = 0
+        heartInterval?.limit = 0
+        heartInterval?.heartRateMode = 0x88 //默认为自动模式 auto:0x88 close:0x55 manual:0xAA
+        
+        if let dict = items{
+            heartInterval?.setValuesForKeys(dict)
+        }
+        guard commit() else {
+            return nil
+        }
+        
+        //为设备添加单位数据
+        device.heartInterval = heartInterval
+        guard commit() else {
+            return nil
+        }
+        return heartInterval
+    }
+    
+    //获取 heartInterval
+    public func selectHeartInterval(userId id: Int16 = 1, withMacAddress macAddress: String) -> HeartInterval?{
+        //根据设备获取单位模型
+        guard let device = selectDevice(userId: id, withMacAddress: macAddress) else {
+            return nil
+        }
+        return device.heartInterval
+    }
+    
+    //更新 heartInterval
+    public func updateHeartInterval(userId id: Int16 = 1, withMacAddress macAddress: String, withItems items: [String: Any]){
+        guard let heartInterval = selectHeartInterval(userId: id, withMacAddress: macAddress) else {
+            return
+        }
+        heartInterval.setValuesForKeys(items)
+        _ = commit()
+    }
+    
+    //删除 heartInterval
+    public func deleteHeartInterval(userId id: Int16 = 1, withMacAddress macAddress: String){
+        guard let heartInterval = selectHeartInterval(userId: id, withMacAddress: macAddress) else {
+            return
+        }
+        context.delete(heartInterval)
+        _ = commit()
     }
 }
 
@@ -626,7 +798,8 @@ extension CoreDataHandler{
         }
         
         handGesture = NSEntityDescription.insertNewObject(forEntityName: "HandGesture", into: context) as! HandGesture
-        
+        handGesture?.displayTime = 3
+        handGesture?.isOpen = true
         if let dict = items {
             handGesture?.setValuesForKeys(dict)
         }
@@ -655,7 +828,9 @@ extension CoreDataHandler{
             return
         }
         handGesture.setValuesForKeys(items)
-        commit()
+        guard commit() else{
+            return
+        }
     }
     
     //删除 handGesture
@@ -664,7 +839,9 @@ extension CoreDataHandler{
             return
         }
         context.delete(handGesture)
-        commit()
+        guard commit() else{
+            return
+        }
     }
 }
 
@@ -902,7 +1079,7 @@ extension CoreDataHandler{
         request.predicate = predicate
     
         do{
-            let resultList = try context.fetch(request)
+            _ = try context.fetch(request)
         }catch let error{
             print(error)
         }
