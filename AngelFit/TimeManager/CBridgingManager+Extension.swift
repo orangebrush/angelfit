@@ -65,10 +65,10 @@ extension CBridgingManager{
             let device = coreDataHandler.selectDevice(withMacAddress: macAddress)
             device?.bandStatus = Int16(deviceInfo.batt_status)
             device?.battLevel = Int16(deviceInfo.batt_level)
-            device?.version = "\(deviceInfo.version)"
-            device?.pairFlag = "\(deviceInfo.pair_flag)"
-            device?.rebootFlag = Int16(deviceInfo.reboot_flag)
-            device?.model = "\(deviceInfo.mode)"
+            device?.version = Int16(deviceInfo.version)
+            device?.pairFlag = deviceInfo.pair_flag == 0x01 ? true : false
+            device?.rebootFlag = deviceInfo.reboot_flag == 0x01 ? true : false
+            device?.model = Int16(deviceInfo.mode)
             device?.deviceId = Int16(deviceInfo.device_id)
             guard coreDataHandler.commit() else{
                 return

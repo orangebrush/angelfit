@@ -12,18 +12,18 @@
     <entity name="Device" representedClassName=".Device" isAbstract="YES" syncable="YES">
         <attribute name="bandStatus" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="battLevel" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="battStatus" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="battStatus" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="deviceId" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="deviceUUID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="findPhoneSwitch" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="landscape" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="macAddress" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="model" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="pairFlag" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="rebootFlag" optional="YES" attributeType="Integer 16" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="model" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="pairFlag" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="rebootFlag" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="sos" optional="YES" attributeType="Boolean" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="version" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="version" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <relationship name="alarm" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Alarm" syncable="YES"/>
         <relationship name="funcTable" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="FuncTable" syncable="YES"/>
         <relationship name="handGesture" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="HandGesture" syncable="YES"/>

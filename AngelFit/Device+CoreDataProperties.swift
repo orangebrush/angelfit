@@ -18,17 +18,17 @@ extension Device {
 
     @NSManaged public var bandStatus: Int16
     @NSManaged public var battLevel: Int16
-    @NSManaged public var battStatus: String?
+    @NSManaged public var battStatus: Int16
     @NSManaged public var deviceId: Int16
     @NSManaged public var deviceUUID: String?
     @NSManaged public var findPhoneSwitch: Bool
     @NSManaged public var macAddress: String?
-    @NSManaged public var model: String?
-    @NSManaged public var pairFlag: String?
-    @NSManaged public var rebootFlag: Int16
+    @NSManaged public var model: Int16
+    @NSManaged public var pairFlag: Bool
+    @NSManaged public var rebootFlag: Bool
     @NSManaged public var sos: Bool
     @NSManaged public var type: Int16
-    @NSManaged public var version: String?
+    @NSManaged public var version: Int16
     @NSManaged public var landscape: Bool
     @NSManaged public var alarm: Alarm?
     @NSManaged public var handGesture: HandGesture?

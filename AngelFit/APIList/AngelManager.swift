@@ -140,10 +140,10 @@ public class AngelManager {
                 let device = self.coredataHandler.selectDevice(withMacAddress: realMacAddress)
                 device?.bandStatus = Int16(deviceInfo.batt_status)
                 device?.battLevel = Int16(deviceInfo.batt_level)
-                device?.version = "\(deviceInfo.version)"
-                device?.pairFlag = "\(deviceInfo.pair_flag)"
-                device?.rebootFlag = Int16(deviceInfo.reboot_flag)
-                device?.model = "\(deviceInfo.mode)"
+                device?.version = Int16(deviceInfo.version)
+                device?.pairFlag = deviceInfo.pair_flag == 0x01 ? true : false
+                device?.rebootFlag = deviceInfo.reboot_flag == 0x01 ? true : false
+                device?.model = Int16(deviceInfo.mode)
                 device?.deviceId = Int16(deviceInfo.device_id)
                 if deviceInfo.reboot_flag == 0x01 {
                     //如果有重启标志==1,同步设备信息
@@ -419,7 +419,10 @@ public class AngelManager {
         user?.gender = Int16(userInfo.gender)
         user?.height = Int16(userInfo.height)
         user?.weight = Int16(userInfo.weight)
-        coredataHandler.commit()
+        guard coredataHandler.commit() else{
+            closure(false)
+            return
+        }
         
         closure(true)
     }
