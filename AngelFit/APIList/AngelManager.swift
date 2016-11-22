@@ -12,10 +12,6 @@ import CoreBluetooth
 
 public class AngelManager {
     
-    typealias alarmBlock1 = ((_ date:Date)->())
-    typealias alarmBlock2 = ((_ success:Date)->())
-    typealias alarmBlock3 = ((_ date:Date)->())
-    
 //    var actionMap:[ActionType:[UInt8]]?{
 //        let map:[ActionType:[UInt8]] = [.binding:[0x04, 0x01, 0x01, 0x83, 0x55, 0xaa],
 //                                        .unbinding:[0x04, 0x02, 0x55, 0xaa, 0x55, 0xaa],
@@ -25,7 +21,7 @@ public class AngelManager {
 //    }
     
     private var peripheral: CBPeripheral?       //当前设备
-    public var macAddress: String?             //当前设备macAddress
+    private var macAddress: String?             //当前设备macAddress
     
     //MARK:- 获取数据库句柄
     private lazy var coredataHandler = {
@@ -93,8 +89,8 @@ public class AngelManager {
     }
     
     //获取功能列表
-    public func getFuncTableFromBand(closure : @escaping (_ errorCode:Int16 ,_ value: String)->()){
-        getLiveDataFromBring(withActionType: .funcTable, closure: closure)
+    public func getFuncTableFromBand(_ macAddress: String? = nil, closure : @escaping (_ errorCode:Int16 ,_ value: String)->()){
+        getLiveDataFromBring(withActionType: .funcTable, macAddress: macAddress, closure: closure)
     }
     
     //获取实时数据
@@ -169,18 +165,134 @@ public class AngelManager {
             vbus_tx_evt(VBUS_EVT_BASE_APP_GET, VBUS_EVT_APP_GET_DEVICE_INFO, &ret_code)
             
         case .funcTable:
+            
+            //为空直接返回失败
+            var realMacAddress: String!
+            if let md = macAddress{
+                realMacAddress = md
+            }else if let md = self.macAddress{
+                realMacAddress = md
+            }else{
+                closure(ErrorCode.failure, "macAddress is empty")
+                break
+            }
+            
             swiftFuncTable = { data in
                 
-                let funcTableStruct:protocol_get_func_table = data.assumingMemoryBound(to: protocol_get_func_table.self).pointee
+                let funcTableModel = data.assumingMemoryBound(to: protocol_func_table.self).pointee
                 
-                let funcTable = funcTableStruct
+                let funcTable = self.coredataHandler.selectDevice(withMacAddress: realMacAddress)?.funcTable
                 
+                funcTable?.alarmCount = Int16(funcTableModel.alarm_count)
+                
+                funcTable?.main2_logIn = funcTableModel.main1.logIn
+                
+                funcTable?.main_ancs = funcTableModel.main.Ancs
+                funcTable?.main_timeLine = funcTableModel.main.timeLine
+                funcTable?.main_heartRate = funcTableModel.main.heartRate
+                funcTable?.main_singleSport = funcTableModel.main.singleSport
+                funcTable?.main_deviceUpdate = funcTableModel.main.deviceUpdate
+                funcTable?.main_realtimeData = funcTableModel.main.realtimeData
+                funcTable?.main_sleepMonitor = funcTableModel.main.sleepMonitor
+                funcTable?.main_stepCalculation = funcTableModel.main.stepCalculation
+                
+                funcTable?.alarmType_custom = funcTableModel.type.custom
+                funcTable?.alarmType_party = funcTableModel.type.party
+                funcTable?.alarmType_sleep = funcTableModel.type.sleep
+                funcTable?.alarmType_sport = funcTableModel.type.sport
+                funcTable?.alarmType_dating = funcTableModel.type.dating
+                funcTable?.alarmType_wakeUp = funcTableModel.type.wakeUp
+                funcTable?.alarmType_metting = funcTableModel.type.metting
+                funcTable?.alarmType_medicine = funcTableModel.type.medicine
+                
+                funcTable?.call_calling = funcTableModel.call.calling
+                funcTable?.call_callingNum = funcTableModel.call.callingNum
+                funcTable?.call_callingContact = funcTableModel.call.callingContact
+                
+                funcTable?.sport_run = funcTableModel.sport_type0.run
+                funcTable?.sport_bike = funcTableModel.sport_type0.by_bike
+                funcTable?.sport_foot = funcTableModel.sport_type0.on_foot
+                funcTable?.sport_swim = funcTableModel.sport_type0.swim
+                funcTable?.sport_walk = funcTableModel.sport_type0.walk
+                funcTable?.sport_other = funcTableModel.sport_type0.other
+                funcTable?.sport_climbing = funcTableModel.sport_type0.mountain_climbing
+                funcTable?.sport_badminton = funcTableModel.sport_type0.badminton
+                
+                funcTable?.sport2_sitUp = funcTableModel.sport_type1.sit_up
+                funcTable?.sport2_fitness = funcTableModel.sport_type1.fitness
+                funcTable?.sport2_dumbbell = funcTableModel.sport_type1.dumbbell
+                funcTable?.sport2_spinning = funcTableModel.sport_type1.spinning
+                funcTable?.sport2_ellipsoid = funcTableModel.sport_type1.ellipsoid
+                funcTable?.sport2_treadmill = funcTableModel.sport_type1.treadmill
+                funcTable?.sport2_weightLifting = funcTableModel.sport_type1.weightlifting
+                funcTable?.sport_pushUp = funcTableModel.sport_type1.push_up
+                
+                funcTable?.sport3_yoga = funcTableModel.sport_type2.yoga
+                funcTable?.sport3_tennis = funcTableModel.sport_type2.tennis
+                funcTable?.sport3_football = funcTableModel.sport_type2.footballl
+                funcTable?.sport3_pingpang = funcTableModel.sport_type2.table_tennis
+                funcTable?.sport3_basketball = funcTableModel.sport_type2.basketball
+                funcTable?.sport3_volleyball = funcTableModel.sport_type2.volleyball
+                funcTable?.sport3_ropeSkipping = funcTableModel.sport_type2.rope_skipping
+                funcTable?.sport3_bodybuildingExercise = funcTableModel.sport_type2.bodybuilding_exercise
+                
+                funcTable?.sport4_golf = funcTableModel.sport_type3.golf
+                funcTable?.sport4_dance = funcTableModel.sport_type3.dance
+                funcTable?.sport4_skiing = funcTableModel.sport_type3.skiing
+                funcTable?.sport4_baseball = funcTableModel.sport_type3.baseball
+                funcTable?.sport4_rollerSkating = funcTableModel.sport_type3.roller_skating
+                
+                funcTable?.sms_tipInfoNum = funcTableModel.sms.tipInfoNum
+                funcTable?.sms_tipInfoContact = funcTableModel.sms.tipInfoContact
+                funcTable?.sms_tipInfoContent = funcTableModel.sms.tipInfoContent
+                
+                funcTable?.other_weather = funcTableModel.other.weather
+                funcTable?.other_antilost = funcTableModel.other.antilost
+                funcTable?.other_findPhone = funcTableModel.other.findPhone
+                funcTable?.other_findDevice = funcTableModel.other.findDevice
+                funcTable?.other_configDefault = funcTableModel.other.configDefault
+                funcTable?.other_sedentariness = funcTableModel.other.sedentariness
+                funcTable?.other_upHandGesture = funcTableModel.other.upHandGesture
+                funcTable?.other_oneTouchCalling = funcTableModel.other.onetouchCalling
+                
+                funcTable?.other2_staticHR = funcTableModel.ohter2.staticHR
+                funcTable?.other2_flipScreen = funcTableModel.ohter2.flipScreen
+                funcTable?.other2_displayMode = funcTableModel.ohter2.displayMode
+                funcTable?.other2_allAppNotice = funcTableModel.ohter2.allAppNotice
+                funcTable?.other2_doNotDisturb = funcTableModel.ohter2.doNotDisturb
+                funcTable?.other2_heartRateMonitor = funcTableModel.ohter2.heartRateMonitor
+                funcTable?.other2_bilateralAntiLost = funcTableModel.ohter2.bilateralAntiLost
+                
+                funcTable?.control_music = funcTableModel.control.music
+                funcTable?.control_takePhoto = funcTableModel.control.takePhoto
+                
+                funcTable?.notify_qq = funcTableModel.notify.qq
+                funcTable?.notify_email = funcTableModel.notify.email
+                funcTable?.notify_weixin = funcTableModel.notify.weixin
+                funcTable?.notify_message = funcTableModel.notify.message
+                funcTable?.notify_twitter = funcTableModel.notify.twitter
+                funcTable?.notify_facebook = funcTableModel.notify.facebook
+                funcTable?.notify_sinaWeibo = funcTableModel.notify.sinaWeibo
+                
+                funcTable?.notify2_skype = funcTableModel.ontify2.skype
+                funcTable?.notify2_message = funcTableModel.ontify2.messengre
+                funcTable?.notify2_calendar = funcTableModel.ontify2.calendar
+                funcTable?.notify2_linkedIn = funcTableModel.ontify2.linked_in
+                funcTable?.notify2_whatsapp = funcTableModel.ontify2.whatsapp
+                funcTable?.notify2_instagram = funcTableModel.ontify2.instagram
+                funcTable?.notify2_alarmClock = funcTableModel.ontify2.alarmClock
+                
+                guard self.coredataHandler.commit() else {
+                    closure(ErrorCode.failure, "saving failure")
+                    return
+                }
                 closure(ErrorCode.success, "\(funcTable)")
             }
             var ret_code:UInt32 = 0
             vbus_tx_evt(VBUS_EVT_BASE_APP_GET, VBUS_EVT_APP_GET_FUNC_TABLE_USER, &ret_code)
             
         case .liveData:
+            //实时数据
             swiftLiveData = { data in
                 
                 let liveDataStruct:protocol_start_live_data = data.assumingMemoryBound(to: protocol_start_live_data.self).pointee
