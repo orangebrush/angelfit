@@ -22,8 +22,9 @@ int32_t (^ __nonnull swiftTimerOnClosure)(int32_t identify,double during_time_in
 int32_t (^ __nonnull swiftTimerOffClosure)(int32_t identify) = NULL;
 int32_t (^ __nonnull swiftSendHealthDataClosure)(uint8_t * _Nonnull data,uint8_t length) = NULL;
 int32_t (^ __nonnull swiftSendCommandDataClosure)(uint8_t * _Nonnull data,uint8_t length) = NULL;
-
-
+void (^ __nonnull swiftReadSportData)(void * __nonnull data) = NULL;
+void (^ __nonnull swiftReadSleepData)(void * __nonnull data) = NULL;
+void (^ __nonnull swiftReadHeartRateData)(void * __nonnull data) = NULL;
 #pragma mark 创建定时器
 extern int32_t c_create_timer(){
   return swiftTimeCreateClosure();
@@ -44,10 +45,18 @@ extern int32_t send_health_data( uint8_t * _Nonnull data,uint8_t length){
 extern uint32_t send_command_data(uint8_t * _Nonnull data,uint8_t length){
     return swiftSendCommandDataClosure(data,length);
 }
-
-
-
-
+#pragma mark 接收运动数据
+extern void c_read_sport_data(void * __nonnull data){
+    swiftReadSportData(data);
+}
+#pragma mark 读取睡眠数据
+extern void c_read_sleep_data(void * __nonnull data){
+    swiftReadSleepData(data);
+}
+#pragma mark 读取心率数据
+extern void c_read_heart_rate_data(void * __nonnull data){
+    swiftReadHeartRateData(data);
+}
 
 static uint32_t protocol_ios_vbus_control_asdk(VBUS_EVT_BASE evt_base,VBUS_EVT_TYPE evt_type,void *data,uint32_t size,uint32_t *error_code)
 {
@@ -74,29 +83,14 @@ void protocol_health_resolve_sport_data_handle(struct protocol_health_resolve_sp
 {
     DEBUG_INFO("protocol_health_resolve_sport_data_handle");
     DEBUG_INFO("%d-%d-%d ",data->head1.date.year,data->head1.date.month,data->head1.date.day);
-//    ProtocolSportDataModel *model = [[ProtocolSportDataModel alloc] initWith:*data];
-//    /*
-//     先删除，在插入
-//     */
-//    if ([model.items_count integerValue]>0) {
-//        [model saveWith:model.date];
-//        
-//    }
-    
-    
+    c_read_sport_data(data);
 }
 
 void protocol_health_resolve_sleep_data_handle(struct protocol_health_resolve_sleep_data_s *data)
 {
     DEBUG_INFO("protocol_health_resolve_sleep_data_handle ");
     DEBUG_INFO("%d-%d-%d",data->head1.date.year,data->head1.date.month,data->head1.date.day);
-//    ProtocolSleepDataModel *model = [[ProtocolSleepDataModel alloc] initWith:*data];
-//    /*
-//     先删除，在插入
-//     */
-//    if ([model.itmes_count integerValue]>0) {
-//        [model saveWith:model.date];
-//    }
+    c_read_sleep_data(data);
     
     
     
@@ -106,13 +100,7 @@ void protocol_health_resolve_heart_rate_data_handle(struct protocol_health_resol
 {
     DEBUG_INFO("protocol_health_resolve_heart_rate_data_handle ");
     DEBUG_INFO("%d-%d-%d",data->head1.year,data->head1.month,data->head1.day);
-   // ProtocolHeartRateModel *model = [[ProtocolHeartRateModel alloc] initWith:*data];
-    /*
-     先删除，在插入
-     */
-//    if ([model.itmes_count integerValue]>0) {
-//        [model saveWith:model.date];
-//    }
+    c_read_heart_rate_data(data);
 }
 void protocol_sync_activity_resolve_data(const struct protocol_activity_data *data){
     DEBUG_INFO("protocol_active_resolve_data_handle ");

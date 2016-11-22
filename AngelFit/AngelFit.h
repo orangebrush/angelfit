@@ -16,6 +16,9 @@
 #include "protocol_data.h"
 #include "protocol_sync_config.h"
 #include "protocol_set_alarm.h"
+#include "protocol_health_resolve_sport.h"
+#include "protocol_health_resolve_sleep.h"
+#include "protocol_health_resolve_heart_rate.h"
 
 //! Project version number for AngelFit.
 FOUNDATION_EXPORT double AngelFitVersionNumber;

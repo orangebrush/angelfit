@@ -1030,6 +1030,19 @@ public class AngelManager {
         swiftSynchronizationHealthData = { data in
             closure(data.0,Int16(data.1))
         }
+        swiftReadSportData = { data in
+            let sportData:protocol_health_resolve_sport_data_s = data.assumingMemoryBound(to: protocol_health_resolve_sport_data_s.self).pointee
+            //处理sportData
+            
+        }
+        swiftReadSleepData = { data in
+            let sleepData:protocol_health_resolve_sleep_data_s = data.assumingMemoryBound(to: protocol_health_resolve_sleep_data_s.self).pointee
+            //处理sportData
+        }
+        swiftReadHeartRateData = { data in
+            let heartRateData:protocol_health_resolve_heart_rate_data_s = data.assumingMemoryBound(to: protocol_health_resolve_heart_rate_data_s.self).pointee
+        }
+        
         protocol_health_sync_start();
     }
     

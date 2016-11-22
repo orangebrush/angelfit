@@ -30,7 +30,17 @@ extern int32_t send_health_data( uint8_t * _Nonnull data,uint8_t length);
 extern int32_t (^ __nonnull swiftSendCommandDataClosure)(uint8_t * _Nonnull data,uint8_t length);
 extern uint32_t send_command_data(uint8_t * _Nonnull data,uint8_t length);
 
+#pragma mark 读取运动数据
+extern void (^ __nonnull swiftReadSportData)(void * __nonnull data);
+extern void c_read_sport_data(void * __nonnull data);
 
+#pragma mark 读取睡眠数据
+extern void (^ __nonnull swiftReadSleepData)(void * __nonnull data);
+extern void c_read_sleep_data(void * __nonnull data);
+
+#pragma mark 读取心率数据
+extern void (^ __nonnull swiftReadHeartRateData)(void * __nonnull data);
+extern void c_read_heart_rate_data(void * __nonnull data);
 
 #pragma mark 初始化所需文件
 void initialization_c_function();

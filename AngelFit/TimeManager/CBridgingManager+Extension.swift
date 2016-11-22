@@ -90,5 +90,6 @@ extension CBridgingManager{
             //保存macAddress到数据库
             _ = CoreDataHandler().insertDevice(withMacAddress: macAddress)
         }
+       
     }
 }
