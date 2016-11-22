@@ -2,7 +2,7 @@
 //  HeartRateData+CoreDataProperties.swift
 //  AngelFit
 //
-//  Created by YiGan on 21/11/2016.
+//  Created by YiGan on 22/11/2016.
 //  Copyright © 2016 aiju_huangjing1. All rights reserved.
 //
 
@@ -27,6 +27,7 @@ extension HeartRateData {
     @NSManaged public var limitThreshold: Int16
     @NSManaged public var minuteOffset: Int16
     @NSManaged public var silentHeartRate: Int16
+    @NSManaged public var packetsCount: Int16
     @NSManaged public var device: Device?
     @NSManaged public var heartRateItem: NSSet?
 

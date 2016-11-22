@@ -2,7 +2,7 @@
 //  SportData+CoreDataProperties.swift
 //  AngelFit
 //
-//  Created by YiGan on 21/11/2016.
+//  Created by YiGan on 22/11/2016.
 //  Copyright © 2016 aiju_huangjing1. All rights reserved.
 //
 
@@ -24,6 +24,10 @@ extension SportData {
     @NSManaged public var totalActiveTime: Int16
     @NSManaged public var totalCal: Int16
     @NSManaged public var totalDistance: Int16
+    @NSManaged public var perMinute: Int16
+    @NSManaged public var packetCount: Int16
+    @NSManaged public var reserved: Int16
+    @NSManaged public var totalStep: Int16
     @NSManaged public var device: Device?
     @NSManaged public var sportItem: NSSet?
 

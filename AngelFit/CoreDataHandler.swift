@@ -67,8 +67,8 @@ public class CoreDataHandler {
         } catch {
             // Report any error we got.
             var dict = [String: AnyObject]()
-            dict[NSLocalizedDescriptionKey] = "Failed to initialize the application's saved data" as! AnyObject
-            dict[NSLocalizedFailureReasonErrorKey] = failureReason as! AnyObject
+            dict[NSLocalizedDescriptionKey] = "Failed to initialize the application's saved data" as AnyObject
+            dict[NSLocalizedFailureReasonErrorKey] = failureReason as AnyObject
             dict[NSUnderlyingErrorKey] = error as NSError
             let wrappedError = NSError(domain: "YOUR_ERROR_DOMAIN", code: 9999, userInfo: dict)
             
@@ -136,7 +136,9 @@ public class CoreDataHandler {
             tableObject.setValuesForKeys(items)
         }
         
-        commit()
+        guard commit() else{
+            return
+        }
     }
     
     //MARK:- *删* deleteTable by condition
@@ -156,7 +158,9 @@ public class CoreDataHandler {
         }else{
             
             context.delete(resultList[0])
-            commit()
+            guard commit() else{
+                return
+            }
         }
     }
     
@@ -200,7 +204,9 @@ public class CoreDataHandler {
             throw GodError.fetchNoResult
         }else{
             resultList[0].setValuesForKeys(items)
-            commit()
+            guard commit() else{
+                return
+            }
         }
     }
 }
@@ -292,7 +298,7 @@ extension CoreDataHandler{
         }
         
         //创建设备模型
-        device = NSEntityDescription.insertNewObject(forEntityName: "Device", into: context) as! Device
+        device = NSEntityDescription.insertNewObject(forEntityName: "Device", into: context) as? Device
         device?.macAddress = macAddress
         device?.landscape = true
         
@@ -386,7 +392,7 @@ extension CoreDataHandler{
         }
         
         //创建久坐数据模型
-        longSit = NSEntityDescription.insertNewObject(forEntityName: "LongSit", into: context) as! LongSit
+        longSit = NSEntityDescription.insertNewObject(forEntityName: "LongSit", into: context) as? LongSit
         
         if let dict = items {
             longSit?.setValuesForKeys(dict)
@@ -420,7 +426,9 @@ extension CoreDataHandler{
             return
         }
         longSit.setValuesForKeys(items)
-        commit()
+        guard commit() else{
+            return
+        }
     }
     
     //删除 longSit
@@ -430,7 +438,9 @@ extension CoreDataHandler{
         }
         
         context.delete(longSit)
-        commit()
+        guard commit() else{
+            return
+        }
     }
 }
 
@@ -445,7 +455,9 @@ extension CoreDataHandler{
             if let dict = items{
                 notice?.setValuesForKeys(dict)
             }
-            commit()
+            guard commit() else{
+                return nil
+            }
             return notice
         }
         
@@ -455,12 +467,14 @@ extension CoreDataHandler{
         }
         
         //创建消息提醒模型
-        notice = NSEntityDescription.insertNewObject(forEntityName: "Notice", into: context) as! Notice
+        notice = NSEntityDescription.insertNewObject(forEntityName: "Notice", into: context) as? Notice
         
         if let dict = items{
             notice?.setValuesForKeys(dict)
         }
-        commit()
+        guard commit() else{
+            return nil
+        }
         
         //为设备添加消息提醒数据
         device.notice = notice
@@ -487,7 +501,9 @@ extension CoreDataHandler{
             return
         }
         notice.setValuesForKeys(items)
-        commit()
+        guard commit() else{
+            return
+        }
     }
     
     //删除 notice
@@ -496,7 +512,9 @@ extension CoreDataHandler{
             return
         }
         context.delete(notice)
-        commit()
+        guard commit() else{
+            return
+        }
     }
 }
 
@@ -511,7 +529,9 @@ extension CoreDataHandler{
             if let dict = items{
                 unit?.setValuesForKeys(dict)
             }
-            commit()
+            guard commit() else{
+                return nil
+            }
             return unit
         }
         
@@ -520,7 +540,7 @@ extension CoreDataHandler{
             return nil
         }
         
-        unit = NSEntityDescription.insertNewObject(forEntityName: "Unit", into: context) as! Unit
+        unit = NSEntityDescription.insertNewObject(forEntityName: "Unit", into: context) as? Unit
         unit?.distance = 0x01
         unit?.weight = 0x01
         unit?.temperature = 0x01
@@ -531,7 +551,9 @@ extension CoreDataHandler{
         if let dict = items{
             unit?.setValuesForKeys(dict)
         }
-        commit()
+        guard commit() else{
+            return nil
+        }
         
         //为设备添加单位数据
         device.unit = unit
@@ -591,7 +613,7 @@ extension CoreDataHandler{
             return nil
         }
         
-        silentDistrube = NSEntityDescription.insertNewObject(forEntityName: "SilentDistrube", into: context) as! SilentDistrube
+        silentDistrube = NSEntityDescription.insertNewObject(forEntityName: "SilentDistrube", into: context) as? SilentDistrube
         silentDistrube?.isOpen = false
         silentDistrube?.startHour = 0
         silentDistrube?.startMinute = 0
@@ -663,7 +685,7 @@ extension CoreDataHandler{
             return nil
         }
         
-        heartInterval = NSEntityDescription.insertNewObject(forEntityName: "HeartInterval", into: context) as! HeartInterval
+        heartInterval = NSEntityDescription.insertNewObject(forEntityName: "HeartInterval", into: context) as? HeartInterval
         heartInterval?.aerobic = 0
         heartInterval?.burnFat = 0
         heartInterval?.limit = 0
@@ -723,7 +745,9 @@ extension CoreDataHandler{
             if let dict = items{
                 alarm?.setValuesForKeys(dict)
             }
-            commit()
+            guard commit() else{
+                return nil
+            }
             return alarm
         }
         
@@ -732,12 +756,14 @@ extension CoreDataHandler{
             return nil
         }
         
-        alarm = NSEntityDescription.insertNewObject(forEntityName: "Alarm", into: context) as! Alarm
+        alarm = NSEntityDescription.insertNewObject(forEntityName: "Alarm", into: context) as? Alarm
         
         if let dict = items{
             alarm?.setValuesForKeys(dict)
         }
-        commit()
+        guard commit() else{
+            return nil
+        }
         
         //为设备添加闹钟数据
         device.alarm = alarm
@@ -762,7 +788,9 @@ extension CoreDataHandler{
             return
         }
         alarm.setValuesForKeys(items)
-        commit()
+        guard commit() else{
+            return
+        }
     }
     
     //删除 alarm
@@ -771,7 +799,9 @@ extension CoreDataHandler{
             return
         }
         context.delete(alarm)
-        commit()
+        guard commit() else{
+            return
+        }
     }
 }
 
@@ -797,13 +827,15 @@ extension CoreDataHandler{
             return nil
         }
         
-        handGesture = NSEntityDescription.insertNewObject(forEntityName: "HandGesture", into: context) as! HandGesture
+        handGesture = NSEntityDescription.insertNewObject(forEntityName: "HandGesture", into: context) as? HandGesture
         handGesture?.displayTime = 3
         handGesture?.isOpen = true
         if let dict = items {
             handGesture?.setValuesForKeys(dict)
         }
-        commit()
+        guard commit() else{
+            return nil
+        }
         
         //为设备添加手势数据
         device.handGesture = handGesture
@@ -856,7 +888,9 @@ extension CoreDataHandler{
             if let dict = items{
                 lostFind?.setValuesForKeys(dict)
             }
-            commit()
+            guard commit() else{
+                return nil
+            }
             return lostFind
         }
         
@@ -865,12 +899,14 @@ extension CoreDataHandler{
             return nil
         }
         
-        lostFind = NSEntityDescription.insertNewObject(forEntityName: "LostFind", into: context) as! LostFind
+        lostFind = NSEntityDescription.insertNewObject(forEntityName: "LostFind", into: context) as? LostFind
         
         if let dict = items{
             lostFind?.setValuesForKeys(dict)
         }
-        commit()
+        guard commit() else{
+            return nil
+        }
         
         //为设备添加防丢数据
         device.lostFind = lostFind
@@ -895,7 +931,9 @@ extension CoreDataHandler{
             return
         }
         lostFind.setValuesForKeys(items)
-        commit()
+        guard commit() else{
+            return
+        }
     }
     
     //删除 lostFind
@@ -904,7 +942,9 @@ extension CoreDataHandler{
             return
         }
         context.delete(lostFind)
-        commit()
+        guard commit() else{
+            return
+        }
     }
 }
 
@@ -921,7 +961,9 @@ extension CoreDataHandler{
             if let dict = items{
                 sportData?.setValuesForKeys(dict)
             }
-            commit()
+            guard commit() else{
+                return nil
+            }
             return sportDataList.first
         }
         
@@ -932,12 +974,14 @@ extension CoreDataHandler{
         
         //创建运动数据模型
         let sportData = NSEntityDescription.insertNewObject(forEntityName: "SportData", into: context) as! SportData
-        sportData.date = date as! NSDate
+        sportData.date = date as NSDate
         
         if let dict = items{
             sportData.setValuesForKeys(dict)
         }
-        commit()
+        guard commit() else{
+            return nil
+        }
         
         //为设备添加运动数据
         device.addToSportDatas(sportData)
@@ -952,8 +996,8 @@ extension CoreDataHandler{
     public func selectSportData(userId id: Int16 = 1, withMacAddress macAddress: String, withDate date: Date = Date(), withDayRange dayRange: Int = 0) -> [SportData]{
         //根据用户设备列表获取设备
         let request: NSFetchRequest<SportData> = SportData.fetchRequest()
-        let startDate = translate(date) as! NSDate
-        let endDate = translate(date, withDayOffset: dayRange) as! NSDate
+        let startDate = translate(date) as NSDate
+        let endDate = translate(date, withDayOffset: dayRange) as NSDate
         let predicate = NSPredicate(format: "device.user.userId = \(id) AND device.macAddress = '\(macAddress)' AND date >= '\(startDate)' AND date <= '\(endDate)'", "")
         request.predicate = predicate
         do{
@@ -971,7 +1015,9 @@ extension CoreDataHandler{
             return
         }
         sportData.setValuesForKeys(items)
-        commit()
+        guard commit() else{
+            return
+        }
     }
     
     //删除 sportData
@@ -980,7 +1026,9 @@ extension CoreDataHandler{
             return
         }
         context.delete(sportData)
-        commit()
+        guard commit() else{
+            return
+        }
     }
     
     //插入 sportItem
@@ -996,9 +1044,11 @@ extension CoreDataHandler{
             return nil
         }
         
-        sportItem = NSEntityDescription.insertNewObject(forEntityName: "SportItem", into: context) as! SportItem
+        sportItem = NSEntityDescription.insertNewObject(forEntityName: "SportItem", into: context) as? SportItem
         sportItem?.id = itemId
-        commit()
+        guard commit() else{
+            return nil
+        }
         
         sportData.addToSportItem(sportItem!)
         
@@ -1042,7 +1092,9 @@ extension CoreDataHandler{
             if let dict = items{
                 sleepData?.setValuesForKeys(dict)
             }
-            commit()
+            guard commit() else{
+                return nil
+            }
             return sleepDataList.first
         }
         
@@ -1053,12 +1105,14 @@ extension CoreDataHandler{
         
         //创建运动数据模型
         let sleepData = NSEntityDescription.insertNewObject(forEntityName: "SleepData", into: context) as! SleepData
-        sleepData.date = date as! NSDate
+        sleepData.date = date as NSDate
         
         if let dict = items{
             sleepData.setValuesForKeys(dict)
         }
-        commit()
+        guard commit() else{
+            return nil
+        }
         
         //为设备添加运动数据
         device.addToSleepDatas(sleepData)
@@ -1073,8 +1127,8 @@ extension CoreDataHandler{
     public func selectSleepData(userId id: Int16 = 1, withMacAddress macAddress: String, withDate date: Date = Date(), withDayRange dayRange: Int = 0) -> [SleepData]{
         //根据用户设备列表获取设备
         let request: NSFetchRequest<SleepData> = SleepData.fetchRequest()
-        let startDate = translate(date) as! NSDate
-        let endDate = translate(date, withDayOffset: dayRange) as! NSDate
+        let startDate = translate(date) as NSDate
+        let endDate = translate(date, withDayOffset: dayRange) as NSDate
         let predicate = NSPredicate(format: "device.user.userId = \(id) AND device.macAddress = '\(macAddress)' AND date >= '\(startDate)' AND date <= '\(endDate)'", "")
         request.predicate = predicate
     
@@ -1092,7 +1146,9 @@ extension CoreDataHandler{
             return
         }
         sleepData.setValuesForKeys(items)
-        commit()
+        guard commit() else{
+            return
+        }
     }
     
     //删除 sleepData
@@ -1101,7 +1157,9 @@ extension CoreDataHandler{
             return
         }
         context.delete(sleepData)
-        commit()
+        guard commit() else{
+            return
+        }
     }
     
     //插入 sleepItem @params: itemId: 详细数据index
@@ -1117,9 +1175,11 @@ extension CoreDataHandler{
             return nil
         }
         
-        sleepItem = NSEntityDescription.insertNewObject(forEntityName: "SleepItem", into: context) as! SleepItem
+        sleepItem = NSEntityDescription.insertNewObject(forEntityName: "SleepItem", into: context) as? SleepItem
         sleepItem?.id = itemId
-        commit()
+        guard commit() else{
+            return nil
+        }
         
         sleepData.addToSleepItem(sleepItem!)
         
@@ -1163,7 +1223,9 @@ extension CoreDataHandler{
             if let dict = items{
                 sleepData?.setValuesForKeys(dict)
             }
-            commit()
+            guard commit() else{
+                return nil
+            }
             return heartRateDataList.first
         }
         
@@ -1174,12 +1236,14 @@ extension CoreDataHandler{
         
         //创建运动数据模型
         let heartRateData = NSEntityDescription.insertNewObject(forEntityName: "HeartRateData", into: context) as! HeartRateData
-        heartRateData.date = date as! NSDate
+        heartRateData.date = date as NSDate
         
         if let dict = items{
             heartRateData.setValuesForKeys(dict)
         }
-        commit()
+        guard commit() else{
+            return nil
+        }
         
         //为设备添加运动数据
         device.addToHeartRateDatas(heartRateData)
@@ -1194,8 +1258,8 @@ extension CoreDataHandler{
     public func selectHeartRateData(userId id: Int16 = 1, withMacAddress macAddress: String, withDate date: Date = Date(), withDayRange dayRange: Int = 0) -> [HeartRateData]{
         //根据用户设备列表获取设备
         let request: NSFetchRequest<HeartRateData> = HeartRateData.fetchRequest()
-        let startDate = translate(date) as! NSDate
-        let endDate = translate(date, withDayOffset: dayRange) as! NSDate
+        let startDate = translate(date) as NSDate
+        let endDate = translate(date, withDayOffset: dayRange) as NSDate
         let predicate = NSPredicate(format: "device.user.userId = \(id) AND device.macAddress = '\(macAddress)' AND date >= '\(startDate)' AND date <= '\(endDate)'", "")
         request.predicate = predicate
         do{
@@ -1213,7 +1277,9 @@ extension CoreDataHandler{
             return
         }
         heartRateData.setValuesForKeys(items)
-        commit()
+        guard commit() else{
+            return
+        }
     }
     
     //删除 heartRateData
@@ -1222,7 +1288,9 @@ extension CoreDataHandler{
             return
         }
         context.delete(heartRateData)
-        commit()
+        guard commit() else{
+            return
+        }
     }
     
     //插入 heartRateItem
@@ -1238,9 +1306,11 @@ extension CoreDataHandler{
             return nil
         }
         
-        heartRateItem = NSEntityDescription.insertNewObject(forEntityName: "HeartRateItem", into: context) as! HeartRateItem
+        heartRateItem = NSEntityDescription.insertNewObject(forEntityName: "HeartRateItem", into: context) as? HeartRateItem
         heartRateItem?.id = itemId
-        commit()
+        guard commit() else{
+            return nil
+        }
         
         heartRateData.addToHeartRateItem(heartRateItem!)
         

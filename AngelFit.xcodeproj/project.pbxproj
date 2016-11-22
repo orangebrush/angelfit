@@ -91,28 +91,14 @@
 		32C103371DC9741D0001D415 /* BindingPeripherals.plist in Resources */ = {isa = PBXBuildFile; fileRef = 32C103361DC9741D0001D415 /* BindingPeripherals.plist */; };
 		32C103391DC974410001D415 /* GodFS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C103381DC974410001D415 /* GodFS.swift */; };
 		32C1033D1DC988130001D415 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 32C1033B1DC988130001D415 /* Model.xcdatamodeld */; };
-		32E2E0D31DE2EDC000DC2C89 /* Notice+CoreDataClass2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E0B51DE2EDBF00DC2C89 /* Notice+CoreDataClass2.swift */; };
-		32E2E0D41DE2EDC000DC2C89 /* Notice+CoreDataProperties2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E0B61DE2EDBF00DC2C89 /* Notice+CoreDataProperties2.swift */; };
-		32E2E0D71DE2EDC000DC2C89 /* HeartRateData+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E0B91DE2EDBF00DC2C89 /* HeartRateData+CoreDataClass.swift */; };
-		32E2E0D81DE2EDC000DC2C89 /* HeartRateData+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E0BA1DE2EDBF00DC2C89 /* HeartRateData+CoreDataProperties.swift */; };
-		32E2E0D91DE2EDC000DC2C89 /* SleepItem+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E0BB1DE2EDBF00DC2C89 /* SleepItem+CoreDataClass.swift */; };
-		32E2E0DA1DE2EDC000DC2C89 /* SleepItem+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E0BC1DE2EDBF00DC2C89 /* SleepItem+CoreDataProperties.swift */; };
-		32E2E0DB1DE2EDC000DC2C89 /* SportItem+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E0BD1DE2EDBF00DC2C89 /* SportItem+CoreDataClass.swift */; };
-		32E2E0DC1DE2EDC000DC2C89 /* SportItem+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E0BE1DE2EDBF00DC2C89 /* SportItem+CoreDataProperties.swift */; };
 		32E2E0DD1DE2EDC000DC2C89 /* User+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E0BF1DE2EDC000DC2C89 /* User+CoreDataClass.swift */; };
 		32E2E0DE1DE2EDC000DC2C89 /* User+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E0C01DE2EDC000DC2C89 /* User+CoreDataProperties.swift */; };
 		32E2E0DF1DE2EDC000DC2C89 /* Alarm+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E0C11DE2EDC000DC2C89 /* Alarm+CoreDataClass.swift */; };
 		32E2E0E01DE2EDC000DC2C89 /* Alarm+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E0C21DE2EDC000DC2C89 /* Alarm+CoreDataProperties.swift */; };
 		32E2E0E11DE2EDC000DC2C89 /* SilentDistrube+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E0C31DE2EDC000DC2C89 /* SilentDistrube+CoreDataClass.swift */; };
 		32E2E0E21DE2EDC000DC2C89 /* SilentDistrube+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E0C41DE2EDC000DC2C89 /* SilentDistrube+CoreDataProperties.swift */; };
-		32E2E0E31DE2EDC000DC2C89 /* HeartRateItem+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E0C51DE2EDC000DC2C89 /* HeartRateItem+CoreDataClass.swift */; };
-		32E2E0E41DE2EDC000DC2C89 /* HeartRateItem+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E0C61DE2EDC000DC2C89 /* HeartRateItem+CoreDataProperties.swift */; };
 		32E2E0E51DE2EDC000DC2C89 /* LostFind+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E0C71DE2EDC000DC2C89 /* LostFind+CoreDataClass.swift */; };
 		32E2E0E61DE2EDC000DC2C89 /* LostFind+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E0C81DE2EDC000DC2C89 /* LostFind+CoreDataProperties.swift */; };
-		32E2E0E71DE2EDC000DC2C89 /* SportData+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E0C91DE2EDC000DC2C89 /* SportData+CoreDataClass.swift */; };
-		32E2E0E81DE2EDC000DC2C89 /* SportData+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E0CA1DE2EDC000DC2C89 /* SportData+CoreDataProperties.swift */; };
-		32E2E0EB1DE2EDC000DC2C89 /* SleepData+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E0CD1DE2EDC000DC2C89 /* SleepData+CoreDataClass.swift */; };
-		32E2E0EC1DE2EDC000DC2C89 /* SleepData+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E0CE1DE2EDC000DC2C89 /* SleepData+CoreDataProperties.swift */; };
 		32E2E0ED1DE2EDC000DC2C89 /* LongSit+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E0CF1DE2EDC000DC2C89 /* LongSit+CoreDataClass.swift */; };
 		32E2E0EE1DE2EDC000DC2C89 /* LongSit+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E0D01DE2EDC000DC2C89 /* LongSit+CoreDataProperties.swift */; };
 		32E2E0EF1DE2EDC000DC2C89 /* Unit+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E0D11DE2EDC000DC2C89 /* Unit+CoreDataClass.swift */; };
@@ -123,6 +109,20 @@
 		32E2E1041DE2FB4C00DC2C89 /* HeartInterval+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E1021DE2FB4C00DC2C89 /* HeartInterval+CoreDataProperties.swift */; };
 		32E2E1071DE2FF4B00DC2C89 /* Device+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E1051DE2FF4B00DC2C89 /* Device+CoreDataClass.swift */; };
 		32E2E1081DE2FF4B00DC2C89 /* Device+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E1061DE2FF4B00DC2C89 /* Device+CoreDataProperties.swift */; };
+		32E2E1211DE3F5A900DC2C89 /* SleepItem+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E1151DE3F5A900DC2C89 /* SleepItem+CoreDataClass.swift */; };
+		32E2E1221DE3F5A900DC2C89 /* SleepItem+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E1161DE3F5A900DC2C89 /* SleepItem+CoreDataProperties.swift */; };
+		32E2E1231DE3F5A900DC2C89 /* SportItem+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E1171DE3F5A900DC2C89 /* SportItem+CoreDataClass.swift */; };
+		32E2E1241DE3F5A900DC2C89 /* SportItem+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E1181DE3F5A900DC2C89 /* SportItem+CoreDataProperties.swift */; };
+		32E2E1251DE3F5A900DC2C89 /* HeartRateData+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E1191DE3F5A900DC2C89 /* HeartRateData+CoreDataClass.swift */; };
+		32E2E1261DE3F5A900DC2C89 /* HeartRateData+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E11A1DE3F5A900DC2C89 /* HeartRateData+CoreDataProperties.swift */; };
+		32E2E1271DE3F5A900DC2C89 /* HeartRateItem+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E11B1DE3F5A900DC2C89 /* HeartRateItem+CoreDataClass.swift */; };
+		32E2E1281DE3F5A900DC2C89 /* HeartRateItem+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E11C1DE3F5A900DC2C89 /* HeartRateItem+CoreDataProperties.swift */; };
+		32E2E1291DE3F5A900DC2C89 /* SportData+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E11D1DE3F5A900DC2C89 /* SportData+CoreDataClass.swift */; };
+		32E2E12A1DE3F5A900DC2C89 /* SportData+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E11E1DE3F5A900DC2C89 /* SportData+CoreDataProperties.swift */; };
+		32E2E1331DE3F9AD00DC2C89 /* SleepData+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E1311DE3F9AD00DC2C89 /* SleepData+CoreDataClass.swift */; };
+		32E2E1341DE3F9AD00DC2C89 /* SleepData+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E1321DE3F9AD00DC2C89 /* SleepData+CoreDataProperties.swift */; };
+		32E2E1371DE42A0100DC2C89 /* Notice+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E1351DE42A0100DC2C89 /* Notice+CoreDataClass.swift */; };
+		32E2E1381DE42A0100DC2C89 /* Notice+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E1361DE42A0100DC2C89 /* Notice+CoreDataProperties.swift */; };
 		BE1F53971DC84FC500EAD9BA /* Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1F53961DC84FC500EAD9BA /* Time.swift */; };
 		BEB057301DD025D500B80678 /* Peripheral+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB0572F1DD025D500B80678 /* Peripheral+Extension.swift */; };
 		BEB057321DD02E1700B80678 /* AngelManager+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB057311DD02E1700B80678 /* AngelManager+Extension.swift */; };
@@ -225,28 +225,14 @@
 		32C103361DC9741D0001D415 /* BindingPeripherals.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = BindingPeripherals.plist; sourceTree = "<group>"; };
 		32C103381DC974410001D415 /* GodFS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GodFS.swift; sourceTree = "<group>"; };
 		32C1033C1DC988130001D415 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
-		32E2E0B51DE2EDBF00DC2C89 /* Notice+CoreDataClass2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Notice+CoreDataClass2.swift"; sourceTree = "<group>"; };
-		32E2E0B61DE2EDBF00DC2C89 /* Notice+CoreDataProperties2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Notice+CoreDataProperties2.swift"; sourceTree = "<group>"; };
-		32E2E0B91DE2EDBF00DC2C89 /* HeartRateData+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HeartRateData+CoreDataClass.swift"; sourceTree = "<group>"; };
-		32E2E0BA1DE2EDBF00DC2C89 /* HeartRateData+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HeartRateData+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		32E2E0BB1DE2EDBF00DC2C89 /* SleepItem+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SleepItem+CoreDataClass.swift"; sourceTree = "<group>"; };
-		32E2E0BC1DE2EDBF00DC2C89 /* SleepItem+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SleepItem+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		32E2E0BD1DE2EDBF00DC2C89 /* SportItem+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SportItem+CoreDataClass.swift"; sourceTree = "<group>"; };
-		32E2E0BE1DE2EDBF00DC2C89 /* SportItem+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SportItem+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		32E2E0BF1DE2EDC000DC2C89 /* User+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "User+CoreDataClass.swift"; sourceTree = "<group>"; };
 		32E2E0C01DE2EDC000DC2C89 /* User+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "User+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		32E2E0C11DE2EDC000DC2C89 /* Alarm+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Alarm+CoreDataClass.swift"; sourceTree = "<group>"; };
 		32E2E0C21DE2EDC000DC2C89 /* Alarm+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Alarm+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		32E2E0C31DE2EDC000DC2C89 /* SilentDistrube+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SilentDistrube+CoreDataClass.swift"; sourceTree = "<group>"; };
 		32E2E0C41DE2EDC000DC2C89 /* SilentDistrube+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SilentDistrube+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		32E2E0C51DE2EDC000DC2C89 /* HeartRateItem+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HeartRateItem+CoreDataClass.swift"; sourceTree = "<group>"; };
-		32E2E0C61DE2EDC000DC2C89 /* HeartRateItem+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HeartRateItem+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		32E2E0C71DE2EDC000DC2C89 /* LostFind+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "LostFind+CoreDataClass.swift"; sourceTree = "<group>"; };
 		32E2E0C81DE2EDC000DC2C89 /* LostFind+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "LostFind+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		32E2E0C91DE2EDC000DC2C89 /* SportData+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SportData+CoreDataClass.swift"; sourceTree = "<group>"; };
-		32E2E0CA1DE2EDC000DC2C89 /* SportData+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SportData+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		32E2E0CD1DE2EDC000DC2C89 /* SleepData+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SleepData+CoreDataClass.swift"; sourceTree = "<group>"; };
-		32E2E0CE1DE2EDC000DC2C89 /* SleepData+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SleepData+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		32E2E0CF1DE2EDC000DC2C89 /* LongSit+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "LongSit+CoreDataClass.swift"; sourceTree = "<group>"; };
 		32E2E0D01DE2EDC000DC2C89 /* LongSit+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "LongSit+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		32E2E0D11DE2EDC000DC2C89 /* Unit+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Unit+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -257,6 +243,20 @@
 		32E2E1021DE2FB4C00DC2C89 /* HeartInterval+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HeartInterval+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		32E2E1051DE2FF4B00DC2C89 /* Device+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Device+CoreDataClass.swift"; sourceTree = "<group>"; };
 		32E2E1061DE2FF4B00DC2C89 /* Device+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Device+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		32E2E1151DE3F5A900DC2C89 /* SleepItem+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SleepItem+CoreDataClass.swift"; sourceTree = "<group>"; };
+		32E2E1161DE3F5A900DC2C89 /* SleepItem+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SleepItem+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		32E2E1171DE3F5A900DC2C89 /* SportItem+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SportItem+CoreDataClass.swift"; sourceTree = "<group>"; };
+		32E2E1181DE3F5A900DC2C89 /* SportItem+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SportItem+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		32E2E1191DE3F5A900DC2C89 /* HeartRateData+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HeartRateData+CoreDataClass.swift"; sourceTree = "<group>"; };
+		32E2E11A1DE3F5A900DC2C89 /* HeartRateData+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HeartRateData+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		32E2E11B1DE3F5A900DC2C89 /* HeartRateItem+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HeartRateItem+CoreDataClass.swift"; sourceTree = "<group>"; };
+		32E2E11C1DE3F5A900DC2C89 /* HeartRateItem+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HeartRateItem+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		32E2E11D1DE3F5A900DC2C89 /* SportData+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SportData+CoreDataClass.swift"; sourceTree = "<group>"; };
+		32E2E11E1DE3F5A900DC2C89 /* SportData+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SportData+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		32E2E1311DE3F9AD00DC2C89 /* SleepData+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SleepData+CoreDataClass.swift"; sourceTree = "<group>"; };
+		32E2E1321DE3F9AD00DC2C89 /* SleepData+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SleepData+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		32E2E1351DE42A0100DC2C89 /* Notice+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Notice+CoreDataClass.swift"; sourceTree = "<group>"; };
+		32E2E1361DE42A0100DC2C89 /* Notice+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Notice+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		BE1F53961DC84FC500EAD9BA /* Time.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Time.swift; sourceTree = "<group>"; };
 		BEB0572F1DD025D500B80678 /* Peripheral+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Peripheral+Extension.swift"; sourceTree = "<group>"; };
 		BEB057311DD02E1700B80678 /* AngelManager+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "AngelManager+Extension.swift"; path = "../AngelManager+Extension.swift"; sourceTree = "<group>"; };
@@ -466,34 +466,34 @@
 		32C1033A1DC987CC0001D415 /* coredata */ = {
 			isa = PBXGroup;
 			children = (
+				32E2E1351DE42A0100DC2C89 /* Notice+CoreDataClass.swift */,
+				32E2E1361DE42A0100DC2C89 /* Notice+CoreDataProperties.swift */,
+				32E2E1311DE3F9AD00DC2C89 /* SleepData+CoreDataClass.swift */,
+				32E2E1321DE3F9AD00DC2C89 /* SleepData+CoreDataProperties.swift */,
+				32E2E1151DE3F5A900DC2C89 /* SleepItem+CoreDataClass.swift */,
+				32E2E1161DE3F5A900DC2C89 /* SleepItem+CoreDataProperties.swift */,
+				32E2E1171DE3F5A900DC2C89 /* SportItem+CoreDataClass.swift */,
+				32E2E1181DE3F5A900DC2C89 /* SportItem+CoreDataProperties.swift */,
+				32E2E1191DE3F5A900DC2C89 /* HeartRateData+CoreDataClass.swift */,
+				32E2E11A1DE3F5A900DC2C89 /* HeartRateData+CoreDataProperties.swift */,
+				32E2E11B1DE3F5A900DC2C89 /* HeartRateItem+CoreDataClass.swift */,
+				32E2E11C1DE3F5A900DC2C89 /* HeartRateItem+CoreDataProperties.swift */,
+				32E2E11D1DE3F5A900DC2C89 /* SportData+CoreDataClass.swift */,
+				32E2E11E1DE3F5A900DC2C89 /* SportData+CoreDataProperties.swift */,
 				32E2E1051DE2FF4B00DC2C89 /* Device+CoreDataClass.swift */,
 				32E2E1061DE2FF4B00DC2C89 /* Device+CoreDataProperties.swift */,
 				32E2E1011DE2FB4C00DC2C89 /* HeartInterval+CoreDataClass.swift */,
 				32E2E1021DE2FB4C00DC2C89 /* HeartInterval+CoreDataProperties.swift */,
 				32E2E0FD1DE2F8F900DC2C89 /* HandGesture+CoreDataClass.swift */,
 				32E2E0FE1DE2F8F900DC2C89 /* HandGesture+CoreDataProperties.swift */,
-				32E2E0B51DE2EDBF00DC2C89 /* Notice+CoreDataClass2.swift */,
-				32E2E0B61DE2EDBF00DC2C89 /* Notice+CoreDataProperties2.swift */,
-				32E2E0B91DE2EDBF00DC2C89 /* HeartRateData+CoreDataClass.swift */,
-				32E2E0BA1DE2EDBF00DC2C89 /* HeartRateData+CoreDataProperties.swift */,
-				32E2E0BB1DE2EDBF00DC2C89 /* SleepItem+CoreDataClass.swift */,
-				32E2E0BC1DE2EDBF00DC2C89 /* SleepItem+CoreDataProperties.swift */,
-				32E2E0BD1DE2EDBF00DC2C89 /* SportItem+CoreDataClass.swift */,
-				32E2E0BE1DE2EDBF00DC2C89 /* SportItem+CoreDataProperties.swift */,
 				32E2E0BF1DE2EDC000DC2C89 /* User+CoreDataClass.swift */,
 				32E2E0C01DE2EDC000DC2C89 /* User+CoreDataProperties.swift */,
 				32E2E0C11DE2EDC000DC2C89 /* Alarm+CoreDataClass.swift */,
 				32E2E0C21DE2EDC000DC2C89 /* Alarm+CoreDataProperties.swift */,
 				32E2E0C31DE2EDC000DC2C89 /* SilentDistrube+CoreDataClass.swift */,
 				32E2E0C41DE2EDC000DC2C89 /* SilentDistrube+CoreDataProperties.swift */,
-				32E2E0C51DE2EDC000DC2C89 /* HeartRateItem+CoreDataClass.swift */,
-				32E2E0C61DE2EDC000DC2C89 /* HeartRateItem+CoreDataProperties.swift */,
 				32E2E0C71DE2EDC000DC2C89 /* LostFind+CoreDataClass.swift */,
 				32E2E0C81DE2EDC000DC2C89 /* LostFind+CoreDataProperties.swift */,
-				32E2E0C91DE2EDC000DC2C89 /* SportData+CoreDataClass.swift */,
-				32E2E0CA1DE2EDC000DC2C89 /* SportData+CoreDataProperties.swift */,
-				32E2E0CD1DE2EDC000DC2C89 /* SleepData+CoreDataClass.swift */,
-				32E2E0CE1DE2EDC000DC2C89 /* SleepData+CoreDataProperties.swift */,
 				32E2E0CF1DE2EDC000DC2C89 /* LongSit+CoreDataClass.swift */,
 				32E2E0D01DE2EDC000DC2C89 /* LongSit+CoreDataProperties.swift */,
 				32E2E0D11DE2EDC000DC2C89 /* Unit+CoreDataClass.swift */,
@@ -673,13 +673,15 @@
 				22DF61CE1DD99CD40080B77A /* protocol_write.c in Sources */,
 				22DF61BD1DD99CD40080B77A /* protocol_send_notice.c in Sources */,
 				22DF61B71DD99CD40080B77A /* protocol_health_resolve_heart_rate.c in Sources */,
-				32E2E0E41DE2EDC000DC2C89 /* HeartRateItem+CoreDataProperties.swift in Sources */,
+				32E2E1261DE3F5A900DC2C89 /* HeartRateData+CoreDataProperties.swift in Sources */,
 				22DF61AB1DD99CD40080B77A /* mem.c in Sources */,
 				32E2E0DD1DE2EDC000DC2C89 /* User+CoreDataClass.swift in Sources */,
 				22DF61A31DD99CD40080B77A /* app_timer.c in Sources */,
+				32E2E1211DE3F5A900DC2C89 /* SleepItem+CoreDataClass.swift in Sources */,
 				BEF78B901DC9E2A000A2D528 /* CoreDataConfigure.swift in Sources */,
 				32060CF81DE28409007BC7B3 /* AngelModel.swift in Sources */,
 				32E2E1081DE2FF4B00DC2C89 /* Device+CoreDataProperties.swift in Sources */,
+				32E2E1221DE3F5A900DC2C89 /* SleepItem+CoreDataProperties.swift in Sources */,
 				22DF61B31DD99CD40080B77A /* protocol_func_table.c in Sources */,
 				32E2E0EE1DE2EDC000DC2C89 /* LongSit+CoreDataProperties.swift in Sources */,
 				32E2E0E61DE2EDC000DC2C89 /* LostFind+CoreDataProperties.swift in Sources */,
@@ -690,61 +692,59 @@
 				BE1F53971DC84FC500EAD9BA /* Time.swift in Sources */,
 				222B89A11DC732C80056861C /* GodManager.swift in Sources */,
 				32E2E0E01DE2EDC000DC2C89 /* Alarm+CoreDataProperties.swift in Sources */,
+				32E2E1381DE42A0100DC2C89 /* Notice+CoreDataProperties.swift in Sources */,
 				22DF61BF1DD99CD40080B77A /* protocol_set_alarm.c in Sources */,
 				22DF61DD1DD99EA20080B77A /* SocketLog.m in Sources */,
 				22DF62401DDAFF2A0080B77A /* CBridgingManager+Extension.swift in Sources */,
+				32E2E1341DE3F9AD00DC2C89 /* SleepData+CoreDataProperties.swift in Sources */,
 				22DF61CB1DD99CD40080B77A /* protocol_util.c in Sources */,
 				BEF78B921DC9E4CA00A2D528 /* CoreDataHandler.swift in Sources */,
 				22DF61C91DD99CD40080B77A /* protocol_sync_config.c in Sources */,
 				22DF61BB1DD99CD40080B77A /* protocol_health_resolve_sport.c in Sources */,
-				32E2E0D31DE2EDC000DC2C89 /* Notice+CoreDataClass2.swift in Sources */,
+				32E2E1281DE3F5A900DC2C89 /* HeartRateItem+CoreDataProperties.swift in Sources */,
 				22DF623A1DDAA8260080B77A /* Timer.swift in Sources */,
 				22DF61D01DD99CD40080B77A /* vbus.c in Sources */,
 				32C1033D1DC988130001D415 /* Model.xcdatamodeld in Sources */,
-				32E2E0DB1DE2EDC000DC2C89 /* SportItem+CoreDataClass.swift in Sources */,
+				32E2E12A1DE3F5A900DC2C89 /* SportData+CoreDataProperties.swift in Sources */,
 				32E2E0DE1DE2EDC000DC2C89 /* User+CoreDataProperties.swift in Sources */,
 				32E2E1031DE2FB4C00DC2C89 /* HeartInterval+CoreDataClass.swift in Sources */,
+				32E2E1331DE3F9AD00DC2C89 /* SleepData+CoreDataClass.swift in Sources */,
 				22DF61AD1DD99CD40080B77A /* protocol.c in Sources */,
-				32E2E0EB1DE2EDC000DC2C89 /* SleepData+CoreDataClass.swift in Sources */,
-				32E2E0D91DE2EDC000DC2C89 /* SleepItem+CoreDataClass.swift in Sources */,
 				222E7D781DC88AA7001BA04A /* ViewController+Extension.swift in Sources */,
 				22DF62071DD9B6900080B77A /* SF2C.c in Sources */,
 				222B89A31DC735B70056861C /* UUIDConfigure.swift in Sources */,
 				22DF61DB1DD99EA20080B77A /* GCDAsyncSocket.m in Sources */,
-				32E2E0DA1DE2EDC000DC2C89 /* SleepItem+CoreDataProperties.swift in Sources */,
 				32E2E0FF1DE2F8F900DC2C89 /* HandGesture+CoreDataClass.swift in Sources */,
 				32E2E1001DE2F8F900DC2C89 /* HandGesture+CoreDataProperties.swift in Sources */,
 				32E2E0E21DE2EDC000DC2C89 /* SilentDistrube+CoreDataProperties.swift in Sources */,
-				32E2E0D71DE2EDC000DC2C89 /* HeartRateData+CoreDataClass.swift in Sources */,
+				32E2E1271DE3F5A900DC2C89 /* HeartRateItem+CoreDataClass.swift in Sources */,
 				32E2E1041DE2FB4C00DC2C89 /* HeartInterval+CoreDataProperties.swift in Sources */,
+				32E2E1291DE3F5A900DC2C89 /* SportData+CoreDataClass.swift in Sources */,
 				22DF625A1DDBE9440080B77A /* Protocol_ios_port.c in Sources */,
 				22DF62431DDB06E10080B77A /* CFunc.c in Sources */,
-				32E2E0E71DE2EDC000DC2C89 /* SportData+CoreDataClass.swift in Sources */,
 				22DF625D1DDBE9440080B77A /* Protocol_model.m in Sources */,
 				32E2E0DF1DE2EDC000DC2C89 /* Alarm+CoreDataClass.swift in Sources */,
 				22DF61C31DD99CD40080B77A /* protocol_switch_data.c in Sources */,
 				22DF61AF1DD99CD40080B77A /* protocol_data.c in Sources */,
 				22DF61B11DD99CD40080B77A /* protocol_exec.c in Sources */,
-				32E2E0D81DE2EDC000DC2C89 /* HeartRateData+CoreDataProperties.swift in Sources */,
-				32E2E0D41DE2EDC000DC2C89 /* Notice+CoreDataProperties2.swift in Sources */,
+				32E2E1251DE3F5A900DC2C89 /* HeartRateData+CoreDataClass.swift in Sources */,
 				22DF61DF1DD99EA20080B77A /* SocketLogC.m in Sources */,
 				22DF62591DDBE9440080B77A /* Protocol_ios.m in Sources */,
-				32E2E0E31DE2EDC000DC2C89 /* HeartRateItem+CoreDataClass.swift in Sources */,
 				32E2E0E11DE2EDC000DC2C89 /* SilentDistrube+CoreDataClass.swift in Sources */,
 				32C103391DC974410001D415 /* GodFS.swift in Sources */,
-				32E2E0E81DE2EDC000DC2C89 /* SportData+CoreDataProperties.swift in Sources */,
-				32E2E0EC1DE2EDC000DC2C89 /* SleepData+CoreDataProperties.swift in Sources */,
 				BEB057301DD025D500B80678 /* Peripheral+Extension.swift in Sources */,
 				BEB057321DD02E1700B80678 /* AngelManager+Extension.swift in Sources */,
 				22DF62611DDC2FB30080B77A /* AngelManager.swift in Sources */,
 				22DF61B91DD99CD40080B77A /* protocol_health_resolve_sleep.c in Sources */,
 				32E2E0ED1DE2EDC000DC2C89 /* LongSit+CoreDataClass.swift in Sources */,
-				32E2E0DC1DE2EDC000DC2C89 /* SportItem+CoreDataProperties.swift in Sources */,
 				22DF61C51DD99CD40080B77A /* protocol_sync_activity.c in Sources */,
 				32E2E0F01DE2EDC000DC2C89 /* Unit+CoreDataProperties.swift in Sources */,
+				32E2E1231DE3F5A900DC2C89 /* SportItem+CoreDataClass.swift in Sources */,
 				22DF61C11DD99CD40080B77A /* protocol_status.c in Sources */,
+				32E2E1241DE3F5A900DC2C89 /* SportItem+CoreDataProperties.swift in Sources */,
 				32E2E0E51DE2EDC000DC2C89 /* LostFind+CoreDataClass.swift in Sources */,
 				2238E0EB1DDC3CC200211F82 /* CDataManager.c in Sources */,
+				32E2E1371DE42A0100DC2C89 /* Notice+CoreDataClass.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

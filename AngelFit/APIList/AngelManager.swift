@@ -51,7 +51,7 @@ public class AngelManager {
     
     init(){
         //初始化获取macAddress
-        getMacAddress(){
+        getMacAddressFromBand(){
             errorCode, data in
             if errorCode == ErrorCode.success{
                 self.macAddress = data
@@ -59,40 +59,52 @@ public class AngelManager {
         }
     }
     
-    //MARK:- 从数据库获取数据
-    public func getModelFromStore(withDataResult dataModel: NSManagedObject.Type, userId ID: Int16 = 1, withDate date: Date = Date(), withMacAddress macAddress: String, closure: @escaping (_ errorCode:Int16 , _ dataResult: DataResult<NSManagedObject>)->()){
+    //MARK:- 从数据库获取数据-用户信息
+    public func getUserinfo(userId id: Int16 = 1, closure: (User?)->()){
         
-        switch dataModel {
-        case is Device:
-            break
-        default:
-            break
-        }
+        closure(coredataHandler.selectUser(userId: id))
     }
     
+    //MARK:- 从数据库获取数据-设备信息
+    public func getDevice(_ macAddress: String? = nil, userId id: Int16 = 1, closure: (Device?) -> ()){
+        //为空直接返回失败
+        var realMacAddress: String!
+        if let md = macAddress{
+            realMacAddress = md
+        }else if let md = self.macAddress{
+            realMacAddress = md
+        }else{
+            closure(nil)
+            return
+        }
+        closure(coredataHandler.selectDevice(userId: id, withMacAddress: realMacAddress))
+    }
+    
+    
+    
     //获取mac地址
-    public func getMacAddress( closure: @escaping (_ errorCode:Int16 ,_ value: String)->()){
+    public func getMacAddressFromBand( closure: @escaping (_ errorCode:Int16 ,_ value: String)->()){
         getLiveDataFromBring(withActionType: .macAddress, closure: closure)
-
     }
     
     //获取设备信息
-    public func getDeviceInfo(closure : @escaping (_ errorCode:Int16 ,_ value: String)->()){
+    public func getDeviceInfoFromBand(closure : @escaping (_ errorCode:Int16 ,_ value: String)->()){
         getLiveDataFromBring(withActionType: .deviceInfo, closure: closure)
     }
     
     //获取功能列表
-    public func getFuncTable(closure : @escaping (_ errorCode:Int16 ,_ value: String)->()){
+    public func getFuncTableFromBand(closure : @escaping (_ errorCode:Int16 ,_ value: String)->()){
         getLiveDataFromBring(withActionType: .funcTable, closure: closure)
     }
     
     //获取实时数据
-    public func getLiveData(closure : @escaping (_ errorCode:Int16 ,_ value: String)->()){
+    public func getLiveDataFromBand(closure : @escaping (_ errorCode:Int16 ,_ value: String)->()){
         getLiveDataFromBring(withActionType: .liveData, closure: closure)
     }
     
     //MARK:- 从手环端获取数据
     private func getLiveDataFromBring(withActionType actionType:ActionType, macAddress: String? = nil, closure: @escaping (_ errorCode:Int16 ,_ value: String) ->()){
+        
         switch actionType {
         case .macAddress:
             
@@ -137,6 +149,14 @@ public class AngelManager {
                 device?.rebootFlag = Int16(deviceInfo.reboot_flag)
                 device?.model = "\(deviceInfo.mode)"
                 device?.deviceId = Int16(deviceInfo.device_id)
+                if deviceInfo.reboot_flag == 0x01 {
+                    //如果有重启标志==1,同步设备信息
+                    self.setSynchronizationConfig(){
+                        complete in
+                    }
+                }
+                
+                
                 guard self.coredataHandler.commit() else{
                     closure(ErrorCode.failure, "commit fail")
                     return
@@ -418,7 +438,7 @@ public class AngelManager {
             case .timeFormat_12:
                 setUnit.is_12hour_format = 0x02
                 unit?.timeFormat = 0x02
-            case .timeFormat_12:
+            case .timeFormat_24:
                 setUnit.is_12hour_format = 0x01
                 unit?.timeFormat = 0x01
             default:
@@ -562,7 +582,10 @@ public class AngelManager {
         //保存数据库
         let device = coredataHandler.selectDevice(withMacAddress: realMacAddress)
         device?.findPhoneSwitch = open
-        coredataHandler.commit()
+        guard coredataHandler.commit() else{
+            closure(false)
+            return
+        }
         
         closure(true)
     }
@@ -889,7 +912,7 @@ public class AngelManager {
     }
     
     //MARK:- 设置心率模式
-    public func setHeartRateMode(_ heartRateMode: HeartRateMode, macAddress: String? = nil, closure:(_ success:Bool) ->() ){
+    public func setHeartRateMode(_ heartRateMode: HeartRateMode, macAddress: String? = nil, closure:(_ success:Bool) ->()){
         
         //判断mac地址是否存在
         var realMacAddress: String!
@@ -1020,35 +1043,290 @@ public class AngelManager {
         return device.landscape
     }
     
-    //MARK:- 同步数据
+    //MARK:- 同步健康数据
     /*
      *  status 是否同步完成
      *  percent 同步百分比
      */
-    public func setSynchronizationHealthData(closure:@escaping (_ status:Bool, _ percent:Int16) -> ()){
+    public func setSynchronizationHealthData(_ macAddress: String? = nil, closure:@escaping (_ complete: Bool, _ progress: Int16) -> ()){
         
+        //判断mac地址是否存在
+        var realMacAddress: String!
+        if let md = macAddress{
+            realMacAddress = md
+        }else if let md = self.macAddress{
+            realMacAddress = md
+        }else{
+            closure(false, 0)
+            return
+        }
+        
+        //同步进度回调
         swiftSynchronizationHealthData = { data in
             closure(data.0,Int16(data.1))
         }
+        
+        //获取到运动数据回调
         swiftReadSportData = { data in
-            let sportData:protocol_health_resolve_sport_data_s = data.assumingMemoryBound(to: protocol_health_resolve_sport_data_s.self).pointee
-            //处理sportData
+            let sportData = data.assumingMemoryBound(to: protocol_health_resolve_sport_data_s.self).pointee
             
-        }
-        swiftReadSleepData = { data in
-            let sleepData:protocol_health_resolve_sleep_data_s = data.assumingMemoryBound(to: protocol_health_resolve_sleep_data_s.self).pointee
             //处理sportData
+            let year = sportData.head1.date.year
+            let month = sportData.head1.date.month
+            let day = sportData.head1.date.day
+            var component = DateComponents()
+            component.day = Int(day)
+            component.month = Int(month)
+            component.year = Int(year)
+            let optionDate = Calendar.current.date(from: component)       //日期
+            let id = 0
+            let itemCount = sportData.items_count
+            let minuteDuration = sportData.head1.per_minute
+            let minuteOffset = sportData.head1.minute_offset
+            let totalActiveTime = sportData.head2.total_active_time
+            let totalCal = sportData.head2.total_cal
+            let totalDistance = sportData.head2.total_distances
+            let totalStep = sportData.head2.total_step
+            let perMinute = sportData.head1.per_minute
+            let packetCount = sportData.head1.packet_count
+            
+            guard let date = optionDate  else {
+                return
+            }
+            
+            guard let sport = self.coredataHandler.insertSportData(withMacAddress: realMacAddress) else {
+                return
+            }
+            sport.date = date as NSDate
+            sport.id = Int16(id)
+            sport.itemCount = Int16(itemCount)
+            sport.minuteDuration = Int16(minuteDuration)
+            sport.minuteOffset = Int16(minuteOffset)
+            sport.totalActiveTime = Int16(totalActiveTime)
+            sport.totalCal = Int16(totalCal)
+            sport.totalDistance = Int16(totalDistance)
+            sport.perMinute = Int16(perMinute)
+            sport.packetCount = Int16(packetCount)
+            sport.totalStep = Int16(totalStep)
+            guard self.coredataHandler.commit() else {
+                return
+            }
+
+            let items = sportData.items
+            let length = MemoryLayout<ble_sync_sport_item>.size
+            (0..<96).forEach(){
+                i in
+                if let item = items?[length * i]{
+                    if let sportItem = self.coredataHandler.createSportItem(withMacAddress: realMacAddress, withDate: date, withItemId: Int16(i)){
+                        sportItem.activeTime = Int16(item.active_time)
+                        sportItem.calories = Int16(item.calories)
+                        sportItem.distance = Int16(item.distance)
+                        sportItem.id = Int16(i)
+                        sportItem.mode = Int16(item.mode)
+                        sportItem.sportCount = Int16(item.sport_count)
+                        _ = self.coredataHandler.commit()
+                    }
+                }
+            }
         }
+        
+        //获取睡眠数据回调
+        swiftReadSleepData = { data in
+            let sleepData = data.assumingMemoryBound(to: protocol_health_resolve_sleep_data_s.self).pointee
+            
+            //处理sportData
+            let year = sleepData.head1.date.year
+            let month = sleepData.head1.date.month
+            let day = sleepData.head1.date.day
+            var component = DateComponents()
+            component.day = Int(day)
+            component.month = Int(month)
+            component.year = Int(year)
+            let optionDate = Calendar.current.date(from: component)       //日期
+            let id = 0
+            let itemCount = sleepData.itmes_count
+            let deepSleepCount = sleepData.head2.deep_sleep_count
+            let deepSleepMinute = sleepData.head2.deep_sleep_minute
+            let endTimeHour = Int16(sleepData.head1.end_time_hour)
+            let endTimeMinute = Int16(sleepData.head1.end_time_minute)
+            let lightSleepCount = sleepData.head2.light_sleep_count
+            let lightSleepMinute = sleepData.head2.ligth_sleep_minute
+            let totalMinute = sleepData.head2.deep_sleep_minute
+            let packetCount = sleepData.head1.packet_count
+            let sleepItemCount = sleepData.head1.sleep_item_count
+            let wakeCount = sleepData.head2.wake_count
+            var deltaHour = Int16(totalMinute / 60)
+            var deltaMinute = Int16(totalMinute % 60)
+            if deltaMinute > endTimeMinute{
+                deltaHour += 1
+                deltaMinute -= 60
+            }
+            var startTimeHour = endTimeHour - deltaHour
+            while startTimeHour < 0 {
+                startTimeHour += 24
+            }
+            let startTimeMinute = endTimeMinute - deltaMinute
+            
+            guard let date = optionDate  else {
+                return
+            }
+            
+            guard let sleep = self.coredataHandler.insertSleepData(withMacAddress: realMacAddress) else {
+                return
+            }
+            sleep.date = date as NSDate
+            sleep.id = Int16(id)
+
+            sleep.itemsCount = Int16(itemCount)
+            sleep.packetCount = Int16(packetCount)
+            sleep.deepSleepCount = Int16(deepSleepCount)
+            sleep.deepSleepMinute = Int16(deepSleepMinute)
+            sleep.endTimeHour = Int16(endTimeHour)
+            sleep.endTimeMinute = Int16(endTimeMinute)
+            sleep.id = Int16(id)
+            sleep.lightSleepCount = Int16(lightSleepCount)
+            sleep.lightSleepMinute = Int16(lightSleepMinute)
+            sleep.sleepItemCount = Int16(sleepItemCount)
+            sleep.totalMinute = Int16(totalMinute)
+            sleep.wakeCount = Int16(wakeCount)
+            sleep.startTimeHour = startTimeHour
+            sleep.startTimeMinute = startTimeMinute
+            guard self.coredataHandler.commit() else {
+                return
+            }
+            
+            let items = sleepData.itmes
+            let length = MemoryLayout<ble_sync_sleep_item>.size
+            (0..<96).forEach(){
+                i in
+                if let item = items?[length * i]{
+                    if let sleepItem = self.coredataHandler.createSleepItem(withMacAddress: realMacAddress, withDate: date, withItemId: Int16(i)){
+                        sleepItem.durations = Int16(item.durations)
+                        sleepItem.id = Int16(i)
+                        sleepItem.sleepStatus = Int16(item.sleep_status)
+                        _ = self.coredataHandler.commit()
+                    }
+                }
+            }
+        }
+        
+        //获取心率数据回调
         swiftReadHeartRateData = { data in
-            let heartRateData:protocol_health_resolve_heart_rate_data_s = data.assumingMemoryBound(to: protocol_health_resolve_heart_rate_data_s.self).pointee
+            let heartRateData = data.assumingMemoryBound(to: protocol_health_resolve_heart_rate_data_s.self).pointee
+            
+            //处理数据
+            let year = heartRateData.head1.year
+            let month = heartRateData.head1.month
+            let day = heartRateData.head1.day
+            var component = DateComponents()
+            component.day = Int(day)
+            component.month = Int(month)
+            component.year = Int(year)
+            let optionDate = Calendar.current.date(from: component)       //日期
+            let id = 0
+            let itemCount = heartRateData.items_count
+            let aerobicMinutes = heartRateData.head2.aerobic_mins
+            let aerobicThreshld = heartRateData.head2.aerobic_threshold
+            let burnFatMinutes = heartRateData.head2.burn_fat_mins
+            let burnFatThreshold = heartRateData.head2.burn_fat_threshold
+            let limitMinutes = heartRateData.head2.limit_mins
+            let limitThreshold = heartRateData.head2.limit_threshold
+            let minuteOffset = heartRateData.head1.minute_offset
+            let packetsCount = heartRateData.head1.packets_count
+            let silentHeartRate = heartRateData.head1.silent_heart_rate
+            
+            guard let date = optionDate  else {
+                return
+            }
+            
+            guard let heartRate = self.coredataHandler.insertHeartRateData(withMacAddress: realMacAddress) else {
+                return
+            }
+            heartRate.date = date as NSDate
+            heartRate.id = Int16(id)
+            heartRate.itemCount = Int16(itemCount)
+            heartRate.aerobicMinutes = Int16(aerobicMinutes)
+            heartRate.aerobicThreshold = Int16(aerobicThreshld)
+            heartRate.burnFatMinutes = Int16(burnFatMinutes)
+            heartRate.burnFatThreshold = Int16(burnFatThreshold)
+            heartRate.limitMinutes = Int16(limitMinutes)
+            heartRate.limitThreshold = Int16(limitThreshold)
+            heartRate.minuteOffset = Int16(minuteOffset)
+            heartRate.packetsCount = Int16(packetsCount)
+            heartRate.silentHeartRate = Int16(silentHeartRate)
+         
+            guard self.coredataHandler.commit() else {
+                return
+            }
+            
+            let items = heartRateData.items
+            let length = MemoryLayout<ble_sync_heart_rate_item>.size
+            (0..<96).forEach(){
+                i in
+                if let item = items?[length * i]{
+                    if let heartRateItem = self.coredataHandler.createHeartRateItem(withMacAddress: realMacAddress, withDate: date, withItemId: Int16(i)){
+                        heartRateItem.data = Int16(item.data)
+                        heartRateItem.id = Int16(i)
+                        heartRateItem.offset = Int16(item.offset)
+                        _ = self.coredataHandler.commit()
+                    }
+                }
+            }
         }
         
         protocol_health_sync_start();
     }
     
-    //同步配置
-    public func setSynchronizationConfig(closure:@escaping (_ status:Bool) -> ()){
+    //MARK:- 获取健康数据
+    public func getSportData(_ macAddress: String? = nil, userId id: Int16? = 1, date: Date = Date(), offset: Int = 0, closure:(_ result: [SportData]) ->()){
+        
+        //判断mac地址是否存在
+        var realMacAddress: String!
+        if let md = macAddress{
+            realMacAddress = md
+        }else if let md = self.macAddress{
+            realMacAddress = md
+        }else{
+            closure([])
+            return
+        }
+        
+        closure(coredataHandler.selectSportData(userId: (id ?? 1), withMacAddress: realMacAddress, withDate: date, withDayRange: offset))
+    }
+    public func getSleepData(_ macAddress: String? = nil, userId id: Int16? = 1, date: Date = Date(), offset: Int = 0, closure:(_ result: [SleepData]) ->()){
+        
+        //判断mac地址是否存在
+        var realMacAddress: String!
+        if let md = macAddress{
+            realMacAddress = md
+        }else if let md = self.macAddress{
+            realMacAddress = md
+        }else{
+            closure([])
+            return
+        }
+        
+        closure(coredataHandler.selectSleepData(userId: (id ?? 1), withMacAddress: realMacAddress, withDate: date, withDayRange: offset))
+    }
+    public func getHeartRateData(_ macAddress: String? = nil, userId id: Int16? = 1, date: Date = Date(), offset: Int = 0, closure:(_ result: [HeartRateData]) ->()){
+        
+        //判断mac地址是否存在
+        var realMacAddress: String!
+        if let md = macAddress{
+            realMacAddress = md
+        }else if let md = self.macAddress{
+            realMacAddress = md
+        }else{
+            closure([])
+            return
+        }
+        
+        closure(coredataHandler.selectHeartRateData(userId: (id ?? 1), withMacAddress: realMacAddress, withDate: date, withDayRange: offset))
+    }
     
+    //MARK:- 同步配置
+    public func setSynchronizationConfig(closure:@escaping (_ complete:Bool) -> ()){
+
         swiftSynchronizationConfig = { data in
             closure(data);
         }
@@ -1077,7 +1355,8 @@ public class AngelManager {
     }
     
     //获取总开关状态
-    public func getNoticeStatus(wirhPAram closure:@escaping (_ status:Bool) -> ()){
+    public func getNoticeStatus(_ closure:@escaping (_ status:Bool) -> ()){
+        
         swiftGetNoticeStatus = { data in
             guard data.0 == 0x55 else {
                 closure(false)
@@ -1085,13 +1364,13 @@ public class AngelManager {
             }
             closure(true)
         }
-        var ret_code:UInt32 = 0
         
+        var ret_code:UInt32 = 0
         vbus_tx_evt(VBUS_EVT_BASE_APP_GET,VBUS_EVT_APP_GET_NOTICE_STATUS,&ret_code);
     }
     
     //打开总开关
-    public func setOpenNoticeSwitch(closure:(_ status:Bool) ->()){
+    private func setOpenNoticeSwitch(closure:(_ status:Bool) ->()){
         var ret_code:UInt32 = 0
         var notice:protocol_set_notice = protocol_set_notice.init()
         notice.notify_switch = 0x55
@@ -1106,119 +1385,194 @@ public class AngelManager {
             return
         }
         closure(true)
-        
     }
     
-    //设置音乐开关
-    public func setMusicSwitch(withParam isOpen:Bool , closure:@escaping (_ success:Bool) -> ()){
+    //MARK:- 设置音乐开关
+    public func setMusicSwitch(_ open:Bool, macAddress: String? = nil, closure:@escaping (_ success:Bool) -> ()){
         
+        //判断mac地址是否存在
+        var realMacAddress: String!
+        if let md = macAddress{
+            realMacAddress = md
+        }else if let md = self.macAddress{
+            realMacAddress = md
+        }else{
+            closure(false)
+            return
+        }
+        
+        var musicOn = protocol_music_onoff()
+        musicOn.switch_status = open ? 0xAA :0x55
+        
+        let length = UInt32(MemoryLayout<UInt8>.size * 3)
         var ret_code:UInt32 = 0
-        
-        var musicOn:protocol_music_onoff = protocol_music_onoff.init()
-        
-        musicOn.switch_status = isOpen ? 0xAA :0x55
-        
-        let length:UInt32 = UInt32(MemoryLayout<UInt8>.size*3)
-        
-        vbus_tx_data(VBUS_EVT_BASE_APP_SET,VBUS_EVT_APP_SET_MUISC_ONOFF,&musicOn,length,&ret_code)
+        vbus_tx_data(VBUS_EVT_BASE_APP_SET,VBUS_EVT_APP_SET_MUISC_ONOFF, &musicOn, length,&ret_code)
         
         guard ret_code==0 else {
             closure(false)
             return
         }
-        guard isOpen else {
+        
+        guard open else {
             closure(false)
             return
         }
+        
         print("打开总开关")
-        setOpenNoticeSwitch(closure: { notice in
-            print("打开总开关 \(notice)")
-            _ = delay(30, task: {
-                
-                self.getNoticeStatus(wirhPAram: {status in
-                    print("获取总开关状态 \(status)")
-                    closure(status)
-                })
-            })
+        setOpenNoticeSwitch(closure: { success in
+            print("打开总开关 \(success)")
+            guard success else{
+                return
+            }
+            //保存音乐开关
+            let notice = coredataHandler.selectNotice(withMacAddress: realMacAddress)
+            notice?.musicSwitch = open
+            guard coredataHandler.commit() else{
+                closure(false)
+                return
+            }
+            loop(5, closure: closure)
         })
-        
     }
-    //设置来电提醒
-    public func setCallRemind(withParam isOpen:Bool , delay:UInt8 , closure:@escaping (_ success:Bool)->()){
-        var ret_code:UInt32 = 0
+    
+    //MARK:- 设置来电提醒
+    public func setCallRemind(_ open:Bool, delay:UInt8, macAddress: String? = nil, closure:@escaping (_ success:Bool)->()){
         
-        var call:protocol_set_notice = protocol_set_notice.init()
+        //判断mac地址是否存在
+        var realMacAddress: String!
+        if let md = macAddress{
+            realMacAddress = md
+        }else if let md = self.macAddress{
+            realMacAddress = md
+        }else{
+            closure(false)
+            return
+        }
         
+        
+        var call = protocol_set_notice()
         call.notify_switch = 0x88
         
-        call.call_switch = isOpen ? 0x55 :0xAA
-        
+        let notice = coredataHandler.selectNotice(withMacAddress: realMacAddress)
+        call.call_switch = open ? 0x55 :0xAA
         call.call_delay = delay
+        call.notify_itme1 = UInt8(notice?.notifyItem0 ?? 0)
+        call.notify_itme2 = UInt8(notice?.notifyItem1 ?? 0)
         
         //从数据库查询出提醒模型赋给call,暂时填为0
-        //...
+        let length = UInt32(MemoryLayout<UInt8>.size * 7)
         
-        call.notify_itme1 = 0x00
-        call.notify_itme2 = 0x00
-        
-        let length:UInt32 = UInt32(MemoryLayout<UInt8>.size*7)
-        
+        var ret_code:UInt32 = 0
         vbus_tx_data(VBUS_EVT_BASE_APP_SET,VBUS_EVT_APP_SET_NOTICE,&call,length,&ret_code)
         
         guard ret_code==0 else {
             closure(false)
             return
         }
-        guard isOpen else {
+        guard open else {
             closure(false)
             return
         }
         print("打开总开关")
-        
-        setOpenNoticeSwitch(closure: {_ in
-        
+        setOpenNoticeSwitch(closure: { success in
+            print("打开总开关 \(success)")
+            guard success else{
+                return
+            }
+            
+            notice?.callSwitch = open
+            notice?.callDelay = Int16(delay)
+            guard coredataHandler.commit() else{
+                closure(false)
+                return
+            }
+            loop(5, closure: closure)
         })
     }
-    public func setSmartAlart(withParam smart:SmartAlertPrm , closure:(_ success:Bool)->()){
-        var ret_code:UInt32 = 0
+    
+    //MARK:- 循环设置总开关5次
+    private func loop(_ count: Int, closure: @escaping (_ success:Bool)->()){
         
-        var call:protocol_set_notice = protocol_set_notice.init()
+        guard count > 0 else {
+            return
+        }
+        
+        _ = delay(5, task: {
+            //调5次
+            self.getNoticeStatus({status in
+                print("获取总开关状态 \(status)")
+                if status{
+                    //保存音乐开关到数据库
+                    
+                    closure(status)
+                }else{
+                    guard count > 0 else{
+                        return
+                    }
+                    self.loop(count - 1, closure: closure)
+                }
+            })
+        })
+    }
+    
+    //MARK:- 设置智能提醒
+    public func setSmartAlart(smart:SmartAlertPrm, macAddress: String? = nil, closure:@escaping (_ success:Bool)->()){
+        
+        //判断mac地址是否存在
+        var realMacAddress: String!
+        if let md = macAddress{
+            realMacAddress = md
+        }else if let md = self.macAddress{
+            realMacAddress = md
+        }else{
+            closure(false)
+            return
+        }
+        
+        var call = protocol_set_notice()
         
         call.notify_switch = 0x88
         
         //从数据库查询出提醒模型赋给call,暂时填为0
-        //...
-        call.call_switch = 0x00
-        call.call_delay = 0x00
+        let notice = coredataHandler.selectNotice(withMacAddress: realMacAddress)
+        call.notify_itme1 = UInt8(notice?.notifyItem0 ?? 0)
+        call.notify_itme2 = UInt8(notice?.notifyItem1 ?? 0)
+        call.call_switch = (notice?.callSwitch ?? false) ? 0x55 : 0xAA
+        call.call_delay = UInt8(notice?.callDelay ?? 0)
         
-        let itmes1:UInt8 = getValue(smart.sms, 1) | getValue(smart.weChat,3) | getValue(smart.qq,4) | getValue(smart.faceBook,6) | getValue(smart.twitter,7)
-        
-        
-        let itmes2:UInt8 = getValue(smart.whatsapp,0) | getValue(smart.messenger,1) | getValue(smart.instagram,2) |
-        getValue(smart.linkedIn,3)
+        let itmes1: UInt8 = getValue(smart.sms, 1) | getValue(smart.weChat,3) | getValue(smart.qq,4) | getValue(smart.faceBook,6) | getValue(smart.twitter,7)
+        let itmes2: UInt8 = getValue(smart.whatsapp,0) | getValue(smart.messenger,1) | getValue(smart.instagram,2) | getValue(smart.linkedIn,3)
 
-        
         call.notify_itme1 = itmes1
         call.notify_itme2 = itmes2
         
-        let length:UInt32 = UInt32(MemoryLayout<UInt8>.size*7)
-        
-        vbus_tx_data(VBUS_EVT_BASE_APP_SET,VBUS_EVT_APP_SET_NOTICE,&call,length,&ret_code)
+        let length = UInt32(MemoryLayout<UInt8>.size * 7)
+        var ret_code:UInt32 = 0
+        vbus_tx_data(VBUS_EVT_BASE_APP_SET,VBUS_EVT_APP_SET_NOTICE, &call, length, &ret_code)
         
         guard ret_code==0 else {
             closure(false)
             return
         }
         print("打开总开关")
-        
-        setOpenNoticeSwitch(closure: {_ in
+        setOpenNoticeSwitch(closure: { success in
+            print("打开总开关 \(success)")
+            guard success else{
+                return
+            }
             
+            notice?.notifyItem0 = Int16(itmes1)
+            notice?.notifyItem1 = Int16(itmes2)
+            guard coredataHandler.commit() else{
+                closure(false)
+                return
+            }
+            loop(5, closure: closure)
         })
-
-    
     }
-    private func getValue(_ a:Bool,_ i:UInt8) -> UInt8{
-        let result = a ? 0x01 << i :0x00 << i
+    
+    private func getValue(_ flag:Bool,_ offset:UInt8) -> UInt8{
+        let result = flag ? 0x01 << offset : 0x00
         return result
     }
 

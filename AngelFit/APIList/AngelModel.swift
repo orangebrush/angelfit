@@ -7,8 +7,24 @@
 //
 
 import Foundation
+import CoreData
 
 //错误码
+//#define SUCCESS					0
+//#define ERROR_NO_MEM			4
+//#define ERROR_NOT_FIND			5
+//#define ERROR_NOT_SUPPORTED		6
+//#define ERROR_INVALID_PARAM		7
+//#define ERROR_INVALID_STATE		8
+//#define ERROR_INVALID_LENGTH 	9
+//#define ERROR_INVALID_FLAGS 	10
+//#define ERROR_INVALID_DATA		11
+//#define ERROR_DATA_SIZE			12
+//#define ERROR_TIMEOUT			13
+//#define ERROR_NULL				14
+//#define ERROR_FORBIDDEN			15
+//#define ERROR_BUSY				17
+//#define ERROR_LOW_BATT          18
 public struct ErrorCode{
     static let success: Int16 = 0
     static let failure: Int16 = 14
@@ -92,14 +108,6 @@ public struct SmartAlertPrm {
 public enum CommondType{
     case setTime        //设置时间
 }
-//data
-public enum DataResult<NSManagedObject>{
-    case user(User)
-    case device(Device)
-    case sportData(SportData)
-    case sleepData(SleepData)
-    case heartRateData(HeartRateData)
-}
 
 //公英制
 public enum UnitType{
@@ -113,4 +121,11 @@ public enum UnitType{
     case langure_EN
     case timeFormat_24
     case timeFormat_12
+}
+
+//健康数据
+public enum HealthDataType{
+    case sport
+    case sleep
+    case heartRate
 }

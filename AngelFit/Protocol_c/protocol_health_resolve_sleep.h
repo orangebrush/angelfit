@@ -62,7 +62,7 @@
     {
     	struct ble_sync_sleep_head head1;
     	struct ble_sync_sleep_head1 head2;
-    	struct ble_sync_sleep_item	itmes[BLE_SYNC_SLEEP_ITEM_ONE_DAY_DATA_MAX];
+    	struct ble_sync_sleep_item	*itmes; //BLE_SYNC_SLEEP_ITEM_ONE_DAY_DATA_MAX
     	uint16_t itmes_count;
     };
 

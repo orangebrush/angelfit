@@ -59,6 +59,7 @@
         <attribute name="limitMinutes" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="limitThreshold" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="minuteOffset" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="packetsCount" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="silentHeartRate" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <relationship name="device" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Device" inverseName="heartRateDatas" inverseEntity="Device" syncable="YES"/>
         <relationship name="heartRateItem" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="HeartRateItem" inverseName="heartRateData" inverseEntity="HeartRateItem" syncable="YES"/>
@@ -82,7 +83,9 @@
     <entity name="Notice" representedClassName=".Notice" syncable="YES">
         <attribute name="callDelay" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="callSwitch" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="notifyItem" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="musicSwitch" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="notifyItem0" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="notifyItem1" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="notifySwitch" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
     </entity>
     <entity name="SilentDistrube" representedClassName=".SilentDistrube" syncable="YES">
@@ -95,10 +98,18 @@
     <entity name="SleepData" representedClassName=".SleepData" syncable="YES">
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="deepSleepCount" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="endDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="deepSleepMinute" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="endTimeHour" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="endTimeMinute" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="itemCount" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="itemsCount" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="lightSleepCount" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="lightSleepMinute" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="packetCount" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="serial" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="sleepItemCount" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="startTimeHour" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="startTimeMinute" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="totalMinute" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="wakeCount" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <relationship name="device" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Device" inverseName="sleepDatas" inverseEntity="Device" syncable="YES"/>
@@ -116,9 +127,13 @@
         <attribute name="itemCount" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="minuteDuration" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="minuteOffset" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="packetCount" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="perMinute" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="reserved" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="totalActiveTime" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="totalCal" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="totalDistance" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="totalStep" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <relationship name="device" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Device" inverseName="sportDatas" inverseEntity="Device" syncable="YES"/>
         <relationship name="sportItem" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SportItem" inverseName="sportData" inverseEntity="SportItem" syncable="YES"/>
     </entity>
@@ -156,15 +171,15 @@
         <element name="Alarm" positionX="259" positionY="59" width="128" height="148"/>
         <element name="Device" positionX="-119" positionY="62" width="200" height="433"/>
         <element name="HandGesture" positionX="259" positionY="287" width="128" height="88"/>
-        <element name="HeartRateData" positionX="162" positionY="477" width="128" height="238"/>
+        <element name="HeartRateData" positionX="162" positionY="477" width="128" height="253"/>
         <element name="HeartRateItem" positionX="160" positionY="770" width="128" height="103"/>
         <element name="LongSit" positionX="-380" positionY="117" width="128" height="118"/>
         <element name="LostFind" positionX="259" positionY="387" width="128" height="58"/>
-        <element name="Notice" positionX="-380" positionY="243" width="128" height="103"/>
+        <element name="Notice" positionX="-380" positionY="243" width="128" height="133"/>
         <element name="SilentDistrube" positionX="-549" positionY="369" width="128" height="118"/>
-        <element name="SleepData" positionX="-38" positionY="545" width="128" height="193"/>
+        <element name="SleepData" positionX="-38" positionY="545" width="128" height="28"/>
         <element name="SleepItem" positionX="-38" positionY="770" width="128" height="103"/>
-        <element name="SportData" positionX="-254" positionY="522" width="128" height="193"/>
+        <element name="SportData" positionX="-254" positionY="522" width="128" height="253"/>
         <element name="SportItem" positionX="-254" positionY="738" width="128" height="148"/>
         <element name="Unit" positionX="-378" positionY="360" width="128" height="118"/>
         <element name="User" positionX="-101" positionY="-207" width="128" height="193"/>
