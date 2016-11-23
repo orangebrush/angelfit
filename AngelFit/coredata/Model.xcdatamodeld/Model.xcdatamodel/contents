@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="11542" systemVersion="16B2555" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Alarm" representedClassName=".Alarm" syncable="YES">
-        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="duration" optional="YES" attributeType="Integer 16" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="hour" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="isRepeat" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="minute" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="repeatList" optional="YES" attributeType="Integer 16" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="status" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="synchronize" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
@@ -18,13 +19,13 @@
         <attribute name="findPhoneSwitch" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="landscape" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="macAddress" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="model" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="mode" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="pairFlag" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="rebootFlag" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="sos" optional="YES" attributeType="Boolean" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="version" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <relationship name="alarm" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Alarm" syncable="YES"/>
+        <relationship name="alarms" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Alarm" syncable="YES"/>
         <relationship name="funcTable" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="FuncTable" syncable="YES"/>
         <relationship name="handGesture" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="HandGesture" syncable="YES"/>
         <relationship name="heartInterval" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="HeartInterval" syncable="YES"/>
@@ -255,7 +256,7 @@
     </entity>
     <fetchRequest name="DefaultUserRequest" entity="User" predicateString="userId == 1"/>
     <elements>
-        <element name="Alarm" positionX="259" positionY="59" width="128" height="148"/>
+        <element name="Alarm" positionX="259" positionY="59" width="128" height="163"/>
         <element name="Device" positionX="-119" positionY="62" width="200" height="448"/>
         <element name="HandGesture" positionX="259" positionY="287" width="128" height="88"/>
         <element name="HeartRateData" positionX="162" positionY="477" width="128" height="253"/>
@@ -271,6 +272,6 @@
         <element name="Unit" positionX="-378" positionY="360" width="128" height="118"/>
         <element name="User" positionX="-101" positionY="-207" width="128" height="193"/>
         <element name="HeartInterval" positionX="-549" positionY="261" width="128" height="103"/>
-        <element name="FuncTable" positionX="-324" positionY="-27" width="128" height="1305"/>
+        <element name="FuncTable" positionX="-686" positionY="-9" width="128" height="1305"/>
     </elements>
 </model>

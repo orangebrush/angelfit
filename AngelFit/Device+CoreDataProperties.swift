@@ -2,7 +2,7 @@
 //  Device+CoreDataProperties.swift
 //  AngelFit
 //
-//  Created by YiGan on 22/11/2016.
+//  Created by YiGan on 23/11/2016.
 //  Copyright © 2016 aiju_huangjing1. All rights reserved.
 //
 
@@ -23,14 +23,14 @@ extension Device {
     @NSManaged public var deviceUUID: String?
     @NSManaged public var findPhoneSwitch: Bool
     @NSManaged public var macAddress: String?
-    @NSManaged public var model: Int16
+    @NSManaged public var mode: Int16
     @NSManaged public var pairFlag: Bool
     @NSManaged public var rebootFlag: Bool
     @NSManaged public var sos: Bool
     @NSManaged public var type: Int16
     @NSManaged public var version: Int16
     @NSManaged public var landscape: Bool
-    @NSManaged public var alarm: Alarm?
+    @NSManaged public var alarms: NSOrderedSet?
     @NSManaged public var handGesture: HandGesture?
     @NSManaged public var heartRateDatas: NSSet?
     @NSManaged public var longSit: LongSit?
@@ -43,6 +43,41 @@ extension Device {
     @NSManaged public var user: User?
     @NSManaged public var heartInterval: HeartInterval?
     @NSManaged public var funcTable: FuncTable?
+
+}
+
+// MARK: Generated accessors for alarms
+extension Device {
+
+    @objc(insertObject:inAlarmsAtIndex:)
+    @NSManaged public func insertIntoAlarms(_ value: Alarm, at idx: Int)
+
+    @objc(removeObjectFromAlarmsAtIndex:)
+    @NSManaged public func removeFromAlarms(at idx: Int)
+
+    @objc(insertAlarms:atIndexes:)
+    @NSManaged public func insertIntoAlarms(_ values: [Alarm], at indexes: NSIndexSet)
+
+    @objc(removeAlarmsAtIndexes:)
+    @NSManaged public func removeFromAlarms(at indexes: NSIndexSet)
+
+    @objc(replaceObjectInAlarmsAtIndex:withObject:)
+    @NSManaged public func replaceAlarms(at idx: Int, with value: Alarm)
+
+    @objc(replaceAlarmsAtIndexes:withAlarms:)
+    @NSManaged public func replaceAlarms(at indexes: NSIndexSet, with values: [Alarm])
+
+    @objc(addAlarmsObject:)
+    @NSManaged public func addToAlarms(_ value: Alarm)
+
+    @objc(removeAlarmsObject:)
+    @NSManaged public func removeFromAlarms(_ value: Alarm)
+
+    @objc(addAlarms:)
+    @NSManaged public func addToAlarms(_ values: NSOrderedSet)
+
+    @objc(removeAlarms:)
+    @NSManaged public func removeFromAlarms(_ values: NSOrderedSet)
 
 }
 

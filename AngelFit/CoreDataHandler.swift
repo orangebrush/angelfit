@@ -739,16 +739,25 @@ extension CoreDataHandler{
     //插入 alarm
     public func insertAlarm(userId id: Int16 = 1, withMacAddress macAddress: String, withItems items: [String: Any]? = nil) -> Alarm?{
         
+        let oldAlarms = selectAllAlarm(userId: id, withMacAddress: macAddress)
+        var ids = [Int16]()
+        oldAlarms.forEach(){
+            alarm in
+            ids.append(alarm.id)
+        }
+        
+        let alarmId: Int16 = ids.isEmpty ? 1 : (ids.max()! + 1)
+        
         //判断alarm是否存在
-        var alarm = selectAlarm(userId: id, withMacAddress: macAddress)
-        guard alarm == nil else {
+        var alarms = selectAlarm(userId: id, alarmId: alarmId, withMacAddress: macAddress)
+        guard alarms.isEmpty else {
             if let dict = items{
-                alarm?.setValuesForKeys(dict)
+                alarms[0].setValuesForKeys(dict)
             }
             guard commit() else{
                 return nil
             }
-            return alarm
+            return alarms[0]
         }
         
         //判断设备是否存在
@@ -756,49 +765,79 @@ extension CoreDataHandler{
             return nil
         }
         
-        alarm = NSEntityDescription.insertNewObject(forEntityName: "Alarm", into: context) as? Alarm
+        guard let newAlarm = NSEntityDescription.insertNewObject(forEntityName: "Alarm", into: context) as? Alarm else{
+            return nil
+        }
+        
+        //设置默认值
+        newAlarm.duration = 0
+        newAlarm.hour = 0
+        newAlarm.minute = 0
+        newAlarm.id = alarmId
+        newAlarm.status = 0x55
+        newAlarm.type = 0x07
+        newAlarm.synchronize = false
+        newAlarm.repeatList = 0
         
         if let dict = items{
-            alarm?.setValuesForKeys(dict)
+            newAlarm.setValuesForKeys(dict)
         }
+        
         guard commit() else{
             return nil
         }
         
+        
         //为设备添加闹钟数据
-        device.alarm = alarm
+        device.addToAlarms(newAlarm)
         guard commit() else {
             return nil
         }
-        return alarm
+        return newAlarm
     }
     
     //获取 alarm
-    public func selectAlarm(userId id: Int16 = 1, withMacAddress macAddress: String) -> Alarm?{
+    public func selectAlarm(userId id: Int16 = 1, alarmId: Int16, withMacAddress macAddress: String) -> [Alarm]{
         //根据设备获取闹钟模型
-        guard let device = selectDevice(userId: id, withMacAddress: macAddress) else {
-            return nil
+        guard (selectDevice(userId: id, withMacAddress: macAddress) != nil) else {
+            return []
         }
-        return device.alarm
+        
+        let request: NSFetchRequest<Alarm> = Alarm.fetchRequest()
+        let predicate = NSPredicate(format: "device.alarm.id = \(id)", "")
+        request.predicate = predicate
+        do{
+            let resultList = try context.fetch(request)
+            return resultList
+        }catch let error{
+            print(error)
+        }
+        return []
     }
     
-    //更新 alarm
-    public func updateAlarm(userId id: Int16 = 1, withMacAddress macAddress: String, withItems items: [String: Any]){
-        guard let alarm = selectAlarm(userId: id, withMacAddress: macAddress) else {
-            return
+    //获取所有 alarm
+    public func selectAllAlarm(userId id: Int16 = 1, withMacAddress macAddress: String) -> [Alarm]{
+        //根据设备获取闹钟模型
+        guard let device = selectDevice(userId: id, withMacAddress: macAddress) else {
+            return []
         }
-        alarm.setValuesForKeys(items)
-        guard commit() else{
-            return
+        
+        var resultList = [Alarm]()
+        device.alarms?.forEach(){
+            alarm in
+            resultList.append(alarm as! Alarm)
         }
+        return resultList
     }
     
     //删除 alarm
-    public func deleteAlarm(userId id: Int16 = 1, withMacAddress macAddress: String){
-        guard let alarm = selectAlarm(userId: id, withMacAddress: macAddress) else {
+    public func deleteAlarm(userId id: Int16 = 1, alarmId: Int16, withMacAddress macAddress: String){
+        let alarmList = selectAlarm(userId: id, alarmId: alarmId, withMacAddress: macAddress)
+        guard !alarmList.isEmpty else {
             return
         }
-        context.delete(alarm)
+        
+        context.delete(alarmList[0])
         guard commit() else{
             return
         }

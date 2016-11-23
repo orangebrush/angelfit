@@ -93,11 +93,11 @@ public enum ActionType {
 }
 
 public struct SmartAlertPrm {
-    var sms:Bool = false
-    var faceBook:Bool = false
-    var weChat:Bool = false
-    var qq:Bool = false
-    var twitter:Bool = false
+    var sms = false
+    var faceBook = false
+    var weChat = false
+    var qq = false
+    var twitter = false
     var whatsapp:Bool = false
     var linkedIn:Bool = false
     var instagram:Bool = false
@@ -128,4 +128,16 @@ public enum HealthDataType{
     case sport
     case sleep
     case heartRate
+}
+
+//闹钟
+//设置闹钟
+public struct CustomAlarm{
+    var id: Int16 = 0
+    var duration: Int16 = 0     //贪睡
+    var status: Int16 = 0x55    //状态
+    var type: Int16 = 0x07      //类型
+    var hour: UInt8 = 0
+    var minute: UInt8 = 0
+    var repeatList = [UInt8]()  //0总开关 1周一 ... 7周日
 }

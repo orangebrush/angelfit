@@ -93,6 +93,21 @@ public class AngelManager {
         getLiveDataFromBring(withActionType: .funcTable, macAddress: macAddress, closure: closure)
     }
     
+    //从数据库获取功能列表
+    public func getFuncTable(_ macAddress: String? = nil, userId id: Int16 = 1, closure: (FuncTable?) -> ()){
+        //为空直接返回失败
+        var realMacAddress: String!
+        if let md = macAddress{
+            realMacAddress = md
+        }else if let md = self.macAddress{
+            realMacAddress = md
+        }else{
+            closure(nil)
+            return
+        }
+        closure(coredataHandler.selectDevice(userId: id, withMacAddress: realMacAddress)?.funcTable)
+    }
+    
     //获取实时数据
     public func getLiveDataFromBand(closure : @escaping (_ errorCode:Int16 ,_ value: String)->()){
         getLiveDataFromBring(withActionType: .liveData, closure: closure)
@@ -143,7 +158,7 @@ public class AngelManager {
                 device?.version = Int16(deviceInfo.version)
                 device?.pairFlag = deviceInfo.pair_flag == 0x01 ? true : false
                 device?.rebootFlag = deviceInfo.reboot_flag == 0x01 ? true : false
-                device?.model = Int16(deviceInfo.mode)
+                device?.mode = Int16(deviceInfo.mode)
                 device?.deviceId = Int16(deviceInfo.device_id)
                 if deviceInfo.reboot_flag == 0x01 {
                     //如果有重启标志==1,同步设备信息
@@ -430,7 +445,7 @@ public class AngelManager {
     //MARK:- 设置久坐提醒
     public func setLongSit(_ sit:LongSitModel, macAddress: String? = nil, closure:(_ success:Bool) ->()){
         
-        var long_sit:protocol_long_sit = protocol_long_sit()
+        var long_sit = protocol_long_sit()
         
         long_sit.start_hour = sit.startHour
         long_sit.start_minute = sit.startMinute
@@ -439,7 +454,7 @@ public class AngelManager {
         long_sit.interval = sit.duringTime
         
         //0,1,2,3,4,5,6 日。。。六
-        var val = sit.weekdayList.reduce(0){$0 | ($1 == 0 ? 0x1 : 0x01 << UInt8(7 - $1))}
+        var val = sit.weekdayList.reduce(0){$0 | ($1 == 0 ? 0x1 : (($1 < 7 && $1 > 0) ? 0x01 << UInt8(7 - $1) : 0x00))}
         val = val | (sit.isOpen ? 0x01 << 7 : 0x00)
         long_sit.repetitions = val
         
@@ -1449,23 +1464,141 @@ public class AngelManager {
     }
     
     //设置闹钟
-    public func setAlarm(){
-      //数据库操作
+    public func updateAlarm(_ macAddress: String? = nil, alarmId: Int16, customAlarm: CustomAlarm, closure: (_ success: Bool)->()){
+      
+        //判断mac地址是否存在
+        var realMacAddress: String!
+        if let md = macAddress{
+            realMacAddress = md
+        }else if let md = self.macAddress{
+            realMacAddress = md
+        }else{
+            closure(false)
+            return
+        }
+        
+        let alarmList = coredataHandler.selectAlarm(alarmId: alarmId, withMacAddress: realMacAddress)
+        guard !alarmList.isEmpty else {
+            closure(false)
+            return
+        }
+        
+        let alarm = alarmList[0]
+        alarm.hour = Int16(customAlarm.hour)
+        alarm.minute = Int16(customAlarm.minute)
+        alarm.duration = customAlarm.duration
+        alarm.repeatList = Int16(customAlarm.repeatList.reduce(0){$0 | 0x01 << (7 - Int8($1))})
+        alarm.synchronize = false
+        alarm.type = customAlarm.type
+        alarm.id = alarmId
+        
+        guard coredataHandler.commit() else {
+            closure(false)
+            return
+        }
+        closure(true)
+    }
+    
+    //MARK:- 添加闹钟
+    public func addAlarm(_ macAddress: String? = nil, customAlarm: CustomAlarm, closure: (_ success: Bool, _ alarmId: Int16?)->()){
+        
+        //判断mac地址是否存在
+        var realMacAddress: String!
+        if let md = macAddress{
+            realMacAddress = md
+        }else if let md = self.macAddress{
+            realMacAddress = md
+        }else{
+            closure(false, nil)
+            return
+        }
+        //数据库操作
+        guard let alarm = coredataHandler.insertAlarm(withMacAddress: realMacAddress) else{
+            closure(false, nil)
+            return
+        }
+        
+        updateAlarm(realMacAddress, alarmId: alarm.id, customAlarm: customAlarm){
+            success in
+            closure(true, alarm.id)
+        }
+        
+        
+    }
+    
+    //MARK:- 获取闹钟
+    public func getAlarm(_ macAddress: String? = nil, alarmId: Int16) -> Alarm?{
+        //判断mac地址是否存在
+        var realMacAddress: String!
+        if let md = macAddress{
+            realMacAddress = md
+        }else if let md = self.macAddress{
+            realMacAddress = md
+        }else{
+            return nil
+        }
+        
+        return coredataHandler.selectAlarm(alarmId: alarmId, withMacAddress: realMacAddress).first
+    }
+    
+    //MARK:- 获取所有闹钟
+    public func getAllAlarms() -> [Alarm]{
+        //判断mac地址是否存在
+        var realMacAddress: String!
+        if let md = macAddress{
+            realMacAddress = md
+        }else if let md = self.macAddress{
+            realMacAddress = md
+        }else{
+            return []
+        }
+        
+        return coredataHandler.selectAllAlarm(withMacAddress: realMacAddress)
     }
     
     //同步闹钟数据
-    public func setSynchronizationAlarm(closure:@escaping (_ status:Bool) -> ()){
+    public func setSynchronizationAlarm(_ macAddress: String? = nil, closure:@escaping (_ success:Bool) -> ()){
+        //判断mac地址是否存在
+        var realMacAddress: String!
+        if let md = macAddress{
+            realMacAddress = md
+        }else if let md = self.macAddress{
+            realMacAddress = md
+        }else{
+            closure(false)
+            return
+        }
+        
     //1.先清除
         protocol_set_alarm_clean()
     //2.再添加 添加的闹钟是从数据库获取的
-        var alarm:protocol_set_alarm = protocol_set_alarm.init()
-        alarm.hour = 12
-        protocol_set_alarm_add(alarm)
-        swiftSynchronizationAlarm = { data in
-        closure(true)
+        //获取所有闹钟
+        let alarmList = coredataHandler.selectAllAlarm(withMacAddress: realMacAddress)
+        alarmList.forEach(){
+            localAlarm in
+            var alarm = protocol_set_alarm()
+            alarm.hour = UInt8(localAlarm.hour)
+            alarm.minute = UInt8(localAlarm.minute)
+            alarm.alarm_id = UInt8(localAlarm.id)
+            alarm.tsnooze_duration = UInt8(localAlarm.duration)
+            alarm.type = UInt8(localAlarm.type)
+            alarm.repeat = UInt8(localAlarm.repeatList)
+            alarm.status = UInt8(localAlarm.status)
+            protocol_set_alarm_add(alarm)
         }
         
     //3.再同步
+        swiftSynchronizationAlarm = { data in
+            closure(true)
+            let alarmList = self.coredataHandler.selectAllAlarm(withMacAddress: realMacAddress)
+            alarmList.forEach(){
+                localAlarm in
+                localAlarm.synchronize = true
+            }
+            guard self.coredataHandler.commit() else {
+                return
+            }
+        }
         protocol_set_alarm_start_sync()
     }
     
@@ -1486,14 +1619,15 @@ public class AngelManager {
     
     //打开总开关
     private func setOpenNoticeSwitch(closure:(_ status:Bool) ->()){
-        var ret_code:UInt32 = 0
-        var notice:protocol_set_notice = protocol_set_notice.init()
-        notice.notify_switch = 0x55
+        var notice = protocol_set_notice()
+        notice.notify_switch = 0x55     //0x55 总开关开 0xAA 总开关关 0x88 设置子开关 0x00 无效
         notice.notify_itme1 = 0x00
         notice.notify_itme2 = 0x00
         notice.call_switch = 0x00
         notice.call_delay = 0x00
-        let length:UInt32 = UInt32(MemoryLayout<UInt8>.size*7)
+        
+        let length = UInt32(MemoryLayout<UInt8>.size * 7)
+        var ret_code:UInt32 = 0
         vbus_tx_data(VBUS_EVT_BASE_APP_SET, VBUS_EVT_APP_SET_NOTICE, &notice, length,&ret_code)
         guard ret_code == 0 else {
             closure(false)
@@ -1521,7 +1655,7 @@ public class AngelManager {
         
         let length = UInt32(MemoryLayout<UInt8>.size * 3)
         var ret_code:UInt32 = 0
-        vbus_tx_data(VBUS_EVT_BASE_APP_SET,VBUS_EVT_APP_SET_MUISC_ONOFF, &musicOn, length,&ret_code)
+        vbus_tx_data(VBUS_EVT_BASE_APP_SET,VBUS_EVT_APP_SET_MUISC_ONOFF, &musicOn, length, &ret_code)
         
         guard ret_code==0 else {
             closure(false)
@@ -1533,9 +1667,8 @@ public class AngelManager {
             return
         }
         
-        print("打开总开关")
         setOpenNoticeSwitch(closure: { success in
-            print("打开总开关 \(success)")
+           
             guard success else{
                 return
             }
