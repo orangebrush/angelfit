@@ -86,7 +86,6 @@
 		22DF625C1DDBE9440080B77A /* Protocol_model.h in Headers */ = {isa = PBXBuildFile; fileRef = 22DF62561DDBE9440080B77A /* Protocol_model.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		22DF625D1DDBE9440080B77A /* Protocol_model.m in Sources */ = {isa = PBXBuildFile; fileRef = 22DF62571DDBE9440080B77A /* Protocol_model.m */; };
 		22DF625E1DDBFA530080B77A /* PeripheralManager.swift in Headers */ = {isa = PBXBuildFile; fileRef = 222E7D721DC87A55001BA04A /* PeripheralManager.swift */; settings = {ATTRIBUTES = (Public, ); }; };
-		22DF62611DDC2FB30080B77A /* AngelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DF62601DDC2FB30080B77A /* AngelManager.swift */; };
 		32060CF81DE28409007BC7B3 /* AngelModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32060CF71DE28409007BC7B3 /* AngelModel.swift */; };
 		32C103371DC9741D0001D415 /* BindingPeripherals.plist in Resources */ = {isa = PBXBuildFile; fileRef = 32C103361DC9741D0001D415 /* BindingPeripherals.plist */; };
 		32C103391DC974410001D415 /* GodFS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C103381DC974410001D415 /* GodFS.swift */; };
@@ -125,6 +124,7 @@
 		32E2E1581DE5491400DC2C89 /* Device+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E1561DE5491400DC2C89 /* Device+CoreDataProperties.swift */; };
 		32E2E15B1DE54FAA00DC2C89 /* Alarm+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E1591DE54FAA00DC2C89 /* Alarm+CoreDataClass.swift */; };
 		32E2E15C1DE54FAA00DC2C89 /* Alarm+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E15A1DE54FAA00DC2C89 /* Alarm+CoreDataProperties.swift */; };
+		32E2E15D1DE5777500DC2C89 /* AngelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DF62601DDC2FB30080B77A /* AngelManager.swift */; };
 		BE1F53971DC84FC500EAD9BA /* Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1F53961DC84FC500EAD9BA /* Time.swift */; };
 		BEB057301DD025D500B80678 /* Peripheral+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB0572F1DD025D500B80678 /* Peripheral+Extension.swift */; };
 		BEB057321DD02E1700B80678 /* AngelManager+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB057311DD02E1700B80678 /* AngelManager+Extension.swift */; };
@@ -674,6 +674,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				32E2E15D1DE5777500DC2C89 /* AngelManager.swift in Sources */,
 				222E7D731DC87A55001BA04A /* PeripheralManager.swift in Sources */,
 				22DF62031DD9B63C0080B77A /* CBridgingManager.swift in Sources */,
 				22DF61CE1DD99CD40080B77A /* protocol_write.c in Sources */,
@@ -741,7 +742,6 @@
 				32C103391DC974410001D415 /* GodFS.swift in Sources */,
 				BEB057301DD025D500B80678 /* Peripheral+Extension.swift in Sources */,
 				BEB057321DD02E1700B80678 /* AngelManager+Extension.swift in Sources */,
-				22DF62611DDC2FB30080B77A /* AngelManager.swift in Sources */,
 				22DF61B91DD99CD40080B77A /* protocol_health_resolve_sleep.c in Sources */,
 				32E2E0ED1DE2EDC000DC2C89 /* LongSit+CoreDataClass.swift in Sources */,
 				22DF61C51DD99CD40080B77A /* protocol_sync_activity.c in Sources */,
