@@ -10,7 +10,7 @@ import Foundation
 import CoreData
 import CoreBluetooth
 
-public class AngelManager {
+public final class AngelManager: NSObject {
     
 //    var actionMap:[ActionType:[UInt8]]?{
 //        let map:[ActionType:[UInt8]] = [.binding:[0x04, 0x01, 0x01, 0x83, 0x55, 0xaa],
@@ -35,7 +35,7 @@ public class AngelManager {
         }
         return AngelManager(currentPeripheral: peripheral)
     }
-    class func share() -> AngelManager?{
+    public class func share() -> AngelManager?{
         return __once
     }
     
@@ -45,7 +45,9 @@ public class AngelManager {
         peripheral = existPeripheral
     }
     
-    init(){
+    override init(){
+        super.init()
+        
         //初始化获取macAddress
         getMacAddressFromBand(){
             errorCode, data in

@@ -10,7 +10,7 @@ import UIKit
 import CoreBluetooth
 
 //MARK:- 蓝牙中心状态
-public enum GodManagerState: Int{
+@objc public enum GodManagerState: Int{
     case unknown
     case resetting
     case unsupported
@@ -19,14 +19,14 @@ public enum GodManagerState: Int{
     case poweredOn
 }
 //MARK:- 连接状态回调
-public enum GodManagerConnectState: Int{
+@objc public enum GodManagerConnectState: Int{
     case connect
     case failed
     case disConnect
 }
 //MARK:- delegate
 
-public protocol GodManagerDelegate {
+@objc public protocol GodManagerDelegate {
     //搜索设备
     func godManager(didDiscoverPeripheral peripheral: CBPeripheral, withRSSI RSSI: NSNumber, peripheralName name: String)
     func godManager(didUpdateCentralState state:GodManagerState)
@@ -66,10 +66,10 @@ public final class GodManager: NSObject {
         centralManager = CBCentralManager(delegate: self, queue: queue)
         
         //初始化蓝牙底层通讯配置
-        CBridgingManager.share()
+        _ = CBridgingManager.share()
         
         //初始化创建默认id=1的用户
-        CoreDataHandler().insertUser()
+        _ = CoreDataHandler().insertUser()
     }
 
     //Mark:- 开始扫描
@@ -262,7 +262,7 @@ extension GodManager:CBPeripheralDelegate{
     
     //获取设备特征
     public func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
-        guard let err = error else{
+        guard error != nil else{
             
             let characteristicList = service.characteristics
             

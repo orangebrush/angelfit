@@ -14,10 +14,10 @@
 		222B89A31DC735B70056861C /* UUIDConfigure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222B89A21DC735B70056861C /* UUIDConfigure.swift */; };
 		222E7D731DC87A55001BA04A /* PeripheralManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222E7D721DC87A55001BA04A /* PeripheralManager.swift */; };
 		222E7D781DC88AA7001BA04A /* ViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222E7D771DC88AA7001BA04A /* ViewController+Extension.swift */; };
-		2238E0E81DDC370300211F82 /* AngelManager.swift in Headers */ = {isa = PBXBuildFile; fileRef = 22DF62601DDC2FB30080B77A /* AngelManager.swift */; settings = {ATTRIBUTES = (Public, ); }; };
+		2238E0E81DDC370300211F82 /* AngelManager.swift in Headers */ = {isa = PBXBuildFile; fileRef = 22DF62601DDC2FB30080B77A /* AngelManager.swift */; };
 		2238E0EB1DDC3CC200211F82 /* CDataManager.c in Sources */ = {isa = PBXBuildFile; fileRef = 2238E0E91DDC3CC200211F82 /* CDataManager.c */; };
 		2238E0EC1DDC3CC200211F82 /* CDataManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 2238E0EA1DDC3CC200211F82 /* CDataManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		2292C3E61DC83C0B00B7472E /* GodManager.swift in Headers */ = {isa = PBXBuildFile; fileRef = 222B89A01DC732C80056861C /* GodManager.swift */; settings = {ATTRIBUTES = (Public, ); }; };
+		2292C3E61DC83C0B00B7472E /* GodManager.swift in Headers */ = {isa = PBXBuildFile; fileRef = 222B89A01DC732C80056861C /* GodManager.swift */; };
 		22DF61A31DD99CD40080B77A /* app_timer.c in Sources */ = {isa = PBXBuildFile; fileRef = 22DF61731DD99CD40080B77A /* app_timer.c */; };
 		22DF61A41DD99CD40080B77A /* app_timer.h in Headers */ = {isa = PBXBuildFile; fileRef = 22DF61741DD99CD40080B77A /* app_timer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		22DF61A51DD99CD40080B77A /* config.h in Headers */ = {isa = PBXBuildFile; fileRef = 22DF61751DD99CD40080B77A /* config.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -85,7 +85,7 @@
 		22DF625B1DDBE9440080B77A /* Protocol_ios_port.h in Headers */ = {isa = PBXBuildFile; fileRef = 22DF62551DDBE9440080B77A /* Protocol_ios_port.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		22DF625C1DDBE9440080B77A /* Protocol_model.h in Headers */ = {isa = PBXBuildFile; fileRef = 22DF62561DDBE9440080B77A /* Protocol_model.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		22DF625D1DDBE9440080B77A /* Protocol_model.m in Sources */ = {isa = PBXBuildFile; fileRef = 22DF62571DDBE9440080B77A /* Protocol_model.m */; };
-		22DF625E1DDBFA530080B77A /* PeripheralManager.swift in Headers */ = {isa = PBXBuildFile; fileRef = 222E7D721DC87A55001BA04A /* PeripheralManager.swift */; settings = {ATTRIBUTES = (Public, ); }; };
+		22DF625E1DDBFA530080B77A /* PeripheralManager.swift in Headers */ = {isa = PBXBuildFile; fileRef = 222E7D721DC87A55001BA04A /* PeripheralManager.swift */; };
 		32060CF81DE28409007BC7B3 /* AngelModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32060CF71DE28409007BC7B3 /* AngelModel.swift */; };
 		32C103371DC9741D0001D415 /* BindingPeripherals.plist in Resources */ = {isa = PBXBuildFile; fileRef = 32C103361DC9741D0001D415 /* BindingPeripherals.plist */; };
 		32C103391DC974410001D415 /* GodFS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C103381DC974410001D415 /* GodFS.swift */; };
@@ -527,47 +527,47 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2238E0EC1DDC3CC200211F82 /* CDataManager.h in Headers */,
-				22DF62581DDBE9440080B77A /* Protocol_ios.h in Headers */,
-				22DF625C1DDBE9440080B77A /* Protocol_model.h in Headers */,
-				22DF625B1DDBE9440080B77A /* Protocol_ios_port.h in Headers */,
-				22DF62441DDB06E10080B77A /* CFunc.h in Headers */,
-				22DF61A51DD99CD40080B77A /* config.h in Headers */,
-				22DF61A61DD99CD40080B77A /* debug.h in Headers */,
-				22DF61CD1DD99CD40080B77A /* protocol_val.h in Headers */,
-				22DF61CC1DD99CD40080B77A /* protocol_util.h in Headers */,
-				22DF61D11DD99CD40080B77A /* vbus.h in Headers */,
-				22DF61AC1DD99CD40080B77A /* mem.h in Headers */,
-				22DF61B01DD99CD40080B77A /* protocol_data.h in Headers */,
-				22DF61A71DD99CD40080B77A /* define.h in Headers */,
-				22DF61AE1DD99CD40080B77A /* protocol.h in Headers */,
-				22DF61A81DD99CD40080B77A /* error.h in Headers */,
-				22DF61A91DD99CD40080B77A /* error_ios.h in Headers */,
-				22DF61DC1DD99EA20080B77A /* SocketLog.h in Headers */,
-				22DF61C41DD99CD40080B77A /* protocol_switch_data.h in Headers */,
-				22DF61D21DD99CD40080B77A /* vbus_evt_app.h in Headers */,
-				22DF61A41DD99CD40080B77A /* app_timer.h in Headers */,
-				22DF61B61DD99CD40080B77A /* protocol_health.h in Headers */,
-				22DF61B21DD99CD40080B77A /* protocol_exec.h in Headers */,
-				22DF61DE1DD99EA20080B77A /* SocketLogC.h in Headers */,
 				22DF61AA1DD99CD40080B77A /* include.h in Headers */,
-				22DF61C61DD99CD40080B77A /* protocol_sync_activity.h in Headers */,
-				22DF61CF1DD99CD40080B77A /* protocol_write.h in Headers */,
-				22DF61C21DD99CD40080B77A /* protocol_status.h in Headers */,
-				22DF61BC1DD99CD40080B77A /* protocol_health_resolve_sport.h in Headers */,
-				22DF61C01DD99CD40080B77A /* protocol_set_alarm.h in Headers */,
-				22DF61CA1DD99CD40080B77A /* protocol_sync_config.h in Headers */,
-				22DF61B81DD99CD40080B77A /* protocol_health_resolve_heart_rate.h in Headers */,
+				22DF61B61DD99CD40080B77A /* protocol_health.h in Headers */,
+				22DF61AE1DD99CD40080B77A /* protocol.h in Headers */,
 				22DF62081DD9B6900080B77A /* SF2C.h in Headers */,
-				22DF61BE1DD99CD40080B77A /* protocol_send_notice.h in Headers */,
+				22DF625B1DDBE9440080B77A /* Protocol_ios_port.h in Headers */,
+				22DF61D11DD99CD40080B77A /* vbus.h in Headers */,
+				2238E0EC1DDC3CC200211F82 /* CDataManager.h in Headers */,
+				22DF61D21DD99CD40080B77A /* vbus_evt_app.h in Headers */,
+				22DF62581DDBE9440080B77A /* Protocol_ios.h in Headers */,
+				22DF61A51DD99CD40080B77A /* config.h in Headers */,
+				22DF61CC1DD99CD40080B77A /* protocol_util.h in Headers */,
+				22DF61B01DD99CD40080B77A /* protocol_data.h in Headers */,
+				22DF61AC1DD99CD40080B77A /* mem.h in Headers */,
+				22DF61CD1DD99CD40080B77A /* protocol_val.h in Headers */,
+				22DF61DC1DD99EA20080B77A /* SocketLog.h in Headers */,
+				22DF61A71DD99CD40080B77A /* define.h in Headers */,
+				22DF61C61DD99CD40080B77A /* protocol_sync_activity.h in Headers */,
+				22DF61C41DD99CD40080B77A /* protocol_switch_data.h in Headers */,
+				22DF625C1DDBE9440080B77A /* Protocol_model.h in Headers */,
+				22DF61C01DD99CD40080B77A /* protocol_set_alarm.h in Headers */,
+				22DF61DE1DD99EA20080B77A /* SocketLogC.h in Headers */,
+				22DF61B21DD99CD40080B77A /* protocol_exec.h in Headers */,
 				22DF61DA1DD99EA20080B77A /* GCDAsyncSocket.h in Headers */,
-				22DF61BA1DD99CD40080B77A /* protocol_health_resolve_sleep.h in Headers */,
+				22DF61A91DD99CD40080B77A /* error_ios.h in Headers */,
+				22DF61BC1DD99CD40080B77A /* protocol_health_resolve_sport.h in Headers */,
+				22DF61A61DD99CD40080B77A /* debug.h in Headers */,
 				22DF61C81DD99CD40080B77A /* protocol_sync_activity_resolve.h in Headers */,
-				2238E0E81DDC370300211F82 /* AngelManager.swift in Headers */,
-				22DF625E1DDBFA530080B77A /* PeripheralManager.swift in Headers */,
+				22DF61A81DD99CD40080B77A /* error.h in Headers */,
+				22DF61B81DD99CD40080B77A /* protocol_health_resolve_heart_rate.h in Headers */,
+				22DF61C21DD99CD40080B77A /* protocol_status.h in Headers */,
+				22DF61CA1DD99CD40080B77A /* protocol_sync_config.h in Headers */,
+				22DF61CF1DD99CD40080B77A /* protocol_write.h in Headers */,
 				22DF61B41DD99CD40080B77A /* protocol_func_table.h in Headers */,
 				222B89961DC7325B0056861C /* AngelFit.h in Headers */,
+				22DF61BA1DD99CD40080B77A /* protocol_health_resolve_sleep.h in Headers */,
+				22DF61BE1DD99CD40080B77A /* protocol_send_notice.h in Headers */,
+				22DF61A41DD99CD40080B77A /* app_timer.h in Headers */,
+				22DF62441DDB06E10080B77A /* CFunc.h in Headers */,
 				2292C3E61DC83C0B00B7472E /* GodManager.swift in Headers */,
+				2238E0E81DDC370300211F82 /* AngelManager.swift in Headers */,
+				22DF625E1DDBFA530080B77A /* PeripheralManager.swift in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

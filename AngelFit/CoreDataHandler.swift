@@ -804,7 +804,7 @@ extension CoreDataHandler{
         }
         
         let request: NSFetchRequest<Alarm> = Alarm.fetchRequest()
-        let predicate = NSPredicate(format: "device.alarm.id = \(id)", "")
+        let predicate = NSPredicate(format: "id = \(id)", "")
         request.predicate = predicate
         do{
             let resultList = try context.fetch(request)
