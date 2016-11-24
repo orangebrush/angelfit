@@ -38,37 +38,45 @@ public enum BandMode{
 }
 //个人信息
 public struct UserInfoModel {
-    var height:UInt8 = 0
-    var weight:UInt16 = 0
-    var gender:UInt8 = 0        //性别 1:男 0:女
-    var birthYear:UInt16 = 0    //生日
-    var birthMonth:UInt8 = 0
-    var birthDay:UInt8 = 0
+    public var height:UInt8 = 0
+    public var weight:UInt16 = 0
+    public var gender:UInt8 = 0        //性别 1:男 0:女
+    public var birthYear:UInt16 = 0    //生日
+    public var birthMonth:UInt8 = 0
+    public var birthDay:UInt8 = 0
+    public init(){}
 }
 //久坐提醒
 public struct LongSitModel {
-    var startHour:UInt8 = 0             //开始时间
-    var startMinute:UInt8 = 0
-    var endHour:UInt8 = 0               //结束时间
-    var endMinute:UInt8 = 0
-    var duringTime:UInt16 = 0           //间隔
-    var isOpen = false                //开关
-    var weekdayList = [Int]()           //星期几响应数组   日 0 一 1 。。。 六 6
+    public var startHour:UInt8 = 0             //开始时间
+    public var startMinute:UInt8 = 0
+    public var endHour:UInt8 = 0               //结束时间
+    public var endMinute:UInt8 = 0
+    public var duringTime:UInt16 = 0           //间隔
+    public var isOpen = false                //开关
+    public var weekdayList = [Int]()           //星期几响应数组   日 0 一 1 。。。 六 6
+    public init(){
+        
+    }
 }
 //目标
 public struct GoalDataModel {
-    var type:UInt8 = 0              //目标类型 00步数,01 卡路里,02 距离
-    var value:UInt32 = 0             //目标
-    var sleepHour:UInt8 = 0             //睡眠目标小时
-    var sleepMinute:UInt8 = 0           //睡眠目标分钟
+    public var type:UInt8 = 0              //目标类型 00步数,01 卡路里,02 距离
+    public var value:UInt32 = 0             //目标
+    public var sleepHour:UInt8 = 0             //睡眠目标小时
+    public var sleepMinute:UInt8 = 0           //睡眠目标分钟
+    public init(){
+        
+    }
 }
 //勿扰模式
 public struct SilentModel {
-    var isOpen = false
-    var startHour:UInt8 = 0
-    var startMinute:UInt8 = 0
-    var endHour:UInt8 = 0
-    var endMinute:UInt8 = 0         //Silent
+    public var isOpen = false
+    public var startHour:UInt8 = 0
+    public var startMinute:UInt8 = 0
+    public var endHour:UInt8 = 0
+    public var endMinute:UInt8 = 0         //Silent
+    public init(){}
 }
 //心率区间
 public struct HeartIntervalModel {
@@ -93,15 +101,16 @@ public enum ActionType {
 }
 
 public struct SmartAlertPrm {
-    var sms = false
-    var faceBook = false
-    var weChat = false
-    var qq = false
-    var twitter = false
-    var whatsapp:Bool = false
-    var linkedIn:Bool = false
-    var instagram:Bool = false
-    var messenger:Bool = false  //FaceBookMessenger
+    public var sms = false
+    public var faceBook = false
+    public var weChat = false
+    public var qq = false
+    public var twitter = false
+    public var whatsapp:Bool = false
+    public var linkedIn:Bool = false
+    public var instagram:Bool = false
+    public var messenger:Bool = false  //FaceBookMessenger
+    public init(){}
 }
 
 //设置命令
@@ -133,11 +142,14 @@ public enum HealthDataType{
 //闹钟
 //设置闹钟
 public struct CustomAlarm{
-    var id: Int16 = 0
-    var duration: Int16 = 0     //贪睡
-    var status: Int16 = 0x55    //状态
-    var type: Int16 = 0x07      //类型
-    var hour: UInt8 = 0
-    var minute: UInt8 = 0
-    var repeatList = [UInt8]()  //0总开关 1周一 ... 7周日
+    public var id: Int16 = 0
+    public var duration: Int16 = 0     //贪睡
+    public var status: Int16 = 0x55    //状态
+    public var type: Int16 = 0x07      //类型
+    public var hour: UInt8 = 0
+    public var minute: UInt8 = 0
+    public var repeatList = [UInt8]()  //0总开关 1周一 ... 7周日
+    public init(){
+        
+    }
 }
