@@ -31,7 +31,7 @@ public struct ErrorCode{
 }
 
 //手环模式
-public enum BandMode{
+@objc public enum BandMode: Int{
     case unbind         //没有绑定
     case bind           //已经绑定
     case levelup        //升级模式
@@ -86,14 +86,14 @@ public struct HeartIntervalModel {
 }
 
 //心率模式
-public enum HeartRateMode {
+@objc public enum HeartRateMode :Int{
     case manual
     case auto
     case close
 }
 
 //从手环端获取数据
-public enum ActionType {
+@objc public enum ActionType: Int {
     case macAddress     //mac地址
     case deviceInfo     //设备信息
     case liveData       //实时数据
@@ -114,12 +114,12 @@ public struct SmartAlertPrm {
 }
 
 //设置命令
-public enum CommondType{
+@objc public enum CommondType: Int{
     case setTime        //设置时间
 }
 
 //公英制
-public enum UnitType{
+@objc public enum UnitType: Int{
     case distance_KM
     case distance_MI
     case weight_KG
@@ -133,7 +133,7 @@ public enum UnitType{
 }
 
 //健康数据
-public enum HealthDataType{
+@objc public enum HealthDataType: Int{
     case sport
     case sleep
     case heartRate
