@@ -93,6 +93,8 @@ public final class AngelManager: NSObject {
     //获取功能列表
     public func getFuncTableFromBand(_ macAddress: String? = nil, closure : @escaping (_ errorCode:Int16 ,_ value: String)->()){
         getLiveDataFromBring(withActionType: .funcTable, macAddress: macAddress, closure: closure)
+         
+        
     }
     
     //从数据库获取功能列表
@@ -121,23 +123,23 @@ public final class AngelManager: NSObject {
         switch actionType {
         case .macAddress:
             
-            swiftMacAddress = { data  in
-                
-                let macStruct:protocol_device_mac = data.assumingMemoryBound(to: protocol_device_mac.self).pointee
-                let macCList = macStruct.mac_addr
-                let macList = [macCList.0, macCList.1, macCList.2, macCList.3, macCList.4, macCList.5]
-                let macAddress = macList.map(){String($0,radix:16)}.reduce(""){$0+$1}.uppercased()
-                
-                //保存macAddress到数据库
-                _ = self.coredataHandler.insertDevice(withMacAddress: macAddress)
-                //保存macAddress到实例
-                self.macAddress = macAddress
-                //返回
-                closure(ErrorCode.success,macAddress)
-            }
-            var ret_code:UInt32 = 0
-            vbus_tx_evt(VBUS_EVT_BASE_APP_GET, VBUS_EVT_APP_APP_GET_MAC, &ret_code);
-            
+//            swiftMacAddress = { data  in
+//                
+//                let macStruct:protocol_device_mac = data.assumingMemoryBound(to: protocol_device_mac.self).pointee
+//                let macCList = macStruct.mac_addr
+//                let macList = [macCList.0, macCList.1, macCList.2, macCList.3, macCList.4, macCList.5]
+//                let macAddress = macList.map(){String($0,radix:16)}.reduce(""){$0+$1}.uppercased()
+//                
+//                //保存macAddress到数据库
+//                _ = self.coredataHandler.insertDevice(withMacAddress: macAddress)
+//                //保存macAddress到实例
+//                self.macAddress = macAddress
+//                //返回
+//                closure(ErrorCode.success,macAddress)
+//            }
+//            var ret_code:UInt32 = 0
+//            vbus_tx_evt(VBUS_EVT_BASE_APP_GET, VBUS_EVT_APP_APP_GET_MAC, &ret_code);
+            break
         case .deviceInfo:
             swiftDeviceInfo = { data in
                 
@@ -184,21 +186,21 @@ public final class AngelManager: NSObject {
         case .funcTable:
             
             //为空直接返回失败
-            var realMacAddress: String!
-            if let md = macAddress{
-                realMacAddress = md
-            }else if let md = self.macAddress{
-                realMacAddress = md
-            }else{
-                closure(ErrorCode.failure, "macAddress is empty")
-                break
-            }
+//            var realMacAddress: String!
+//            if let md = macAddress{
+//                realMacAddress = md
+//            }else if let md = self.macAddress{
+//                realMacAddress = md
+//            }else{
+//                closure(ErrorCode.failure, "macAddress is empty")
+//                break
+//            }
             
             swiftFuncTable = { data in
                 
                 let funcTableModel = data.assumingMemoryBound(to: protocol_func_table.self).pointee
                 
-                let funcTable = self.coredataHandler.selectDevice(withMacAddress: realMacAddress)?.funcTable
+                let funcTable = self.coredataHandler.selectDevice(withMacAddress: "MADEDFEDEE")?.funcTable
                 
                 funcTable?.alarmCount = Int16(funcTableModel.alarm_count)
                 
@@ -306,7 +308,8 @@ public final class AngelManager: NSObject {
                 closure(ErrorCode.success, "\(funcTable)")
             }
             var ret_code:UInt32 = 0
-            vbus_tx_evt(VBUS_EVT_BASE_APP_GET, VBUS_EVT_APP_GET_FUNC_TABLE_USER, &ret_code)
+            vbus_tx_evt(VBUS_EVT_BASE_APP_GET, VBUS_EVT_APP_GET_FUNC_TABLE, &ret_code)
+            print("获取功能列表 \(ret_code)")
             
         case .liveData:
             //实时数据

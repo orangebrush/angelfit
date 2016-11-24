@@ -58,11 +58,26 @@ extern void c_get_notice_status(int8_t notice,int8_t status,int8_t errorCode);
 extern void (^ __nonnull swiftSendSetTime)(void);
 extern void c_send_set_time();
 
-//extern void sendSyncAlarm();
+#pragma mark 同步闹钟
+extern void (^ __nonnull swiftSyncAlarm)(void);
+extern void c_send_sync_alarm();
+
+#pragma mark 设置久坐
+extern void (^ __nonnull swiftSetLongSit)(void);
+extern void c_send_set_long_sit();
+
+#pragma mark 设置个人信息
+extern void (^ __nonnull swiftSetUserInfo)(void);
+extern void c_send_set_user_info();
+
+#pragma mark 设置单位
+extern void (^ __nonnull swiftSetUnit)(void);
+extern void c_send_set_unit();
+
 //extern uint32_t sendSyncLongSit();
 //extern uint32_t sendSyncLostFind();
 //extern uint32_t sendSetGoal();
-//extern uint32_t sendSetUserInfo();
+
 //extern uint32_t sendSetUint();
 
 #endif /* CDataManager_h */

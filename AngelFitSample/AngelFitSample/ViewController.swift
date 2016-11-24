@@ -58,11 +58,12 @@ class ViewController: UIViewController {
     }
     
     @IBAction func bandDevice(_ sender: Any) {
-        let interfaceManager = InterfaceListManager()
-        interfaceManager.setMusicSwitch(withParam: true, closure: { status in
-            print("设置状态 : \(status)")
+        let angelManager  = AngelManager.share()
+        angelManager?.getFuncTableFromBand(closure: { data in
+        print("功能列表: \(data)")
+            
+            
         })
-        
 //        let interfaceManager = InterfaceListManager()
 //        interfaceManager.setSynchronization(closure: { status , percent in
 //            print("同步状态: \(status)  同步百分比: \(percent)")

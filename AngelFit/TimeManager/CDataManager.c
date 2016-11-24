@@ -7,7 +7,7 @@
 //
 
 #include "CDataManager.h"
-
+#include "protocol_func_table.h"
 void (^ __nonnull swiftMacAddress)(void * __nonnull) = NULL;
 void (^ __nonnull swiftDeviceInfo)(void * __nonnull) = NULL;
 void (^ __nonnull swiftFuncTable)(void * __nonnull)  = NULL;
@@ -18,10 +18,14 @@ void (^ __nonnull swiftSynchronizationConfig)(bool status) = NULL;
 void (^ __nonnull swiftSynchronizationAlarm)(bool status) = NULL;
 void (^ __nonnull swiftGetNoticeStatus)(int8_t notice,int8_t status,int8_t errorCode) = NULL;
 void (^ __nonnull swiftSendSetTime)() = NULL;
-
+void (^ __nonnull swiftSyncAlarm)(void) = NULL;
+void (^ __nonnull swiftSetLongSit)(void) = NULL;
+void (^ __nonnull swiftSetUserInfo)(void) = NULL;
+void (^ __nonnull swiftSetUnit)(void) = NULL;
 
 
 extern void c_get_macAddress(void * __nonnull data){
+    
     swiftMacAddress(data);
 }
 
@@ -55,9 +59,20 @@ extern void c_get_notice_status(int8_t notice,int8_t status,int8_t errorCode){
     swiftGetNoticeStatus(notice,status,errorCode);
 }
 
-#pragma mark 设置时间
+extern void c_send_sync_alarm(){
+    swiftSyncAlarm();
+}
 extern void c_send_set_time(){
      swiftSendSetTime();
+}
+extern void c_send_set_long_sit(){
+    swiftSetLongSit();
+}
+extern void c_send_set_user_info(){
+    swiftSetUserInfo();
+}
+extern void c_send_set_unit(){
+    swiftSetUnit();
 }
 #pragma mark 处理C返回的数据
 void manageData(VBUS_EVT_BASE evt_base,VBUS_EVT_TYPE evt_type,void * __nonnull data,uint32_t size,uint32_t * __nonnull error_code){
@@ -68,6 +83,7 @@ void manageData(VBUS_EVT_BASE evt_base,VBUS_EVT_TYPE evt_type,void * __nonnull d
     if (evt_base == VBUS_EVT_BASE_NOTICE_APP) {
         switch (evt_type) {
             case VBUS_EVT_APP_APP_GET_MAC:
+                printf("获取mac地址 ：%s",data);
                 c_get_macAddress(data);
                 break;
             case VBUS_EVT_APP_GET_DEVICE_INFO:{
@@ -75,7 +91,9 @@ void manageData(VBUS_EVT_BASE evt_base,VBUS_EVT_TYPE evt_type,void * __nonnull d
             }
                 break;
             case VBUS_EVT_APP_GET_FUNC_TABLE_USER:{
-                c_get_func_table(data);
+                struct protocol_func_table func_table;
+                protocol_func_table_get(&func_table);
+                c_get_func_table(&func_table);
             }
                 break;
             case VBUS_EVT_APP_GET_LIVE_DATA:{
@@ -122,6 +140,17 @@ void manageData(VBUS_EVT_BASE evt_base,VBUS_EVT_TYPE evt_type,void * __nonnull d
                 c_send_set_time();
             }
                 break;
+            case VBUS_EVT_APP_SET_ALARM :{
+                c_send_sync_alarm();
+            }
+                break;
+            case VBUS_EVT_APP_SET_USER_INFO :
+                c_send_set_user_info();
+                break;
+            case VBUS_EVT_APP_SET_UINT:{
+                c_send_set_unit();
+            }
+                break;
             case VBUS_EVT_APP_GET_DEVICE_INFO :
                 vbus_tx_evt(VBUS_EVT_BASE_APP_GET,VBUS_EVT_APP_GET_DEVICE_INFO,&ret_code);
                 break;
@@ -138,5 +167,5 @@ void manageData(VBUS_EVT_BASE evt_base,VBUS_EVT_TYPE evt_type,void * __nonnull d
                 break;
         }
     }
-}
+  }
 
