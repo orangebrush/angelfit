@@ -163,17 +163,32 @@ extension CBridgingManager{
             })
         }
         swiftSetUnit = {
-          let unit = AngelManager.share()?.getUnit()
-            unit?.distance
-            
-            
-            var unitType: Set<UnitType> = [.distance_KM, .weight_KG]
-            
-            
-            AngelManager.share()?.setUnit(unitType, macAddress: self.currentMacAddress!, closure: { _ in
-            
-            })
+            AngelManager.share()?.getUnit(){
+                unit in
+                
+                var unitType: Set<UnitType> = [.distance_KM, .langure_ZH, .temp_C, .timeFormat_24, .weight_KG]
+                
+                if unit?.distance == 0x02{
+                    unitType.insert(UnitType.distance_MI)
+                }
+                if unit?.language == 0x02{
+                    unitType.insert(UnitType.langure_ZH)
+                }
+                if unit?.weight == 0x02{
+                    unitType.insert(UnitType.weight_LB)
+                }
+                if unit?.temperature == 0x02{
+                    unitType.insert(UnitType.temp_F)
+                }
+                if unit?.timeFormat == 0x02{
+                    unitType.insert(UnitType.timeFormat_12)
+                }
+                AngelManager.share()?.setUnit(unitType, macAddress: self.currentMacAddress!, closure: { _ in
+                    
+                })
+            }
         }
+        
         swiftFuncTable = { data in
             
             
