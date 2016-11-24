@@ -146,23 +146,22 @@ public final class AngelManager: NSObject {
         switch actionType {
         case .macAddress:
             
-//            swiftMacAddress = { data  in
-//                
-//                let macStruct:protocol_device_mac = data.assumingMemoryBound(to: protocol_device_mac.self).pointee
-//                let macCList = macStruct.mac_addr
-//                let macList = [macCList.0, macCList.1, macCList.2, macCList.3, macCList.4, macCList.5]
-//                let macAddress = macList.map(){String($0,radix:16)}.reduce(""){$0+$1}.uppercased()
-//                
-//                //保存macAddress到数据库
-//                _ = self.coredataHandler.insertDevice(withMacAddress: macAddress)
-//                //保存macAddress到实例
-//                self.macAddress = macAddress
-//                //返回
-//                closure(ErrorCode.success,macAddress)
-//            }
-//            var ret_code:UInt32 = 0
-//            vbus_tx_evt(VBUS_EVT_BASE_APP_GET, VBUS_EVT_APP_APP_GET_MAC, &ret_code);
-            break
+            swiftMacAddress = { data  in
+                
+                let macStruct:protocol_device_mac = data.assumingMemoryBound(to: protocol_device_mac.self).pointee
+                let macCList = macStruct.mac_addr
+                let macList = [macCList.0, macCList.1, macCList.2, macCList.3, macCList.4, macCList.5]
+                let macAddress = macList.map(){String($0,radix:16)}.reduce(""){$0+$1}.uppercased()
+                
+                //保存macAddress到数据库
+                _ = self.coredataHandler.insertDevice(withMacAddress: macAddress)
+                //保存macAddress到实例
+                self.macAddress = macAddress
+                //返回
+                closure(ErrorCode.success,macAddress)
+            }
+            var ret_code:UInt32 = 0
+            vbus_tx_evt(VBUS_EVT_BASE_APP_GET, VBUS_EVT_APP_APP_GET_MAC, &ret_code);
         case .deviceInfo:
             swiftDeviceInfo = { data in
                 
