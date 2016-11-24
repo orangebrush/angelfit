@@ -64,7 +64,7 @@ public final class AngelManager: NSObject {
     }
     
     //MARK:- 从数据库获取数据-设备信息
-    public func getDevice(_ macAddress: String? = nil, userId id: Int16 = 1, closure: (Device?) -> ()){
+    public func getDevice(_ macAddress: String? = nil, userId id: Int16 = 1, closure: @escaping (Device?) -> ()){
         //为空直接返回失败
         var realMacAddress: String!
         if let md = macAddress{
@@ -75,28 +75,38 @@ public final class AngelManager: NSObject {
             closure(nil)
             return
         }
-        closure(coredataHandler.selectDevice(userId: id, withMacAddress: realMacAddress))
+        
+        guard let device = coredataHandler.selectDevice(userId: id, withMacAddress: realMacAddress) else {
+            getDeviceInfoFromBand(){
+                errorCode, value in
+                if errorCode == ErrorCode.success{
+                    closure(self.coredataHandler.selectDevice(userId: id, withMacAddress: realMacAddress))
+                }else{
+                    closure(nil)
+                }
+            }
+            return
+        }
+        closure(device)
     }
     
-    
+    //获取设备信息
+    private func getDeviceInfoFromBand(closure : @escaping (_ errorCode:Int16 ,_ value: String)->()){
+        getLiveDataFromBring(withActionType: .deviceInfo, closure: closure)
+    }
     
     //获取mac地址
     public func getMacAddressFromBand( closure: @escaping (_ errorCode:Int16 ,_ value: String)->()){
         getLiveDataFromBring(withActionType: .macAddress, closure: closure)
     }
     
-    //获取设备信息
-    public func getDeviceInfoFromBand(closure : @escaping (_ errorCode:Int16 ,_ value: String)->()){
-        getLiveDataFromBring(withActionType: .deviceInfo, closure: closure)
-    }
-    
     //获取功能列表
-    public func getFuncTableFromBand(_ macAddress: String? = nil, closure : @escaping (_ errorCode:Int16 ,_ value: String)->()){
+    private func getFuncTableFromBand(_ macAddress: String? = nil, closure : @escaping (_ errorCode:Int16 ,_ value: String)->()){
         getLiveDataFromBring(withActionType: .funcTable, macAddress: macAddress, closure: closure)
     }
     
     //从数据库获取功能列表
-    public func getFuncTable(_ macAddress: String? = nil, userId id: Int16 = 1, closure: (FuncTable?) -> ()){
+    public func getFuncTable(_ macAddress: String? = nil, userId id: Int16 = 1, closure: @escaping (FuncTable?) -> ()){
         //为空直接返回失败
         var realMacAddress: String!
         if let md = macAddress{
@@ -107,7 +117,20 @@ public final class AngelManager: NSObject {
             closure(nil)
             return
         }
-        closure(coredataHandler.selectDevice(userId: id, withMacAddress: realMacAddress)?.funcTable)
+        
+        guard let funcTable = coredataHandler.selectDevice(userId: id, withMacAddress: realMacAddress)?.funcTable else{
+            getFuncTableFromBand(realMacAddress){
+                errorCode, value in
+                if errorCode == ErrorCode.success{
+                    closure(self.coredataHandler.selectDevice(userId: id, withMacAddress: realMacAddress)?.funcTable)
+                }else{
+                    closure(nil)
+                }
+            }
+            return
+        }
+        
+        closure(funcTable)
     }
     
     //获取实时数据
@@ -196,8 +219,10 @@ public final class AngelManager: NSObject {
             
             swiftFuncTable = { data in
                 
-                let funcTableModel = data.assumingMemoryBound(to: protocol_func_table.self).pointee
+                print("--------------\n已经获取funcTable")
                 
+                let funcTableModel = data.assumingMemoryBound(to: protocol_func_table.self).pointee
+                print("--------------\nprint:funcTable\n\(funcTableModel)")
                 let funcTable = self.coredataHandler.selectDevice(withMacAddress: realMacAddress)?.funcTable
                 
                 funcTable?.alarmCount = Int16(funcTableModel.alarm_count)
@@ -305,9 +330,10 @@ public final class AngelManager: NSObject {
                 }
                 closure(ErrorCode.success, "\(funcTable)")
             }
+            print("--------------\n开始获取funcTable")
             var ret_code:UInt32 = 0
             vbus_tx_evt(VBUS_EVT_BASE_APP_GET, VBUS_EVT_APP_GET_FUNC_TABLE_USER, &ret_code)
-            
+            print("--------------\n获取状态:\(ret_code)")
         case .liveData:
             //实时数据
             swiftLiveData = { data in
@@ -614,16 +640,17 @@ public final class AngelManager: NSObject {
     }
     
     //MARK:- 获取公英制
-    public func getUnit(_ macAddress: String? = nil) -> Unit?{
+    public func getUnit(_ macAddress: String? = nil, closure: (Unit?)->()){
         var realMacAddress: String!
         if let md = macAddress{
             realMacAddress = md
         }else if let md = self.macAddress{
             realMacAddress = md
         }else{
-            return nil
+            closure(nil)
+            return
         }
-        return coredataHandler.selectUnit(withMacAddress: realMacAddress)
+        closure(coredataHandler.selectUnit(withMacAddress: realMacAddress))
     }
     
     //设置目标
@@ -723,7 +750,7 @@ public final class AngelManager: NSObject {
     }
     
     //MARK:- 获取是否开启寻找手机
-    public func getFindPhone(_ macAddress: String? = nil) -> Bool?{
+    public func getFindPhone(_ macAddress: String? = nil, closure: (_ open: Bool?)->()){
         
         var realMacAddress: String!
         if let md = macAddress{
@@ -731,13 +758,15 @@ public final class AngelManager: NSObject {
         }else if let md = self.macAddress{
             realMacAddress = md
         }else{
-            return nil
+            closure(nil)
+            return
         }
         
         guard let device = coredataHandler.selectDevice(withMacAddress: realMacAddress) else{
-            return nil
+            closure(nil)
+            return
         }
-        return device.findPhoneSwitch
+        closure(device.findPhoneSwitch)
     }
     
     //MARK:- 设置一键还原
@@ -788,7 +817,7 @@ public final class AngelManager: NSObject {
     }
     
     //MARK:- 获取是否开启一键呼叫
-    public func getQuickSOSSwitch(_ macAddress: String? = nil) -> Bool?{
+    public func getQuickSOSSwitch(_ macAddress: String? = nil, closure: (_ open: Bool?)->()){
         
         var realMacAddress: String!
         if let md = macAddress{
@@ -796,13 +825,15 @@ public final class AngelManager: NSObject {
         }else if let md = self.macAddress{
             realMacAddress = md
         }else{
-            return nil
+            closure(nil)
+            return
         }
         
         guard let device = coredataHandler.selectDevice(withMacAddress: realMacAddress) else{
-            return nil
+            closure(nil)
+            return
         }
-        return device.sos
+        closure(device.sos)
     }
     
     //重启设备
@@ -865,7 +896,7 @@ public final class AngelManager: NSObject {
     }
     
     //MARK:- 获取抬腕识别
-    public func getWristRecognition(_ macAddress: String? = nil) -> HandGesture?{
+    public func getWristRecognition(_ macAddress: String? = nil, closure: (HandGesture?)->()){
         
         //判断mac地址是否存在
         var realMacAddress: String!
@@ -874,10 +905,11 @@ public final class AngelManager: NSObject {
         }else if let md = self.macAddress{
             realMacAddress = md
         }else{
-            return nil
+            closure(nil)
+            return
         }
         
-        return coredataHandler.selectHandGesture(withMacAddress: realMacAddress)
+        closure(coredataHandler.selectHandGesture(withMacAddress: realMacAddress))
     }
     
     //设置勿扰模式
@@ -969,7 +1001,7 @@ public final class AngelManager: NSObject {
     }
     
     //MARK:- 获取心率区间
-    public func getHeartRateInterval(_ macAddress: String? = nil) -> HeartInterval?{
+    public func getHeartRateInterval(_ macAddress: String? = nil, closure: (HeartInterval?)->()){
         
         //判断mac地址是否存在
         var realMacAddress: String!
@@ -978,10 +1010,11 @@ public final class AngelManager: NSObject {
         }else if let md = self.macAddress{
             realMacAddress = md
         }else{
-            return nil
+            closure(nil)
+            return
         }
         
-        return coredataHandler.selectHeartInterval(withMacAddress: realMacAddress)
+        closure(coredataHandler.selectHeartInterval(withMacAddress: realMacAddress))
     }
     
     //MARK:- 设置左右手穿戴
@@ -1024,7 +1057,7 @@ public final class AngelManager: NSObject {
     }
     
     //MARK:- 获取左右手穿戴
-    public func getHand(_ macAddress: String? = nil) -> Bool?{
+    public func getHand(_ macAddress: String? = nil, closure: (_ isLeftHand: Bool?)->()){
         
         //判断mac地址是否存在
         var realMacAddress: String!
@@ -1033,14 +1066,16 @@ public final class AngelManager: NSObject {
         }else if let md = self.macAddress{
             realMacAddress = md
         }else{
-            return nil
+            closure(nil)
+            return
         }
         
         guard let handGesture = coredataHandler.selectHandGesture(withMacAddress: realMacAddress) else {
-            return nil
+            closure(nil)
+            return
         }
         
-        return handGesture.leftHand
+        closure(handGesture.leftHand)
     }
     
     //MARK:- 设置心率模式
@@ -1090,7 +1125,7 @@ public final class AngelManager: NSObject {
     }
     
     //MARK:- 获取心率模式
-    public func getHeartRateMode(_ macAddress: String? = nil) -> HeartRateMode?{
+    public func getHeartRateMode(_ macAddress: String? = nil, closure: (HeartRateMode?)->()){
         //判断mac地址是否存在
         var realMacAddress: String!
         if let md = macAddress{
@@ -1098,22 +1133,24 @@ public final class AngelManager: NSObject {
         }else if let md = self.macAddress{
             realMacAddress = md
         }else{
-            return nil
+            closure(nil)
+            return
         }
         
         guard let heartInterval = coredataHandler.selectHeartInterval(withMacAddress: realMacAddress) else {
-            return nil
+            closure(nil)
+            return
         }
         let result = heartInterval.heartRateMode
         switch result {
         case 0x88:
-            return HeartRateMode.auto
+            closure(HeartRateMode.auto)
         case 0x55:
-            return HeartRateMode.close
+            closure(HeartRateMode.close)
         case 0xAA:
-            return HeartRateMode.manual
+            closure(HeartRateMode.manual)
         default:
-            return nil
+            closure(nil)
         }
     }
     
@@ -1157,7 +1194,7 @@ public final class AngelManager: NSObject {
     }
     
     //MARK:- 获取横屏消息
-    public func getLangscape(_ macAddress: String? = nil) -> Bool?{
+    public func getLangscape(_ macAddress: String? = nil, closure: (_ isLangScape: Bool?)->()){
         //判断mac地址是否存在
         var realMacAddress: String!
         if let md = macAddress{
@@ -1165,14 +1202,16 @@ public final class AngelManager: NSObject {
         }else if let md = self.macAddress{
             realMacAddress = md
         }else{
-            return nil
+            closure(nil)
+            return
         }
         
         guard let device = coredataHandler.selectDevice(withMacAddress: realMacAddress) else {
-            return nil
+            closure(nil)
+            return
         }
         
-        return device.landscape
+        closure(device.landscape)
     }
     
     //MARK:- 同步健康数据
@@ -1529,7 +1568,7 @@ public final class AngelManager: NSObject {
     }
     
     //MARK:- 获取闹钟
-    public func getAlarm(_ macAddress: String? = nil, alarmId: Int16) -> Alarm?{
+    public func getAlarm(_ macAddress: String? = nil, alarmId: Int16, closure: (Alarm?)->()){
         //判断mac地址是否存在
         var realMacAddress: String!
         if let md = macAddress{
@@ -1537,14 +1576,15 @@ public final class AngelManager: NSObject {
         }else if let md = self.macAddress{
             realMacAddress = md
         }else{
-            return nil
+            closure(nil)
+            return
         }
         
-        return coredataHandler.selectAlarm(alarmId: alarmId, withMacAddress: realMacAddress).first
+        closure(coredataHandler.selectAlarm(alarmId: alarmId, withMacAddress: realMacAddress).first)
     }
     
     //MARK:- 获取所有闹钟
-    public func getAllAlarms() -> [Alarm]{
+    public func getAllAlarms(closure: ([Alarm])->()){
         //判断mac地址是否存在
         var realMacAddress: String!
         if let md = macAddress{
@@ -1552,10 +1592,11 @@ public final class AngelManager: NSObject {
         }else if let md = self.macAddress{
             realMacAddress = md
         }else{
-            return []
+            closure([])
+            return
         }
         
-        return coredataHandler.selectAllAlarm(withMacAddress: realMacAddress)
+        closure(coredataHandler.selectAllAlarm(withMacAddress: realMacAddress))
     }
     
     //同步闹钟数据
