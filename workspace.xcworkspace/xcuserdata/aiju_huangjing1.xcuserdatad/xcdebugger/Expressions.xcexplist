@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "protocol_sync_config_evt_handle:protocol_sync_config.c">
+         <PersistentStrings>
+            <PersistentString
+               value = "sync_config_evt_table">
+            </PersistentString>
+            <PersistentString
+               value = "cur_sync_index">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>

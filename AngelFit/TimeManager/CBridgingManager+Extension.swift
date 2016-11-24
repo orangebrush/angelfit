@@ -86,7 +86,8 @@ extension CBridgingManager{
             self.currentMacAddress = macAddress
             
             //保存macAddress到数据库
-            _ = CoreDataHandler().insertDevice(withMacAddress: macAddress)
+            let coreDataHandler = CoreDataHandler()
+            _ = coreDataHandler.insertDevice(withMacAddress: macAddress)
         }
         
         swiftSyncAlarm = {

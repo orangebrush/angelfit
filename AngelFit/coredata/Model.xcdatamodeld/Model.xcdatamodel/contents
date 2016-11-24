@@ -131,9 +131,9 @@
         <attribute name="leftHand" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
     </entity>
     <entity name="HeartInterval" representedClassName=".HeartInterval" syncable="YES">
-        <attribute name="aerobic" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="burnFat" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="heartRateMode" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="aerobic" optional="YES" attributeType="Integer 16" minValueString="1" maxValueString="255" defaultValueString="96" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="burnFat" optional="YES" attributeType="Integer 16" minValueString="1" maxValueString="255" defaultValueString="135" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="heartRateMode" optional="YES" attributeType="Integer 16" minValueString="1" maxValueString="255" defaultValueString="160" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="limit" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
     </entity>
     <entity name="HeartRateData" representedClassName=".HeartRateData" syncable="YES">
@@ -258,7 +258,9 @@
     <elements>
         <element name="Alarm" positionX="259" positionY="59" width="128" height="163"/>
         <element name="Device" positionX="-119" positionY="62" width="200" height="448"/>
+        <element name="FuncTable" positionX="-686" positionY="-9" width="128" height="1305"/>
         <element name="HandGesture" positionX="259" positionY="287" width="128" height="88"/>
+        <element name="HeartInterval" positionX="-549" positionY="261" width="128" height="105"/>
         <element name="HeartRateData" positionX="162" positionY="477" width="128" height="253"/>
         <element name="HeartRateItem" positionX="160" positionY="770" width="128" height="103"/>
         <element name="LongSit" positionX="-380" positionY="117" width="128" height="118"/>
@@ -271,7 +273,5 @@
         <element name="SportItem" positionX="-254" positionY="738" width="128" height="148"/>
         <element name="Unit" positionX="-378" positionY="360" width="128" height="118"/>
         <element name="User" positionX="-101" positionY="-207" width="128" height="193"/>
-        <element name="HeartInterval" positionX="-549" positionY="261" width="128" height="103"/>
-        <element name="FuncTable" positionX="-686" positionY="-9" width="128" height="1305"/>
     </elements>
 </model>

@@ -162,6 +162,7 @@ public final class AngelManager: NSObject {
             }
             var ret_code:UInt32 = 0
             vbus_tx_evt(VBUS_EVT_BASE_APP_GET, VBUS_EVT_APP_APP_GET_MAC, &ret_code);
+
         case .deviceInfo:
             swiftDeviceInfo = { data in
                 

@@ -24,7 +24,7 @@ static uint32_t protocol_status_alarm_vbus_control(VBUS_EVT_BASE evt_base,VBUS_E
     {
         switch (evt_type)
         {
-            case VBUS_EVT_APP_APP_GET_MAC:
+            case VBUS_EVT_APP_GET_DEVICE_INFO:
                 {
                     struct protocol_device_info *device_info = (struct protocol_device_info *)data;
                     if(device_info->reboot_flag == 0x01) //设备重启
