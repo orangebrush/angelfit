@@ -843,7 +843,7 @@ public final class AngelManager: NSObject {
         closure(device.sos)
     }
     
-    //重启设备
+    //MARK:- 重启设备
     public func setRestart(closure:(_ success:Bool) ->()){
         
         var ret_code:UInt32 = 0
@@ -854,7 +854,7 @@ public final class AngelManager: NSObject {
             closure(false)
             return
         }
-        closure(false)
+        closure(true)
     }
     
     //MARK:- 设置抬腕识别
@@ -1575,6 +1575,46 @@ public final class AngelManager: NSObject {
         }
         
         
+    }
+    
+    //MARK:- 删除闹钟
+    public func deleteAlarm(_ macAddress: String? = nil, alarmId: Int16, closure:(_ complete: Bool)->()){
+        
+        //判断mac地址是否存在
+        var realMacAddress: String!
+        if let md = macAddress{
+            realMacAddress = md
+        }else if let md = self.macAddress{
+            realMacAddress = md
+        }else{
+            closure(false)
+            return
+        }
+        
+        //数据库操作
+        let alarmList = coredataHandler.selectAlarm(alarmId: alarmId, withMacAddress: realMacAddress)
+        
+        guard !alarmList.isEmpty else {
+            closure(false)
+            return
+        }
+        
+        let coreDataAlarmModel = alarmList[0]
+        var alarm = protocol_set_alarm()
+        alarm.alarm_id = UInt8(coreDataAlarmModel.id)
+        alarm.repeat = 0
+        alarm.type = UInt8(coreDataAlarmModel.type)
+        alarm.hour = UInt8(coreDataAlarmModel.hour)
+        alarm.minute = UInt8(coreDataAlarmModel.minute)
+        alarm.tsnooze_duration = UInt8(coreDataAlarmModel.duration)
+        alarm.status = 0xAA
+        let length = UInt32(MemoryLayout<UInt8>.size * 9)
+        var ret_code: UInt32 = 0
+        vbus_tx_data(VBUS_EVT_BASE_APP_SET,VBUS_EVT_APP_SET_ALARM, &alarm, length, &ret_code)
+        if ret_code == 0 {
+            coredataHandler.deleteAlarm(alarmId: alarmId, withMacAddress: realMacAddress)
+            closure(true)
+        }
     }
     
     //MARK:- 获取闹钟

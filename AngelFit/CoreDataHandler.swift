@@ -1182,7 +1182,7 @@ extension CoreDataHandler{
     private func selectSportItem(userId id: Int16 = 1, withMacAddress macAddress: String, withDate date: Date, withItemId itemId: Int16) -> SportItem?{
         
         let request: NSFetchRequest<SportItem> = SportItem.fetchRequest()
-        let predicate = NSPredicate(format: "sportData.device.macAddress = '\(macAddress)' AND sportData.user.userId = \(id) AND sportData.date = %@ AND id = \(itemId)", translate(date) as CVarArg)
+        let predicate = NSPredicate(format: "sportData.device.macAddress = '\(macAddress)' AND sportData.device.user.userId = \(id) AND sportData.date = %@ AND id = \(itemId)", translate(date) as CVarArg)
         request.predicate = predicate
         do{
             let resultList = try context.fetch(request)
@@ -1313,7 +1313,7 @@ extension CoreDataHandler{
     private func selectSleepItem(userId id: Int16 = 1, withMacAddress macAddress: String, withDate date: Date, withItemId itemId: Int16) -> SleepItem?{
         
         let request: NSFetchRequest<SleepItem> = SleepItem.fetchRequest()
-        let predicate = NSPredicate(format: "sleepData.device.macAddress = '\(macAddress)' AND sleepData.user.userId = \(id) AND sleepData.date = %@ AND id = \(itemId)", translate(date) as CVarArg)
+        let predicate = NSPredicate(format: "sleepData.device.macAddress = '\(macAddress)' AND sleepData.device.user.userId = \(id) AND sleepData.date = %@ AND id = \(itemId)", translate(date) as CVarArg)
         request.predicate = predicate
         do{
             let resultList = try context.fetch(request)
@@ -1444,7 +1444,7 @@ extension CoreDataHandler{
     private func selectHeartRateItem(userId id: Int16 = 1, withMacAddress macAddress: String, withDate date: Date, withItemId itemId: Int16) -> HeartRateItem?{
         
         let request: NSFetchRequest<HeartRateItem> = HeartRateItem.fetchRequest()
-        let predicate = NSPredicate(format: "heartRateData.device.macAddress = \(macAddress) AND heartRateData.user.userId = \(id) AND heartRateData.date = %@ AND id = \(itemId)", translate(date) as CVarArg)
+        let predicate = NSPredicate(format: "heartRateData.device.macAddress = '\(macAddress)' AND heartRateData.device.user.userId = \(id) AND heartRateData.date = %@ AND id = \(itemId)", translate(date) as CVarArg)
         request.predicate = predicate
         do{
             let resultList = try context.fetch(request)

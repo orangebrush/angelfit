@@ -93,13 +93,17 @@ class GodFS {
         
         result.remove(at: index)
         
-        return true
+        let newResult = NSArray(array: result)
+        if newResult.write(toFile: documentPath(), atomically: true){
+            return true
+        }
+        return false
     }
     
     //MARK:- determine if device by UUID is banding
     func select(UUIDString uuidString: String) -> Bool{
         
-        var result = readDictionary()
+        let result = readDictionary()
         if result.contains(uuidString) {
             return true
         }
