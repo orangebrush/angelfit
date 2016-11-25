@@ -37,7 +37,7 @@ public struct ErrorCode{
     case levelup        //升级模式
 }
 //个人信息
-public struct UserInfoModel {
+public class UserInfoModel {
     public var height:UInt8 = 0
     public var weight:UInt16 = 0
     public var gender:UInt8 = 0        //性别 1:男 0:女
@@ -47,7 +47,7 @@ public struct UserInfoModel {
     public init(){}
 }
 //久坐提醒
-public struct LongSitModel {
+public class LongSitModel {
     public var startHour:UInt8 = 0             //开始时间
     public var startMinute:UInt8 = 0
     public var endHour:UInt8 = 0               //结束时间
@@ -60,7 +60,7 @@ public struct LongSitModel {
     }
 }
 //目标
-public struct GoalDataModel {
+public class GoalDataModel {
     public var type:UInt8 = 0              //目标类型 00步数,01 卡路里,02 距离
     public var value:UInt32 = 0             //目标
     public var sleepHour:UInt8 = 0             //睡眠目标小时
@@ -70,7 +70,7 @@ public struct GoalDataModel {
     }
 }
 //勿扰模式
-public struct SilentModel {
+public class SilentModel {
     public var isOpen = false
     public var startHour:UInt8 = 0
     public var startMinute:UInt8 = 0
@@ -79,10 +79,11 @@ public struct SilentModel {
     public init(){}
 }
 //心率区间
-public struct HeartIntervalModel {
-    var burnFat: UInt8 = 0
-    var aerobic: UInt8 = 0
-    var limit: UInt8   = 0
+public class HeartIntervalModel {
+    public var burnFat: UInt8 = 0
+    public var aerobic: UInt8 = 0
+    public var limit: UInt8   = 0
+    public init(){}
 }
 
 //心率模式
@@ -100,7 +101,7 @@ public struct HeartIntervalModel {
     case funcTable      //功能列表
 }
 
-public struct SmartAlertPrm {
+public class SmartAlertPrm {
     public var sms = false
     public var faceBook = false
     public var weChat = false
@@ -141,7 +142,7 @@ public struct SmartAlertPrm {
 
 //闹钟
 //设置闹钟
-public struct CustomAlarm{
+public class CustomAlarm{
     public var id: Int16 = 0
     public var duration: Int16 = 0     //贪睡
     public var status: Int16 = 0x55    //状态

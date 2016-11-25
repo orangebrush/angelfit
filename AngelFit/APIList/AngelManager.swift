@@ -1624,6 +1624,7 @@ public final class AngelManager: NSObject {
     //2.再添加 添加的闹钟是从数据库获取的
         //获取所有闹钟
         let alarmList = coredataHandler.selectAllAlarm(withMacAddress: realMacAddress)
+        print("alarmList: \(alarmList)")
         alarmList.forEach(){
             localAlarm in
             var alarm = protocol_set_alarm()
