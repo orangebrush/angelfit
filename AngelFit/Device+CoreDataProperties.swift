@@ -2,7 +2,7 @@
 //  Device+CoreDataProperties.swift
 //  AngelFit
 //
-//  Created by YiGan on 23/11/2016.
+//  Created by YiGan on 25/11/2016.
 //  Copyright © 2016 aiju_huangjing1. All rights reserved.
 //
 
@@ -22,6 +22,7 @@ extension Device {
     @NSManaged public var deviceId: Int16
     @NSManaged public var deviceUUID: String?
     @NSManaged public var findPhoneSwitch: Bool
+    @NSManaged public var landscape: Bool
     @NSManaged public var macAddress: String?
     @NSManaged public var mode: Int16
     @NSManaged public var pairFlag: Bool
@@ -29,9 +30,10 @@ extension Device {
     @NSManaged public var sos: Bool
     @NSManaged public var type: Int16
     @NSManaged public var version: Int16
-    @NSManaged public var landscape: Bool
     @NSManaged public var alarms: NSOrderedSet?
+    @NSManaged public var funcTable: FuncTable?
     @NSManaged public var handGesture: HandGesture?
+    @NSManaged public var heartInterval: HeartInterval?
     @NSManaged public var heartRateDatas: NSSet?
     @NSManaged public var longSit: LongSit?
     @NSManaged public var lostFind: LostFind?
@@ -41,8 +43,6 @@ extension Device {
     @NSManaged public var sportDatas: NSSet?
     @NSManaged public var unit: Unit?
     @NSManaged public var user: User?
-    @NSManaged public var heartInterval: HeartInterval?
-    @NSManaged public var funcTable: FuncTable?
 
 }
 

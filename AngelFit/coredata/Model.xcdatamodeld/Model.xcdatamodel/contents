@@ -9,6 +9,7 @@
         <attribute name="status" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="synchronize" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <relationship name="device" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Device" inverseName="alarms" inverseEntity="Device" syncable="YES"/>
     </entity>
     <entity name="Device" representedClassName=".Device" isAbstract="YES" syncable="YES">
         <attribute name="bandStatus" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
@@ -25,7 +26,7 @@
         <attribute name="sos" optional="YES" attributeType="Boolean" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="version" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <relationship name="alarms" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Alarm" syncable="YES"/>
+        <relationship name="alarms" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Alarm" inverseName="device" inverseEntity="Alarm" syncable="YES"/>
         <relationship name="funcTable" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="FuncTable" syncable="YES"/>
         <relationship name="handGesture" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="HandGesture" syncable="YES"/>
         <relationship name="heartInterval" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="HeartInterval" syncable="YES"/>
@@ -256,8 +257,8 @@
     </entity>
     <fetchRequest name="DefaultUserRequest" entity="User" predicateString="userId == 1"/>
     <elements>
-        <element name="Alarm" positionX="259" positionY="59" width="128" height="163"/>
-        <element name="Device" positionX="-119" positionY="62" width="200" height="448"/>
+        <element name="Alarm" positionX="259" positionY="59" width="128" height="180"/>
+        <element name="Device" positionX="-119" positionY="62" width="200" height="450"/>
         <element name="FuncTable" positionX="-686" positionY="-9" width="128" height="1305"/>
         <element name="HandGesture" positionX="259" positionY="287" width="128" height="88"/>
         <element name="HeartInterval" positionX="-549" positionY="261" width="128" height="105"/>

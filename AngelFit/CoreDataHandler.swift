@@ -315,7 +315,6 @@ extension CoreDataHandler{
         //初始化设备信息
         _ = insertUnit(userId: id, withMacAddress: macAddress, withItems: nil)
         _ = insertLongSit(userId: id, withMacAddress: macAddress, withItems: nil)
-        _ = insertAlarm(userId: id, withMacAddress: macAddress, withItems: nil)
         _ = insertNotice(userId: id, withMacAddress: macAddress, withItems: nil)
         _ = insertHandGesture(userId: id, withMacAddress: macAddress, withItems: nil)
         _ = insertLostFind(userId: id, withMacAddress: macAddress, withItems: nil)
@@ -821,15 +820,16 @@ extension CoreDataHandler{
         }
         
         let alarmId: Int16 = ids.isEmpty ? 1 : (ids.max()! + 1)
-        
+        debug("alarmId:", alarmId)
         //判断alarm是否存在
         var alarms = selectAlarm(userId: id, alarmId: alarmId, withMacAddress: macAddress)
+        debug("alarms:", alarms)
         guard alarms.isEmpty else {
             if let dict = items{
                 alarms[0].setValuesForKeys(dict)
-            }
-            guard commit() else{
-                return nil
+                guard commit() else{
+                    return nil
+                }
             }
             return alarms[0]
         }
@@ -838,7 +838,7 @@ extension CoreDataHandler{
         guard let device = selectDevice(userId: id, withMacAddress: macAddress) else {
             return nil
         }
-        
+        debug("device:", device)
         guard let newAlarm = NSEntityDescription.insertNewObject(forEntityName: "Alarm", into: context) as? Alarm else{
             return nil
         }
@@ -856,7 +856,7 @@ extension CoreDataHandler{
         if let dict = items{
             newAlarm.setValuesForKeys(dict)
         }
-        
+        debug("newAlarm:", newAlarm)
         guard commit() else{
             return nil
         }
@@ -892,16 +892,21 @@ extension CoreDataHandler{
     //获取所有 alarm
     public func selectAllAlarm(userId id: Int16 = 1, withMacAddress macAddress: String) -> [Alarm]{
         //根据设备获取闹钟模型
-        guard let device = selectDevice(userId: id, withMacAddress: macAddress) else {
-            return []
-        }
         
-        var resultList = [Alarm]()
-        device.alarms?.forEach(){
-            alarm in
-            resultList.append(alarm as! Alarm)
+        let request: NSFetchRequest<Alarm> = Alarm.fetchRequest()
+        let predicate = NSPredicate(format: "device.macAddress = '\(macAddress)' AND device.user.userId = \(id)")
+        request.predicate = predicate
+        do{
+            let resultList = try context.fetch(request)
+            if resultList.isEmpty {
+                return []
+            }else{
+                return resultList
+            }
+        }catch let error{
+            print(error)
         }
-        return resultList
+        return []
     }
     
     //删除 alarm

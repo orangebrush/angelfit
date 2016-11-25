@@ -118,14 +118,14 @@
 		32E2E1381DE42A0100DC2C89 /* Notice+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E1361DE42A0100DC2C89 /* Notice+CoreDataProperties.swift */; };
 		32E2E1471DE44C0F00DC2C89 /* FuncTable+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E1451DE44C0F00DC2C89 /* FuncTable+CoreDataClass.swift */; };
 		32E2E1481DE44C0F00DC2C89 /* FuncTable+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E1461DE44C0F00DC2C89 /* FuncTable+CoreDataProperties.swift */; };
-		32E2E1571DE5491400DC2C89 /* Device+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E1551DE5491400DC2C89 /* Device+CoreDataClass.swift */; };
-		32E2E1581DE5491400DC2C89 /* Device+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E1561DE5491400DC2C89 /* Device+CoreDataProperties.swift */; };
-		32E2E15B1DE54FAA00DC2C89 /* Alarm+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E1591DE54FAA00DC2C89 /* Alarm+CoreDataClass.swift */; };
-		32E2E15C1DE54FAA00DC2C89 /* Alarm+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E15A1DE54FAA00DC2C89 /* Alarm+CoreDataProperties.swift */; };
 		32E2E15D1DE5777500DC2C89 /* AngelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DF62601DDC2FB30080B77A /* AngelManager.swift */; };
 		32E971D51DE6A0560029DE9F /* HeartInterval+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E971D31DE6A0560029DE9F /* HeartInterval+CoreDataClass.swift */; };
 		32E971D61DE6A0560029DE9F /* HeartInterval+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E971D41DE6A0560029DE9F /* HeartInterval+CoreDataProperties.swift */; };
 		32E971D81DE7D13F0029DE9F /* Debug.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E971D71DE7D13F0029DE9F /* Debug.swift */; };
+		32E971DD1DE7DAD60029DE9F /* Alarm+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E971D91DE7DAD60029DE9F /* Alarm+CoreDataClass.swift */; };
+		32E971DE1DE7DAD60029DE9F /* Alarm+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E971DA1DE7DAD60029DE9F /* Alarm+CoreDataProperties.swift */; };
+		32E971DF1DE7DAD60029DE9F /* Device+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E971DB1DE7DAD60029DE9F /* Device+CoreDataClass.swift */; };
+		32E971E01DE7DAD60029DE9F /* Device+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E971DC1DE7DAD60029DE9F /* Device+CoreDataProperties.swift */; };
 		BE1F53971DC84FC500EAD9BA /* Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1F53961DC84FC500EAD9BA /* Time.swift */; };
 		BEB057301DD025D500B80678 /* Peripheral+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB0572F1DD025D500B80678 /* Peripheral+Extension.swift */; };
 		BEB057321DD02E1700B80678 /* AngelManager+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB057311DD02E1700B80678 /* AngelManager+Extension.swift */; };
@@ -256,13 +256,13 @@
 		32E2E1361DE42A0100DC2C89 /* Notice+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Notice+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		32E2E1451DE44C0F00DC2C89 /* FuncTable+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FuncTable+CoreDataClass.swift"; sourceTree = "<group>"; };
 		32E2E1461DE44C0F00DC2C89 /* FuncTable+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FuncTable+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		32E2E1551DE5491400DC2C89 /* Device+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Device+CoreDataClass.swift"; sourceTree = "<group>"; };
-		32E2E1561DE5491400DC2C89 /* Device+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Device+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		32E2E1591DE54FAA00DC2C89 /* Alarm+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Alarm+CoreDataClass.swift"; sourceTree = "<group>"; };
-		32E2E15A1DE54FAA00DC2C89 /* Alarm+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Alarm+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		32E971D31DE6A0560029DE9F /* HeartInterval+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HeartInterval+CoreDataClass.swift"; sourceTree = "<group>"; };
 		32E971D41DE6A0560029DE9F /* HeartInterval+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HeartInterval+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		32E971D71DE7D13F0029DE9F /* Debug.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Debug.swift; sourceTree = "<group>"; };
+		32E971D91DE7DAD60029DE9F /* Alarm+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Alarm+CoreDataClass.swift"; sourceTree = "<group>"; };
+		32E971DA1DE7DAD60029DE9F /* Alarm+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Alarm+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		32E971DB1DE7DAD60029DE9F /* Device+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Device+CoreDataClass.swift"; sourceTree = "<group>"; };
+		32E971DC1DE7DAD60029DE9F /* Device+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Device+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		BE1F53961DC84FC500EAD9BA /* Time.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Time.swift; sourceTree = "<group>"; };
 		BEB0572F1DD025D500B80678 /* Peripheral+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Peripheral+Extension.swift"; sourceTree = "<group>"; };
 		BEB057311DD02E1700B80678 /* AngelManager+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "AngelManager+Extension.swift"; path = "../AngelManager+Extension.swift"; sourceTree = "<group>"; };
@@ -473,12 +473,12 @@
 		32C1033A1DC987CC0001D415 /* coredata */ = {
 			isa = PBXGroup;
 			children = (
+				32E971D91DE7DAD60029DE9F /* Alarm+CoreDataClass.swift */,
+				32E971DA1DE7DAD60029DE9F /* Alarm+CoreDataProperties.swift */,
+				32E971DB1DE7DAD60029DE9F /* Device+CoreDataClass.swift */,
+				32E971DC1DE7DAD60029DE9F /* Device+CoreDataProperties.swift */,
 				32E971D31DE6A0560029DE9F /* HeartInterval+CoreDataClass.swift */,
 				32E971D41DE6A0560029DE9F /* HeartInterval+CoreDataProperties.swift */,
-				32E2E1591DE54FAA00DC2C89 /* Alarm+CoreDataClass.swift */,
-				32E2E15A1DE54FAA00DC2C89 /* Alarm+CoreDataProperties.swift */,
-				32E2E1551DE5491400DC2C89 /* Device+CoreDataClass.swift */,
-				32E2E1561DE5491400DC2C89 /* Device+CoreDataProperties.swift */,
 				32E2E1451DE44C0F00DC2C89 /* FuncTable+CoreDataClass.swift */,
 				32E2E1461DE44C0F00DC2C89 /* FuncTable+CoreDataProperties.swift */,
 				32E2E1351DE42A0100DC2C89 /* Notice+CoreDataClass.swift */,
@@ -625,7 +625,7 @@
 				TargetAttributes = {
 					222B89841DC7325B0056861C = {
 						CreatedOnToolsVersion = 8.1;
-						DevelopmentTeam = T65EE75V48;
+						DevelopmentTeam = NWGF84NL9Q;
 						LastSwiftMigration = 0810;
 						ProvisioningStyle = Automatic;
 					};
@@ -680,9 +680,9 @@
 				32E2E15D1DE5777500DC2C89 /* AngelManager.swift in Sources */,
 				222E7D731DC87A55001BA04A /* PeripheralManager.swift in Sources */,
 				22DF62031DD9B63C0080B77A /* CBridgingManager.swift in Sources */,
+				32E971DF1DE7DAD60029DE9F /* Device+CoreDataClass.swift in Sources */,
 				22DF61CE1DD99CD40080B77A /* protocol_write.c in Sources */,
 				22DF61BD1DD99CD40080B77A /* protocol_send_notice.c in Sources */,
-				32E2E1581DE5491400DC2C89 /* Device+CoreDataProperties.swift in Sources */,
 				22DF61B71DD99CD40080B77A /* protocol_health_resolve_heart_rate.c in Sources */,
 				32E2E1261DE3F5A900DC2C89 /* HeartRateData+CoreDataProperties.swift in Sources */,
 				22DF61AB1DD99CD40080B77A /* mem.c in Sources */,
@@ -697,22 +697,24 @@
 				32E2E0E61DE2EDC000DC2C89 /* LostFind+CoreDataProperties.swift in Sources */,
 				22DF61C71DD99CD40080B77A /* protocol_sync_activity_resolve.c in Sources */,
 				22DF61B51DD99CD40080B77A /* protocol_health.c in Sources */,
-				32E2E15B1DE54FAA00DC2C89 /* Alarm+CoreDataClass.swift in Sources */,
 				32E2E0EF1DE2EDC000DC2C89 /* Unit+CoreDataClass.swift in Sources */,
 				BE1F53971DC84FC500EAD9BA /* Time.swift in Sources */,
 				222B89A11DC732C80056861C /* GodManager.swift in Sources */,
 				32E2E1381DE42A0100DC2C89 /* Notice+CoreDataProperties.swift in Sources */,
+				32E971DE1DE7DAD60029DE9F /* Alarm+CoreDataProperties.swift in Sources */,
 				22DF61BF1DD99CD40080B77A /* protocol_set_alarm.c in Sources */,
 				22DF61DD1DD99EA20080B77A /* SocketLog.m in Sources */,
 				22DF62401DDAFF2A0080B77A /* CBridgingManager+Extension.swift in Sources */,
 				32E2E1341DE3F9AD00DC2C89 /* SleepData+CoreDataProperties.swift in Sources */,
 				22DF61CB1DD99CD40080B77A /* protocol_util.c in Sources */,
 				32E2E1471DE44C0F00DC2C89 /* FuncTable+CoreDataClass.swift in Sources */,
+				32E971DD1DE7DAD60029DE9F /* Alarm+CoreDataClass.swift in Sources */,
 				BEF78B921DC9E4CA00A2D528 /* CoreDataHandler.swift in Sources */,
 				22DF61C91DD99CD40080B77A /* protocol_sync_config.c in Sources */,
 				22DF61BB1DD99CD40080B77A /* protocol_health_resolve_sport.c in Sources */,
 				32E2E1281DE3F5A900DC2C89 /* HeartRateItem+CoreDataProperties.swift in Sources */,
 				22DF623A1DDAA8260080B77A /* Timer.swift in Sources */,
+				32E971E01DE7DAD60029DE9F /* Device+CoreDataProperties.swift in Sources */,
 				22DF61D01DD99CD40080B77A /* vbus.c in Sources */,
 				32E971D51DE6A0560029DE9F /* HeartInterval+CoreDataClass.swift in Sources */,
 				32C1033D1DC988130001D415 /* Model.xcdatamodeld in Sources */,
@@ -734,14 +736,12 @@
 				22DF625D1DDBE9440080B77A /* Protocol_model.m in Sources */,
 				22DF61C31DD99CD40080B77A /* protocol_switch_data.c in Sources */,
 				22DF61AF1DD99CD40080B77A /* protocol_data.c in Sources */,
-				32E2E1571DE5491400DC2C89 /* Device+CoreDataClass.swift in Sources */,
 				22DF61B11DD99CD40080B77A /* protocol_exec.c in Sources */,
 				32E2E1251DE3F5A900DC2C89 /* HeartRateData+CoreDataClass.swift in Sources */,
 				22DF61DF1DD99EA20080B77A /* SocketLogC.m in Sources */,
 				32E971D81DE7D13F0029DE9F /* Debug.swift in Sources */,
 				22DF62591DDBE9440080B77A /* Protocol_ios.m in Sources */,
 				32E2E0E11DE2EDC000DC2C89 /* SilentDistrube+CoreDataClass.swift in Sources */,
-				32E2E15C1DE54FAA00DC2C89 /* Alarm+CoreDataProperties.swift in Sources */,
 				32C103391DC974410001D415 /* GodFS.swift in Sources */,
 				BEB057301DD025D500B80678 /* Peripheral+Extension.swift in Sources */,
 				BEB057321DD02E1700B80678 /* AngelManager+Extension.swift in Sources */,
@@ -884,7 +884,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = T65EE75V48;
+				DEVELOPMENT_TEAM = NWGF84NL9Q;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -908,7 +908,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = T65EE75V48;
+				DEVELOPMENT_TEAM = NWGF84NL9Q;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";

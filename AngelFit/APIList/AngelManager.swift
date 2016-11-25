@@ -1526,6 +1526,7 @@ public final class AngelManager: NSObject {
         }
         
         let alarmList = coredataHandler.selectAlarm(alarmId: alarmId, withMacAddress: realMacAddress)
+        debug("update alarmList:", alarmList)
         guard !alarmList.isEmpty else {
             closure(false)
             return
@@ -1535,11 +1536,13 @@ public final class AngelManager: NSObject {
         alarm.hour = Int16(customAlarm.hour)
         alarm.minute = Int16(customAlarm.minute)
         alarm.duration = customAlarm.duration
-        alarm.repeatList = Int16(customAlarm.repeatList.reduce(0){$0 | 0x01 << (7 - Int8($1))})
+        alarm.repeatList = Int16(customAlarm.repeatList.reduce(0x00){$0 | 0x01 << $1})
         alarm.synchronize = false
         alarm.type = customAlarm.type
         alarm.id = alarmId
-        
+        debug("?????????????????????")
+        debug(alarm.repeatList)
+        debug(customAlarm.repeatList)
         guard coredataHandler.commit() else {
             closure(false)
             return
@@ -1633,9 +1636,11 @@ public final class AngelManager: NSObject {
             alarm.alarm_id = UInt8(localAlarm.id)
             alarm.tsnooze_duration = UInt8(localAlarm.duration)
             alarm.type = UInt8(localAlarm.type)
-            alarm.repeat = UInt8(localAlarm.repeatList)
+            alarm.repeat = 0xFF // UInt8(localAlarm.repeatList)
             alarm.status = UInt8(localAlarm.status)
             protocol_set_alarm_add(alarm)
+            
+            print("set alarm: \(alarm)")
         }
         
     //3.再同步

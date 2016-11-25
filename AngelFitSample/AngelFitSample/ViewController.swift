@@ -59,52 +59,18 @@ class ViewController: UIViewController {
     
     @IBAction func bandDevice(_ sender: Any) {
         let angelManager  = AngelManager.share()
-//        angelManager?.getFuncTableFromBand(closure: { data in
-//        print("功能列表: \(data)")
-//            
-//            
-//        })
-//        let interfaceManager = InterfaceListManager()
-//        interfaceManager.setSynchronization(closure: { status , percent in
-//            print("同步状态: \(status)  同步百分比: \(percent)")
-//        })
         
-//        interfaceManager.setCamera(withParam: true, closure:{
-//            type in
-//            print("正在拍照: \(type)")
-//        })
-        
-//        interfaceManager.manage(type: ActionType.macAddress, param: nil, closure: {
-//            complete, result in
-//            
-//            
-//            guard complete else{
-//                return
-//            }
-//            
-//            guard let res = result else{
-//                return
-//            }
-//            
-//            
-//        })
-        
-        
-        return
-        guard let curPeripharel = PeripheralManager.share().currentPeripheral else{
-            print("currentPeripharel is not exist!")
-            return
+        var customAlarm = CustomAlarm()
+        customAlarm.hour = 12
+        customAlarm.minute = 20
+        customAlarm.repeatList = [0, 1, 2, 6]
+        customAlarm.status = 0x01
+        customAlarm.type = 0x01
+        customAlarm.duration = 5
+        angelManager?.addAlarm(customAlarm: customAlarm){
+            complete, alarmId in
+            print(complete, alarmId)
         }
-        
-        print("currentPeripharel is \(curPeripharel.name)")
-        
-        
-        handler.deleteDevice(withMacAddress: "textMacAddress")
-        
-        let device = handler.selectDevice(userId: 1, withMacAddress: "textMacAddress")
-        print("uuuuuuuuuuu")
-        print(device ?? "not nil")
-        print("nnnnnnnnnnn")
     }
 }
 
