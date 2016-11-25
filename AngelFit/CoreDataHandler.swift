@@ -321,6 +321,7 @@ extension CoreDataHandler{
         _ = insertLostFind(userId: id, withMacAddress: macAddress, withItems: nil)
         _ = insertSilent(userId: id, withMacAddress: macAddress, withItems: nil)
         _ = insertHeartInterval(userId: id, withMacAddress: macAddress, withItems: nil)
+        _ = insertFuncTable(userId: id, withMacAddress: macAddress, withItems: nil)
         
         return device
     }
@@ -440,6 +441,82 @@ extension CoreDataHandler{
         }
     }
 }
+
+//MARK:- FuncTable
+extension CoreDataHandler{
+    //插入 funcTable
+    public func insertFuncTable(userId id: Int16 = 1, withMacAddress macAddress: String, withItems items: [String: Any]? = nil) -> FuncTable?{
+        
+        //判断funcTable是否存在
+        var funcTable = selectFuncTable(userID: id, withMacAddress: macAddress)
+        guard funcTable == nil else {
+            if let dict = items {
+                funcTable?.setValuesForKeys(dict)
+            }
+            guard commit() else{
+                return nil
+            }
+            return funcTable
+        }
+        
+        //判断设备是否存在
+        guard let device = selectDevice(userId: id, withMacAddress: macAddress) else {
+            return nil
+        }
+        
+        //创建久坐数据模型
+        funcTable = NSEntityDescription.insertNewObject(forEntityName: "FuncTable", into: context) as? FuncTable
+        
+        if let dict = items {
+            funcTable?.setValuesForKeys(dict)
+        }
+        guard commit() else{
+            return nil
+        }
+        
+        //为设备添加久坐数据
+        device.funcTable = funcTable
+        
+        guard commit() else{
+            return nil
+        }
+        return funcTable
+    }
+    
+    //获取 funcTable
+    public func selectFuncTable(userID id: Int16 = 1, withMacAddress macAddress: String) -> FuncTable?{
+        //根据设备获取久坐模型
+        guard let device = selectDevice(userId: id, withMacAddress: macAddress) else{
+            return nil
+        }
+        
+        return device.funcTable
+    }
+    
+    //更新 funcTable
+    public func updateFuncTable(userId id: Int16 = 1, withMacAddress macAddress: String, withItems items: [String: Any]){
+        guard let funcTable = selectFuncTable(userID: id, withMacAddress: macAddress) else{
+            return
+        }
+        funcTable.setValuesForKeys(items)
+        guard commit() else{
+            return
+        }
+    }
+    
+    //删除 funcTable
+    public func deleteFuncTable(userId id: Int16 = 1, withMacAddress macAddress: String){
+        guard let funcTable = selectFuncTable(userID: id, withMacAddress: macAddress) else {
+            return
+        }
+        
+        context.delete(funcTable)
+        guard commit() else{
+            return
+        }
+    }
+}
+
 
 //MARK:- Notice
 extension CoreDataHandler{

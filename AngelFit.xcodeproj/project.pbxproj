@@ -125,6 +125,7 @@
 		32E2E15D1DE5777500DC2C89 /* AngelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DF62601DDC2FB30080B77A /* AngelManager.swift */; };
 		32E971D51DE6A0560029DE9F /* HeartInterval+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E971D31DE6A0560029DE9F /* HeartInterval+CoreDataClass.swift */; };
 		32E971D61DE6A0560029DE9F /* HeartInterval+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E971D41DE6A0560029DE9F /* HeartInterval+CoreDataProperties.swift */; };
+		32E971D81DE7D13F0029DE9F /* Debug.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E971D71DE7D13F0029DE9F /* Debug.swift */; };
 		BE1F53971DC84FC500EAD9BA /* Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1F53961DC84FC500EAD9BA /* Time.swift */; };
 		BEB057301DD025D500B80678 /* Peripheral+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB0572F1DD025D500B80678 /* Peripheral+Extension.swift */; };
 		BEB057321DD02E1700B80678 /* AngelManager+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB057311DD02E1700B80678 /* AngelManager+Extension.swift */; };
@@ -261,6 +262,7 @@
 		32E2E15A1DE54FAA00DC2C89 /* Alarm+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Alarm+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		32E971D31DE6A0560029DE9F /* HeartInterval+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HeartInterval+CoreDataClass.swift"; sourceTree = "<group>"; };
 		32E971D41DE6A0560029DE9F /* HeartInterval+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HeartInterval+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		32E971D71DE7D13F0029DE9F /* Debug.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Debug.swift; sourceTree = "<group>"; };
 		BE1F53961DC84FC500EAD9BA /* Time.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Time.swift; sourceTree = "<group>"; };
 		BEB0572F1DD025D500B80678 /* Peripheral+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Peripheral+Extension.swift"; sourceTree = "<group>"; };
 		BEB057311DD02E1700B80678 /* AngelManager+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "AngelManager+Extension.swift"; path = "../AngelManager+Extension.swift"; sourceTree = "<group>"; };
@@ -454,6 +456,7 @@
 			children = (
 				22DF62601DDC2FB30080B77A /* AngelManager.swift */,
 				32060CF71DE28409007BC7B3 /* AngelModel.swift */,
+				32E971D71DE7D13F0029DE9F /* Debug.swift */,
 			);
 			path = APIList;
 			sourceTree = "<group>";
@@ -735,6 +738,7 @@
 				22DF61B11DD99CD40080B77A /* protocol_exec.c in Sources */,
 				32E2E1251DE3F5A900DC2C89 /* HeartRateData+CoreDataClass.swift in Sources */,
 				22DF61DF1DD99EA20080B77A /* SocketLogC.m in Sources */,
+				32E971D81DE7D13F0029DE9F /* Debug.swift in Sources */,
 				22DF62591DDBE9440080B77A /* Protocol_ios.m in Sources */,
 				32E2E0E11DE2EDC000DC2C89 /* SilentDistrube+CoreDataClass.swift in Sources */,
 				32E2E15C1DE54FAA00DC2C89 /* Alarm+CoreDataProperties.swift in Sources */,

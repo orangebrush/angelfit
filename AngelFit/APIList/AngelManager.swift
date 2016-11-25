@@ -103,8 +103,6 @@ public final class AngelManager: NSObject {
     //获取功能列表
     private func getFuncTableFromBand(_ macAddress: String? = nil, closure : @escaping (_ errorCode:Int16 ,_ value: String)->()){
         getLiveDataFromBring(withActionType: .funcTable, macAddress: macAddress, closure: closure)
-         
-        
     }
     
     //从数据库获取功能列表
@@ -120,9 +118,10 @@ public final class AngelManager: NSObject {
             return
         }
         
-        guard let funcTable = coredataHandler.selectDevice(userId: id, withMacAddress: realMacAddress)?.funcTable else{
+//        guard let funcTable = coredataHandler.selectDevice(userId: id, withMacAddress: realMacAddress)?.funcTable else{
             getFuncTableFromBand(realMacAddress){
                 errorCode, value in
+                debug("funcTable errorCode: \(errorCode) value: \(value)")
                 if errorCode == ErrorCode.success{
                     closure(self.coredataHandler.selectDevice(userId: id, withMacAddress: realMacAddress)?.funcTable)
                 }else{
@@ -130,9 +129,9 @@ public final class AngelManager: NSObject {
                 }
             }
             return
-        }
+//        }
         
-        closure(funcTable)
+//        closure(funcTable)
     }
     
     //获取实时数据
@@ -221,7 +220,7 @@ public final class AngelManager: NSObject {
             
             swiftFuncTable = { data in
                 
-                print("--------------\n已经获取funcTable")
+                debug("--------------\n已经获取funcTable")
                 
                 let funcTableModel = data.assumingMemoryBound(to: protocol_func_table.self).pointee
                 print("--------------\nprint:funcTable\n\(funcTableModel)")
@@ -326,13 +325,14 @@ public final class AngelManager: NSObject {
                 funcTable?.notify2_instagram = funcTableModel.ontify2.instagram
                 funcTable?.notify2_alarmClock = funcTableModel.ontify2.alarmClock
                 
+                debug("coreData functable: \(funcTable)")
                 guard self.coredataHandler.commit() else {
                     closure(ErrorCode.failure, "saving failure")
                     return
                 }
                 closure(ErrorCode.success, "\(funcTable)")
             }
-            print("--------------\n开始获取funcTable")
+            debug("--------------\n开始获取funcTable")
             var ret_code:UInt32 = 0
 
             vbus_tx_evt(VBUS_EVT_BASE_APP_GET, VBUS_EVT_APP_GET_FUNC_TABLE, &ret_code)
@@ -1639,8 +1639,9 @@ public final class AngelManager: NSObject {
         }
         
     //3.再同步
-        swiftSynchronizationAlarm = { data in
-            closure(true)
+        swiftSynchronizationAlarm = { complete in
+            
+            closure(complete)
             let alarmList = self.coredataHandler.selectAllAlarm(withMacAddress: realMacAddress)
             alarmList.forEach(){
                 localAlarm in
