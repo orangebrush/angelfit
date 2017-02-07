@@ -91,9 +91,13 @@ public final class GodManager: NSObject {
     //MARK:- 连接设备
     public func connect(_ peripheral:CBPeripheral){
         centralManager?.connect(peripheral, options: nil)
-
+        
     }
     
+    //MARK:- 断开设备
+    public func disconnect(_ peripheral: CBPeripheral){
+        centralManager?.cancelPeripheralConnection(peripheral)
+    }
 }
 
 //MARK:- 中心蓝牙管理delegate
