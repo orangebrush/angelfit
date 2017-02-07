@@ -39,49 +39,21 @@ class ViewController: UIViewController {
     @IBAction func scanDevice(_ sender: Any) {
         peripheralTuple.removeAll()
          godManager.startScan()
-//        let device = handler.insertDevice(withMacAddress: "textMacAddress", withItems: ["battLevel": 4])
-//        device?.bandStatus = 222
-//        
-//        
-//        if let device2 = handler.selectDevice(userId: 1, withMacAddress: "textMacAddress"){
-//            print("ddddddddddd")
-//            print(device2)
-//            device2.bandStatus = 333
-//            print("bbbbbbbbbbb")
-//            
-//            if let device3 = handler.selectDevice(userId: 1, withMacAddress: "textMacAddress") {
-//                print("cccccccccc")
-//                print(device3)
-//                print("oooooooooooo")
-//            }
-//        }
     }
     
     @IBAction func bandDevice(_ sender: Any) {
-        let angelManager  = AngelManager.share()
-        
-        var customAlarm = CustomAlarm()
-        customAlarm.hour = 12
-        customAlarm.minute = 20
-        customAlarm.repeatList = [0, 1, 2, 6]
-        customAlarm.status = 0x01
-        customAlarm.type = 0x01
-        customAlarm.duration = 5
-        angelManager?.addAlarm(customAlarm: customAlarm){
-            complete, alarmId in
-            print(complete, alarmId)
-        }
+        godManager.startScan()
     }
 }
 
 //MARK:- GodManager 代理实现
 extension ViewController: GodManagerDelegate{
     func godManager(didDiscoverPeripheral peripheral: CBPeripheral, withRSSI RSSI: NSNumber, peripheralName name: String){
-        print(name)
-        print(peripheral)
-        print(RSSI)
+//        print(name)
+//        print(peripheral)
+//        print(RSSI)
         let res = Thread.isMainThread ? "main" : "global"
-        print(res)
+//        print(res)
         peripheralTuple.append((name, RSSI, peripheral))
         myTableView.reloadData()
     }

@@ -135,9 +135,7 @@ extension GodManager: CBCentralManagerDelegate{
     private func loop(){
     
         guard let peripheral = PeripheralManager.share().currentPeripheral else{
-            print("未能获取到设备")
-            
-            cancel(task)
+            print("未能获取到设备 重新连接...")
             
             //弹出绑定设备列表
             let uuidStringList = PeripheralManager.share().selectUUIDStringList()
@@ -158,8 +156,12 @@ extension GodManager: CBCentralManagerDelegate{
                 return
             }
             
-            connect(peripheralList[0])
-            
+            task = delay(2){
+                //...
+                
+                self.connect(peripheralList[0])
+                self.loop()
+            }
             return
         }
         
