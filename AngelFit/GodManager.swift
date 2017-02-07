@@ -121,9 +121,10 @@ extension GodManager: CBCentralManagerDelegate{
             self.delegate?.godManager(didUpdateCentralState: state)
         }
         
-        print("蓝牙状态更新: \(state)")
+        print("蓝牙状态更新: \(state.rawValue)")
         //判断蓝牙是否可用
-        guard state == .poweredOn else {
+        guard central.state == .poweredOn else {
+            print("蓝牙不可用")
             cancel(task)
             return
         }
