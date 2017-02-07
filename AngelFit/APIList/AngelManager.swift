@@ -369,6 +369,7 @@ public final class AngelManager: NSObject {
             //解绑当前设备uuid
             let uuid = PeripheralManager.share().UUID
             _ = PeripheralManager.share().delete(UUIDString: uuid!)
+            PeripheralManager.share().UUID = nil
         case .bind:
             closure(protocol_set_mode(PROTOCOL_MODE_BIND) == 0)
             //保存绑定当前设备uuid
