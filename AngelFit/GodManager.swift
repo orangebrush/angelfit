@@ -95,7 +95,8 @@ public final class GodManager: NSObject {
     }
     
     //MARK:- 断开设备
-    public func disconnect(_ peripheral: CBPeripheral){
+    public func disconnect(_ peripheral: CBPeripheral, closure: @escaping (Bool)->()){
+        AngelManager.share()?.setBind(false, closure: closure)
         centralManager?.cancelPeripheralConnection(peripheral)
     }
 }
