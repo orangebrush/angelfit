@@ -108,9 +108,12 @@ extension GodManager: CBCentralManagerDelegate{
     //连接状态改变
     public func centralManagerDidUpdateState(_ central: CBCentralManager) {
 
-        let state = GodManagerState(rawValue: central.state.rawValue)
+        guard let state = GodManagerState(rawValue: central.state.rawValue) else{
+            return
+        }
+        
         DispatchQueue.main.async {
-            self.delegate?.godManager(didUpdateCentralState: state!)
+            self.delegate?.godManager(didUpdateCentralState: state)
         }
         
         print("蓝牙状态更新: \(state)")

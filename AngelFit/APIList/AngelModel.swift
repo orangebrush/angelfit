@@ -26,8 +26,8 @@ import CoreData
 //#define ERROR_BUSY				17
 //#define ERROR_LOW_BATT          18
 public struct ErrorCode{
-    static let success: Int16 = 0
-    static let failure: Int16 = 14
+    public static let success: Int16 = 0
+    public static let failure: Int16 = 14
 }
 
 //手环模式
