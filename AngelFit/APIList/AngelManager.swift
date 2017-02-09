@@ -21,15 +21,7 @@ public final class AngelManager: NSObject {
 //    }
     
     private var peripheral: CBPeripheral?       //当前设备
-    public var macAddress: String?{
-        didSet{
-            if macAddress == nil {
-                print("-----------nil")
-            }else{
-                print("-----------val")
-            }
-        }
-    }//当前设备macAddress
+    public var macAddress: String?              //当前设备macAddress
     
     //MARK:- 获取数据库句柄
     private lazy var coredataHandler = {
