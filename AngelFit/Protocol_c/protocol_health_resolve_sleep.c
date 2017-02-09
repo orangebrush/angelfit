@@ -93,11 +93,7 @@ static uint32_t protocol_health_resolve_sleep_exec_data(uint8_t *data,uint16_t l
 		return SUCCESS;
 	}
 
-    m_sleep_data.itmes = malloc(sizeof(struct ble_sync_sleep_item) * BLE_SYNC_SLEEP_TIME_DATA_MAX);
-    if(m_sleep_data.itmes == NULL)
-    {
-        return ERROR_NULL;
-    }
+    m_sleep_data.itmes = malloc(sizeof(struct ble_sync_sleep_item) * BLE_SYNC_SLEEP_ITEM_ONE_DAY_DATA_MAX);
 	for(index = 0; index < index_count; index ++)
 	{
 		item = (struct ble_sync_sleep_item *)(&data[index * sizeof(struct ble_sync_sleep_item)]);
@@ -125,6 +121,7 @@ static uint32_t protocol_health_resolve_sleep_exec_complete(uint32_t err_code)
 	}
     free(m_sleep_data.itmes);
     memset(&m_sleep_data,0,sizeof(m_sleep_data));
+    
 	return SUCCESS;
 }
 

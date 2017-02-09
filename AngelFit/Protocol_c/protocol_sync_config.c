@@ -43,33 +43,34 @@ struct sync_config_table_s
 static struct sync_config_table_s sync_config_evt_table[] = {
 
 		/*必须要同步的,先获得设备信息,再同步配置*/
-    SYNC_CONFIG_INIT_SUPPORT_TRUE(VBUS_EVT_APP_APP_GET_MAC),
+		SYNC_CONFIG_INIT_SUPPORT_TRUE(VBUS_EVT_APP_APP_GET_MAC),
+        /**/
+        SYNC_CONFIG_INIT_SUPPORT_TRUE(VBUS_EVT_APP_GET_FUNC_TABLE),
+
+        SYNC_CONFIG_INIT_SUPPORT_FALSE(VBUS_EVT_APP_APP_TO_BLE_OPEN_ANCS),
+        SYNC_CONFIG_INIT_SUPPORT_TRUE(VBUS_EVT_APP_GET_DEVICE_INFO),
+        SYNC_CONFIG_INIT_SUPPORT_TRUE(VBUS_EVT_APP_SET_TIME),
+
+
     
-    SYNC_CONFIG_INIT_SUPPORT_TRUE(VBUS_EVT_APP_SET_TIME),
-    
-    
-    /**/
-    SYNC_CONFIG_INIT_SUPPORT_TRUE(VBUS_EVT_APP_GET_FUNC_TABLE),
-    
-    SYNC_CONFIG_INIT_SUPPORT_FALSE(VBUS_EVT_APP_APP_TO_BLE_OPEN_ANCS),
-    SYNC_CONFIG_INIT_SUPPORT_TRUE(VBUS_EVT_APP_GET_DEVICE_INFO),
-    
-    
-    SYNC_CONFIG_INIT_SUPPORT_TRUE(VBUS_EVT_APP_SET_USER_INFO),
-    SYNC_CONFIG_INIT_SUPPORT_TRUE(VBUS_EVT_APP_SET_UINT),
-    SYNC_CONFIG_INIT_SUPPORT_TRUE(VBUS_EVT_APP_SET_SPORT_GOAL),
-    
-    /*根据功能表同步的*/
-    SYNC_CONFIG_INIT_SUPPORT_FALSE(VBUS_EVT_APP_SET_LOST_FIND),
-    SYNC_CONFIG_INIT_SUPPORT_FALSE(VBUS_EVT_APP_SET_LONG_SIT),
-    SYNC_CONFIG_INIT_SUPPORT_FALSE(VBUS_EVT_APP_SET_FIND_PHONE),
-    
-    SYNC_CONFIG_INIT_SUPPORT_FALSE(VBUS_EVT_APP_SET_HEART_RATE_MODE),
-    SYNC_CONFIG_INIT_SUPPORT_FALSE(VBUS_EVT_APP_SET_UP_HAND_GESTURE),
-    SYNC_CONFIG_INIT_SUPPORT_FALSE(VBUS_EVT_APP_SET_DO_NOT_DISTURB),
-    SYNC_CONFIG_INIT_SUPPORT_FALSE(VBUS_EVT_APP_SET_MUISC_ONOFF),
-    SYNC_CONFIG_INIT_SUPPORT_FALSE(VBUS_EVT_APP_SET_DISPLAY_MODE),
-    SYNC_CONFIG_INIT_SUPPORT_FALSE(VBUS_EVT_APP_SET_ONEKEY_SOS),
+		SYNC_CONFIG_INIT_SUPPORT_TRUE(VBUS_EVT_APP_SET_USER_INFO),
+		SYNC_CONFIG_INIT_SUPPORT_TRUE(VBUS_EVT_APP_SET_UINT),
+		SYNC_CONFIG_INIT_SUPPORT_TRUE(VBUS_EVT_APP_SET_SPORT_GOAL),
+
+		/*根据功能表同步的*/
+		SYNC_CONFIG_INIT_SUPPORT_FALSE(VBUS_EVT_APP_SET_LOST_FIND),
+		SYNC_CONFIG_INIT_SUPPORT_FALSE(VBUS_EVT_APP_SET_LONG_SIT),
+        SYNC_CONFIG_INIT_SUPPORT_FALSE(VBUS_EVT_APP_SET_FIND_PHONE),
+
+        SYNC_CONFIG_INIT_SUPPORT_FALSE(VBUS_EVT_APP_SET_HEART_RATE_MODE),
+        SYNC_CONFIG_INIT_SUPPORT_FALSE(VBUS_EVT_APP_SET_UP_HAND_GESTURE),
+        SYNC_CONFIG_INIT_SUPPORT_FALSE(VBUS_EVT_APP_SET_DO_NOT_DISTURB),
+        SYNC_CONFIG_INIT_SUPPORT_FALSE(VBUS_EVT_APP_SET_MUISC_ONOFF),
+        SYNC_CONFIG_INIT_SUPPORT_FALSE(VBUS_EVT_APP_SET_DISPLAY_MODE),
+        SYNC_CONFIG_INIT_SUPPORT_FALSE(VBUS_EVT_APP_SET_ONEKEY_SOS),
+        SYNC_CONFIG_INIT_SUPPORT_FALSE(VBUS_EVT_APP_SET_WEATHER_SWITCH),
+        SYNC_CONFIG_INIT_SUPPORT_FALSE(VBUS_EVT_APP_SET_HEART_RATE_INTERVAL),
+        SYNC_CONFIG_INIT_SUPPORT_FALSE(VBUS_EVT_APP_SET_SPORT_MODE_SELECT),
 
 };
 
@@ -133,6 +134,15 @@ uint32_t protocol_sync_config_set_func_table()
             case VBUS_EVT_APP_SET_MUISC_ONOFF :
             	sync_config_evt_table[index].is_support = func_table.control.music;
             	break;
+            case VBUS_EVT_APP_SET_WEATHER_SWITCH :
+                sync_config_evt_table[index].is_support = func_table.other.weather;
+                break;
+            case VBUS_EVT_APP_SET_HEART_RATE_INTERVAL:
+               // sync_config_evt_table[index].is_support = func_table.other
+                break;
+            case VBUS_EVT_APP_SET_SPORT_MODE_SELECT :
+                sync_config_evt_table[index].is_support = func_table.main.timeLine;
+                break;
                 
             default:
                 break;
@@ -183,6 +193,7 @@ uint32_t protocol_sync_config_start()
 
 uint32_t protocol_sync_config_stop()
 {
+	DEBUG_INFO("protocol_sync_config_stop");
     app_timer_stop(delay_sync_timer_id);
 	sync_config_is_start = false;
     stop_sync_timer_out();
@@ -222,7 +233,6 @@ static uint32_t protocol_sync_config_evt_handle(VBUS_EVT_BASE evt_base,VBUS_EVT_
 
 	if(evt_base == VBUS_EVT_BASE_BLE_REPLY)
 	{
-        DEBUG_INFO("evt = %d,index = %d,table evt = %d ",evt_type,cur_sync_index,sync_config_evt_table[cur_sync_index - 1].evt);
 		if(evt_type == sync_config_evt_table[cur_sync_index - 1].evt)
 		{
             set_sync_timer_out(SYNC_CONFIG_TIME_OUT_MS);
@@ -230,6 +240,8 @@ static uint32_t protocol_sync_config_evt_handle(VBUS_EVT_BASE evt_base,VBUS_EVT_
             {
                 if(evt_type == VBUS_EVT_APP_GET_DEVICE_INFO) //同步自动位置
                 {
+                	DEBUG_INFO("auto sync config end");
+                    vbus_tx_evt(VBUS_EVT_BASE_NOTICE_APP,SYNC_EVT_CONFIG_FAST_SYNC_COMPLETE,&ret_code);
                     protocol_sync_config_stop(); //
                     return SUCCESS;
                 }
@@ -248,7 +260,6 @@ static uint32_t protocol_sync_config_evt_handle(VBUS_EVT_BASE evt_base,VBUS_EVT_
             {
                 set_sync_timer_out(SYNC_CONFIG_TIME_OUT_MS);
                 err = app_timer_start(delay_sync_timer_id,20,NULL);
-                DEBUG_INFO("start sync next config");
                 APP_ERROR_CHECK(err);
             }
         
@@ -285,7 +296,9 @@ static uint32_t protocol_sync_config_evt_handle(VBUS_EVT_BASE evt_base,VBUS_EVT_
 static void sync_timer_handle(void *data)
 {
     DEBUG_INFO("sync config time out,stop sync");
+    uint32_t err_code = ERROR_TIMEOUT;
     protocol_sync_config_stop();
+    vbus_tx_evt(VBUS_EVT_BASE_NOTICE_APP,SYNC_EVT_CONFIG_SYNC_COMPLETE,&err_code);
 }
 
 static void delay_sync_next_timer_handle()
@@ -318,6 +331,11 @@ static uint32_t protocol_sync_config_vbus_control(VBUS_EVT_BASE evt_base,VBUS_EV
     {
         if(evt_type == SET_BLE_EVT_DISCONNECT) //断线后停止同步
         {
+            if(sync_config_is_start == true)
+            {
+                uint32_t err_code = ERROR_INVALID_STATE;
+                vbus_tx_evt(VBUS_EVT_BASE_NOTICE_APP,SYNC_EVT_CONFIG_SYNC_COMPLETE,&err_code);
+            }
             protocol_sync_config_stop();
         }
     }

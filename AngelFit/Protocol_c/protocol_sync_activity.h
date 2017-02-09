@@ -13,9 +13,9 @@
 
 
 
-#define PROTOCOL_ACTIVITY_DATA_MAX_PACKET_NUM			(1440/96 + 2)
-#define PROTOCOL_ACTIVITY_DATA_MAX_PACKET_LENGTH		(16)
 
+#define PROTOCOL_ACTIVITY_DATA_MAX_PACKET_LENGTH		(16)
+#define PROTOCOL_ACTIVITY_DATA_MAX_PACKET_NUM			(1440/PROTOCOL_ACTIVITY_DATA_MAX_PACKET_LENGTH + 3)
 
 
 
@@ -103,14 +103,26 @@ struct activity_packet_data
 	uint8_t hr_data[PROTOCOL_TRANSPORT_MAX_SIZE];
 };
 
+struct protocol_activity_hr_tx_complete
+{
+	struct protocol_head head;
+	uint8_t serial;
+	uint8_t length;
+	uint8_t flag;
+};
+
+struct protocol_new_health_activity_count
+{
+	struct protocol_head head;
+	uint8_t count;
+};
 
 
 #pragma pack()
 
 typedef void (*protocol_sync_activity_data_cb_t)(const struct activity_packet_data data[],uint16_t serial_count);
 typedef uint16_t (*protocol_sync_activiey_get_packet_count_t)(uint8_t *data,uint16_t length);
-
-uint32_t protocol_sync_activity_exec(const uint8_t *data,uint16_t length);
+typedef void (*protocol_sync_activity_progress )(uint8_t progress);
 
 
 
@@ -120,7 +132,8 @@ extern "C" {
 
 
 extern uint32_t protocol_sync_activity_rx_data_reg(protocol_sync_activity_data_cb_t func);
-extern uint32_t protocol_sync_cativity_get_packet_reg(protocol_sync_activiey_get_packet_count_t func);
+extern uint32_t protocol_sync_activity_get_packet_reg(protocol_sync_activiey_get_packet_count_t func);
+extern uint32_t protocol_sync_activity_progress_reg(protocol_sync_activity_progress func);
 
 extern uint32_t protocol_sync_activity_exec(const uint8_t *data,uint16_t length);
 

@@ -90,6 +90,23 @@ do {\
     socket_debug_print("\r\n");\
 }while(0);
 
+#else
+#define DEBUG_PRINT(debug...) \
+do {\
+    printf(debug );\
+}while(0)
+
+#define DEBUG_INFO(debug...)     \
+do {\
+    printf(DEBUG_STR);\
+    printf(DEBUG_LINE_STR);\
+    printf(debug );\
+    printf("\n");\
+}while(0);
+
+
+#endif
+
 #endif //end USE_DEBUG_IOS
 
 #else //USE_DEBUG
@@ -101,6 +118,3 @@ do {\
 
 #endif //USE_DEBUG
 
-
-
-#endif /* DEBUG_H_ */

@@ -43,7 +43,10 @@ static uint32_t protocol_status_alarm_vbus_control(VBUS_EVT_BASE evt_base,VBUS_E
                     }
                     else
                     {
+                        uint32_t ret_code = SUCCESS;
+                        vbus_tx_evt(VBUS_EVT_BASE_REQUEST,VBUS_EVT_APP_SET_TIME,&ret_code);
                         DEBUG_INFO("device no reboot");
+
                     }
                 }
                 break;

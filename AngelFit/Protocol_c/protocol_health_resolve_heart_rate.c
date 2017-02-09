@@ -85,18 +85,15 @@ static uint32_t protocol_health_resolve_heart_rate_exec_total_packet(uint8_t *da
 	if(index_count > BLE_SYNC_HEART_RATE_ITEM_ONE_DAY_MAX)
 	{
 		DEBUG_INFO("heart rate data length error = %d",index_count);
-        memset(m_heart_rate_data.items,0,sizeof(m_heart_rate_data.items));
+		//memset(m_heart_rate_data.items,0,sizeof(m_heart_rate_data.items));
 		m_heart_rate_data.items_count = 0;
-        return SUCCESS;
+		return SUCCESS;
 	}
-    m_heart_rate_data.items = malloc(sizeof(struct ble_sync_heart_rate_item) * BLE_SYNC_HEART_RATE_ITEM_ONE_DAY_MAX);
-    if(m_heart_rate_data.items == NULL)
-    {
-      return  ERROR_NULL;
-    }
+
 	for(index =  0; index < index_count; index ++)
 	{
 		itme = (struct ble_sync_heart_rate_item *)(&data[index * sizeof(struct ble_sync_heart_rate_item)]);
+        m_heart_rate_data.items = malloc(sizeof(struct ble_sync_heart_rate_item) * BLE_SYNC_HEART_RATE_ITEM_ONE_DAY_MAX);
 		memcpy(&m_heart_rate_data.items[index],itme,sizeof(struct ble_sync_heart_rate_item));
 
 		DEBUG_INFO("index = %d,offset = %d,data = %d",index,itme->offset,itme->data);

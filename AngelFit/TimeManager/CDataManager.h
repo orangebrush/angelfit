@@ -19,6 +19,7 @@ void manageData(VBUS_EVT_BASE evt_base,VBUS_EVT_TYPE evt_type,void * __nonnull d
 
 #pragma mark 获取mac地址
 extern void (^ __nonnull swiftMacAddress)(void * __nonnull);
+extern void (^ __nonnull swiftTempMacAddress)(void * __nonnull);
 extern void c_get_macAddress(void * __nonnull data);
 
 #pragma mark 获取设备信息

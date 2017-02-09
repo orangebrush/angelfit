@@ -21,7 +21,15 @@ public final class AngelManager: NSObject {
 //    }
     
     private var peripheral: CBPeripheral?       //当前设备
-    private var macAddress: String?             //当前设备macAddress
+    public var macAddress: String?{
+        didSet{
+            if macAddress == nil {
+                print("-----------nil")
+            }else{
+                print("-----------val")
+            }
+        }
+    }//当前设备macAddress
     
     //MARK:- 获取数据库句柄
     private lazy var coredataHandler = {
@@ -155,7 +163,10 @@ public final class AngelManager: NSObject {
                 //保存macAddress到数据库
                 _ = self.coredataHandler.insertDevice(withMacAddress: macAddress)
                 //保存macAddress到实例
-                self.macAddress = macAddress
+                print("1....", Unmanaged.passUnretained(self).toOpaque())
+                DispatchQueue.main.async {
+                    self.macAddress = macAddress
+                }
                 //返回
                 closure(ErrorCode.success,macAddress)
             }
@@ -1230,16 +1241,18 @@ public final class AngelManager: NSObject {
     public func setSynchronizationHealthData(_ macAddress: String? = nil, closure:@escaping (_ complete: Bool, _ progress: Int16) -> ()){
         
         //判断mac地址是否存在
+        print("2....", Unmanaged.passUnretained(self).toOpaque())
+        
         var realMacAddress: String!
         if let md = macAddress{
             realMacAddress = md
         }else if let md = self.macAddress{
             realMacAddress = md
         }else{
+            debugPrint("同步获取macaddress失败")
             closure(false, 0)
-            return
+           return
         }
-        
         //同步进度回调
         swiftSynchronizationHealthData = { data in
             closure(data.0,Int16(data.1))
@@ -1253,6 +1266,9 @@ public final class AngelManager: NSObject {
             let year = sportData.head1.date.year
             let month = sportData.head1.date.month
             let day = sportData.head1.date.day
+            guard day != 0, month != 0, year != 0 else {
+                return
+            }
             var component = DateComponents()
             component.day = Int(day)
             component.month = Int(month)
@@ -1317,10 +1333,14 @@ public final class AngelManager: NSObject {
             let year = sleepData.head1.date.year
             let month = sleepData.head1.date.month
             let day = sleepData.head1.date.day
+            guard day != 0, month != 0, year != 0 else {
+                return
+            }
             var component = DateComponents()
             component.day = Int(day)
             component.month = Int(month)
             component.year = Int(year)
+            
             let optionDate = Calendar.current.date(from: component)       //日期
             let id = 0
             let itemCount = sleepData.itmes_count
@@ -1370,6 +1390,7 @@ public final class AngelManager: NSObject {
             sleep.wakeCount = Int16(wakeCount)
             sleep.startTimeHour = startTimeHour
             sleep.startTimeMinute = startTimeMinute
+            
             guard self.coredataHandler.commit() else {
                 return
             }
@@ -1397,6 +1418,9 @@ public final class AngelManager: NSObject {
             let year = heartRateData.head1.year
             let month = heartRateData.head1.month
             let day = heartRateData.head1.day
+            guard day != 0, month != 0, year != 0 else {
+                return
+            }
             var component = DateComponents()
             component.day = Int(day)
             component.month = Int(month)
@@ -1443,6 +1467,7 @@ public final class AngelManager: NSObject {
             (0..<96).forEach(){
                 i in
                 if let item = items?[length * i]{
+                    
                     if let heartRateItem = self.coredataHandler.createHeartRateItem(withMacAddress: realMacAddress, withDate: date, withItemId: Int16(i)){
                         heartRateItem.data = Int16(item.data)
                         heartRateItem.id = Int16(i)

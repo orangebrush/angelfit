@@ -42,7 +42,23 @@ class ViewController: UIViewController {
     }
     
     @IBAction func bandDevice(_ sender: Any) {
-        godManager.startScan()
+        let angelManger = AngelManager.share()
+        angelManger?.getMacAddressFromBand{
+            errorCode, macaddress in
+            print("sample address:", macaddress)
+            angelManger?.setSynchronizationHealthData{
+                success, progress in
+                print(success, progress, "%")
+            }
+        }
+        /*
+        AngelManager.share()?.setBind(true){
+            success in
+            print(success)
+            
+          
+        }
+         */
     }
 }
 

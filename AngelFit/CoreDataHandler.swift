@@ -105,10 +105,11 @@ public class CoreDataHandler {
     public func commit() -> Bool{
         if context.hasChanges {
             do {
+                print("context:", context)
                 try context.save()
                 return true
             } catch let error {
-
+                print("error context:", context)
                 print(error)
                 abort()
             }

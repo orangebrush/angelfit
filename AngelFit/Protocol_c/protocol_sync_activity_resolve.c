@@ -84,7 +84,7 @@ uint32_t protocol_sync_activity_resolve_data_cb_reg(protocol_sync_activity_resol
 uint32_t protocol_sync_activity_resolve_init()
 {
 	protocol_sync_activity_rx_data_reg(protocol_sync_activity_data_cb_handle);
-	protocol_sync_cativity_get_packet_reg(protocol_sync_activiey_get_packet_count_handle);
+	protocol_sync_activity_get_packet_reg(protocol_sync_activiey_get_packet_count_handle);
 	return SUCCESS;
 }
 

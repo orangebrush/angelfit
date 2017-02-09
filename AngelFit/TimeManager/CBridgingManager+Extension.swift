@@ -13,6 +13,11 @@ extension CBridgingManager{
     func createBaseConfigure()  {
         //MARK:-发送健康数据命令
         swiftSendHealthDataClosure = { data,length ->Int32 in
+            
+            guard PeripheralManager.share().currentPeripheral?.state == .connected else {
+                return self.failure
+            }
+            
             let sendData = Data(bytes: data, count: Int(length))
             
             guard let characteristic = PeripheralManager.share().currentPeripheralChar?[.bigWrite] else{
@@ -29,6 +34,11 @@ extension CBridgingManager{
         
         //MARK:-发送命令
         swiftSendCommandDataClosure = { data,length ->Int32 in
+            
+            guard PeripheralManager.share().currentPeripheral?.state == .connected else {
+                return self.failure
+            }
+            
             let sendData = Data(bytes: data, count: Int(length))
             
             guard let characteristic = PeripheralManager.share().currentPeripheralChar?[.write] else{
@@ -84,7 +94,7 @@ extension CBridgingManager{
             let macList = [macCList.0, macCList.1, macCList.2, macCList.3, macCList.4, macCList.5]
             let macAddress = macList.map(){String($0,radix:16)}.reduce(""){$0+$1}.uppercased()
             self.currentMacAddress = macAddress
-            
+            AngelManager.share()?.macAddress = macAddress
             //保存macAddress到数据库
             let coreDataHandler = CoreDataHandler()
             _ = coreDataHandler.insertDevice(withMacAddress: macAddress)
@@ -153,8 +163,9 @@ extension CBridgingManager{
             userInfo.gender = UInt8((user?.gender)!)
             userInfo.height = UInt8((user?.height)!)
             userInfo.weight = UInt16(UInt8((user?.weight)!))
+            let birthday = user?.birthday ?? NSDate()
             let calender = Calendar.current
-            var components = calender.dateComponents([.year, .month, .day], from: user?.birthday as! Date)
+            var components = calender.dateComponents([.year, .month, .day], from: birthday as! Date)
             userInfo.birthYear = UInt16(components.year!)
             userInfo.birthMonth = UInt8(components.month!)
             userInfo.birthDay = UInt8(components.day!)

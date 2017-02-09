@@ -28,6 +28,7 @@
 #include "protocol_sync_activity_resolve.h"
 #include "protocol_sync_activity.h"
 
+
 static protocol_write_data_handle write_data_handle = NULL;
 
 static bool hook_receive_data(uint8_t const *data,uint16_t length)
@@ -83,7 +84,7 @@ uint32_t protocol_write_data(const uint8_t *data,uint16_t length)
     {
         return ERROR_INVALID_STATE;
     }
-    /*
+    
     DEBUG_PRINT("TX : ");
     int i;
     for(i = 0; i < length ; i ++)
@@ -91,7 +92,7 @@ uint32_t protocol_write_data(const uint8_t *data,uint16_t length)
         DEBUG_PRINT("%02X " ,data[i]);
     }
     DEBUG_PRINT("\r\n");
-    */
+    
 	if(write_data_handle != NULL)
 	{
 		return write_data_handle(data,length);
@@ -117,7 +118,7 @@ uint32_t protocol_receive_data(uint8_t const *data,uint16_t length)
     {
         return ERROR_INVALID_STATE;
     }
-    /*
+    
     DEBUG_PRINT("RX : ");
     int i;
     for(i = 0; i < length ; i ++)
@@ -125,13 +126,15 @@ uint32_t protocol_receive_data(uint8_t const *data,uint16_t length)
         DEBUG_PRINT("%02X ",data[i]);
     }
     DEBUG_PRINT("\r\n");
-    */
-	if(data[0] == PROTOCOL_CMD_HEALTH_DATA)
+    
+	if(data[0] == PROTOCOL_CMD_HEALTH_DATA || ((data[0]) == PROTOCOL_CMD_NEW_HEALTH_DATA))
 	{
-		return protocol_health_exec(data,length);
+        uint32_t err_code;
+        err_code = protocol_sync_activity_exec(data,length);
+        err_code |= protocol_health_exec(data,length);
+		return err_code;
 	}
 	protocol_switch_exec(data,length);
-	protocol_sync_activity_exec(data,length);
 	return protocol_cmd_exec(data,length);
 }
 
@@ -159,6 +162,7 @@ uint32_t protocol_init(protocol_write_data_handle func)
     
     protocol_sync_activity_init();
     protocol_sync_activity_resolve_init();
+
     vbus_print_info();
 	return SUCCESS;
 }

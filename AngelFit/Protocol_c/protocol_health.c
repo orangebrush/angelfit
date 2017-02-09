@@ -19,8 +19,9 @@
 #include "protocol_func_table.h"
 
 
+
 #define PROTOCOL_HEALTH_DELAY_EXEC_PROCESS_MS		50
-#define PROTOCOL_HEALTH_SYNC_MAX_DAY				7
+#define PROTOCOL_HEALTH_SYNC_MAX_DAY				40
 
 #define PROTOCOL_HEALTH_RX_SPORT_ONEDAY_PACKET			(32 + 4) //(60/15*5*24/15)
 #define PROTOCOL_HEALTH_RX_SLEEP_ONEDAY_PACKET			(10 + 4)  //80/8
@@ -517,9 +518,10 @@ uint32_t protocol_health_exec(uint8_t const *data,uint8_t length)
 		{
             uint32_t ret_code = SUCCESS;
 			cur_sync.all_sync_is_start = false;
+            update_sync_progress_rate(true);
             vbus_tx_evt(VBUS_EVT_BASE_NOTICE_APP, SYNC_EVT_HEALTH_SYNC_COMPLETE, &ret_code);
             sync_guard_timer_stop();
-            update_sync_progress_rate(true);
+            
             return SUCCESS;
             
 		}
@@ -720,7 +722,13 @@ static uint32_t protocol_health_vbus_control(VBUS_EVT_BASE evt_base,VBUS_EVT_TYP
     {
         if(evt_type == SET_BLE_EVT_DISCONNECT)
         {
+			if(cur_sync.all_sync_is_start == true)
+			{
+				uint32_t ret_code = ERROR_INVALID_STATE;
+				vbus_tx_evt(VBUS_EVT_BASE_NOTICE_APP, SYNC_EVT_HEALTH_SYNC_COMPLETE, &ret_code);
+			}
             protocol_health_sync_stop();
+
         }
     }
     else if(evt_base == VBUS_EVT_BASE_NOTICE_APP)

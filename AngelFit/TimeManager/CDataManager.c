@@ -8,6 +8,7 @@
 
 #include "CDataManager.h"
 #include "protocol_func_table.h"
+void (^ __nonnull swiftTempMacAddress)(void * __nonnull) = NULL;
 void (^ __nonnull swiftMacAddress)(void * __nonnull) = NULL;
 void (^ __nonnull swiftDeviceInfo)(void * __nonnull) = NULL;
 void (^ __nonnull swiftFuncTable)(void * __nonnull)  = NULL;
@@ -25,7 +26,6 @@ void (^ __nonnull swiftSetUnit)(void) = NULL;
 
 
 extern void c_get_macAddress(void * __nonnull data){
-    
     swiftMacAddress(data);
 }
 

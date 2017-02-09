@@ -14,8 +14,10 @@
 #include "mem.h"
 #include "app_timer.h"
 #include "protocol_status.h"
+
 #define RESEND_TIMER_INTERVAL       2000
-#define RESEND_TIMEOUT_COUNT_MAX    5
+#define RESEND_TIMEOUT_COUNT_MAX    4	//最大重发4次
+#define RESEND_BUF_SIZE				7	//最大缓存7个命令
 
 struct re_send_data_s
 {
@@ -104,6 +106,24 @@ static uint32_t protocol_write_data_add(uint8_t *data,uint8_t length,VBUS_EVT_TY
     protocol_write_process();
     return SUCCESS;
 }
+
+static uint32_t clean_resend_buf()
+{
+	uint8_t tmp_buf[sizeof(struct re_send_data_s)];
+	for(;;)
+	{
+		if(mem_isempty(re_tx_mem_id) == true)
+		{
+			break;
+		}
+		mem_pop(re_tx_mem_id, tmp_buf);
+
+	}
+    
+    return SUCCESS;
+
+};
+
 //这里的data 不能包含协议头
 uint32_t protocol_write_set_cmd_key(uint8_t cmd,uint8_t key,const void *data,uint32_t size,bool need_resend,VBUS_EVT_TYPE evt_type)
 {
@@ -326,6 +346,7 @@ static uint32_t protocol_write_vbus_control(VBUS_EVT_BASE evt_base,VBUS_EVT_TYPE
         	head.cmd = PROTOCOL_CMD_WEATHER;
         	head.key = PROTOCOL_KEY_WEATHER_SET_DATA ;
         	break;
+		
         case VBUS_EVT_APP_SET_NOTICE_STOP_CALL :
 			cmd.head.cmd = PROTOCOL_CMD_MSG;
 			cmd.head.key = PROTOCOL_KEY_MSG_CALL_STATUS;
@@ -335,9 +356,12 @@ static uint32_t protocol_write_vbus_control(VBUS_EVT_BASE evt_base,VBUS_EVT_TYPE
         case SET_BLE_EVT_CONNECT :
             return SUCCESS;
         case SET_BLE_EVT_DISCONNECT : //断开连接
-            app_timer_stop(send_timer_id);
-            is_tx_ok = true;
-            m_resend_count = 0;
+		{
+			app_timer_stop(send_timer_id);
+			is_tx_ok = true;
+			m_resend_count = 0;
+			clean_resend_buf();
+		}
             return SUCCESS;
         case VBUS_EVT_APP_PROTOCOL_TEST_CMD_1 :
             head.cmd = 0xFF;
@@ -392,7 +416,8 @@ static uint32_t protocol_write_vbus_control(VBUS_EVT_BASE evt_base,VBUS_EVT_TYPE
         case VBUS_EVT_APP_GET_LIVE_DATA :
             head.cmd = PROTOCOL_CMD_GET;
             head.key = PROTOCOL_KEY_GET_LIVE_DATA;
-            break;
+			*error_code = protocol_write_set_head(head,NULL,2,false,evt_type);
+            return SUCCESS;
         case VBUS_EVT_APP_GET_NOTICE_STATUS :
         	head.cmd = PROTOCOL_CMD_GET;
         	head.key = PROTOCOL_KEY_GET_NOTICE_STATUS;
@@ -405,8 +430,8 @@ static uint32_t protocol_write_vbus_control(VBUS_EVT_BASE evt_base,VBUS_EVT_TYPE
         	head.cmd = PROTOCOL_CMD_GET ;
         	head.key = PROTOCOL_KEY_GET_GSENSOR_PARAM;
         	break;
-		default :
-			return 0;
+				default :
+			return SUCCESS;
 		}
 		*error_code = protocol_write_set_head(head,NULL,2,true,evt_type);
 	}
@@ -450,7 +475,7 @@ static uint32_t protocol_write_vbus_init()
 uint32_t protocol_write_init()
 {
     uint32_t err_code;
-    static uint8_t re_tx_buf[1024];
+    static uint8_t re_tx_buf[sizeof(struct re_send_data_s) * RESEND_BUF_SIZE];
 	err_code = protocol_write_vbus_init();
     APP_ERROR_CHECK(error_code);
     mem_init(re_tx_buf,sizeof(re_tx_buf),sizeof(struct re_send_data_s),&re_tx_mem_id);

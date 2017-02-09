@@ -30,6 +30,12 @@ static uint32_t vbus_tx_evt_process(VBUS_EVT_BASE evt_base,VBUS_EVT_TYPE evt_typ
     {
         if(m_bus_table[i].control != NULL)
         {
+            #if VBUS_DEBUG
+            if(m_bus_table[i].name != NULL)
+            {
+                DEBUG_INFO("vbus process = %s",m_bus_table[i].name);
+            }
+            #endif
             m_bus_table[i].control(evt_base,evt_type,(void *)data,size,error_code);
         }
     }

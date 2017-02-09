@@ -12,6 +12,7 @@
 #include "protocol_exec.h"
 #include "protocol_val.h"
 #include "protocol_status.h"
+
 static uint32_t protocol_exec_reset(uint8_t const *data,uint8_t size)
 {
     
@@ -335,7 +336,7 @@ static uint32_t protocol_exec_control(uint8_t const *data,uint32_t size)
                 {
                     vbus_tx_data(VBUS_EVT_BASE_BLE_REPLY,VBUS_EVT_APP_APP_TO_BLE_FIND_DEVICE_STOP,data,size,&ret_code);
                 }
-                 */
+                */
             }
             break;
          case PROTOCOL_KEY_CONTROL_OPEN_ANCS :

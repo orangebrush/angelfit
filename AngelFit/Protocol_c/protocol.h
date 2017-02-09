@@ -104,6 +104,7 @@
 
 	//新的健康数据
 	#define PROTOCOL_KEY_NEW_HEALTH_DATA_ACTIVITY_DATA		0x06
+    #define PROTOCOL_KEY_NEW_HEALTH_DATA_ACTIVITY_COUNT     0x07
 
 
 	#define PROTOCOL_KEY_WEATHER_SET_DATA			0x01
@@ -354,7 +355,7 @@
         uint8_t end_hour;
         uint8_t end_minute;    //   结束时间
         uint16_t interval;     // 间隔
-        uint8_t repetitions;       //重复
+        uint16_t repetitions;       //重复
     };
 
     //防丢
@@ -390,8 +391,6 @@
     	struct protocol_head head;
     	uint8_t mode;
     };
-
-
 
 
     struct protocol_status

@@ -36,6 +36,9 @@ typedef enum {
     SYNC_EVT_HEALTH_PROCESSING,
     SYNC_EVT_ALARM_PROCESSING,
     SYNC_EVT_CONFIG_PROCESSING,
+	SYNC_EVT_CONFIG_FAST_SYNC_COMPLETE,		//连接以后,快速同步完成
+	SYNC_EVT_ACTIVITY_STOP_ONCE,				//中间状态	重发控制
+	SYNC_EVT_ACTIVITY_START_ONCE,
 
 	VBUS_EVT_APP_SET_ALARM  = 100,		//设置闹钟
 	VBUS_EVT_APP_SET_LONG_SIT ,			//设置久坐 struct protocol_long_sit
@@ -119,9 +122,12 @@ typedef enum {
     VBUS_EVT_APP_BLE_TO_APP_PHOTO_BURST,        //连拍
     VBUS_EVT_APP_BLE_TO_APP_VOLUME_UP,          //音量+
     VBUS_EVT_APP_BLE_TO_APP_VOLUME_DOWN,        //音量-
+	VBUS_EVT_APP_BLE_TO_APP_OPEN_CAMERA,		//打开相机
+	VBUS_EVT_APP_BLE_TO_APP_CLOSE_CAMERA,		//关闭相机
+	VBUS_EVT_APP_BLE_TO_APP_PHONE_ANSWER,		//接听电话
+	VBUS_EVT_APP_BLE_TO_APP_PHONE_REJECT,		//拒接电话
     
-    
-    VBUS_EVT_APP_BLE_TO_APP_FIND_PHONE_START,   //寻找手机开始
+    VBUS_EVT_APP_BLE_TO_APP_FIND_PHONE_START = 570,   //寻找手机开始
     VBUS_EVT_APP_BLE_TO_APP_FIND_PHONE_STOP,    //寻找手机结束
     
     VBUS_EVT_APP_BLE_TO_APP_ANTI_LOST_START,    //防丢启动
@@ -138,13 +144,28 @@ typedef enum {
     VBUS_EVT_APP_SWITCH_APP_ING_REPLY,			//交换应答	struct protocol_switch_app_ing_reply
     VBUS_EVT_APP_SWITCH_APP_END,				//结束		struct protocol_switch_app_end
     VBUS_EVT_APP_SWITCH_APP_END_REPLY,			//struct protocol_switch_app_end_reply
+    VBUS_EVT_APP_SWITCH_APP_PAUSE,				//struct protocol_switch_app_pause
+    VBUS_EVT_APP_SWITCH_APP_PAUSE_REPLY,		//struct protocol_switch_app_pause_reply
+    VBUS_EVT_APP_SWITCH_APP_RESTORE,			//struct protocol_switch_app_restore
+    VBUS_EVT_APP_SWITCH_APP_RESTORE_REPLY,		//struct protocol_switch_app_restore_reply
+	VBUS_EVT_APP_SWITCH_APP_BLE_PAUSE,				//struct protocol_switch_app_ble_pause
+	VBUS_EVT_APP_SWITCH_APP_BLE_PAUSE_REPLY,		//struct protocol_switch_app_ble_pause_reply
+	VBUS_EVT_APP_SWITCH_APP_BLE_RESTORE,			//struct protocol_switch_app_ble_restore
+	VBUS_EVT_APP_SWITCH_APP_BLE_RESTORE_REPLY,	//struct protocol_switch_app_ble_restore_reply
+	VBUS_EVT_APP_SWITCH_APP_BLE_END,				//struct struct protocol_switch_app_ble_end
+	VBUS_EVT_APP_SWITCH_APP_BLE_END_REPLY,		//struct struct protocol_switch_app_ble_end_reply
 
-    VBUS_EVT_APP_SWITCH_BLE_START,				//ble 发送	struct protocol_switch_ble_start
+
+    VBUS_EVT_APP_SWITCH_BLE_START = 620,				//ble 发送	struct protocol_switch_ble_start
     VBUS_EVT_APP_SWITCH_BLE_START_REPLY,		//ble 发送应答	struct protocol_switch_ble_start_reply
     VBUS_EVT_APP_SWITCH_BLE_ING,				//交换过程中	struct protocol_switch_ble_ing
     VBUS_EVT_APP_SWITCH_BLE_ING_REPLY,			//		struct protocol_switch_ble_ing_reply
     VBUS_EVT_APP_SWITCH_BLE_END,				//结束	struct protocol_switch_ble_end
     VBUS_EVT_APP_SWITCH_BLE_END_REPLY,
+    VBUS_EVT_APP_SWITCH_BLE_PAUSE,				//struct protocol_switch_ble_pause
+    VBUS_EVT_APP_SWITCH_BLE_PAUSE_REPLY,		//struct protocol_switch_ble_pause_reply
+    VBUS_EVT_APP_SWITCH_BLE_RESTORE,			//struct protocol_switch_ble_restore
+    VBUS_EVT_APP_SWITCH_BLE_RESTORE_REPLY,		//struct protocol_switch_ble_restore_reply
 
 
     //新的同步项
@@ -153,10 +174,21 @@ typedef enum {
     VBUS_EVT_APP_ACTIVITY_SYNC_ONCE_COMPLETE_JSON_NOTEICE,  //单次数据同步完成通知,android 使用
 
 
+	VBUS_EVT_APP_PROTOCOL_TEST_CMD_1   = 700, //内部测试
 
-    
-    
-    VBUS_EVT_APP_PROTOCOL_TEST_CMD_1   = 700, //内部测试
+	//ibecon
+	VBUS_EVT_IBEACON_WRITE_HEAD	= 1000,				//struct protocol_beacon_head_set
+	VBUS_EVT_IBEACON_WRITE_HEAD_REPLY,				//struct protocol_beacon_retcode
+	VBUS_EVT_IBEACON_WRITE_UUID,					//struct protocol_beacon_uuid_set
+	VBUS_EVT_IBEACON_WRITE_UUID_REPLY,				//struct protocol_beacon_retcode
+	VBUS_EVT_IBEACON_WRITE_PASSWORD,				//struct protocol_beacon_write_passwd
+	VBUS_EVT_IBEACON_WRITE_PASSWORD_REPLY,		//struct protocol_beacon_retcode
+	VBUS_EVT_IBEACON_GET_HEAD,
+	VBUS_EVT_IBEACON_GET_HEAD_REPY,				//struct protocol_beacon_ret_head
+	VBUS_EVT_IBEACON_GET_UUID,
+	VBUS_EVT_IBEACON_GET_UUID_REPLY,				//struct protocol_beacon_ret_uuid
+
+
 
 
 }VBUS_EVT_TYPE;
