@@ -154,3 +154,22 @@ public class CustomAlarm{
         
     }
 }
+//交换数据开始
+/*
+public class SwitchStart {
+    public var timeString : String;   //开始时间时间戳 同时也是记录的轨迹id
+    public var sportType : Int8 
+    
+    @property (nonatomic,copy) NSString *time_str; //格式 yyyyMMddHHmmss
+    @property (nonatomic,assign) uint8_t  sport_type;
+    @property (nonatomic,assign) uint32_t durations;
+    @property (nonatomic,assign) uint32_t calories;
+    @property (nonatomic,assign) uint32_t distance;
+    @property (nonatomic,assign) uint8_t target_type;
+    @property (nonatomic,assign) uint32_t target_value;
+    @property (nonatomic,assign) uint8_t is_save;
+    @property (nonatomic,assign) uint8_t flag;
+    @property (nonatomic,assign) SwitchStatusType switch_type;
+    @property (nonatomic,assign) BOOL force_start;
+}*/
+
