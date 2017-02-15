@@ -491,7 +491,7 @@ public final class AngelManager: NSObject {
         //0,1,2,3,4,5,6 日。。。六
         var val = sit.weekdayList.reduce(0){$0 | ($1 == 0 ? 0x1 : (($1 < 7 && $1 > 0) ? 0x01 << UInt8(7 - $1) : 0x00))}
         val = val | (sit.isOpen ? 0x01 << 7 : 0x00)
-        long_sit.repetitions = val
+        long_sit.repetitions = UInt16(val)
         
         var ret_code:UInt32 = 0
         
@@ -1254,6 +1254,7 @@ public final class AngelManager: NSObject {
         swiftReadSportData = { data in
             let sportData = data.assumingMemoryBound(to: protocol_health_resolve_sport_data_s.self).pointee
             
+            
             //处理sportData
             let year = sportData.head1.date.year
             let month = sportData.head1.date.month
@@ -1300,10 +1301,13 @@ public final class AngelManager: NSObject {
             }
 
             let items = sportData.items
+            print("items:", items)
             let length = MemoryLayout<ble_sync_sport_item>.size
             (0..<96).forEach(){
                 i in
-                if let item = items?[length * i]{
+                if let item = items?[i]{
+                    print("item 步数 :" , item.sport_count);
+                    
                     if let sportItem = self.coredataHandler.createSportItem(withMacAddress: realMacAddress, withDate: date, withItemId: Int16(i)){
                         sportItem.activeTime = Int16(item.active_time)
                         sportItem.calories = Int16(item.calories)
@@ -1391,7 +1395,7 @@ public final class AngelManager: NSObject {
             let length = MemoryLayout<ble_sync_sleep_item>.size
             (0..<96).forEach(){
                 i in
-                if let item = items?[length * i]{
+                if let item = items?[i]{
                     if let sleepItem = self.coredataHandler.createSleepItem(withMacAddress: realMacAddress, withDate: date, withItemId: Int16(i)){
                         sleepItem.durations = Int16(item.durations)
                         sleepItem.id = Int16(i)
@@ -1458,7 +1462,7 @@ public final class AngelManager: NSObject {
             let length = MemoryLayout<ble_sync_heart_rate_item>.size
             (0..<96).forEach(){
                 i in
-                if let item = items?[length * i]{
+                if let item = items?[i]{
                     
                     if let heartRateItem = self.coredataHandler.createHeartRateItem(withMacAddress: realMacAddress, withDate: date, withItemId: Int16(i)){
                         heartRateItem.data = Int16(item.data)
@@ -1933,6 +1937,9 @@ public final class AngelManager: NSObject {
             loop(5, closure: closure)
         })
     }
+    
+  
+    
     
     private func getValue(_ flag:Bool,_ offset:UInt8) -> UInt8{
         let result = flag ? 0x01 << offset : 0x00

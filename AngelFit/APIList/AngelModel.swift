@@ -154,22 +154,50 @@ public class CustomAlarm{
         
     }
 }
+  // MARK:- 交换数据(手环端发起)
+
 //交换数据开始
-/*
 public class SwitchStart {
-    public var timeString : String;   //开始时间时间戳 同时也是记录的轨迹id
-    public var sportType : Int8 
+    public var timeString : String = ""   //开始时间格式 同时也是记录的轨迹id eg:yyyyMMddHHmmss
+    /*
+     Target_type:目标类型，(0x00:无目标， 0x01:重复次数，单位:次， 0x02:距离，单位:
+     60 / 98
+     深圳市爱聚科技有限公司
+     米， 0x03:卡路里，单位:大卡，0x04:时长，单位:分钟 ) Type:运动类型(0x00:无， 0x01:走路， 0x02:跑步， 0x03:骑行，0x04:徒步， 0x05: 游泳， 0x06:爬山， 0x07:羽毛球， 0x08:其他， 0x09:健身， 0x0A:动感单车， 0x0B:椭圆机， 0x0C:跑步机， 0x0D:仰卧起坐， 0x0E:俯卧撑， 0x0F:哑铃， 0x10:举重， 0x11:健身操， 0x12:瑜伽， 0x13:跳绳， 0x14:乒乓球， 0x15:篮球， 0x16:足球 ， 0x17:排球， 0x18:网球， 0x19:高尔夫球， 0x1A:棒球， 0x1B:滑雪， 0x1C:轮滑，0x1D:跳舞)
+     */
+    public var sportType : UInt8 = 0
     
-    @property (nonatomic,copy) NSString *time_str; //格式 yyyyMMddHHmmss
-    @property (nonatomic,assign) uint8_t  sport_type;
-    @property (nonatomic,assign) uint32_t durations;
-    @property (nonatomic,assign) uint32_t calories;
-    @property (nonatomic,assign) uint32_t distance;
-    @property (nonatomic,assign) uint8_t target_type;
-    @property (nonatomic,assign) uint32_t target_value;
-    @property (nonatomic,assign) uint8_t is_save;
-    @property (nonatomic,assign) uint8_t flag;
-    @property (nonatomic,assign) SwitchStatusType switch_type;
-    @property (nonatomic,assign) BOOL force_start;
-}*/
+    public var targetType : UInt8 = 0     //目标类型
+    public var targetValue : UInt8 = 0    //目标值
+    /*强制开始标志 Force_start:强制开始，0x01:强制开始有效， 0x00:强制开始无效(只有用户可以使用)*/
+    public var forceStart : UInt8 = 0
+}
+
+//交换数据中
+public class SwitchDoind {
+    public var timeString : String = ""   //开始时间格式 eg:yyyyMMddHHmmss
+    /*
+     Flag:0x00:全部有效， 0x01:距离无效，0x02:gps信号弱
+     */
+    public var flag : UInt8 = 0
+    public var duration	: UInt32 = 0        //持续时长
+    public var calories	: UInt32 = 0        //卡路里
+    public var distance	: UInt32 = 0        //距离(米)
+}
+
+//暂停或继续交换数据
+public class SwitchPauseOrContinue{
+    public var timeString : String = ""   //开始时间格式 eg:yyyyMMddHHmmss
+}
+
+//结束交换数据
+public class SwitchEnd{
+    public var timeString : String = ""     //开始时间格式 eg:yyyyMMddHHmmss
+    public var durations : UInt32 = 0       //持续时长
+    public var calories  : UInt32 = 0
+    public var distance  : UInt32 = 0
+    public var sport_type: UInt32 = 0
+    public var is_save   : UInt32 = 0       //是否保存
+}
+
 

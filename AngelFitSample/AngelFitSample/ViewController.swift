@@ -71,6 +71,8 @@ extension ViewController: GodManagerDelegate{
         let res = Thread.isMainThread ? "main" : "global"
 //        print(res)
         peripheralTuple.append((name, RSSI, peripheral))
+       peripheralTuple = peripheralTuple.sorted{fabs($0.RSSI.floatValue) < fabs($1.RSSI.floatValue)}
+        
         myTableView.reloadData()
     }
     func godManager(didUpdateCentralState state: GodManagerState) {

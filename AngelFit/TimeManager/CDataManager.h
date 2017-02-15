@@ -6,13 +6,9 @@
 //  Copyright © 2016年 aiju_huangjing1. All rights reserved.
 //
 
-#ifndef CDataManager_h
-#define CDataManager_h
 #include "vbus_evt_app.h"
 #include <stdio.h>
 #include <stdbool.h>
-#include "protocol.h"
-
 #pragma mark 获取mac地址
 void manageData(VBUS_EVT_BASE evt_base,VBUS_EVT_TYPE evt_type,void * __nonnull data,uint32_t size,uint32_t * __nonnull error_code);
 
@@ -81,4 +77,4 @@ extern void c_send_set_unit();
 
 //extern uint32_t sendSetUint();
 
-#endif /* CDataManager_h */
+
