@@ -174,7 +174,7 @@ public class SwitchStart {
 }
 
 //交换数据中
-public class SwitchDoind {
+public class SwitchDoing {
     public var timeString : String = ""   //开始时间格式 eg:yyyyMMddHHmmss
     /*
      Flag:0x00:全部有效， 0x01:距离无效，0x02:gps信号弱
@@ -183,6 +183,18 @@ public class SwitchDoind {
     public var duration	: UInt32 = 0        //持续时长
     public var calories	: UInt32 = 0        //卡路里
     public var distance	: UInt32 = 0        //距离(米)
+}
+//交换中手环回复
+public class SwitchDoingReply {
+    /*0x01:成功; 0x02:设备没有进入运动模式失败*/
+    public var status : UInt8 = 0
+    public var step : UInt32 = 0
+    public var calories : UInt32 = 0
+    public var distance : UInt32 = 0
+    public var curHrValue : UInt8 = 0
+    public var intervalSecond : UInt8 = 0
+    public var hrValueSerial : UInt8 = 0
+    public var hrValue: (UInt8, UInt8, UInt8, UInt8, UInt8, UInt8) = (0,0,0,0,0,0)
 }
 
 //暂停或继续交换数据
@@ -196,8 +208,21 @@ public class SwitchEnd{
     public var durations : UInt32 = 0       //持续时长
     public var calories  : UInt32 = 0
     public var distance  : UInt32 = 0
-    public var sport_type: UInt32 = 0
-    public var is_save   : UInt32 = 0       //是否保存
+    public var sportType: UInt32 = 0
+    public var isSave   : UInt32 = 0       //是否保存
+}
+//结束交换数据回复
+public class SwitchEndReply{
+     /*0x01:成功; 0x02:设备没有进入运动模式失败*/
+    public var errCode : UInt8 = 0
+    public var step : UInt32 = 0
+    public var calories : UInt32 = 0
+    public var distance : UInt32 = 0
+    public var avgHrValue : UInt8 = 0
+    public var maxHrValue : UInt8 = 0
+    public var burnFatMins : UInt8 = 0
+    public var aerobicMins : UInt8 = 0
+    public var limitMins : UInt8 = 0
 }
 
 

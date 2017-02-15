@@ -23,6 +23,15 @@ void (^ __nonnull swiftSyncAlarm)(void) = NULL;
 void (^ __nonnull swiftSetLongSit)(void) = NULL;
 void (^ __nonnull swiftSetUserInfo)(void) = NULL;
 void (^ __nonnull swiftSetUnit)(void) = NULL;
+void (^ __nonnull swiftSwitchStartReply)(void * __nonnull) = NULL;
+void (^ __nonnull swiftSwitchingReply)(void * __nonnull) = NULL;
+void (^ __nonnull swiftSwitchPauseReply)(void * __nonnull) = NULL;
+void (^ __nonnull swiftSwitchRestartReply)(void * __nonnull) = NULL;
+void (^ __nonnull swiftSwitchEndReply)(void * __nonnull) = NULL;
+void (^ __nonnull swiftSwitchBlePause)(void * __nonnull) = NULL;
+void (^ __nonnull swiftSwitchBleRestart)(void * __nonnull) = NULL;
+void (^ __nonnull swiftSwitchBleEnd)(void * __nonnull) = NULL;
+
 
 
 extern void c_get_macAddress(void * __nonnull data){
@@ -74,6 +83,32 @@ extern void c_send_set_user_info(){
 extern void c_send_set_unit(){
     swiftSetUnit();
 }
+
+extern void c_switch_start_reply(void * __nonnull data){
+    swiftSwitchStartReply(data);
+}
+extern void c_switching_reply(void * __nonnull data){
+    swiftSwitchingReply(data);
+}
+extern void c_swich_pause_reply(void * __nonnull data){
+    swiftSwitchPauseReply(data);
+}
+extern void c_swich_restart_reply(void * __nonnull data){
+    swiftSwitchRestartReply(data);
+}
+extern void c_swich_end_reply(void * __nonnull data){
+    swiftSwitchEndReply(data);
+}
+extern void c_swich_ble_pause(void * __nonnull data){
+    swiftSwitchBlePause(data);
+}
+extern void c_swich_ble_restart(void * __nonnull data){
+    swiftSwitchBleRestart(data);
+}
+extern void c_swich_ble_end(void * __nonnull data){
+    swiftSwitchBleEnd(data);
+}
+
 #pragma mark 处理C返回的数据
 void manageData(VBUS_EVT_BASE evt_base,VBUS_EVT_TYPE evt_type,void * __nonnull data,uint32_t size,uint32_t * __nonnull error_code){
     
@@ -107,7 +142,7 @@ void manageData(VBUS_EVT_BASE evt_base,VBUS_EVT_TYPE evt_type,void * __nonnull d
             case SYNC_EVT_HEALTH_PROGRESS:{
                 c_synchronization_health_data(false, (uint32_t)data);
             }
-                 break;
+                break;
             case SYNC_EVT_HEALTH_SYNC_COMPLETE:{
                 c_synchronization_health_data(true, 100);
             }
@@ -126,8 +161,41 @@ void manageData(VBUS_EVT_BASE evt_base,VBUS_EVT_TYPE evt_type,void * __nonnull d
                     c_get_notice_status(notice->notify_switch, notice->status_code, notice->err_code);
                 }
                 else{
-                 c_get_notice_status(0x55, 0 , 0);
+                    c_get_notice_status(0x55, 0 , 0);
                 }
+            }
+                break;
+                //收到交换数据开始回调
+            case VBUS_EVT_APP_SWITCH_APP_START_REPLY:{
+                c_switch_start_reply(data);
+            }
+                break;
+            case VBUS_EVT_APP_SWITCH_APP_ING_REPLY:{
+                c_switching_reply(data);
+            }
+                break;
+            case VBUS_EVT_APP_SWITCH_APP_PAUSE_REPLY:{
+                c_swich_pause_reply(data);
+            }
+                break;
+            case VBUS_EVT_APP_SWITCH_APP_RESTORE_REPLY:{
+                c_swich_restart_reply(data);
+            }
+                break;
+            case VBUS_EVT_APP_SWITCH_APP_END_REPLY:{
+                c_swich_end_reply(data);
+            }
+                break;
+            case VBUS_EVT_APP_SWITCH_APP_BLE_PAUSE:{
+                c_swich_ble_pause(data);
+            }
+                break;
+            case VBUS_EVT_APP_SWITCH_APP_BLE_RESTORE:{
+                c_swich_ble_restart(data);
+            }
+                break;
+            case VBUS_EVT_APP_SWITCH_APP_BLE_END:{
+                c_swich_ble_end(data);
             }
                 break;
             default:

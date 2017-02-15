@@ -102,7 +102,7 @@ extension CBridgingManager{
         
         swiftSyncAlarm = {
             AngelManager.share()?.setSynchronizationAlarm(closure: {
-            status in
+                status in
             })
         }
         swiftSetLongSit = {
@@ -122,7 +122,7 @@ extension CBridgingManager{
                 AngelManager.share()?.setLongSit(longSitModel, closure: {_ in
                     
                 })
-
+                
                 return
             }
             let calender = Calendar.current
@@ -138,7 +138,7 @@ extension CBridgingManager{
             longSitModel.duringTime = UInt16((longSit?.interval)!)
             longSitModel.weekdayList = (longSit?.weekdayList)! as! [Int]
             
-            AngelManager.share()?.setLongSit(longSitModel, closure: {_ in 
+            AngelManager.share()?.setLongSit(longSitModel, closure: {_ in
                 
             })
             
@@ -146,7 +146,7 @@ extension CBridgingManager{
         swiftSetUserInfo = {
             var userInfo:UserInfoModel = UserInfoModel();
             
-         let user = CoreDataHandler().selectUser()
+            let user = CoreDataHandler().selectUser()
             guard user != nil else {
                 userInfo.gender = 0
                 userInfo.height = 175
@@ -170,8 +170,8 @@ extension CBridgingManager{
             userInfo.birthMonth = UInt8(components.month!)
             userInfo.birthDay = UInt8(components.day!)
             
-            AngelManager.share()?.setUserInfo(userInfo, closure: {_ in 
-            
+            AngelManager.share()?.setUserInfo(userInfo, closure: {_ in
+                
             })
         }
         swiftSetUnit = {
@@ -309,9 +309,48 @@ extension CBridgingManager{
             funcTable?.notify2_instagram = funcTableModel.ontify2.instagram
             funcTable?.notify2_alarmClock = funcTableModel.ontify2.alarmClock
             
-            CoreDataHandler().commit()
+            _ = CoreDataHandler().commit()
         }
         
-       
+        //MARK:- 数据交换
+        /*
+          这是app发起的交换数据过程中，手环控制交换数据暂停，继续，结束 
+         暂停和结束无需特殊处理，SDK需将状态传回，告诉app状态
+         结束后，不仅要通知app状态，还要讲数据传回保存，并且不能再手动调用交换结束接口，否则数据已经被清除
+         */
+        swiftSwitchBlePause = {
+        data in
+            
+            var ret_code:UInt32 = 0
+            var reply:protocol_switch_app_ble_pause_reply = protocol_switch_app_ble_pause_reply()
+            reply.err_code = 1
+            let length = UInt32(MemoryLayout<UInt8>.size * 3)
+            vbus_tx_data(VBUS_EVT_BASE_APP_SET,VBUS_EVT_APP_SWITCH_APP_BLE_PAUSE_REPLY,&reply,length,&ret_code)
+            
+            let pause:protocol_switch_app_ble_pause = data.assumingMemoryBound(to: protocol_switch_app_ble_pause.self).pointee
+            
+        }
+        swiftSwitchBleRestart = {
+        data in
+            var ret_code:UInt32 = 0
+            var reply:protocol_switch_app_ble_restore_reply = protocol_switch_app_ble_restore_reply()
+            reply.err_code = 1
+            let length = UInt32(MemoryLayout<UInt8>.size * 3)
+            vbus_tx_data(VBUS_EVT_BASE_APP_SET,VBUS_EVT_APP_SWITCH_APP_BLE_RESTORE_REPLY,&reply,length,&ret_code)
+            
+            let reatart:protocol_switch_app_ble_restore = data.assumingMemoryBound(to: protocol_switch_app_ble_restore.self).pointee
+        }
+        swiftSwitchBleEnd = {
+        data in
+            var ret_code:UInt32 = 0
+            var reply:protocol_switch_app_ble_end_reply = protocol_switch_app_ble_end_reply()
+            reply.err_code = 1
+            let length = UInt32(MemoryLayout<UInt8>.size * 3)
+            vbus_tx_data(VBUS_EVT_BASE_APP_SET,VBUS_EVT_APP_SWITCH_APP_BLE_END_REPLY,&reply,length,&ret_code)
+            
+            let end:protocol_switch_app_ble_end = data.assumingMemoryBound(to: protocol_switch_app_ble_end.self).pointee
+            
+        }
+        
     }
 }
