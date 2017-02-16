@@ -29,14 +29,18 @@ public final class AngelManager: NSObject {
     }()
     
     //MARK:- init +++++++++++++++++++
-    private static var __once: AngelManager? {
+    private static var __once: () = {
         guard let peripheral = PeripheralManager.share().currentPeripheral else{
-            return nil
+            return
         }
-        return AngelManager(currentPeripheral: peripheral)
+        singleton.instance = AngelManager(currentPeripheral: peripheral)
+    }()
+    struct singleton{
+        static var instance:AngelManager? = nil
     }
     public class func share() -> AngelManager?{
-        return __once
+        _ = AngelManager.__once
+        return singleton.instance
     }
     
     convenience init(currentPeripheral existPeripheral: CBPeripheral) {
@@ -52,7 +56,9 @@ public final class AngelManager: NSObject {
         getMacAddressFromBand(){
             errorCode, data in
             if errorCode == ErrorCode.success{
-                self.macAddress = data
+                DispatchQueue.main.async {
+                    self.macAddress = data
+                }
             }
         }
     }
@@ -1252,6 +1258,7 @@ public final class AngelManager: NSObject {
         
         //获取到运动数据回调
         swiftReadSportData = { data in
+
             let sportData = data.assumingMemoryBound(to: protocol_health_resolve_sport_data_s.self).pointee
             
             
@@ -1299,14 +1306,16 @@ public final class AngelManager: NSObject {
             guard self.coredataHandler.commit() else {
                 return
             }
-
+            
+            
             let items = sportData.items
             print("items:", items)
             let length = MemoryLayout<ble_sync_sport_item>.size
+            
             (0..<96).forEach(){
                 i in
                 if let item = items?[i]{
-                    print("item 步数 :" , item.sport_count);
+                    print("item 步数 :" , item.sport_count, Thread.isMainThread);
                     
                     if let sportItem = self.coredataHandler.createSportItem(withMacAddress: realMacAddress, withDate: date, withItemId: Int16(i)){
                         sportItem.activeTime = Int16(item.active_time)
@@ -1315,9 +1324,11 @@ public final class AngelManager: NSObject {
                         sportItem.id = Int16(i)
                         sportItem.mode = Int16(item.mode)
                         sportItem.sportCount = Int16(item.sport_count)
-                        _ = self.coredataHandler.commit()
                     }
                 }
+            }
+            DispatchQueue.main.async {
+                _ = self.coredataHandler.commit()
             }
         }
         
@@ -1400,9 +1411,11 @@ public final class AngelManager: NSObject {
                         sleepItem.durations = Int16(item.durations)
                         sleepItem.id = Int16(i)
                         sleepItem.sleepStatus = Int16(item.sleep_status)
-                        _ = self.coredataHandler.commit()
                     }
                 }
+            }
+            DispatchQueue.main.async {
+                _ = self.coredataHandler.commit()
             }
         }
         
@@ -1468,9 +1481,11 @@ public final class AngelManager: NSObject {
                         heartRateItem.data = Int16(item.data)
                         heartRateItem.id = Int16(i)
                         heartRateItem.offset = Int16(item.offset)
-                        _ = self.coredataHandler.commit()
                     }
                 }
+            }
+            DispatchQueue.main.async {
+                _ = self.coredataHandler.commit()
             }
         }
         

@@ -96,7 +96,7 @@ public class CoreDataHandler {
         
         let resultDate = Date(timeInterval: TimeInterval(offset) * 60 * 60 * 24, since: date)
         
-        var components = calender.dateComponents([.year, .month, .day], from: resultDate)
+        let components = calender.dateComponents([.year, .month, .day], from: resultDate)
 
         return calender.date(from: components)!
     }
@@ -1237,9 +1237,9 @@ extension CoreDataHandler{
         
         //为设备添加运动数据
         device.addToSleepDatas(sleepData)
-        guard commit() else {
-            return nil
-        }
+//        guard commit() else {
+//            return nil
+//        }
         
         return sleepData
     }
@@ -1304,9 +1304,9 @@ extension CoreDataHandler{
         
         sleepData.addToSleepItem(sleepItem!)
         
-        guard commit() else {
-            return nil
-        }
+//        guard commit() else {
+//            return nil
+//        }
         
         return sleepItem
     }
@@ -1435,9 +1435,9 @@ extension CoreDataHandler{
         
         heartRateData.addToHeartRateItem(heartRateItem!)
         
-        guard commit() else {
-            return nil
-        }
+//        guard commit() else {
+//            return nil
+//        }
         
         return heartRateItem
     }

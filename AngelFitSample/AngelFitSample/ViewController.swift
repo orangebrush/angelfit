@@ -41,38 +41,26 @@ class ViewController: UIViewController {
          godManager.startScan()
     }
     
+    var secClick = false
     @IBAction func bandDevice(_ sender: Any) {
         let angelManger = AngelManager.share()
-        angelManger?.getMacAddressFromBand{
-            errorCode, macaddress in
-            print("sample address:", macaddress)
-            angelManger?.setSynchronizationHealthData{
-                success, progress in
-                print(success, progress, "%")
-            }
+        secClick = !secClick
+        if secClick {
+            print("local address:", angelManger?.macAddress ?? "null")
+        }else{            
+            print("2.....", angelManger?.macAddress ?? "null")
         }
-        /*
-        AngelManager.share()?.setBind(true){
-            success in
-            print(success)
-            
-          
-        }
-         */
+        
+        
     }
 }
 
 //MARK:- GodManager 代理实现
 extension ViewController: GodManagerDelegate{
     func godManager(didDiscoverPeripheral peripheral: CBPeripheral, withRSSI RSSI: NSNumber, peripheralName name: String){
-//        print(name)
-//        print(peripheral)
-//        print(RSSI)
-        let res = Thread.isMainThread ? "main" : "global"
-//        print(res)
+
         peripheralTuple.append((name, RSSI, peripheral))
-       peripheralTuple = peripheralTuple.sorted{fabs($0.RSSI.floatValue) < fabs($1.RSSI.floatValue)}
-        
+        peripheralTuple = peripheralTuple.sorted{fabs($0.RSSI.floatValue) < fabs($1.RSSI.floatValue)}
         myTableView.reloadData()
     }
     func godManager(didUpdateCentralState state: GodManagerState) {
