@@ -91,9 +91,9 @@ void protocol_health_resolve_sleep_data_handle(struct protocol_health_resolve_sl
     DEBUG_INFO("protocol_health_resolve_sleep_data_handle ");
     DEBUG_INFO("%d-%d-%d",data->head1.date.year,data->head1.date.month,data->head1.date.day);
     c_read_sleep_data(data);
-    
-    
-    
+}
+void protocol_sync_activity_progress_handle(uint8_t progress){
+    c_sync_active_progress(progress);
 }
 
 void protocol_health_resolve_heart_rate_data_handle(struct protocol_health_resolve_heart_rate_data_s *data)
@@ -103,6 +103,7 @@ void protocol_health_resolve_heart_rate_data_handle(struct protocol_health_resol
     c_read_heart_rate_data(data);
 }
 void protocol_sync_activity_resolve_data(const struct protocol_activity_data *data){
+    c_sync_active_data(data);
     DEBUG_INFO("protocol_active_resolve_data_handle ");
     DEBUG_INFO("%d-%d-%d",data->head.time.year,data->head.time.month,data->head.time.day);
 //    ProtocolActivityModel *model = [[ProtocolActivityModel alloc] initWith:*data];
@@ -115,7 +116,6 @@ void protocol_sync_activity_resolve_data(const struct protocol_activity_data *da
 //        
 //        [model saveOrUpdate];
 //    }
-    
 }
 #pragma mark 初始化所需文件
 void initialization_c_function(){
@@ -130,6 +130,7 @@ void initialization_c_function(){
     protocol_health_resolve_sleep_reg_data_callback(protocol_health_resolve_sleep_data_handle);
     protocol_health_resolve_heart_rate_reg_data_callback(protocol_health_resolve_heart_rate_data_handle);
     protocol_sync_activity_resolve_data_cb_reg(protocol_sync_activity_resolve_data);
+    protocol_sync_activity_progress_reg(protocol_sync_activity_progress_handle);
     
     vbus_print_info();
 

@@ -351,6 +351,27 @@ extension CBridgingManager{
             let end:protocol_switch_app_ble_end = data.assumingMemoryBound(to: protocol_switch_app_ble_end.self).pointee
             
         }
+        swiftBleSwitchStart = {
+        data in
+            let start:protocol_switch_ble_start = data.assumingMemoryBound(to: protocol_switch_ble_start.self).pointee
+        }
+        swiftBleSwitching = {
+        data in
+           let doing:protocol_switch_ble_ing = data.assumingMemoryBound(to: protocol_switch_ble_ing.self).pointee
+        }
+        swiftBleSwitchPause = {
+        data in
+            let pause:protocol_switch_ble_pause = data.assumingMemoryBound(to: protocol_switch_ble_pause.self).pointee
+        }
+        swiftBleSwitchRestart = {
+        data in
+            let start:protocol_switch_ble_restore = data.assumingMemoryBound(to: protocol_switch_ble_restore.self).pointee
+        }
+        swiftBleSwitchEnd = {
+        data in
+            let end:protocol_switch_ble_end = data.assumingMemoryBound(to: protocol_switch_ble_end.self).pointee
+        }
+      
         
     }
 }

@@ -96,6 +96,38 @@ extern void c_swich_ble_restart(void * __nonnull);
 
 extern void (^ __nonnull swiftSwitchBleEnd)(void * __nonnull);
 extern void c_swich_ble_end(void * __nonnull);
+
+#pragma mark 手环端发起
+extern void (^ __nonnull swiftBleSwitchStart)(void * __nonnull);
+extern void c_ble_swich_start(void * __nonnull);
+
+extern void (^ __nonnull swiftBleSwitching)(void * __nonnull);
+extern void c_ble_swich_ing(void * __nonnull);
+
+extern void (^ __nonnull swiftBleSwitchPause)(void * __nonnull);
+extern void c_ble_swich_pause(void * __nonnull);
+
+extern void (^ __nonnull swiftBleSwitchRestart)(void * __nonnull);
+extern void c_ble_swich_restart(void * __nonnull);
+
+extern void (^ __nonnull swiftBleSwitchEnd)(void * __nonnull);
+extern void c_ble_swich_end(void * __nonnull);
+
+extern void (^ __nonnull swiftGetActiveCount)(void * __nonnull);
+extern void c_get_active_count(void * __nonnull data);
+
+extern void (^ __nonnull swiftSyncActiveTimeOut)();
+extern void c_sync_active_timeout();
+
+extern void (^ __nonnull swiftSyncActiveProgress)(int);
+extern void c_sync_active_progress(int);
+
+extern void (^ __nonnull swiftSyncActiveComplete)();
+extern void c_sync_active_complete();
+
+extern void (^ __nonnull swiftSyncActiveData)(void * __nonnull);
+extern void c_sync_active_data(void * __nonnull);
+
 //extern uint32_t sendSyncLongSit();
 //extern uint32_t sendSyncLostFind();
 //extern uint32_t sendSetGoal();

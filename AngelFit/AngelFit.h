@@ -24,6 +24,8 @@
 #include "protocol_func_table.h"
 #include "protocol_switch_data.h"
 #include "vbus_evt_app.h"
+#include "protocol_sync_activity.h"
+#include "protocol_sync_activity_resolve.h"
 //! Project version number for AngelFit.
 FOUNDATION_EXPORT double AngelFitVersionNumber;
 

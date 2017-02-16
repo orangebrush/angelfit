@@ -215,4 +215,36 @@ class AngelSwitchDataManager: NSObject {
             closure(true,endRelpyResult)
         }
     }
+    //同步活动数据
+    public func setSynchronizationActiveData(_ macAddress: String? = nil, closure:@escaping (_ complete: Bool, _ progress: Int16 ,_ timeOut:Bool) -> ()){
+               swiftSyncActiveProgress = {
+            /*data为同步百分比 */
+        data in
+            closure(false,Int16(data),false);
+        }
+        swiftSyncActiveComplete = {
+        closure(true,100,false)
+        }
+        swiftSyncActiveTimeOut = {
+          closure(false,0,true)
+        }
+        swiftSyncActiveData = {
+        data in
+            let activeData:protocol_activity_data = data.assumingMemoryBound(to: protocol_activity_data.self).pointee
+        }
+        
+    }
+    //获取同步项个数
+    public func getSynchronizationActiveCount(_ macAddress: String? = nil, closure:@escaping (_ count: UInt8) -> ()){
+        var ret_code:UInt32 = 0;
+        vbus_tx_evt(VBUS_EVT_BASE_APP_GET, VBUS_EVT_APP_GET_ACTIVITY_COUNT,&ret_code);
+
+        swiftGetActiveCount = {
+            data in
+            let activeCount:protocol_new_health_activity_count = data.assumingMemoryBound(to: protocol_new_health_activity_count.self).pointee
+            closure(activeCount.count)
+        }
+
+    }
+    
 }

@@ -33,12 +33,13 @@ typedef enum {
 	SYNC_EVT_HEALTH_PROGRESS,			//健康数据同步进度,进度在data (0-100) (uint32_t)data
 	SYNC_EVT_ALARM_PROGRESS,			//闹钟同步进度 struct protocol_set_alarm_progress_s
     
-    SYNC_EVT_HEALTH_PROCESSING,
+    SYNC_EVT_HEALTH_PROCESSING,//8
     SYNC_EVT_ALARM_PROCESSING,
     SYNC_EVT_CONFIG_PROCESSING,
 	SYNC_EVT_CONFIG_FAST_SYNC_COMPLETE,		//连接以后,快速同步完成
 	SYNC_EVT_ACTIVITY_STOP_ONCE,				//中间状态	重发控制
 	SYNC_EVT_ACTIVITY_START_ONCE,
+	SYNC_EVT_ACTIVITY_PROCESSING,				//同步活动项进度(0-100)
 
 	VBUS_EVT_APP_SET_ALARM  = 100,		//设置闹钟
 	VBUS_EVT_APP_SET_LONG_SIT ,			//设置久坐 struct protocol_long_sit
@@ -87,6 +88,7 @@ typedef enum {
     
     VBUS_EVT_APP_GET_HR_SENSOR_PARAM,		//获取心率传感器参数 struct protocol_heart_rate_sensor_param
     VBUS_EVT_APP_GET_GSENSOR_PARAM,			//加速度传感器  struct protocol_gsensor_param
+	VBUS_EVT_APP_GET_ACTIVITY_COUNT,			//获取同步时间轴来计算百分比 struct protocol_new_health_activity_count
 
     
 	VBUS_EVT_APP_OTA_START = 400,			//进入升级模式

@@ -31,9 +31,16 @@ void (^ __nonnull swiftSwitchEndReply)(void * __nonnull) = NULL;
 void (^ __nonnull swiftSwitchBlePause)(void * __nonnull) = NULL;
 void (^ __nonnull swiftSwitchBleRestart)(void * __nonnull) = NULL;
 void (^ __nonnull swiftSwitchBleEnd)(void * __nonnull) = NULL;
-
-
-
+void (^ __nonnull swiftBleSwitchStart)(void * __nonnull) = NULL;
+void (^ __nonnull swiftBleSwitching)(void * __nonnull) = NULL;
+void (^ __nonnull swiftBleSwitchPause)(void * __nonnull) = NULL;
+void (^ __nonnull swiftBleSwitchRestart)(void * __nonnull) = NULL;
+void (^ __nonnull swiftBleSwitchEnd)(void * __nonnull) = NULL;
+void (^ __nonnull swiftGetActiveCount)(void * __nonnull) = NULL;
+void (^ __nonnull swiftSyncActiveTimeOut)() = NULL;
+void (^ __nonnull swiftSyncActiveProgress)(int) = NULL;
+void (^ __nonnull swiftSyncActiveComplete)() = NULL;
+void (^ __nonnull swiftSyncActiveData)(void * __nonnull) = NULL;
 extern void c_get_macAddress(void * __nonnull data){
     swiftMacAddress(data);
 }
@@ -108,6 +115,37 @@ extern void c_swich_ble_restart(void * __nonnull data){
 extern void c_swich_ble_end(void * __nonnull data){
     swiftSwitchBleEnd(data);
 }
+extern void c_ble_swich_start(void * __nonnull data){
+    swiftBleSwitchStart(data);
+}
+extern void c_ble_swich_ing(void * __nonnull data){
+    swiftBleSwitching(data);
+}
+extern void c_ble_swich_pause(void * __nonnull data){
+    swiftBleSwitchPause(data);
+}
+extern void c_ble_swich_restart(void * __nonnull data){
+    swiftBleSwitchRestart(data);
+}
+extern void c_ble_swich_end(void * __nonnull data){
+    swiftBleSwitchEnd(data);
+}
+extern void c_get_active_count(void * __nonnull data){
+    swiftGetActiveCount(data);
+}
+extern void c_sync_active_timeout(){
+    swiftSyncActiveTimeOut();
+}
+extern void c_sync_active_progress(int progress){
+    swiftSyncActiveProgress(progress);
+}
+extern void c_sync_active_complete(){
+    swiftSyncActiveComplete();
+}
+extern void c_sync_active_data(void * __nonnull data){
+    swiftSyncActiveData(data);
+}
+
 
 #pragma mark 处理C返回的数据
 void manageData(VBUS_EVT_BASE evt_base,VBUS_EVT_TYPE evt_type,void * __nonnull data,uint32_t size,uint32_t * __nonnull error_code){
@@ -196,6 +234,38 @@ void manageData(VBUS_EVT_BASE evt_base,VBUS_EVT_TYPE evt_type,void * __nonnull d
                 break;
             case VBUS_EVT_APP_SWITCH_APP_BLE_END:{
                 c_swich_ble_end(data);
+            }
+                break;
+            case VBUS_EVT_APP_SWITCH_BLE_START:{
+                c_ble_swich_start(data);
+            }
+                break;
+            case VBUS_EVT_APP_SWITCH_BLE_ING:{
+                c_ble_swich_ing(data);
+            }
+                break;
+            case VBUS_EVT_APP_SWITCH_BLE_END:{
+                c_ble_swich_end(data);
+            }
+                break;
+            case VBUS_EVT_APP_SWITCH_BLE_PAUSE:{
+                c_ble_swich_pause(data);
+            }
+                break;
+            case VBUS_EVT_APP_SWITCH_BLE_RESTORE:{
+                c_ble_swich_restart(data);
+            }
+                break;
+            case VBUS_EVT_APP_ACTIVITY_SYNC_TIMEOUT:{
+                c_sync_active_timeout();
+            }
+                break;
+            case VBUS_EVT_APP_GET_ACTIVITY_COUNT:{
+                c_get_active_count(data);
+            }
+                break;
+            case VBUS_EVT_APP_ACTIVITY_SYNC_COMPLETE:{
+                c_sync_active_complete();
             }
                 break;
             default:
