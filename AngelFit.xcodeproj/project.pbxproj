@@ -125,9 +125,9 @@
 		32E971D81DE7D13F0029DE9F /* Debug.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E971D71DE7D13F0029DE9F /* Debug.swift */; };
 		32E971DD1DE7DAD60029DE9F /* Alarm+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E971D91DE7DAD60029DE9F /* Alarm+CoreDataClass.swift */; };
 		32E971DE1DE7DAD60029DE9F /* Alarm+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E971DA1DE7DAD60029DE9F /* Alarm+CoreDataProperties.swift */; };
-		32E971DF1DE7DAD60029DE9F /* Device+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E971DB1DE7DAD60029DE9F /* Device+CoreDataClass.swift */; };
-		32E971E01DE7DAD60029DE9F /* Device+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E971DC1DE7DAD60029DE9F /* Device+CoreDataProperties.swift */; };
 		BE1F53971DC84FC500EAD9BA /* Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1F53961DC84FC500EAD9BA /* Time.swift */; };
+		BE7DF73E1E56E9F2000E115E /* Device+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE7DF73C1E56E9F2000E115E /* Device+CoreDataClass.swift */; };
+		BE7DF73F1E56E9F2000E115E /* Device+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE7DF73D1E56E9F2000E115E /* Device+CoreDataProperties.swift */; };
 		BEB057301DD025D500B80678 /* Peripheral+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB0572F1DD025D500B80678 /* Peripheral+Extension.swift */; };
 		BEB057321DD02E1700B80678 /* AngelManager+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB057311DD02E1700B80678 /* AngelManager+Extension.swift */; };
 		BEF78B901DC9E2A000A2D528 /* CoreDataConfigure.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF78B8F1DC9E2A000A2D528 /* CoreDataConfigure.swift */; };
@@ -263,9 +263,9 @@
 		32E971D71DE7D13F0029DE9F /* Debug.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Debug.swift; sourceTree = "<group>"; };
 		32E971D91DE7DAD60029DE9F /* Alarm+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Alarm+CoreDataClass.swift"; sourceTree = "<group>"; };
 		32E971DA1DE7DAD60029DE9F /* Alarm+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Alarm+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		32E971DB1DE7DAD60029DE9F /* Device+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Device+CoreDataClass.swift"; sourceTree = "<group>"; };
-		32E971DC1DE7DAD60029DE9F /* Device+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Device+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		BE1F53961DC84FC500EAD9BA /* Time.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Time.swift; sourceTree = "<group>"; };
+		BE7DF73C1E56E9F2000E115E /* Device+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Device+CoreDataClass.swift"; sourceTree = "<group>"; };
+		BE7DF73D1E56E9F2000E115E /* Device+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Device+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		BEB0572F1DD025D500B80678 /* Peripheral+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Peripheral+Extension.swift"; sourceTree = "<group>"; };
 		BEB057311DD02E1700B80678 /* AngelManager+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "AngelManager+Extension.swift"; path = "../AngelManager+Extension.swift"; sourceTree = "<group>"; };
 		BEF78B8F1DC9E2A000A2D528 /* CoreDataConfigure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataConfigure.swift; sourceTree = "<group>"; };
@@ -476,10 +476,10 @@
 		32C1033A1DC987CC0001D415 /* coredata */ = {
 			isa = PBXGroup;
 			children = (
+				BE7DF73C1E56E9F2000E115E /* Device+CoreDataClass.swift */,
+				BE7DF73D1E56E9F2000E115E /* Device+CoreDataProperties.swift */,
 				32E971D91DE7DAD60029DE9F /* Alarm+CoreDataClass.swift */,
 				32E971DA1DE7DAD60029DE9F /* Alarm+CoreDataProperties.swift */,
-				32E971DB1DE7DAD60029DE9F /* Device+CoreDataClass.swift */,
-				32E971DC1DE7DAD60029DE9F /* Device+CoreDataProperties.swift */,
 				32E971D31DE6A0560029DE9F /* HeartInterval+CoreDataClass.swift */,
 				32E971D41DE6A0560029DE9F /* HeartInterval+CoreDataProperties.swift */,
 				32E2E1451DE44C0F00DC2C89 /* FuncTable+CoreDataClass.swift */,
@@ -687,9 +687,9 @@
 				22DF62031DD9B63C0080B77A /* CBridgingManager.swift in Sources */,
 				22122F871E53F8E700AA61F4 /* vbus.c in Sources */,
 				22122F7A1E53F8E700AA61F4 /* protocol_switch_data.c in Sources */,
-				32E971DF1DE7DAD60029DE9F /* Device+CoreDataClass.swift in Sources */,
 				32E2E1261DE3F5A900DC2C89 /* HeartRateData+CoreDataProperties.swift in Sources */,
 				32E2E0DD1DE2EDC000DC2C89 /* User+CoreDataClass.swift in Sources */,
+				BE7DF73E1E56E9F2000E115E /* Device+CoreDataClass.swift in Sources */,
 				32E2E1211DE3F5A900DC2C89 /* SleepItem+CoreDataClass.swift in Sources */,
 				BEF78B901DC9E2A000A2D528 /* CoreDataConfigure.swift in Sources */,
 				32060CF81DE28409007BC7B3 /* AngelModel.swift in Sources */,
@@ -708,13 +708,13 @@
 				22DF61DD1DD99EA20080B77A /* SocketLog.m in Sources */,
 				22DF62401DDAFF2A0080B77A /* CBridgingManager+Extension.swift in Sources */,
 				32E2E1341DE3F9AD00DC2C89 /* SleepData+CoreDataProperties.swift in Sources */,
+				BE7DF73F1E56E9F2000E115E /* Device+CoreDataProperties.swift in Sources */,
 				22122F721E53F8E700AA61F4 /* protocol_health_resolve_sport.c in Sources */,
 				32E2E1471DE44C0F00DC2C89 /* FuncTable+CoreDataClass.swift in Sources */,
 				32E971DD1DE7DAD60029DE9F /* Alarm+CoreDataClass.swift in Sources */,
 				BEF78B921DC9E4CA00A2D528 /* CoreDataHandler.swift in Sources */,
 				32E2E1281DE3F5A900DC2C89 /* HeartRateItem+CoreDataProperties.swift in Sources */,
 				22DF623A1DDAA8260080B77A /* Timer.swift in Sources */,
-				32E971E01DE7DAD60029DE9F /* Device+CoreDataProperties.swift in Sources */,
 				32E971D51DE6A0560029DE9F /* HeartInterval+CoreDataClass.swift in Sources */,
 				32C1033D1DC988130001D415 /* Model.xcdatamodeld in Sources */,
 				32E2E12A1DE3F5A900DC2C89 /* SportData+CoreDataProperties.swift in Sources */,

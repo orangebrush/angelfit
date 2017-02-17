@@ -2,8 +2,8 @@
 //  Device+CoreDataProperties.swift
 //  AngelFit
 //
-//  Created by YiGan on 25/11/2016.
-//  Copyright © 2016 aiju_huangjing1. All rights reserved.
+//  Created by ganyi on 2017/2/17.
+//  Copyright © 2017年 aiju_huangjing1. All rights reserved.
 //
 
 import Foundation
@@ -43,6 +43,7 @@ extension Device {
     @NSManaged public var sportDatas: NSSet?
     @NSManaged public var unit: Unit?
     @NSManaged public var user: User?
+    @NSManaged public var tracks: NSSet?
 
 }
 
@@ -129,5 +130,22 @@ extension Device {
 
     @objc(removeSportDatas:)
     @NSManaged public func removeFromSportDatas(_ values: NSSet)
+
+}
+
+// MARK: Generated accessors for tracks
+extension Device {
+
+    @objc(addTracksObject:)
+    @NSManaged public func addToTracks(_ value: Track)
+
+    @objc(removeTracksObject:)
+    @NSManaged public func removeFromTracks(_ value: Track)
+
+    @objc(addTracks:)
+    @NSManaged public func addToTracks(_ values: NSSet)
+
+    @objc(removeTracks:)
+    @NSManaged public func removeFromTracks(_ values: NSSet)
 
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="11542" systemVersion="16B2555" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="11759" systemVersion="16D32" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Alarm" representedClassName=".Alarm" syncable="YES">
         <attribute name="duration" optional="YES" attributeType="Integer 16" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="hour" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
@@ -37,6 +37,7 @@
         <relationship name="silentDistrube" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SilentDistrube" syncable="YES"/>
         <relationship name="sleepDatas" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SleepData" inverseName="device" inverseEntity="SleepData" syncable="YES"/>
         <relationship name="sportDatas" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SportData" inverseName="device" inverseEntity="SportData" syncable="YES"/>
+        <relationship name="tracks" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Track" inverseName="device" inverseEntity="Track" syncable="YES"/>
         <relationship name="unit" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Unit" syncable="YES"/>
         <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="devices" inverseEntity="User" syncable="YES"/>
     </entity>
@@ -235,6 +236,22 @@
         <attribute name="sportCount" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <relationship name="sportData" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SportData" inverseName="sportItem" inverseEntity="SportData" syncable="YES"/>
     </entity>
+    <entity name="Track" representedClassName="Track" syncable="YES" codeGenerationType="class">
+        <attribute name="aerobicMinutes" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="avgrageHeartrate" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="burnFatMinutes" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="calories" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="distance" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="durations" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="heartrateList" optional="YES" syncable="YES"/>
+        <attribute name="limitMinutes" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="maxHeartrate" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="serial" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="step" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <relationship name="device" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Device" inverseName="tracks" inverseEntity="Device" syncable="YES"/>
+    </entity>
     <entity name="Unit" representedClassName=".Unit" syncable="YES">
         <attribute name="distance" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="language" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
@@ -258,7 +275,7 @@
     <fetchRequest name="DefaultUserRequest" entity="User" predicateString="userId == 1"/>
     <elements>
         <element name="Alarm" positionX="259" positionY="59" width="128" height="180"/>
-        <element name="Device" positionX="-119" positionY="62" width="200" height="450"/>
+        <element name="Device" positionX="-90" positionY="63" width="200" height="463"/>
         <element name="FuncTable" positionX="-686" positionY="-9" width="128" height="1305"/>
         <element name="HandGesture" positionX="259" positionY="287" width="128" height="88"/>
         <element name="HeartInterval" positionX="-549" positionY="261" width="128" height="105"/>
@@ -268,11 +285,12 @@
         <element name="LostFind" positionX="259" positionY="387" width="128" height="58"/>
         <element name="Notice" positionX="-380" positionY="243" width="128" height="133"/>
         <element name="SilentDistrube" positionX="-549" positionY="369" width="128" height="118"/>
-        <element name="SleepData" positionX="-38" positionY="545" width="128" height="28"/>
-        <element name="SleepItem" positionX="-38" positionY="770" width="128" height="103"/>
+        <element name="SleepData" positionX="-47" positionY="540" width="128" height="313"/>
+        <element name="SleepItem" positionX="-47" positionY="882" width="128" height="103"/>
         <element name="SportData" positionX="-254" positionY="522" width="128" height="253"/>
-        <element name="SportItem" positionX="-254" positionY="738" width="128" height="148"/>
+        <element name="SportItem" positionX="-254" positionY="806" width="128" height="148"/>
         <element name="Unit" positionX="-378" positionY="360" width="128" height="118"/>
         <element name="User" positionX="-101" positionY="-207" width="128" height="193"/>
+        <element name="Track" positionX="367" positionY="468" width="128" height="253"/>
     </elements>
 </model>

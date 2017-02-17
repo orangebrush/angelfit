@@ -2,8 +2,8 @@
 //  Device+CoreDataClass.swift
 //  AngelFit
 //
-//  Created by YiGan on 25/11/2016.
-//  Copyright © 2016 aiju_huangjing1. All rights reserved.
+//  Created by ganyi on 2017/2/17.
+//  Copyright © 2017年 aiju_huangjing1. All rights reserved.
 //
 
 import Foundation

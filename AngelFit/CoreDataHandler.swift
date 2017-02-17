@@ -1080,10 +1080,9 @@ extension CoreDataHandler{
             if let dict = items{
                 sportData?.setValuesForKeys(dict)
             }
-//            guard commit() else{
-//                return nil
-//            }
-            commit()
+            guard commit() else{
+                return nil
+            }
             return sportDataList.first
         }
         
@@ -1098,9 +1097,6 @@ extension CoreDataHandler{
         
         if let dict = items{
             sportData.setValuesForKeys(dict)
-        }
-        guard commit() else{
-            return nil
         }
         
         //为设备添加运动数据
@@ -1167,9 +1163,6 @@ extension CoreDataHandler{
         
         sportItem = NSEntityDescription.insertNewObject(forEntityName: "SportItem", into: context) as? SportItem
         sportItem?.id = itemId
-        guard commit() else{
-            return nil
-        }
         
         sportData.addToSportItem(sportItem!)
         
@@ -1231,15 +1224,12 @@ extension CoreDataHandler{
         if let dict = items{
             sleepData.setValuesForKeys(dict)
         }
-        guard commit() else{
-            return nil
-        }
         
         //为设备添加运动数据
         device.addToSleepDatas(sleepData)
-//        guard commit() else {
-//            return nil
-//        }
+        guard commit() else {
+            return nil
+        }
         
         return sleepData
     }
@@ -1298,15 +1288,12 @@ extension CoreDataHandler{
         
         sleepItem = NSEntityDescription.insertNewObject(forEntityName: "SleepItem", into: context) as? SleepItem
         sleepItem?.id = itemId
-        guard commit() else{
-            return nil
-        }
-        
+
         sleepData.addToSleepItem(sleepItem!)
         
-//        guard commit() else {
-//            return nil
-//        }
+        guard commit() else {
+            return nil
+        }
         
         return sleepItem
     }
@@ -1361,9 +1348,6 @@ extension CoreDataHandler{
         
         if let dict = items{
             heartRateData.setValuesForKeys(dict)
-        }
-        guard commit() else{
-            return nil
         }
         
         //为设备添加运动数据
@@ -1429,15 +1413,15 @@ extension CoreDataHandler{
         
         heartRateItem = NSEntityDescription.insertNewObject(forEntityName: "HeartRateItem", into: context) as? HeartRateItem
         heartRateItem?.id = itemId
-        guard commit() else{
-            return nil
-        }
+//        guard commit() else{
+//            return nil
+//        }
         
         heartRateData.addToHeartRateItem(heartRateItem!)
         
-//        guard commit() else {
-//            return nil
-//        }
+        guard commit() else {
+            return nil
+        }
         
         return heartRateItem
     }
@@ -1461,3 +1445,82 @@ extension CoreDataHandler{
         return nil
     }
 }
+
+//MARK:- Trucks
+extension CoreDataHandler{
+    //插入 Track
+    public func insertTrack(userId id: Int16 = 1, withMacAddress macAddress: String, withDate date: Date = Date(), withItems items: [String: Any]? = nil) -> Track?{
+        
+        //判断当前日期heartRateData是否存在
+        let trackList = selectTrack(userId: id, withMacAddress: macAddress, withDate: date)
+        guard trackList.isEmpty else {
+            let track = trackList.first
+            if let dict = items{
+                track?.setValuesForKeys(dict)
+            }
+            guard commit() else{
+                return nil
+            }
+            return trackList.first
+        }
+        
+        //判断设备是否存在
+        guard let device = selectDevice(userId: id, withMacAddress: macAddress) else {
+            return nil
+        }
+        
+        //创建运动数据模型
+        let track = NSEntityDescription.insertNewObject(forEntityName: "Track", into: context) as! Track
+        track.date = date as NSDate
+        
+        if let dict = items{
+            track.setValuesForKeys(dict)
+        }
+        
+        //为设备添加运动数据
+        device.addToTracks(track)
+        guard commit() else {
+            return nil
+        }
+        
+        return track
+    }
+    
+    //获取 heartRateData
+    public func selectTrack(userId id: Int16 = 1, withMacAddress macAddress: String, withDate date: Date = Date(), withDayRange dayRange: Int = 0) -> [Track]{
+        //根据用户设备列表获取设备
+        let request: NSFetchRequest<Track> = Track.fetchRequest()
+        let startDate = translate(date)
+        let endDate = translate(date, withDayOffset: dayRange)
+        let predicate = NSPredicate(format: "device.user.userId = \(id) AND device.macAddress = '\(macAddress)' AND date >= %@ AND date <= %@", startDate as! CVarArg, endDate as! CVarArg)
+        request.predicate = predicate
+        do{
+            let resultList = try context.fetch(request)
+            return resultList
+        }catch let error{
+            print(error)
+        }
+        return []
+    }
+    
+    //更新 heartRateData
+    public func updateTrack(userId id: Int16 = 1, withMacAddress macAddress: String, withDate date: Date, withItems items: [String: Any]){
+        guard let track = selectTrack(userId: id, withMacAddress: macAddress, withDate: date, withDayRange: 0).first else {
+            return
+        }
+        track.setValuesForKeys(items)
+        guard commit() else{
+            return
+        }
+    }
+    
+    //删除 heartRateData
+    public func deleteTrack(userId id: Int16 = 1, withMacAddress macAddress: String, withDate date: Date){
+        guard let track = selectTrack(userId: id, withMacAddress: macAddress, withDate: date, withDayRange: 0).first else {
+            return
+        }
+        context.delete(track)
+        guard commit() else{
+            return
+        }
+    }}

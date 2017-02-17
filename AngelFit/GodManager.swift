@@ -190,8 +190,8 @@ extension GodManager: CBCentralManagerDelegate{
     public func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
         
         //通知设备已断开
-        var ret_code:UInt32 = 0
-        vbus_tx_evt(VBUS_EVT_BASE_APP_SET, SET_BLE_EVT_DISCONNECT, &ret_code)
+//        var ret_code:UInt32 = 0
+//        vbus_tx_evt(VBUS_EVT_BASE_APP_SET, SET_BLE_EVT_DISCONNECT, &ret_code)
         
         //自动重连
         if isAutoReconnect {
