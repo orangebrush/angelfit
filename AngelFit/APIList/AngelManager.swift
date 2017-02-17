@@ -40,6 +40,11 @@ public final class AngelManager: NSObject {
     }
     public class func share() -> AngelManager?{
         _ = AngelManager.__once
+        if singleton.instance == nil {
+            if let peripheral = PeripheralManager.share().currentPeripheral {
+                singleton.instance = AngelManager(currentPeripheral: peripheral)
+            }
+        }
         return singleton.instance
     }
     
