@@ -154,11 +154,19 @@ public class CustomAlarm{
         
     }
 }
-  // MARK:- 交换数据(手环端发起)
+
+
+// MARK:- 交换数据(手环端发起)
+public enum SwitchStartStatus: UInt8{
+    case normal = 0
+    case conflicts
+    case batteryLow
+}
+
 
 //交换数据开始
 public class SwitchStart {
-    public var timeString : String = ""   //开始时间格式 同时也是记录的轨迹id eg:yyyyMMddHHmmss
+    public var date = Date()    //开始时间格式 同时也是记录的轨迹id eg:yyyyMMddHHmmss
     /*
      Target_type:目标类型，(0x00:无目标， 0x01:重复次数，单位:次， 0x02:距离，单位:
      
@@ -167,14 +175,14 @@ public class SwitchStart {
     public var sportType : UInt8 = 0
     
     public var targetType : UInt8 = 0     //目标类型
-    public var targetValue : UInt8 = 0    //目标值
+    public var targetValue : UInt32 = 0    //目标值
     /*强制开始标志 Force_start:强制开始，0x01:强制开始有效， 0x00:强制开始无效(只有用户可以使用)*/
-    public var forceStart : UInt8 = 0
+    public var forceStart : Bool = false
 }
 
 //交换数据中
 public class SwitchDoing {
-    public var timeString : String = ""   //开始时间格式 eg:yyyyMMddHHmmss
+    public var date = Date()   //开始时间格式 eg:yyyyMMddHHmmss
     /*
      Flag:0x00:全部有效， 0x01:距离无效，0x02:gps信号弱
      */
@@ -186,24 +194,24 @@ public class SwitchDoing {
 //交换中手环回复
 public class SwitchDoingReply {
     /*0x01:成功; 0x02:设备没有进入运动模式失败*/
-    public var status : UInt8 = 0
-    public var step : UInt32 = 0
-    public var calories : UInt32 = 0
-    public var distance : UInt32 = 0
-    public var curHrValue : UInt8 = 0
-    public var intervalSecond : UInt8 = 0
-    public var hrValueSerial : UInt8 = 0
+    public var status: UInt8 = 0
+    public var step: UInt32 = 0
+    public var calories: UInt32 = 0
+    public var distance: UInt32 = 0
+    public var curHrValue: UInt8 = 0
+    public var available: Bool = true
+    public var hrValueSerial: UInt8 = 0
     public var hrValue: (UInt8, UInt8, UInt8, UInt8, UInt8, UInt8) = (0,0,0,0,0,0)
 }
 
 //暂停或继续交换数据
 public class SwitchPauseOrContinue{
-    public var timeString : String = ""   //开始时间格式 eg:yyyyMMddHHmmss
+    public var date = Date()   //开始时间格式 eg:yyyyMMddHHmmss
 }
 
 //结束交换数据
 public class SwitchEnd{
-    public var timeString : String = ""     //开始时间格式 eg:yyyyMMddHHmmss
+    public var date = Date()     //开始时间格式 eg:yyyyMMddHHmmss
     public var durations : UInt32 = 0       //持续时长
     public var calories  : UInt32 = 0
     public var distance  : UInt32 = 0
@@ -213,15 +221,15 @@ public class SwitchEnd{
 //结束交换数据回复
 public class SwitchEndReply{
      /*0x01:成功; 0x02:设备没有进入运动模式失败*/
-    public var errCode : UInt8 = 0
-    public var step : UInt32 = 0
-    public var calories : UInt32 = 0
-    public var distance : UInt32 = 0
-    public var avgHrValue : UInt8 = 0       //平均心率
-    public var maxHrValue : UInt8 = 0       //最大心率
-    public var burnFatMins : UInt8 = 0      //燃烧脂肪时长
-    public var aerobicMins : UInt8 = 0      //心肺锻炼时长
-    public var limitMins : UInt8 = 0        //极限锻炼时长
+    public var endSuccess: Bool = false
+    public var step: UInt32 = 0
+    public var calories: UInt32 = 0
+    public var distance: UInt32 = 0
+    public var avgHrValue: UInt8 = 0       //平均心率
+    public var maxHrValue: UInt8 = 0       //最大心率
+    public var burnFatMins: UInt8 = 0      //燃烧脂肪时长
+    public var aerobicMins: UInt8 = 0      //心肺锻炼时长
+    public var limitMins: UInt8 = 0        //极限锻炼时长
 }
 
 
