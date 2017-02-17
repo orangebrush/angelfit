@@ -97,17 +97,20 @@ public final class AngelManager: NSObject {
     }
     
     //获取设备信息
-    private func getDeviceInfoFromBand(closure : @escaping (_ errorCode:Int16 ,_ value: String)->()){
+    private func getDeviceInfoFromBand(closure : @escaping (_ errorCode:Int16 ,_ value: Any)->()){
         getLiveDataFromBring(withActionType: .deviceInfo, closure: closure)
     }
     
     //获取mac地址
     public func getMacAddressFromBand( closure: @escaping (_ errorCode:Int16 ,_ value: String)->()){
-        getLiveDataFromBring(withActionType: .macAddress, closure: closure)
+        getLiveDataFromBring(withActionType: .macAddress){
+            errorCode, aValue in
+            closure(errorCode, aValue as! String)
+        }
     }
     
     //获取功能列表
-    private func getFuncTableFromBand(_ macAddress: String? = nil, closure : @escaping (_ errorCode:Int16 ,_ value: String)->()){
+    private func getFuncTableFromBand(_ macAddress: String? = nil, closure : @escaping (_ errorCode:Int16 ,_ value: Any)->()){
         getLiveDataFromBring(withActionType: .funcTable, macAddress: macAddress, closure: closure)
     }
     
@@ -146,7 +149,7 @@ public final class AngelManager: NSObject {
     }
     
     //MARK:- 从手环端获取数据
-    private func getLiveDataFromBring(withActionType actionType:ActionType, macAddress: String? = nil, closure: @escaping (_ errorCode:Int16 ,_ value: String) ->()){
+    private func getLiveDataFromBring(withActionType actionType:ActionType, macAddress: String? = nil, closure: @escaping (_ errorCode:Int16 ,_ value: Any) ->()){
         
         switch actionType {
         case .macAddress:
@@ -353,7 +356,6 @@ public final class AngelManager: NSObject {
                 let liveDataStruct:protocol_start_live_data = data.assumingMemoryBound(to: protocol_start_live_data.self).pointee
                 
                 let liveData = liveDataStruct
-                
                 closure(ErrorCode.success, "\(liveData)")
             }
             var ret_code:UInt32 = 0
