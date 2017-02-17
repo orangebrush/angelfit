@@ -10,25 +10,20 @@ import UIKit
 import CoreData
 import CoreBluetooth
 class AngelSwitchDataManager: NSObject {
-    private static var __once: AngelSwitchDataManager? {
-        return AngelSwitchDataManager()
+    private static var __once: () = {
+        singleton.instance = AngelSwitchDataManager()
+    }()
+    struct singleton{
+        static var instance:AngelSwitchDataManager? = nil
     }
     public class func share() -> AngelSwitchDataManager?{
-        return __once
+        _ = AngelSwitchDataManager.__once
+        return singleton.instance
     }
-    private let angelManager = AngelManager.share()
-    private var macAddress : String?
+    private lazy var angelManager: AngelManager? = {
+        return AngelManager.share()
+    }()
     
-    override init(){
-    super.init()
-        //初始化获取macAddress
-        angelManager?.getMacAddressFromBand(){
-            errorCode, data in
-            if errorCode == ErrorCode.success{
-                self.macAddress = data
-            }
-        }
-    }
     // MARK:- app发起交换数据
     //开始交换数据
     public func appSwitchStart( withParam start:SwitchStart , macAddress: String? = nil, closure:@escaping (_ success:Bool ,_ bleState:UInt8 )->()){
@@ -38,7 +33,7 @@ class AngelSwitchDataManager: NSObject {
         let startDate = dateFormatter.date(from: start.timeString)
         let calendar = NSCalendar.current
         
-        let components = calendar.dateComponents([.year, .month, .day, .hour, .minute, .second, .weekday], from: startDate!)
+        let components = calendar.dateComponents([.day, .hour, .minute, .second], from: startDate!)
         
         
         var switchStart = protocol_switch_app_start()
@@ -72,8 +67,6 @@ class AngelSwitchDataManager: NSObject {
         let calendar = NSCalendar.current
         
         let components = calendar.dateComponents([.year, .month, .day, .hour, .minute, .second, .weekday], from: startDate!)
-        
-        
         var switchDoing = protocol_switch_app_ing()
         switchDoing.start_time.day   = UInt8(components.day!)
         switchDoing.start_time.hour = UInt8(components.hour!) 
