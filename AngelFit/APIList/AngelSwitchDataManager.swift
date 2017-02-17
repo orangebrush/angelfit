@@ -20,13 +20,23 @@ class AngelSwitchDataManager: NSObject {
         _ = AngelSwitchDataManager.__once
         return singleton.instance
     }
-    private lazy var angelManager: AngelManager? = {
-        return AngelManager.share()
-    }()
+//    private lazy var angelManager: AngelManager? = {
+//        return AngelManager.share()
+//    }()
     
     // MARK:- app发起交换数据
     //开始交换数据
-    public func appSwitchStart( withParam start:SwitchStart , macAddress: String? = nil, closure:@escaping (_ success:Bool ,_ bleState:UInt8 )->()){
+    public func appSwitchStart( withParam start:SwitchStart , macAddress: String? = nil, closure:@escaping (_ errorCode: Int16, _ reason: Int16?)->()){
+        
+        guard let peripheral = PeripheralManager.share().currentPeripheral else{
+            closure(ErrorCode.failure, nil)
+            return
+        }
+        
+        guard peripheral.state == .connected else {
+            closure(ErrorCode.failure, nil)
+            return
+        }
         
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyyMMddHHmmss"
@@ -41,32 +51,43 @@ class AngelSwitchDataManager: NSObject {
         switchStart.start_time.hour = UInt8(components.hour!) 
         switchStart.start_time.minute = UInt8(components.minute!)
         switchStart.start_time.second = UInt8(components.second!)
-        switchStart.sport_type = start.sportType 
-        switchStart.target_type = start.targetType 
-        switchStart.target_value = UInt32(start.targetValue) 
-        switchStart.force_start = start.forceStart 
+        switchStart.sport_type = start.sportType                //运动类型
+        switchStart.target_type = start.targetType              //目标类型
+        switchStart.target_value = UInt32(start.targetValue)    //目标值
+        switchStart.force_start = start.forceStart              //强制开始
         let length = UInt32(MemoryLayout<UInt8>.size * 9) + UInt32(MemoryLayout<UInt32>.size)
         var  ret_code : UInt32 = 0
         vbus_tx_data(VBUS_EVT_BASE_APP_SET,VBUS_EVT_APP_SWITCH_APP_STAERT,&switchStart,length,&ret_code)
         guard ret_code == 0 else {
-            closure(false,0) 
+            closure(ErrorCode.failure, nil)
             return
         }
         swiftSwitchStartReply = {
             data in
             let startReply:protocol_switch_app_start_reply = data.assumingMemoryBound(to: protocol_switch_app_start_reply.self).pointee
-            closure(true , startReply.ret_code)
-         
+            //0x00:成功; 0x01:设备已经进入运动模式失败;0x02: 设备电量低失败
+            closure(ErrorCode.success, Int16(startReply.ret_code))
         }
     }
     //交换数据中
-    public func appSwitchDoing (withParam doing:SwitchDoing , macAddress: String? = nil, closure:@escaping (_ success:Bool,_ reply:SwitchDoingReply )->()){
+    public func appSwitchDoing (withParam doing:SwitchDoing , macAddress: String? = nil, closure:@escaping (_ errorCode:Int16,_ reply:SwitchDoingReply?)->()){
+        
+        guard let peripheral = PeripheralManager.share().currentPeripheral else{
+            closure(ErrorCode.failure, nil)
+            return
+        }
+        
+        guard peripheral.state == .connected else {
+            closure(ErrorCode.failure, nil)
+            return
+        }
+        
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyyMMddHHmmss"
         let startDate = dateFormatter.date(from: doing.timeString)
         let calendar = NSCalendar.current
         
-        let components = calendar.dateComponents([.year, .month, .day, .hour, .minute, .second, .weekday], from: startDate!)
+        let components = calendar.dateComponents([.day, .hour, .minute, .second], from: startDate!)
         var switchDoing = protocol_switch_app_ing()
         switchDoing.start_time.day   = UInt8(components.day!)
         switchDoing.start_time.hour = UInt8(components.hour!) 
@@ -75,39 +96,39 @@ class AngelSwitchDataManager: NSObject {
         switchDoing.calories = doing.calories
         switchDoing.distance = doing.distance
         switchDoing.duration = doing.duration
-        switchDoing.flag = doing.flag 
+        switchDoing.flag = doing.flag               //
         let length = UInt32(MemoryLayout<UInt8>.size * 7) + UInt32(MemoryLayout<UInt32>.size * 3)
         var  ret_code : UInt32 = 0
         vbus_tx_data(VBUS_EVT_BASE_APP_SET,VBUS_EVT_APP_SWITCH_APP_ING,&switchDoing,length,&ret_code)
         guard ret_code == 0 else {
-            closure(false,SwitchDoingReply()) 
+            closure(ErrorCode.failure, nil)
             return
         }
         
         swiftSwitchingReply = {
         data in
-           let doingReply:protocol_switch_app_ing_reply = data.assumingMemoryBound(to: protocol_switch_app_ing_reply.self).pointee
+            let doingReply:protocol_switch_app_ing_reply = data.assumingMemoryBound(to: protocol_switch_app_ing_reply.self).pointee
             let switchReply:SwitchDoingReply = SwitchDoingReply()
-            switchReply.calories = doingReply.calories 
-            switchReply.distance = doingReply.distance 
-            switchReply.step = doingReply.step 
-            switchReply.curHrValue = doingReply.hr_item.cur_hr_value 
-            switchReply.hrValueSerial = doingReply.hr_item.hr_value_serial 
-            switchReply.intervalSecond = doingReply.hr_item.interval_second 
+            switchReply.calories = doingReply.calories
+            switchReply.distance = doingReply.distance
+            switchReply.step = doingReply.step
+            switchReply.curHrValue = doingReply.hr_item.cur_hr_value
+            switchReply.hrValueSerial = doingReply.hr_item.hr_value_serial          //.1
+            switchReply.intervalSecond = doingReply.hr_item.interval_second         //5s
             if switchReply.intervalSecond > 0 {
-                  switchReply.hrValue = doingReply.hr_item.hr_vlaue 
+                switchReply.hrValue = doingReply.hr_item.hr_vlaue
             }
-            closure(true,switchReply)
+            closure(ErrorCode.success, switchReply)
         }
     }
     //交换数据暂停
-    public func appSwitchingPause (withParam pause:SwitchPauseOrContinue , macAddress: String? = nil, closure:@escaping (_ success:Bool)->()){
+    public func appSwitchingPause (withParam pause:SwitchPauseOrContinue , macAddress: String? = nil, closure:@escaping (_ errorCode: Int16)->()){
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyyMMddHHmmss"
         let startDate = dateFormatter.date(from: pause.timeString)
         let calendar = NSCalendar.current
         
-        let components = calendar.dateComponents([.year, .month, .day, .hour, .minute, .second, .weekday], from: startDate!)
+        let components = calendar.dateComponents([.day, .hour, .minute, .second], from: startDate!)
         
         var switchPause = protocol_switch_app_pause()
         switchPause.start_time.day   = UInt8(components.day!)
@@ -119,17 +140,17 @@ class AngelSwitchDataManager: NSObject {
         vbus_tx_data(VBUS_EVT_BASE_APP_SET,VBUS_EVT_APP_SWITCH_APP_PAUSE,&switchPause,length,&ret_code)
         
         guard ret_code == 0 else {
-            closure(false)
+            closure(ErrorCode.failure)
             return
         }
         swiftSwitchPauseReply = {
         data in
             let pause:protocol_switch_app_pause_reply = data.assumingMemoryBound(to: protocol_switch_app_pause_reply.self).pointee
             guard pause.err_code == 0 else {
-                closure(false)
+                closure(ErrorCode.failure)
                 return
             }
-            closure(true)
+            closure(ErrorCode.success)
         }
     }
     //交换数据继续
@@ -183,7 +204,7 @@ class AngelSwitchDataManager: NSObject {
         switchEnd.distance = end.distance
         switchEnd.durations = end.durations
         switchEnd.sport_type = UInt8(end.sportType)
-        switchEnd.is_save = UInt8(end.isSave)
+        switchEnd.is_save = UInt8(end.isSave)           // < 10m false
         let length = UInt32(MemoryLayout<UInt8>.size * 7) + UInt32(MemoryLayout<UInt32>.size * 3)
         var  ret_code : UInt32 = 0
         vbus_tx_data(VBUS_EVT_BASE_APP_SET,VBUS_EVT_APP_SWITCH_APP_END,&switchEnd,length,&ret_code)
@@ -210,9 +231,9 @@ class AngelSwitchDataManager: NSObject {
     }
     //同步活动数据
     public func setSynchronizationActiveData(_ macAddress: String? = nil, closure:@escaping (_ complete: Bool, _ progress: Int16 ,_ timeOut:Bool) -> ()){
-               swiftSyncActiveProgress = {
+        swiftSyncActiveProgress = {
             /*data为同步百分比 */
-        data in
+            data in
             closure(false,Int16(data),false);
         }
         swiftSyncActiveComplete = {
@@ -238,6 +259,52 @@ class AngelSwitchDataManager: NSObject {
             closure(activeCount.count)
         }
 
+    }
+    //回复手环端发起的请求
+    public func sendSwitchStart(_ retCode:Int){
+        var ret_code:UInt32 = 0
+        var reply:protocol_switch_ble_start_reply = protocol_switch_ble_start_reply();
+        reply.ret_code = UInt8(retCode);
+        let length = UInt32(MemoryLayout<UInt8>.size * 3)
+
+        vbus_tx_data(VBUS_EVT_BASE_APP_SET,VBUS_EVT_APP_SWITCH_BLE_START_REPLY,&reply,length,&ret_code);
+        
+    }
+    public func sendSwitchPause(_ retCode:Int){
+        var ret_code:UInt32 = 0
+        var reply:protocol_switch_ble_pause_reply = protocol_switch_ble_pause_reply();
+        let length = UInt32(MemoryLayout<UInt8>.size * 3)
+        reply.ret_code = UInt8(retCode);
+
+        vbus_tx_data(VBUS_EVT_BASE_APP_SET,VBUS_EVT_APP_SWITCH_BLE_PAUSE_REPLY,&reply,length,&ret_code);
+        
+    }
+    public func sendSwitchRestart(_ retCode:Int){
+        var ret_code:UInt32 = 0
+        var reply:protocol_switch_ble_restore_reply = protocol_switch_ble_restore_reply();
+        let length = UInt32(MemoryLayout<UInt8>.size * 3)
+        reply.ret_code = UInt8(retCode);
+
+        vbus_tx_data(VBUS_EVT_BASE_APP_SET,VBUS_EVT_APP_SWITCH_BLE_RESTORE_REPLY,&reply,length,&ret_code);
+        
+    }
+    public func sendSwitchEnd(_ retCode:Int){
+        var ret_code:UInt32 = 0
+        var reply:protocol_switch_ble_end_reply = protocol_switch_ble_end_reply();
+        let length = UInt32(MemoryLayout<UInt8>.size * 3)
+        reply.ret_code = UInt8(retCode);
+
+        vbus_tx_data(VBUS_EVT_BASE_APP_SET,VBUS_EVT_APP_SWITCH_BLE_END_REPLY,&reply,length,&ret_code);
+        
+    }
+    public func sendSwitchDoing(_ distance:Int){
+        var ret_code:UInt32 = 0
+        var reply:protocol_switch_ble_ing_reply = protocol_switch_ble_ing_reply();
+        let length = UInt32(MemoryLayout<UInt8>.size * 3)
+        reply.distance = UInt32(distance);
+        
+        vbus_tx_data(VBUS_EVT_BASE_APP_SET,VBUS_EVT_APP_SWITCH_BLE_ING_REPLY,&reply,length,&ret_code);
+        
     }
     
 }

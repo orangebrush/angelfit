@@ -161,8 +161,7 @@ public class SwitchStart {
     public var timeString : String = ""   //开始时间格式 同时也是记录的轨迹id eg:yyyyMMddHHmmss
     /*
      Target_type:目标类型，(0x00:无目标， 0x01:重复次数，单位:次， 0x02:距离，单位:
-     60 / 98
-     深圳市爱聚科技有限公司
+     
      米， 0x03:卡路里，单位:大卡，0x04:时长，单位:分钟 ) Type:运动类型(0x00:无， 0x01:走路， 0x02:跑步， 0x03:骑行，0x04:徒步， 0x05: 游泳， 0x06:爬山， 0x07:羽毛球， 0x08:其他， 0x09:健身， 0x0A:动感单车， 0x0B:椭圆机， 0x0C:跑步机， 0x0D:仰卧起坐， 0x0E:俯卧撑， 0x0F:哑铃， 0x10:举重， 0x11:健身操， 0x12:瑜伽， 0x13:跳绳， 0x14:乒乓球， 0x15:篮球， 0x16:足球 ， 0x17:排球， 0x18:网球， 0x19:高尔夫球， 0x1A:棒球， 0x1B:滑雪， 0x1C:轮滑，0x1D:跳舞)
      */
     public var sportType : UInt8 = 0
@@ -209,7 +208,7 @@ public class SwitchEnd{
     public var calories  : UInt32 = 0
     public var distance  : UInt32 = 0
     public var sportType: UInt32 = 0
-    public var isSave   : UInt32 = 0       //是否保存
+    public var isSave   : UInt32 = 0       //是否保存  1 0
 }
 //结束交换数据回复
 public class SwitchEndReply{
@@ -218,11 +217,11 @@ public class SwitchEndReply{
     public var step : UInt32 = 0
     public var calories : UInt32 = 0
     public var distance : UInt32 = 0
-    public var avgHrValue : UInt8 = 0
-    public var maxHrValue : UInt8 = 0
-    public var burnFatMins : UInt8 = 0
-    public var aerobicMins : UInt8 = 0
-    public var limitMins : UInt8 = 0
+    public var avgHrValue : UInt8 = 0       //平均心率
+    public var maxHrValue : UInt8 = 0       //最大心率
+    public var burnFatMins : UInt8 = 0      //燃烧脂肪时长
+    public var aerobicMins : UInt8 = 0      //心肺锻炼时长
+    public var limitMins : UInt8 = 0        //极限锻炼时长
 }
 
 
