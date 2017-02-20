@@ -38,7 +38,7 @@ fileprivate enum TableClass: String{
 public class CoreDataHandler {
     
     //coredata-context
-    fileprivate let context = NSManagedObjectContext(concurrencyType: NSManagedObjectContextConcurrencyType.mainQueueConcurrencyType)
+    fileprivate let context = NSManagedObjectContext(concurrencyType: NSManagedObjectContextConcurrencyType.privateQueueConcurrencyType)
     
     private let calender = Calendar.current
     

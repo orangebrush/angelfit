@@ -81,8 +81,8 @@ extern void c_switching_reply(void * __nonnull);
 extern void (^ __nonnull swiftSwitchPauseReply)(void * __nonnull);
 extern void c_swich_pause_reply(void * __nonnull);
 
-extern void (^ __nonnull swiftSwitchRestartReply)(void * __nonnull);
-extern void c_swich_restart_reply(void * __nonnull);
+extern void (^ __nonnull swiftSwitchRestoreReply)(void * __nonnull);
+extern void c_swich_restore_reply(void * __nonnull);
 
 extern void (^ __nonnull swiftSwitchEndReply)(void * __nonnull);
 extern void c_swich_end_reply(void * __nonnull);
@@ -91,8 +91,8 @@ extern void c_swich_end_reply(void * __nonnull);
 extern void (^ __nonnull swiftSwitchBlePause)(void * __nonnull);
 extern void c_swich_ble_pause(void * __nonnull);
 
-extern void (^ __nonnull swiftSwitchBleRestart)(void * __nonnull);
-extern void c_swich_ble_restart(void * __nonnull);
+extern void (^ __nonnull swiftSwitchBleRestore)(void * __nonnull);
+extern void c_swich_ble_restore(void * __nonnull);
 
 extern void (^ __nonnull swiftSwitchBleEnd)(void * __nonnull);
 extern void c_swich_ble_end(void * __nonnull);
@@ -107,8 +107,8 @@ extern void c_ble_swich_ing(void * __nonnull);
 extern void (^ __nonnull swiftBleSwitchPause)(void * __nonnull);
 extern void c_ble_swich_pause(void * __nonnull);
 
-extern void (^ __nonnull swiftBleSwitchRestart)(void * __nonnull);
-extern void c_ble_swich_restart(void * __nonnull);
+extern void (^ __nonnull swiftBleSwitchRestore)(void * __nonnull);
+extern void c_ble_swich_restore(void * __nonnull);
 
 extern void (^ __nonnull swiftBleSwitchEnd)(void * __nonnull);
 extern void c_ble_swich_end(void * __nonnull);

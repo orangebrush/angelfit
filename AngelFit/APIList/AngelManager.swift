@@ -12,14 +12,6 @@ import CoreBluetooth
 
 public final class AngelManager: NSObject {
     
-//    var actionMap:[ActionType:[UInt8]]?{
-//        let map:[ActionType:[UInt8]] = [.binding:[0x04, 0x01, 0x01, 0x83, 0x55, 0xaa],
-//                                        .unbinding:[0x04, 0x02, 0x55, 0xaa, 0x55, 0xaa],
-//                                        .responceType:[0x07, 0xA1, 0x01],
-//                                        .activated:[0x02, 0xA1]]
-//        return map
-//    }
-    
     private var peripheral: CBPeripheral?       //当前设备
     public var macAddress: String?              //当前设备macAddress
     
@@ -1316,9 +1308,7 @@ public final class AngelManager: NSObject {
             
             
             let items = sportData.items
-            print("items:", items)
-            let length = MemoryLayout<ble_sync_sport_item>.size
-            
+            //let length = MemoryLayout<ble_sync_sport_item>.size
             (0..<96).forEach(){
                 i in
                 if let item = items?[i]{
@@ -1410,7 +1400,7 @@ public final class AngelManager: NSObject {
             }
             
             let items = sleepData.itmes
-            let length = MemoryLayout<ble_sync_sleep_item>.size
+            //let length = MemoryLayout<ble_sync_sleep_item>.size
             (0..<96).forEach(){
                 i in
                 if let item = items?[i]{
@@ -1479,7 +1469,7 @@ public final class AngelManager: NSObject {
             }
             
             let items = heartRateData.items
-            let length = MemoryLayout<ble_sync_heart_rate_item>.size
+            //let length = MemoryLayout<ble_sync_heart_rate_item>.size
             (0..<96).forEach(){
                 i in
                 if let item = items?[i]{

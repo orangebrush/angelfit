@@ -65,7 +65,7 @@
 		2238E0E81DDC370300211F82 /* AngelManager.swift in Headers */ = {isa = PBXBuildFile; fileRef = 22DF62601DDC2FB30080B77A /* AngelManager.swift */; settings = {ATTRIBUTES = (Public, ); }; };
 		2238E0EB1DDC3CC200211F82 /* CDataManager.c in Sources */ = {isa = PBXBuildFile; fileRef = 2238E0E91DDC3CC200211F82 /* CDataManager.c */; };
 		2238E0EC1DDC3CC200211F82 /* CDataManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 2238E0EA1DDC3CC200211F82 /* CDataManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		22439F861E4D48EF00087C52 /* AngelSwitchDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22439F851E4D48EF00087C52 /* AngelSwitchDataManager.swift */; };
+		22439F861E4D48EF00087C52 /* SatanManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22439F851E4D48EF00087C52 /* SatanManager.swift */; };
 		2292C3E61DC83C0B00B7472E /* GodManager.swift in Headers */ = {isa = PBXBuildFile; fileRef = 222B89A01DC732C80056861C /* GodManager.swift */; settings = {ATTRIBUTES = (Public, ); }; };
 		22DF61DA1DD99EA20080B77A /* GCDAsyncSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 22DF61D41DD99EA20080B77A /* GCDAsyncSocket.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		22DF61DB1DD99EA20080B77A /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 22DF61D51DD99EA20080B77A /* GCDAsyncSocket.m */; };
@@ -205,7 +205,7 @@
 		222E7D771DC88AA7001BA04A /* ViewController+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ViewController+Extension.swift"; sourceTree = "<group>"; };
 		2238E0E91DDC3CC200211F82 /* CDataManager.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = CDataManager.c; sourceTree = "<group>"; };
 		2238E0EA1DDC3CC200211F82 /* CDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDataManager.h; sourceTree = "<group>"; };
-		22439F851E4D48EF00087C52 /* AngelSwitchDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AngelSwitchDataManager.swift; sourceTree = "<group>"; };
+		22439F851E4D48EF00087C52 /* SatanManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SatanManager.swift; sourceTree = "<group>"; };
 		22DF61D41DD99EA20080B77A /* GCDAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDAsyncSocket.h; sourceTree = "<group>"; };
 		22DF61D51DD99EA20080B77A /* GCDAsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncSocket.m; sourceTree = "<group>"; };
 		22DF61D61DD99EA20080B77A /* SocketLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SocketLog.h; sourceTree = "<group>"; };
@@ -456,7 +456,7 @@
 		22DF625F1DDC2F5E0080B77A /* APIList */ = {
 			isa = PBXGroup;
 			children = (
-				22439F851E4D48EF00087C52 /* AngelSwitchDataManager.swift */,
+				22439F851E4D48EF00087C52 /* SatanManager.swift */,
 				22DF62601DDC2FB30080B77A /* AngelManager.swift */,
 				32060CF71DE28409007BC7B3 /* AngelModel.swift */,
 				32E971D71DE7D13F0029DE9F /* Debug.swift */,
@@ -750,7 +750,7 @@
 				BEB057301DD025D500B80678 /* Peripheral+Extension.swift in Sources */,
 				BEB057321DD02E1700B80678 /* AngelManager+Extension.swift in Sources */,
 				32E2E0ED1DE2EDC000DC2C89 /* LongSit+CoreDataClass.swift in Sources */,
-				22439F861E4D48EF00087C52 /* AngelSwitchDataManager.swift in Sources */,
+				22439F861E4D48EF00087C52 /* SatanManager.swift in Sources */,
 				32E2E0F01DE2EDC000DC2C89 /* Unit+CoreDataProperties.swift in Sources */,
 				22122F701E53F8E700AA61F4 /* protocol_health_resolve_sleep.c in Sources */,
 				32E2E1231DE3F5A900DC2C89 /* SportItem+CoreDataClass.swift in Sources */,

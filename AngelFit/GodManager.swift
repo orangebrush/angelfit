@@ -27,6 +27,8 @@ import CoreBluetooth
 //MARK:- delegate
 
 @objc public protocol GodManagerDelegate {
+    //返回已连接设备
+    func godManager(currentConnectPeripheral peripheral: CBPeripheral, peripheralName name: String)
     //搜索设备
     func godManager(didDiscoverPeripheral peripheral: CBPeripheral, withRSSI RSSI: NSNumber, peripheralName name: String)
     func godManager(didUpdateCentralState state:GodManagerState)
@@ -75,10 +77,21 @@ public final class GodManager: NSObject {
     //Mark:- 开始扫描
     public func startScan(){
         
+        //判断已连接的话，添加到列表
+        if let peripherals = centralManager?.retrieveConnectedPeripherals(withServices: [service.uuid]){
+            for peripheral in peripherals{
+                //判断UUID重复，避免重复存储
+                
+                centralManager?.cancelPeripheralConnection(peripheral)
+                delegate?.godManager(currentConnectPeripheral: peripheral, peripheralName: peripheral.name ?? "")
+            }
+        }
+        
+        //扫描
         centralManager?.scanForPeripherals(withServices: [service.uuid], options: nil)
 
         //3秒后停止扫描
-        delay(3){
+        _ = delay(3){
             self.stopScan()
         }
     }

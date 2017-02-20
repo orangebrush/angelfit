@@ -26,15 +26,15 @@ void (^ __nonnull swiftSetUnit)(void) = NULL;
 void (^ __nonnull swiftSwitchStartReply)(void * __nonnull) = NULL;
 void (^ __nonnull swiftSwitchingReply)(void * __nonnull) = NULL;
 void (^ __nonnull swiftSwitchPauseReply)(void * __nonnull) = NULL;
-void (^ __nonnull swiftSwitchRestartReply)(void * __nonnull) = NULL;
+void (^ __nonnull swiftSwitchRestoreReply)(void * __nonnull) = NULL;
 void (^ __nonnull swiftSwitchEndReply)(void * __nonnull) = NULL;
 void (^ __nonnull swiftSwitchBlePause)(void * __nonnull) = NULL;
-void (^ __nonnull swiftSwitchBleRestart)(void * __nonnull) = NULL;
+void (^ __nonnull swiftSwitchBleRestore)(void * __nonnull) = NULL;
 void (^ __nonnull swiftSwitchBleEnd)(void * __nonnull) = NULL;
 void (^ __nonnull swiftBleSwitchStart)(void * __nonnull) = NULL;
 void (^ __nonnull swiftBleSwitching)(void * __nonnull) = NULL;
 void (^ __nonnull swiftBleSwitchPause)(void * __nonnull) = NULL;
-void (^ __nonnull swiftBleSwitchRestart)(void * __nonnull) = NULL;
+void (^ __nonnull swiftBleSwitchRestore)(void * __nonnull) = NULL;
 void (^ __nonnull swiftBleSwitchEnd)(void * __nonnull) = NULL;
 void (^ __nonnull swiftGetActiveCount)(void * __nonnull) = NULL;
 void (^ __nonnull swiftSyncActiveTimeOut)() = NULL;
@@ -100,8 +100,8 @@ extern void c_switching_reply(void * __nonnull data){
 extern void c_swich_pause_reply(void * __nonnull data){
     swiftSwitchPauseReply(data);
 }
-extern void c_swich_restart_reply(void * __nonnull data){
-    swiftSwitchRestartReply(data);
+extern void c_swich_restore_reply(void * __nonnull data){
+    swiftSwitchRestoreReply(data);
 }
 extern void c_swich_end_reply(void * __nonnull data){
     swiftSwitchEndReply(data);
@@ -109,8 +109,8 @@ extern void c_swich_end_reply(void * __nonnull data){
 extern void c_swich_ble_pause(void * __nonnull data){
     swiftSwitchBlePause(data);
 }
-extern void c_swich_ble_restart(void * __nonnull data){
-    swiftSwitchBleRestart(data);
+extern void c_swich_ble_restore(void * __nonnull data){
+    swiftSwitchBleRestore(data);
 }
 extern void c_swich_ble_end(void * __nonnull data){
     swiftSwitchBleEnd(data);
@@ -124,8 +124,8 @@ extern void c_ble_swich_ing(void * __nonnull data){
 extern void c_ble_swich_pause(void * __nonnull data){
     swiftBleSwitchPause(data);
 }
-extern void c_ble_swich_restart(void * __nonnull data){
-    swiftBleSwitchRestart(data);
+extern void c_ble_swich_restore(void * __nonnull data){
+    swiftBleSwitchRestore(data);
 }
 extern void c_ble_swich_end(void * __nonnull data){
     swiftBleSwitchEnd(data);
@@ -217,7 +217,7 @@ void manageData(VBUS_EVT_BASE evt_base,VBUS_EVT_TYPE evt_type,void * __nonnull d
             }
                 break;
             case VBUS_EVT_APP_SWITCH_APP_RESTORE_REPLY:{
-                c_swich_restart_reply(data);
+                c_swich_restore_reply(data);
             }
                 break;
             case VBUS_EVT_APP_SWITCH_APP_END_REPLY:{
@@ -229,7 +229,7 @@ void manageData(VBUS_EVT_BASE evt_base,VBUS_EVT_TYPE evt_type,void * __nonnull d
             }
                 break;
             case VBUS_EVT_APP_SWITCH_APP_BLE_RESTORE:{
-                c_swich_ble_restart(data);
+                c_swich_ble_restore(data);
             }
                 break;
             case VBUS_EVT_APP_SWITCH_APP_BLE_END:{
@@ -253,7 +253,7 @@ void manageData(VBUS_EVT_BASE evt_base,VBUS_EVT_TYPE evt_type,void * __nonnull d
             }
                 break;
             case VBUS_EVT_APP_SWITCH_BLE_RESTORE:{
-                c_ble_swich_restart(data);
+                c_ble_swich_restore(data);
             }
                 break;
             case VBUS_EVT_APP_ACTIVITY_SYNC_TIMEOUT:{
