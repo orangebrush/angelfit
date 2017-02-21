@@ -71,7 +71,7 @@ struct protocol_health_resolve_heart_rate_data_s
 {
 	struct ble_sync_heart_rate_head head1;
 	struct ble_sync_heart_rate_head1 head2;
-	struct ble_sync_heart_rate_item items[BLE_SYNC_HEART_RATE_ITEM_ONE_DAY_MAX];
+	struct ble_sync_heart_rate_item *items;
 	uint16_t items_count;
 };
 

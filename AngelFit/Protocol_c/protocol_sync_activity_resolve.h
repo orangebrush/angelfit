@@ -17,10 +17,10 @@ struct protocol_activity_data
 	struct protocol_activity_data_head head;
 	struct protocol_activity_ex_data1 ex_data1;
 	struct protocol_activity_ex_data2 ex_data2;
-	uint8_t hr_value[2*60*60/5];	//5s钟保存一组,最大保存2小时
+	uint8_t *hr_value;	//5s钟保存一组,最大保存2小时
 };
 
-#pragma pack()
+#pragma 9bpack()
 
 
 typedef void (*protocol_sync_activity_resolve_data_cb_t) (const struct protocol_activity_data *data);

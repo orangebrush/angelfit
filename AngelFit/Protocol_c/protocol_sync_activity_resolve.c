@@ -11,7 +11,6 @@
 
 
 #include "protocol_sync_activity_resolve.h"
-
 static protocol_sync_activity_resolve_data_cb_t data_handle = NULL;
 
 static void protocol_sync_activity_data_cb_handle(const struct activity_packet_data data[],uint16_t serial_count)

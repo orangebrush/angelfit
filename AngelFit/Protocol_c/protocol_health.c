@@ -518,10 +518,10 @@ uint32_t protocol_health_exec(uint8_t const *data,uint8_t length)
 		{
             uint32_t ret_code = SUCCESS;
 			cur_sync.all_sync_is_start = false;
-
-            sync_guard_timer_stop();
             update_sync_progress_rate(true);
-			vbus_tx_evt(VBUS_EVT_BASE_NOTICE_APP, SYNC_EVT_HEALTH_SYNC_COMPLETE, &ret_code);
+            vbus_tx_evt(VBUS_EVT_BASE_NOTICE_APP, SYNC_EVT_HEALTH_SYNC_COMPLETE, &ret_code);
+            sync_guard_timer_stop();
+            
             return SUCCESS;
             
 		}

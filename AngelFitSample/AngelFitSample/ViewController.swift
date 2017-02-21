@@ -88,7 +88,7 @@ class ViewController: UIViewController {
                             }
                         }
                     }else{
-                        message = "正在同步运动数据:\(satanExist ? progress / 2 : progress)%"
+                        message = "正在同步健康数据:\(satanExist ? progress / 2 : progress)%"
                         debugPrint(message)
                     }
                 }
