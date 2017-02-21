@@ -9,24 +9,30 @@
 import UIKit
 import CoreData
 import CoreBluetooth
-public enum SatanManagerState{
-    case start
+//MARK:- 数据交换状态
+@objc public enum SatanManagerState: Int{
+    case start = 0
     case pause
     case restore
     case end
 }
-protocol SatanManagerDelegate {
-    func satanManager(didUpdateState state: SatanManagerState)              //状态
+
+@objc public protocol SatanManagerDelegate {
+    func satanManager(didUpdateState state: SatanManagerState)              //状态(主要控制定位)
     func satanManagerDistanceByLocation() -> Int                            //返回手机定位距离
-    func satanManager(switch: Int)
+    func satanManagerDuration() -> Int                                      //返回手机持续时间
+    func satanManager(didSwitchingReplyCalories calories: UInt32, distance: UInt32, step: UInt32, curHeartrate: UInt8, heartrateSerial: UInt8, available: Bool, heartrateValue: [UInt8])
 }
 
-class SatanManager: NSObject {
+public class SatanManager: NSObject {
     
     //delegate
     public var delegate: SatanManagerDelegate?
     
     private let calendar = Calendar.current
+    
+    //存储当前活动开始日期
+    private var curDate: Date?
     
     //MARK:- 获取数据库句柄
     private lazy var coredataHandler = {
@@ -88,8 +94,10 @@ class SatanManager: NSObject {
             vbus_tx_data(VBUS_EVT_BASE_APP_SET,VBUS_EVT_APP_SWITCH_APP_BLE_PAUSE_REPLY, &reply, length, &ret_code)
             
             //let pause: protocol_switch_app_ble_pause = data.assumingMemoryBound(to: protocol_switch_app_ble_pause.self).pointee
-            //停止定位***
-            self.delegate?.satanManager(didUpdateState: .pause)
+            //暂停定位
+            DispatchQueue.main.async {
+                self.delegate?.satanManager(didUpdateState: .pause)
+            }
         }
         swiftSwitchBleRestore = {
             data in
@@ -100,55 +108,111 @@ class SatanManager: NSObject {
             vbus_tx_data(VBUS_EVT_BASE_APP_SET,VBUS_EVT_APP_SWITCH_APP_BLE_RESTORE_REPLY, &reply, length, &ret_code)
             
             //let restore: protocol_switch_app_ble_restore = data.assumingMemoryBound(to: protocol_switch_app_ble_restore.self).pointee
-            self.delegate?.satanManager(didUpdateState: .restore)
+            //恢复定位
+            DispatchQueue.main.async {
+                self.delegate?.satanManager(didUpdateState: .restore)
+            }
         }
         swiftSwitchBleEnd = {
             data in
+            
+            self.curDate = nil
+            
             var ret_code: UInt32 = 0
             var reply: protocol_switch_app_ble_end_reply = protocol_switch_app_ble_end_reply()
             reply.err_code = 1
             let length = UInt32(MemoryLayout<UInt8>.size * 3)
             vbus_tx_data(VBUS_EVT_BASE_APP_SET, VBUS_EVT_APP_SWITCH_APP_BLE_END_REPLY, &reply, length, &ret_code)
             
+            //结束定位
+            DispatchQueue.main.async {
+                self.appSwitch(flag: false)
+                self.delegate?.satanManager(didUpdateState: .end)
+            }
+
+            //数据库操作
             let end: protocol_switch_app_ble_end = data.assumingMemoryBound(to: protocol_switch_app_ble_end.self).pointee
-            //存数据库***
-            self.delegate?.satanManager(didUpdateState: .end)
+            let isSave = end.is_save == 0x01 ? true : false
+            guard let date = self.curDate, let macaddress = self.angelManager?.macAddress else {
+                return
+            }
+            if isSave {
+                //存储
+                let calories = end.calories
+                let step = end.step
+                let distance = end.distance
+                let hrValue = end.hr_value
+                
+                guard let track = self.coredataHandler.selectTrack(userId: 1, withMacAddress: macaddress, withDate: date, withDayRange: nil).last else {
+                    return
+                }
+                track.step = Int16(step)
+                track.aerobicMinutes = Int16(hrValue.aerobic_mins)
+                track.avgrageHeartrate = Int16(hrValue.avg_hr_value)
+                track.burnFatMinutes = Int16(hrValue.burn_fat_mins)
+                track.calories = Int16(calories)
+                track.distance = Int16(distance)
+                guard self.coredataHandler.commit() else {
+                    return
+                }
+            }else{
+                //删除当天最后一条交换数据
+                self.coredataHandler.deleteTrack(userId: 1, withMacAddress: macaddress, withDate: date)
+            }
         }
         
         //手环发起--手环操作
         /*  添加回复接口*/
         swiftBleSwitchStart = {
             data in
-            let start: protocol_switch_ble_start = data.assumingMemoryBound(to: protocol_switch_ble_start.self).pointee
-            //开始定位***
+            //let start: protocol_switch_ble_start = data.assumingMemoryBound(to: protocol_switch_ble_start.self).pointee
             self.sendSwitchStart(0x01)
+            //开始定位
+            DispatchQueue.main.async {
+                self.delegate?.satanManager(didUpdateState: .start)
+            }
         }
         swiftBleSwitching = {
             //需要添加交换距离接口
             data in
-            let doing: protocol_switch_ble_ing = data.assumingMemoryBound(to: protocol_switch_ble_ing.self).pointee
+            //let doing: protocol_switch_ble_ing = data.assumingMemoryBound(to: protocol_switch_ble_ing.self).pointee
             //传入要交换的的距离，如gps信号不好，则直接把未添加的距离返回去
-            if let distance = self.delegate?.satanManagerDistanceByLocation(){
-                self.sendSwitchDoing(distance)
+            DispatchQueue.main.async {
+                if let distance = self.delegate?.satanManagerDistanceByLocation(){
+                    DispatchQueue.global().async {
+                        self.sendSwitchDoing(distance)
+                    }
+                }
             }
         }
         swiftBleSwitchPause = {
             data in
-            let pause: protocol_switch_ble_pause = data.assumingMemoryBound(to: protocol_switch_ble_pause.self).pointee
+            //let pause: protocol_switch_ble_pause = data.assumingMemoryBound(to: protocol_switch_ble_pause.self).pointee
             self.sendSwitchPause(0x01)
-            //暂停定位***
+            //暂停定位
+            DispatchQueue.main.async {
+                self.delegate?.satanManager(didUpdateState: .pause)
+            }
         }
         swiftBleSwitchRestore = {
             data in
-            let restore: protocol_switch_ble_restore = data.assumingMemoryBound(to: protocol_switch_ble_restore.self).pointee
-            self.sendSwitchRestore(1)
-            //继续定位***
+            //let restore: protocol_switch_ble_restore = data.assumingMemoryBound(to: protocol_switch_ble_restore.self).pointee
+            self.sendSwitchRestore(0x01)
+            //继续定位
+            DispatchQueue.main.async {
+                self.delegate?.satanManager(didUpdateState: .restore)
+            }
         }
         swiftBleSwitchEnd = {
             data in
-            let end: protocol_switch_ble_end = data.assumingMemoryBound(to: protocol_switch_ble_end.self).pointee
-            self.sendSwitchEnd(1)
-            //停止定位***
+            //let end: protocol_switch_ble_end = data.assumingMemoryBound(to: protocol_switch_ble_end.self).pointee
+            self.sendSwitchEnd(0x01)
+            
+            self.curDate = nil
+            //停止定位
+            DispatchQueue.main.async {
+                self.delegate?.satanManager(didUpdateState: .end)
+            }
         }
     }
     
@@ -189,11 +253,79 @@ class SatanManager: NSObject {
                 return
             }
             //开始定位
+            DispatchQueue.main.async {
+                self.delegate?.satanManager(didUpdateState: .start)
+                
+                //创建新路线
+                self.curDate = Date()
+                
+                guard let macaddress = self.angelManager?.macAddress else{
+                    return
+                }
+        
+                //插入数据库
+                guard let track = self.coredataHandler.insertTrack(userId: 1, withMacAddress: macaddress, withDate: Date(), withItems: nil) else{
+                    return
+                }
+                track.heartrateList = NSArray()
+                track.type = Int16(start.sportType)         //运动类型
+                
+                guard self.coredataHandler.commit() else {
+                    return
+                }
+            }
+            
+            //自动调用数据交换
+            self.appSwitch(flag: true)
             
             closure(ErrorCode.success, status)
         }
     }
-    //交换数据中
+    
+    //MARK:- 自动开始与停止交换
+    private var task: TimeTask?
+    private func appSwitch(flag: Bool){
+        if flag {
+            //交换数据
+            let switchDoing = SwitchDoing()
+            if let distance = self.delegate?.satanManagerDistanceByLocation(){
+                switchDoing.distance = UInt32(distance)
+            }
+            if let duration = self.delegate?.satanManagerDuration(){
+                switchDoing.duration = UInt32(duration)
+            }
+            self.appSwitchDoing(withParam: switchDoing){
+                errorCode, switchDoingReply in
+                guard errorCode == ErrorCode.success else{
+                    return
+                }
+                guard let reply = switchDoingReply else{
+                    return
+                }
+                DispatchQueue.main.async {
+                    self.delegate?.satanManager(didSwitchingReplyCalories: reply.calories,
+                                                distance: reply.distance, step: reply.step,
+                                                curHeartrate: reply.curHrValue,
+                                                heartrateSerial: reply.hrValueSerial,
+                                                available: reply.available,
+                                                heartrateValue: [reply.hrValue.0, reply.hrValue.1, reply.hrValue.2, reply.hrValue.3, reply.hrValue.4, reply.hrValue.5])
+                }
+            }
+            
+            //循环
+            guard task == nil else {
+                return
+            }
+            task = delay(2){
+                self.appSwitch(flag: flag)
+            }
+        }else{
+            cancel(task)
+            task = nil
+        }
+    }
+    
+    //交换数据中 2s一次
     public func appSwitchDoing (withParam doing: SwitchDoing, closure: @escaping (_ errorCode:Int16, _ reply: SwitchDoingReply?)->()){
         
         guard isPeripheralConnected() else {
@@ -228,11 +360,34 @@ class SatanManager: NSObject {
             switchReply.distance = doingReply.distance
             switchReply.step = doingReply.step
             switchReply.curHrValue = doingReply.hr_item.cur_hr_value
-            switchReply.hrValueSerial = doingReply.hr_item.hr_value_serial                          //.1
+            switchReply.hrValueSerial = doingReply.hr_item.hr_value_serial                          //.1序列号 每组6个数据
             switchReply.available = doingReply.hr_item.interval_second > 0 ? true : false           //5s返回一组合法心率数据
             switchReply.hrValue = doingReply.hr_item.hr_vlaue                                       //心率数据
+            
+            DispatchQueue.main.async {
+                //返回根据序列号绘制曲线
+                closure(ErrorCode.success, switchReply)
+            }
+            
             //存数据库
-            closure(ErrorCode.success, switchReply)
+            guard let date = self.curDate, let macaddress = self.angelManager?.macAddress else {
+                return
+            }
+            guard let track = self.coredataHandler.selectTrack(userId: 1, withMacAddress: macaddress, withDate: date, withDayRange: 0).last else {
+                return
+            }
+            track.calories = Int16(switchReply.calories)
+            track.distance = Int16(switchReply.distance)
+            track.step = Int16(switchReply.step)
+            if switchReply.available {
+                let tuple = switchReply.hrValue
+                (track.heartrateList as! NSArray).addingObjects(from: [tuple.0, tuple.1, tuple.2, tuple.3, tuple.4, tuple.5])       //添加心率数据
+            }else{
+                (track.heartrateList as! NSArray).addingObjects(from: [0, 0, 0, 0, 0, 0])                                           //补零
+            }
+            guard self.coredataHandler.commit() else {
+                return
+            }
         }
     }
     
@@ -263,7 +418,10 @@ class SatanManager: NSObject {
             data in
             let pause: protocol_switch_app_pause_reply = data.assumingMemoryBound(to: protocol_switch_app_pause_reply.self).pointee
             //暂停定位***
-            closure(Int16(pause.err_code))
+            DispatchQueue.main.async {
+                closure(Int16(pause.err_code))
+                self.delegate?.satanManager(didUpdateState: .pause)
+            }
         }
     }
     
@@ -295,19 +453,27 @@ class SatanManager: NSObject {
             data in
             let restore: protocol_switch_app_restore_reply = data.assumingMemoryBound(to: protocol_switch_app_restore_reply.self).pointee
             //继续定位***
-            closure(Int16(restore.err_code))
+            DispatchQueue.main.async {
+                closure(Int16(restore.err_code))
+                self.delegate?.satanManager(didUpdateState: .restore)
+            }
         }
     }
     
     //交换数据结束
-    public func appSwitchEnd(withParam end: SwitchEnd, closure:@escaping (_ errorCode: Int16 , _ reply: SwitchEndReply?)->()){
+    private func appSwitchEnd(withParam end: SwitchEnd, closure:@escaping (_ errorCode: Int16 , _ reply: SwitchEndReply?)->()){
         
         guard isPeripheralConnected() else {
             closure(ErrorCode.failure, nil)
             return
         }
         
-        let components = calendar.dateComponents([.year, .month, .day, .hour, .minute, .second, .weekday], from: end.date)
+        guard let date = curDate else {
+            closure(ErrorCode.failure, nil)
+            return
+        }
+        
+        let components = calendar.dateComponents([.day, .hour, .minute, .second], from: date)
         
         var switchEnd = protocol_switch_app_end()
         switchEnd.start_time.day   = UInt8(components.day!)
@@ -331,20 +497,46 @@ class SatanManager: NSObject {
         swiftSwitchEndReply = {
             data in
             let switchEndStruct: protocol_switch_app_end_reply = data.assumingMemoryBound(to: protocol_switch_app_end_reply.self).pointee
-            let endRelpyResult = SwitchEndReply()
-            endRelpyResult.endSuccess = switchEndStruct.err_code == 0x01           //结束成功返回 0x01 0x00
-            endRelpyResult.step = switchEndStruct.step
-            endRelpyResult.calories = switchEndStruct.calories
-            endRelpyResult.distance = switchEndStruct.distance
-            endRelpyResult.avgHrValue = switchEndStruct.hr_value.avg_hr_value
-            endRelpyResult.maxHrValue = switchEndStruct.hr_value.max_hr_value
-            endRelpyResult.burnFatMins = switchEndStruct.hr_value.burn_fat_mins
-            endRelpyResult.aerobicMins = switchEndStruct.hr_value.aerobic_mins
-            endRelpyResult.limitMins = switchEndStruct.hr_value.limit_mins
+            let endReplyResult = SwitchEndReply()
+            endReplyResult.endSuccess = switchEndStruct.err_code == 0x01           //结束成功返回 0x01 0x00
+            endReplyResult.step = switchEndStruct.step
+            endReplyResult.calories = switchEndStruct.calories
+            endReplyResult.distance = switchEndStruct.distance
+            endReplyResult.avgHrValue = switchEndStruct.hr_value.avg_hr_value
+            endReplyResult.maxHrValue = switchEndStruct.hr_value.max_hr_value
+            endReplyResult.burnFatMins = switchEndStruct.hr_value.burn_fat_mins
+            endReplyResult.aerobicMins = switchEndStruct.hr_value.aerobic_mins
+            endReplyResult.limitMins = switchEndStruct.hr_value.limit_mins
             //存数据库
-            //结束定位
+            guard let date = self.curDate, let macaddress = self.angelManager?.macAddress else {
+                return
+            }
+            guard let track = self.coredataHandler.selectTrack(userId: 1, withMacAddress: macaddress, withDate: date, withDayRange: nil).last else {
+                return
+            }
+            track.step = Int16(endReplyResult.step)
+            track.aerobicMinutes = Int16(endReplyResult.aerobicMins)
+            track.avgrageHeartrate = Int16(endReplyResult.avgHrValue)
+            track.burnFatMinutes = Int16(endReplyResult.burnFatMins)
+            track.calories = Int16(endReplyResult.calories)
+            track.distance = Int16(endReplyResult.distance)
+            guard self.coredataHandler.commit() else {
+                return
+            }
             
-            closure(ErrorCode.success, endRelpyResult)
+            //回调
+            DispatchQueue.main.async {                
+                closure(ErrorCode.success, endReplyResult)
+            }
+        }
+        
+        //结束数据交换
+        appSwitch(flag: false)
+        
+        //结束定位
+        DispatchQueue.main.async {
+            self.curDate = nil
+            self.delegate?.satanManager(didUpdateState: .end)
         }
     }
     
@@ -507,5 +699,4 @@ class SatanManager: NSObject {
         vbus_tx_data(VBUS_EVT_BASE_APP_SET, VBUS_EVT_APP_SWITCH_BLE_ING_REPLY, &reply,length, &ret_code)
         
     }
-    
 }

@@ -67,7 +67,7 @@
     {
     	struct ble_sync_sport_head head1;
     	struct ble_sync_sport_head1 head2;
-    	struct ble_sync_sport_item *items;
+    	struct ble_sync_sport_item items[BLE_SYNC_SPORT_ONE_DAY_ITEMS_MAX];
     	uint16_t items_count;
     };
 

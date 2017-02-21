@@ -131,7 +131,6 @@ void initialization_c_function(){
     protocol_health_resolve_heart_rate_reg_data_callback(protocol_health_resolve_heart_rate_data_handle);
     protocol_sync_activity_resolve_data_cb_reg(protocol_sync_activity_resolve_data);
     protocol_sync_activity_progress_reg(protocol_sync_activity_progress_handle);
-    
     vbus_print_info();
 
     

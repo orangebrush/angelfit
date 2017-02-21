@@ -261,13 +261,17 @@ void manageData(VBUS_EVT_BASE evt_base,VBUS_EVT_TYPE evt_type,void * __nonnull d
             }
                 break;
             case VBUS_EVT_APP_GET_ACTIVITY_COUNT:{
-                c_get_active_count(data);
+                struct protocol_new_health_activity_count *count1 = data;
+                if (data) {
+                    c_get_active_count(data);
+                }
             }
                 break;
             case VBUS_EVT_APP_ACTIVITY_SYNC_COMPLETE:{
                 c_sync_active_complete();
             }
                 break;
+           
             default:
                 break;
         }

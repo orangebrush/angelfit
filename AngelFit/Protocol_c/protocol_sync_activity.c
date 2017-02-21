@@ -113,13 +113,14 @@ uint32_t protocol_sync_activity_start()
 		DEBUG_INFO("protocol_sync_activity_start is start");
 		return SUCCESS;
 	}
-
+	sync_data_count = 0;
 	is_get_data_count = true;
+	/*
 	send_get_count_cmd();
 	app_timer_start(sync_timer,3000,(uint32_t *)4);
-
+	*/
+	protocol_sync_activity_sync_next();
 	app_timer_start(sync_timeout_timer,5000,NULL);
-
 	return SUCCESS;
 }
 
@@ -188,7 +189,7 @@ static bool check_packet_data_and_exec()
 	if(sync_activity_rx_data_handle != NULL)
 	{
 		DEBUG_INFO("check_packet_data_and_exec,packet count = %d",need_packet_count);
-		sync_activity_rx_data_handle(rx_packet_buf,need_packet_count);
+		 sync_activity_rx_data_handle(rx_packet_buf,need_packet_count);
 	}
 
 
@@ -200,16 +201,23 @@ static bool check_packet_data_and_exec()
 
 static void protocol_exec_get_count(const uint8_t *data,uint16_t length)
 {
+	uint32_t error_code = SUCCESS;
 	struct protocol_head *head = (struct protocol_head *)data;
 	if(head->cmd == PROTOCOL_CMD_NEW_HEALTH_DATA && (head->key == PROTOCOL_KEY_NEW_HEALTH_DATA_ACTIVITY_COUNT))
 	{
 		struct protocol_new_health_activity_count *activity_count = (struct protocol_new_health_activity_count *)data;
 		need_sync_count = activity_count->count;
+		DEBUG_INFO("need_sync_count = %d,is_get_data_count=%d",need_sync_count,is_get_data_count);
+
+		vbus_tx_data(VBUS_EVT_BASE_BLE_REPLY,VBUS_EVT_APP_GET_ACTIVITY_COUNT,activity_count,sizeof(struct protocol_new_health_activity_count),&error_code);
+
+		/*
 		if(is_get_data_count == true)
 		{
 			protocol_sync_activity_sync_next();
 		}
 		app_timer_stop(sync_timer);
+		 */
 	}
 }
 

@@ -119,9 +119,7 @@ static uint32_t clean_resend_buf()
 		mem_pop(re_tx_mem_id, tmp_buf);
 
 	}
-    
     return SUCCESS;
-
 };
 
 //这里的data 不能包含协议头
@@ -347,6 +345,8 @@ static uint32_t protocol_write_vbus_control(VBUS_EVT_BASE evt_base,VBUS_EVT_TYPE
         	head.key = PROTOCOL_KEY_WEATHER_SET_DATA ;
         	break;
 		
+	
+
         case VBUS_EVT_APP_SET_NOTICE_STOP_CALL :
 			cmd.head.cmd = PROTOCOL_CMD_MSG;
 			cmd.head.key = PROTOCOL_KEY_MSG_CALL_STATUS;
@@ -430,6 +430,11 @@ static uint32_t protocol_write_vbus_control(VBUS_EVT_BASE evt_base,VBUS_EVT_TYPE
         	head.cmd = PROTOCOL_CMD_GET ;
         	head.key = PROTOCOL_KEY_GET_GSENSOR_PARAM;
         	break;
+		
+		case VBUS_EVT_APP_GET_ACTIVITY_COUNT :
+			head.cmd = PROTOCOL_CMD_NEW_HEALTH_DATA;
+			head.key = PROTOCOL_KEY_NEW_HEALTH_DATA_ACTIVITY_COUNT;
+			break;
 				default :
 			return SUCCESS;
 		}

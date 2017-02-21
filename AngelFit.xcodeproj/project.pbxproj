@@ -456,8 +456,8 @@
 		22DF625F1DDC2F5E0080B77A /* APIList */ = {
 			isa = PBXGroup;
 			children = (
-				22439F851E4D48EF00087C52 /* SatanManager.swift */,
 				22DF62601DDC2FB30080B77A /* AngelManager.swift */,
+				22439F851E4D48EF00087C52 /* SatanManager.swift */,
 				32060CF71DE28409007BC7B3 /* AngelModel.swift */,
 				32E971D71DE7D13F0029DE9F /* Debug.swift */,
 			);

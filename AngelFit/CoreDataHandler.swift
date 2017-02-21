@@ -1486,13 +1486,13 @@ extension CoreDataHandler{
         return track
     }
     
-    //获取 heartRateData
-    public func selectTrack(userId id: Int16 = 1, withMacAddress macAddress: String, withDate date: Date = Date(), withDayRange dayRange: Int = 0) -> [Track]{
+    //获取 heartRateData   dayRange置空则获取准确数据
+    public func selectTrack(userId id: Int16 = 1, withMacAddress macAddress: String, withDate date: Date = Date(), withDayRange dayRange: Int? = 0) -> [Track]{
         //根据用户设备列表获取设备
         let request: NSFetchRequest<Track> = Track.fetchRequest()
         let startDate = translate(date)
-        let endDate = translate(date, withDayOffset: dayRange)
-        let predicate = NSPredicate(format: "device.user.userId = \(id) AND device.macAddress = '\(macAddress)' AND date >= %@ AND date <= %@", startDate as! CVarArg, endDate as! CVarArg)
+        let endDate = translate(date, withDayOffset: dayRange ?? 0)
+        let predicate = dayRange == 0 ? NSPredicate(format: "device.user.userId = \(id) AND device.macAddress = '\(macAddress)' AND date == %@", date as! CVarArg) : NSPredicate(format: "device.user.userId = \(id) AND device.macAddress = '\(macAddress)' AND date >= %@ AND date <= %@", startDate as! CVarArg, endDate as! CVarArg)
         request.predicate = predicate
         do{
             let resultList = try context.fetch(request)
@@ -1516,7 +1516,7 @@ extension CoreDataHandler{
     
     //删除 heartRateData
     public func deleteTrack(userId id: Int16 = 1, withMacAddress macAddress: String, withDate date: Date){
-        guard let track = selectTrack(userId: id, withMacAddress: macAddress, withDate: date, withDayRange: 0).first else {
+        guard let track = selectTrack(userId: id, withMacAddress: macAddress, withDate: date, withDayRange: nil).last else {
             return
         }
         context.delete(track)

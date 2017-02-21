@@ -156,13 +156,12 @@ public class CustomAlarm{
 }
 
 
-// MARK:- 交换数据(手环端发起)
+//MARK:- 交换数据(手环端发起)
 public enum SwitchStartStatus: UInt8{
     case normal = 0
     case conflicts
     case batteryLow
 }
-
 
 //交换数据开始
 public class SwitchStart {

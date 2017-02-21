@@ -43,20 +43,68 @@ class ViewController: UIViewController {
     
     var secClick = false
     @IBAction func bandDevice(_ sender: Any) {
-        let angelManger = AngelManager.share()
-        secClick = !secClick
-        if secClick {
-            print("local address:", angelManger?.macAddress ?? "null")
-        }else{            
-            print("2.....", angelManger?.macAddress ?? "null")
-        }
         
+        
+        
+        let angelManager = AngelManager.share()
+        //初始化设置用户信息
+        let userInfoModel = UserInfoModel()
+        userInfoModel.birthDay = 27
+        userInfoModel.birthMonth = 1
+        userInfoModel.birthYear = 1988
+        userInfoModel.gender = 1
+        userInfoModel.height = 172
+        userInfoModel.weight = 65
+        angelManager?.setUserInfo(userInfoModel){_ in}
+        
+        let satanExist = false  //默认无时间轴个数 test
+        let satanManager = SatanManager.share()
+            //同步数据
+            angelManager?.setSynchronizationHealthData{
+                complete, progress in
+                DispatchQueue.main.async {
+                    var message: String
+                    if complete{
+                        message = "健康数据同步完成"
+                        debugPrint(message)
+                      
+                        
+                        //同步时间轴
+                        satanManager?.setSynchronizationActiveData{
+                            complete, progress, timeout in
+                            DispatchQueue.main.async {
+                                guard !timeout else{
+                                    message = "同步运动数据超时"
+                               
+                                    return
+                                }
+                                
+                                if complete {
+                                    message = "同步运动数据完成"
+                                    
+                                }else{
+                                    message = "正在同步运动数据:\(progress / 2 + 50)%"
+                                }
+                            }
+                        }
+                    }else{
+                        message = "正在同步运动数据:\(satanExist ? progress / 2 : progress)%"
+                        debugPrint(message)
+                    }
+                }
+            }
         
     }
 }
 
 //MARK:- GodManager 代理实现
 extension ViewController: GodManagerDelegate{
+    func godManager(currentConnectPeripheral peripheral: CBPeripheral, peripheralName name: String) {
+        peripheralTuple.append((name, 0, peripheral))
+        peripheralTuple = peripheralTuple.sorted{fabs($0.RSSI.floatValue) < fabs($1.RSSI.floatValue)}
+        myTableView.reloadData()
+    }
+    
     func godManager(didDiscoverPeripheral peripheral: CBPeripheral, withRSSI RSSI: NSNumber, peripheralName name: String){
 
         peripheralTuple.append((name, RSSI, peripheral))
@@ -98,7 +146,7 @@ extension ViewController:UITableViewDelegate, UITableViewDataSource{
         }
         let element = peripheralTuple[indexPath.row]
         cell?.textLabel?.text = element.name
-        cell?.detailTextLabel?.text = "\(element.RSSI)"
+        cell?.detailTextLabel?.text = element.RSSI == 0 ? "已连接" : "\(element.RSSI)"
         return cell!
     }
 }

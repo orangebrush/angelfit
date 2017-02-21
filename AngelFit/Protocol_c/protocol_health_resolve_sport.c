@@ -82,11 +82,11 @@ static uint32_t protocol_health_resolve_sport_exec_data(uint8_t *data,uint16_t l
 	if(index_count > BLE_SYNC_SPORT_ONE_DAY_ITEMS_MAX)
 	{
 		DEBUG_INFO("sport data length error = %d,",index_count);
-		//memset(m_sport_data.items,0,sizeof(m_sport_data.items));
+		memset(m_sport_data.items,0,sizeof(m_sport_data.items));
 		m_sport_data.items_count = 0;
 		return SUCCESS;
 	}
-    m_sport_data.items = malloc(sizeof(struct ble_sync_sport_item) * BLE_SYNC_SPORT_ONE_DAY_ITEMS_MAX);
+
 	for(index =  0; index < index_count; index ++)
 	{
 		itme = (struct ble_sync_sport_item *)(&data[index * sizeof(struct ble_sync_sport_item)]);
@@ -109,9 +109,7 @@ static uint32_t protocol_health_resolve_sport_exec_complete(uint32_t err_code)
 	{
 		m_sport_data_handle(&m_sport_data);
 	}
-    free(m_sport_data.items);
     memset(&m_sport_data,0,sizeof(m_sport_data));
-    
 	return SUCCESS;
 }
 
