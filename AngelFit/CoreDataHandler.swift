@@ -1486,7 +1486,7 @@ extension CoreDataHandler{
         return track
     }
     
-    //获取 heartRateData   dayRange置空则获取准确数据
+    //获取 Track   dayRange置空则获取准确数据
     public func selectTrack(userId id: Int16 = 1, withMacAddress macAddress: String, withDate date: Date = Date(), withDayRange dayRange: Int? = 0) -> [Track]{
         //根据用户设备列表获取设备
         let request: NSFetchRequest<Track> = Track.fetchRequest()
@@ -1503,7 +1503,24 @@ extension CoreDataHandler{
         return []
     }
     
-    //更新 heartRateData
+    //获取 trackList 个数
+    public func selectTrackCount(userId id: Int16 = 1, withMacAddress macAddress: String, withDate date: Date = Date(), withDayRange dayRange: Int = 0) -> Int{
+        //根据用户设备列表获取设备
+        let request: NSFetchRequest<Track> = Track.fetchRequest()
+        let startDate = translate(date)
+        let endDate = translate(date, withDayOffset: dayRange)
+        let predicate = dayRange == 0 ? NSPredicate(format: "device.user.userId = \(id) AND device.macAddress = '\(macAddress)' AND date == %@", date as! CVarArg) : NSPredicate(format: "device.user.userId = \(id) AND device.macAddress = '\(macAddress)' AND date >= %@ AND date <= %@", startDate as! CVarArg, endDate as! CVarArg)
+        request.predicate = predicate
+        do{
+            let count = try context.count(for: request)
+            return count
+        }catch let error{
+            print(error)
+        }
+        return 0
+    }
+    
+    //更新 Track
     public func updateTrack(userId id: Int16 = 1, withMacAddress macAddress: String, withDate date: Date, withItems items: [String: Any]){
         guard let track = selectTrack(userId: id, withMacAddress: macAddress, withDate: date, withDayRange: 0).first else {
             return
@@ -1514,7 +1531,7 @@ extension CoreDataHandler{
         }
     }
     
-    //删除 heartRateData
+    //删除 Track
     public func deleteTrack(userId id: Int16 = 1, withMacAddress macAddress: String, withDate date: Date){
         guard let track = selectTrack(userId: id, withMacAddress: macAddress, withDate: date, withDayRange: nil).last else {
             return

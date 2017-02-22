@@ -55,9 +55,7 @@ public class LongSitModel {
     public var duringTime:UInt16 = 0           //间隔
     public var isOpen = false                //开关
     public var weekdayList = [Int]()           //星期几响应数组   日 0 一 1 。。。 六 6
-    public init(){
-        
-    }
+    public init(){}
 }
 //目标
 public class GoalDataModel {
@@ -65,9 +63,7 @@ public class GoalDataModel {
     public var value:UInt32 = 0             //目标
     public var sleepHour:UInt8 = 0             //睡眠目标小时
     public var sleepMinute:UInt8 = 0           //睡眠目标分钟
-    public init(){
-        
-    }
+    public init(){}
 }
 //勿扰模式
 public class SilentModel {
@@ -177,6 +173,7 @@ public class SwitchStart {
     public var targetValue : UInt32 = 0    //目标值
     /*强制开始标志 Force_start:强制开始，0x01:强制开始有效， 0x00:强制开始无效(只有用户可以使用)*/
     public var forceStart : Bool = false
+    public init(){}
 }
 
 //交换数据中
@@ -189,6 +186,7 @@ public class SwitchDoing {
     public var duration	: UInt32 = 0        //持续时长
     public var calories	: UInt32 = 0        //卡路里
     public var distance	: UInt32 = 0        //距离(米)
+    public init(){}
 }
 //交换中手环回复
 public class SwitchDoingReply {
@@ -201,11 +199,13 @@ public class SwitchDoingReply {
     public var available: Bool = true
     public var hrValueSerial: UInt8 = 0
     public var hrValue: (UInt8, UInt8, UInt8, UInt8, UInt8, UInt8) = (0,0,0,0,0,0)
+    public init(){}
 }
 
 //暂停或继续交换数据
 public class SwitchPauseOrContinue{
     public var date = Date()   //开始时间格式 eg:yyyyMMddHHmmss
+    public init(){}
 }
 
 //结束交换数据
@@ -216,6 +216,7 @@ public class SwitchEnd{
     public var distance  : UInt32 = 0
     public var sportType: UInt32 = 0
     public var isSave   : UInt32 = 0       //是否保存  1 0
+    public init(){}
 }
 //结束交换数据回复
 public class SwitchEndReply{
@@ -229,6 +230,7 @@ public class SwitchEndReply{
     public var burnFatMins: UInt8 = 0      //燃烧脂肪时长
     public var aerobicMins: UInt8 = 0      //心肺锻炼时长
     public var limitMins: UInt8 = 0        //极限锻炼时长
+    public init(){}
 }
 
 

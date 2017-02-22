@@ -253,25 +253,27 @@ public class SatanManager: NSObject {
                 return
             }
             //开始定位
-            DispatchQueue.main.async {
-                self.delegate?.satanManager(didUpdateState: .start)
-                
-                //创建新路线
-                self.curDate = Date()
-                
-                guard let macaddress = self.angelManager?.macAddress else{
-                    return
-                }
-        
-                //插入数据库
-                guard let track = self.coredataHandler.insertTrack(userId: 1, withMacAddress: macaddress, withDate: Date(), withItems: nil) else{
-                    return
-                }
-                track.heartrateList = NSArray()
-                track.type = Int16(start.sportType)         //运动类型
-                
-                guard self.coredataHandler.commit() else {
-                    return
+            if status == .normal {                
+                DispatchQueue.main.async {
+                    self.delegate?.satanManager(didUpdateState: .start)
+                    
+                    //创建新路线
+                    self.curDate = Date()
+                    
+                    guard let macaddress = self.angelManager?.macAddress else{
+                        return
+                    }
+                    
+                    //插入数据库
+                    guard let track = self.coredataHandler.insertTrack(userId: 1, withMacAddress: macaddress, withDate: Date(), withItems: nil) else{
+                        return
+                    }
+                    track.heartrateList = NSArray()
+                    track.type = Int16(start.sportType)         //运动类型
+                    
+                    guard self.coredataHandler.commit() else {
+                        return
+                    }
                 }
             }
             
@@ -623,6 +625,8 @@ public class SatanManager: NSObject {
                 return
             }
         }
+        
+        protocol_sync_activity_start()
     }
     
     //获取同步项个数
