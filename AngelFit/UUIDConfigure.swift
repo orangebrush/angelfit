@@ -27,3 +27,6 @@ public enum CharacteristicType{
     case bigWrite
     case bigRead
 }
+
+public let connected_notiy = Notification.Name(rawValue: "connected")
+public let disconnected_notiy = Notification.Name(rawValue: "disconnected")

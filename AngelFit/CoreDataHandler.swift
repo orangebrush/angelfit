@@ -79,6 +79,17 @@ public class CoreDataHandler {
         return coordinator
     }()
     
+    //MARK:- init
+    private static var __once: () = {
+        singleton.instance = CoreDataHandler()
+    }()
+    struct singleton{
+        static var instance:CoreDataHandler? = nil
+    }
+    public class func share() -> CoreDataHandler{
+        _ = CoreDataHandler.__once
+        return singleton.instance!
+    }
     
     //MARK:- init
     public init() {
@@ -1244,7 +1255,8 @@ extension CoreDataHandler{
         request.predicate = predicate
     
         do{
-            _ = try context.fetch(request)
+            let resultList = try context.fetch(request)
+            return resultList
         }catch let error{
             print(error)
         }
@@ -1452,7 +1464,7 @@ extension CoreDataHandler{
     public func insertTrack(userId id: Int16 = 1, withMacAddress macAddress: String, withDate date: Date = Date(), withItems items: [String: Any]? = nil) -> Track?{
         
         //判断当前日期heartRateData是否存在
-        let trackList = selectTrack(userId: id, withMacAddress: macAddress, withDate: date)
+        let trackList = selectTrack(userId: id, withMacAddress: macAddress, withDate: date, withDayRange: nil)
         guard trackList.isEmpty else {
             let track = trackList.first
             if let dict = items{
@@ -1491,8 +1503,10 @@ extension CoreDataHandler{
         //根据用户设备列表获取设备
         let request: NSFetchRequest<Track> = Track.fetchRequest()
         let startDate = translate(date)
-        let endDate = translate(date, withDayOffset: dayRange ?? 0)
-        let predicate = dayRange == 0 ? NSPredicate(format: "device.user.userId = \(id) AND device.macAddress = '\(macAddress)' AND date == %@", date as! CVarArg) : NSPredicate(format: "device.user.userId = \(id) AND device.macAddress = '\(macAddress)' AND date >= %@ AND date <= %@", startDate as! CVarArg, endDate as! CVarArg)
+        let endDate = translate(date, withDayOffset: dayRange == nil ? 0 : dayRange! + 1)       //+1偏移日期 第二天0点
+        let predicate = dayRange == nil ?
+            NSPredicate(format: "device.user.userId = \(id) AND device.macAddress = '\(macAddress)' AND date == %@", date as! CVarArg) :
+            NSPredicate(format: "device.user.userId = \(id) AND device.macAddress = '\(macAddress)' AND date >= %@ AND date <= %@", startDate as! CVarArg, endDate as! CVarArg)
         request.predicate = predicate
         do{
             let resultList = try context.fetch(request)

@@ -48,7 +48,7 @@ uint32_t protocol_ios_send_data(const uint8_t *data,uint16_t length)
 {
     
     
-    if(data[0] == 0x08)
+    if(data[0] == 0x08 || data[0] == 0x09)
     {
         ble_send_health_data(data, length);
     }

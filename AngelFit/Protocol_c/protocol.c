@@ -104,11 +104,6 @@ uint32_t protocol_write_data(const uint8_t *data,uint16_t length)
 
 uint32_t protocol_receive_data(uint8_t const *data,uint16_t length)
 {
-    
-    if(data == NULL)
-{
-        return SUCCESS;
-    }
     if(hook_receive_data(data,length) == true)
     {
         return SUCCESS;

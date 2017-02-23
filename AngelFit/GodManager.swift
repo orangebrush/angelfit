@@ -71,7 +71,7 @@ public final class GodManager: NSObject {
         _ = CBridgingManager.share()
         
         //初始化创建默认id=1的用户
-        _ = CoreDataHandler().insertUser()
+        _ = CoreDataHandler.share().insertUser()
     }
 
     //Mark:- 开始扫描
@@ -213,6 +213,9 @@ extension GodManager: CBCentralManagerDelegate{
             self.loop()
             
             DispatchQueue.main.async {
+                //发送连接失败消息
+                NotificationCenter.default.post(name: disconnected_notiy, object: nil, userInfo: nil)
+                
                 self.delegate?.godManager(didUpdateConnectState: .disConnect, withPeripheral: peripheral, withError: error)
             }
 
@@ -238,7 +241,10 @@ extension GodManager: CBCentralManagerDelegate{
         
         //callback
         DispatchQueue.main.async {
-             self.delegate?.godManager(didUpdateConnectState: .connect, withPeripheral: peripheral, withError: nil)
+            //发送连接成功消息-  迁移至获取物理地址位置
+            //NotificationCenter.default.post(name: connected_notiy, object: nil, userInfo: nil)
+            
+            self.delegate?.godManager(didUpdateConnectState: .connect, withPeripheral: peripheral, withError: nil)
         }
     }
     
@@ -319,6 +325,7 @@ extension GodManager:CBPeripheralDelegate{
 //                var ret_code:UInt32 = 0
 //                vbus_tx_evt(VBUS_EVT_BASE_APP_SET, SET_BLE_EVT_CONNECT, &ret_code);
                 self.delegate?.godManager(didConnectedPeripheral: peripheral, connectState: true)
+                
             }
             return
         }
@@ -337,9 +344,9 @@ extension GodManager:CBPeripheralDelegate{
         
         let length = (data as NSData).length
         
-        var val: [UInt8] = Array(repeating: 0x00, count: length)
+        var val: [UInt8] = Array(repeating: 0x00, count: 20)
         (data as NSData).getBytes(&val, length: val.count)
-        protocol_receive_data(val,UInt16(length));
+        protocol_receive_data(val,UInt16(length))
         print("3.\(peripheral.name)接收蓝牙数据成功 \n \(val)")
     }
     

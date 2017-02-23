@@ -17,6 +17,7 @@
 
 static protocol_health_resolve_sleep_data_handle_t m_sleep_data_handle = NULL;
 static struct  protocol_health_resolve_sleep_data_s m_sleep_data;
+static uint8_t m_itmes_buf[BLE_SYNC_SLEEP_ITEM_ONE_DAY_DATA_MAX * sizeof(struct ble_sync_sleep_item)];
 
 static uint32_t protocol_health_resolve_sleep_exec_total_packet(uint8_t *data,uint8_t length,uint16_t *total_packet)
 {
@@ -93,7 +94,7 @@ static uint32_t protocol_health_resolve_sleep_exec_data(uint8_t *data,uint16_t l
 		return SUCCESS;
 	}
 
-    m_sleep_data.itmes = malloc(sizeof(struct ble_sync_sleep_item) * BLE_SYNC_SLEEP_ITEM_ONE_DAY_DATA_MAX);
+
 	for(index = 0; index < index_count; index ++)
 	{
 		item = (struct ble_sync_sleep_item *)(&data[index * sizeof(struct ble_sync_sleep_item)]);
@@ -119,9 +120,8 @@ static uint32_t protocol_health_resolve_sleep_exec_complete(uint32_t err_code)
 	{
 		m_sleep_data_handle(&m_sleep_data);
 	}
-    free(m_sleep_data.itmes);
     memset(&m_sleep_data,0,sizeof(m_sleep_data));
-    
+	m_sleep_data.itmes = (void *)m_itmes_buf;
 	return SUCCESS;
 }
 
@@ -133,6 +133,7 @@ uint32_t protocol_health_resolve_sleep_init()
 	func.exec_data_func = protocol_health_resolve_sleep_exec_data;
 	func.exec_head_func = protocol_health_resolve_sleep_exec_head;
 	func.total_packet_func = protocol_health_resolve_sleep_exec_total_packet;
+	m_sleep_data.itmes = (void *)m_itmes_buf;
 	protocol_health_add_exec(PROTOCOL_EXEC_TABLE_INDEX_SLEEP,func);
 	return SUCCESS;
 }

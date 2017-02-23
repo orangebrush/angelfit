@@ -114,7 +114,7 @@ static void clean_cur_sync_status()
 
 static void sync_guard_timer_start()
 {
-    app_timer_start(sync_guard_timer, 15*1000, NULL); //15s 超时
+    app_timer_start(sync_guard_timer, 45*1000, NULL); //30s 超时
 }
 
 static void sync_guard_timer_stop()
@@ -442,7 +442,11 @@ uint32_t protocol_health_exec(uint8_t const *data,uint8_t length)
 	{
 		return SUCCESS;
 	}
-
+	if(cur_sync.all_sync_is_start == false)
+	{
+		DEBUG_INFO("sync health is stop,invalid data");
+		return SUCCESS;
+	}
     
     if(
        (
@@ -518,10 +522,10 @@ uint32_t protocol_health_exec(uint8_t const *data,uint8_t length)
 		{
             uint32_t ret_code = SUCCESS;
 			cur_sync.all_sync_is_start = false;
-            update_sync_progress_rate(true);
-            vbus_tx_evt(VBUS_EVT_BASE_NOTICE_APP, SYNC_EVT_HEALTH_SYNC_COMPLETE, &ret_code);
+
             sync_guard_timer_stop();
-            
+            update_sync_progress_rate(true);
+			vbus_tx_evt(VBUS_EVT_BASE_NOTICE_APP, SYNC_EVT_HEALTH_SYNC_COMPLETE, &ret_code);
             return SUCCESS;
             
 		}

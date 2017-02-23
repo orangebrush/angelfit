@@ -36,7 +36,7 @@ public class SatanManager: NSObject {
     
     //MARK:- 获取数据库句柄
     private lazy var coredataHandler = {
-        return CoreDataHandler()
+        return CoreDataHandler.share()
     }()
     
     //MARK:- 获取AngelManager
@@ -590,7 +590,10 @@ public class SatanManager: NSObject {
             let minute = Int(head.time.minute)
             let second = Int(head.time.second)
             var components = self.calendar.dateComponents([.year, .month, .day, .hour, .minute, .second], from: Date())
-            components.year = year
+            guard year != 0, month != 0, day != 0 else {
+                return
+            }
+            components.year = year + 2000
             components.month = month
             components.day = day
             components.hour = hour
@@ -606,7 +609,7 @@ public class SatanManager: NSObject {
             track.avgrageHeartrate = Int16(data2.avg_hr_value)
             track.burnFatMinutes = Int16(data2.burn_fat_mins)
             track.calories = Int16(data1.calories)
-            //track.date = date as NSDate?
+            track.date = date as NSDate?
             track.distance = Int16(data1.distance)
             track.durations = Int16(data1.durations)
             let count: Int = 2 * 60 * 60 / 5
@@ -621,8 +624,8 @@ public class SatanManager: NSObject {
             track.serial = Int16(head.serial)
             track.step = Int16(data1.step)
             track.type = Int16(data1.type)
-            guard self.coredataHandler.commit() else {
-                return
+            DispatchQueue.main.async {
+                _ = self.coredataHandler.commit()
             }
         }
         

@@ -62,7 +62,6 @@
 #define USER_FUNC_TABLE_MSG2_ALARM_CLOCK()        (1 << 6)
 #define USER_FUNC_TABLE_MSG2_POKEMAM()            (1 << 7)
 
-
 //其他功能
 #define USER_FUNC_TABLE_OHTER_NONE 				  (0)
 #define USER_FUNC_TABLE_OHTER_LONG_SIT()          (1 << 0) //久坐
@@ -188,11 +187,10 @@ uint32_t protocol_func_table_set(struct protocol_get_func_table *protocol_data)
     func_table.ontify2.messengre = (protocol_data->msg2 & USER_FUNC_TABLE_MSG2_MESSENGER()) != 0;
     func_table.ontify2.instagram = (protocol_data->msg2 & USER_FUNC_TABLE_MSG2_INSTAGRAM()) != 0;
     func_table.ontify2.linked_in = (protocol_data->msg2 & USER_FUNC_TABLE_MSG2_LINKED_IN()) != 0;
-    func_table.ontify2.calendar = (protocol_data->msg2 & USER_FUNC_TABLE_MSG2_CALENDAR()) != 0;
-    func_table.ontify2.skype = (protocol_data->msg2 & USER_FUNC_TABLE_MSG2_SKYPE()) != 0;
-    func_table.ontify2.alarmClock = (protocol_data->msg2 & USER_FUNC_TABLE_MSG2_ALARM_CLOCK()) != 0;
+	func_table.ontify2.calendar = (protocol_data->msg2 & USER_FUNC_TABLE_MSG2_CALENDAR()) != 0;
+	func_table.ontify2.skype = (protocol_data->msg2 & USER_FUNC_TABLE_MSG2_SKYPE()) != 0;
+	func_table.ontify2.alarmClock = (protocol_data->msg2 & USER_FUNC_TABLE_MSG2_ALARM_CLOCK()) != 0;
 
-    
 	func_table.other.sedentariness = (protocol_data->ohter & USER_FUNC_TABLE_OHTER_LONG_SIT()) != 0;
 	func_table.other.antilost = (protocol_data->ohter & USER_FUNC_TABLE_OHTER_LOST_FIND()) != 0;
 	func_table.other.onetouchCalling = (protocol_data->ohter & USER_FUNC_TABLE_OHTER_ONE_KEY_SOS()) != 0;

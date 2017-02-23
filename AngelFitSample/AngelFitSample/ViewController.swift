@@ -15,7 +15,7 @@ class ViewController: UIViewController {
     
     fileprivate let godManager = GodManager.share()
     
-    fileprivate let handler = CoreDataHandler()
+    fileprivate let handler = CoreDataHandler.share()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -69,22 +69,32 @@ class ViewController: UIViewController {
 //                    debugPrint(message)
         
                     //同步时间轴
-                    satanManager?.setSynchronizationActiveData{
-                        complete, progress, timeout in
-                        DispatchQueue.main.async {
-                            var message: String
-                            guard !timeout else{
-                                message = "同步运动数据超时"
-                                return
-                            }
-                            
-                            if complete {
-                                message = "同步运动数据完成"                                
-                            }else{
-                                message = "正在同步运动数据:\(progress / 2 + 50)%"
-                            }
-                        }
+        satanManager?.getSynchronizationActiveCount(angelManager?.macAddress){
+            count in
+            print("count:", count)
+            satanManager?.setSynchronizationActiveData{
+                complete, progress, timeout in
+                DispatchQueue.main.async {
+                    var message: String
+                    guard !timeout else{
+                        message = "同步运动数据超时"
+                        return
                     }
+                    
+                    if complete {
+                        message = "同步运动数据完成"
+                        let coredataHandler = CoreDataHandler.share()
+                        if let macaddress = angelManager?.macAddress{
+                            
+                            let tracks = coredataHandler.selectTrack(userId: 1, withMacAddress: macaddress, withDate: Date(), withDayRange: 0)
+                            print(tracks)
+                        }
+                    }else{
+                        message = "正在同步运动数据:\(progress / 2 + 50)%"
+                    }
+                }
+            }
+        }
 //                }else{
 //                    message = "正在同步健康数据:\(satanExist ? progress / 2 : progress)%"
 //                    debugPrint(message)

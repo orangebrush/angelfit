@@ -133,7 +133,8 @@ static uint32_t protocol_set_alarm_vbus_control(VBUS_EVT_BASE evt_base,VBUS_EVT_
 			}
 
             protocol_set_alarm_stop_sync();
-            vbus_tx_evt(VBUS_EVT_BASE_NOTICE_APP,SYNC_EVT_ALRM_SYNC_COMPLETE,&ret_code);
+
+
         }
     }
     else if(evt_base == VBUS_EVT_BASE_NOTICE_APP)

@@ -11,6 +11,9 @@
 #include "include.h"
 #include "protocol_sync_activity.h"
 
+
+#define PROTOCOL_SYNC_ACTIVITY_RESOLVE_HR_ITME_MAX_SIZE	(2*60*60/5)
+
 #pragma pack(1)
 struct protocol_activity_data
 {
@@ -20,7 +23,7 @@ struct protocol_activity_data
 	uint8_t *hr_value;	//5s钟保存一组,最大保存2小时
 };
 
-#pragma 9bpack()
+#pragma pack()
 
 
 typedef void (*protocol_sync_activity_resolve_data_cb_t) (const struct protocol_activity_data *data);

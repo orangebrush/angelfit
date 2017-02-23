@@ -17,7 +17,7 @@ public final class AngelManager: NSObject {
     
     //MARK:- 获取数据库句柄
     private lazy var coredataHandler = {
-        return CoreDataHandler()
+        return CoreDataHandler.share()
     }()
     
     //MARK:- init +++++++++++++++++++
@@ -55,6 +55,9 @@ public final class AngelManager: NSObject {
             if errorCode == ErrorCode.success{
                 DispatchQueue.main.async {
                     self.macAddress = data
+                    
+                    //发送连接成功消息
+                    NotificationCenter.default.post(name: connected_notiy, object: nil, userInfo: nil)
                 }
             }
         }
@@ -195,6 +198,10 @@ public final class AngelManager: NSObject {
                 device?.rebootFlag = deviceInfo.reboot_flag == 0x01 ? true : false
                 device?.mode = Int16(deviceInfo.mode)
                 device?.deviceId = Int16(deviceInfo.device_id)
+                //象征性初始化
+                swiftSynchronizationConfig = { data in
+                    
+                }
                 if deviceInfo.reboot_flag == 0x01 {
                     //如果有重启标志==1,同步设备信息
                     self.setSynchronizationConfig(){
@@ -1540,7 +1547,7 @@ public final class AngelManager: NSObject {
     public func setSynchronizationConfig(closure:@escaping (_ complete:Bool) -> ()){
 
         swiftSynchronizationConfig = { data in
-            closure(data);
+            closure(data)
         }
         protocol_sync_config_start()
     }

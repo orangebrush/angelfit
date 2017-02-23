@@ -14,6 +14,7 @@
 
 struct protocol_health_resolve_heart_rate_data_s m_heart_rate_data;
 static protocol_health_resolve_heart_rate_data_handle_t m_heart_rate_data_handle = NULL;
+static uint8_t m_item_buf[BLE_SYNC_HEART_RATE_ITEM_ONE_DAY_MAX * sizeof(struct ble_sync_heart_rate_item)];
 
 static uint32_t protocol_health_resolve_heart_rate_exec_total_packet(uint8_t *data,uint8_t length,uint16_t *total_packet)
   {
@@ -93,7 +94,6 @@ static uint32_t protocol_health_resolve_heart_rate_exec_total_packet(uint8_t *da
 	for(index =  0; index < index_count; index ++)
 	{
 		itme = (struct ble_sync_heart_rate_item *)(&data[index * sizeof(struct ble_sync_heart_rate_item)]);
-        m_heart_rate_data.items = malloc(sizeof(struct ble_sync_heart_rate_item) * BLE_SYNC_HEART_RATE_ITEM_ONE_DAY_MAX);
 		memcpy(&m_heart_rate_data.items[index],itme,sizeof(struct ble_sync_heart_rate_item));
 
 		DEBUG_INFO("index = %d,offset = %d,data = %d",index,itme->offset,itme->data);
@@ -114,8 +114,8 @@ static uint32_t protocol_health_resolve_heart_rate_exec_total_packet(uint8_t *da
 	{
 		m_heart_rate_data_handle(&m_heart_rate_data);
 	}
-    free(m_heart_rate_data.items);
     memset(&m_heart_rate_data,0,sizeof(m_heart_rate_data));
+	m_heart_rate_data.items = (void *)m_item_buf;
 	return SUCCESS;
   }
 
@@ -127,6 +127,9 @@ static uint32_t protocol_health_resolve_heart_rate_exec_total_packet(uint8_t *da
 	func.exec_data_func = protocol_health_resolve_heart_rate_exec_data;
 	func.exec_head_func = protocol_health_resolve_heart_rate_exec_head;
 	func.total_packet_func = protocol_health_resolve_heart_rate_exec_total_packet;
+
+
+	m_heart_rate_data.items = (void *)m_item_buf;
 	protocol_health_add_exec(PROTOCOL_EXEC_TABLE_INDEX_HEART_RATE,func);
 	return SUCCESS;
   }

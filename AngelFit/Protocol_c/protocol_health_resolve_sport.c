@@ -16,6 +16,7 @@
 
 static protocol_health_resolve_sport_data_handle_t m_sport_data_handle = NULL;
 struct protocol_health_resolve_sport_data_s m_sport_data;
+static uint8_t m_items_data_buf[BLE_SYNC_SPORT_ONE_DAY_ITEMS_MAX * sizeof(struct ble_sync_sport_item)];
 
 static uint32_t protocol_health_resolve_sport_exec_total_packet(uint8_t *data,uint8_t length,uint16_t *total_packet)
 {
@@ -86,7 +87,7 @@ static uint32_t protocol_health_resolve_sport_exec_data(uint8_t *data,uint16_t l
 		m_sport_data.items_count = 0;
 		return SUCCESS;
 	}
-    m_sport_data.items = malloc(sizeof(struct ble_sync_sport_item) * BLE_SYNC_SPORT_ONE_DAY_ITEMS_MAX);
+
 	for(index =  0; index < index_count; index ++)
 	{
 		itme = (struct ble_sync_sport_item *)(&data[index * sizeof(struct ble_sync_sport_item)]);
@@ -109,21 +110,22 @@ static uint32_t protocol_health_resolve_sport_exec_complete(uint32_t err_code)
 	{
 		m_sport_data_handle(&m_sport_data);
 	}
-    free(m_sport_data.items);
     memset(&m_sport_data,0,sizeof(m_sport_data));
-    
+	m_sport_data.items = (void *)m_items_data_buf;
 	return SUCCESS;
 }
 
 
 uint32_t protocol_health_resolve_sport_init()
 {
+
 	struct protocol_health_exec_st func;
 	func.exec_complete_func = protocol_health_resolve_sport_exec_complete;
 	func.exec_data_func = protocol_health_resolve_sport_exec_data;
 	func.exec_head_func = protocol_health_resolve_sport_exec_head;
 	func.total_packet_func = protocol_health_resolve_sport_exec_total_packet;
 	memset(&m_sport_data,0,sizeof(m_sport_data));
+	m_sport_data.items = (void *)m_items_data_buf;
 	protocol_health_add_exec(PROTOCOL_EXEC_TABLE_INDEX_SPORT,func);
 	return SUCCESS;
 }

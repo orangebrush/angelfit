@@ -71,7 +71,7 @@ extension CBridgingManager{
                 return
             }
             
-            let coreDataHandler = CoreDataHandler()
+            let coreDataHandler = CoreDataHandler.share()
             let device = coreDataHandler.selectDevice(withMacAddress: macAddress)
             device?.bandStatus = Int16(deviceInfo.batt_status)
             device?.battLevel = Int16(deviceInfo.batt_level)
@@ -96,7 +96,7 @@ extension CBridgingManager{
             self.currentMacAddress = macAddress
             AngelManager.share()?.macAddress = macAddress
             //保存macAddress到数据库
-            let coreDataHandler = CoreDataHandler()
+            let coreDataHandler = CoreDataHandler.share()
             _ = coreDataHandler.insertDevice(withMacAddress: macAddress)
         }
         
@@ -109,7 +109,7 @@ extension CBridgingManager{
             var longSitModel:LongSitModel = LongSitModel()
             
             
-            let longSit = CoreDataHandler().selectLongSit(withMacAddress: self.currentMacAddress!)
+            let longSit = CoreDataHandler.share().selectLongSit(withMacAddress: self.currentMacAddress!)
             guard (longSit != nil) else {
                 longSitModel.startHour = UInt8(9)
                 longSitModel.startMinute = UInt8(0)
@@ -146,7 +146,7 @@ extension CBridgingManager{
         swiftSetUserInfo = {
             var userInfo:UserInfoModel = UserInfoModel();
             
-            let user = CoreDataHandler().selectUser()
+            let user = CoreDataHandler.share().selectUser()
             guard user != nil else {
                 userInfo.gender = 0
                 userInfo.height = 175
@@ -208,7 +208,7 @@ extension CBridgingManager{
             
             print("获取到功能列表: \(funcTableModel)")
             
-            let funcTable = CoreDataHandler().selectDevice(withMacAddress: "MDEDSEDFTGFD")?.funcTable
+            let funcTable = CoreDataHandler.share().selectDevice(withMacAddress: "MDEDSEDFTGFD")?.funcTable
             
             funcTable?.alarmCount = Int16(funcTableModel.alarm_count)
             
@@ -309,7 +309,7 @@ extension CBridgingManager{
             funcTable?.notify2_instagram = funcTableModel.ontify2.instagram
             funcTable?.notify2_alarmClock = funcTableModel.ontify2.alarmClock
             
-            _ = CoreDataHandler().commit()
+            _ = CoreDataHandler.share().commit()
         }
     }
 }

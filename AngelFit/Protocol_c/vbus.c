@@ -3,8 +3,9 @@
 #include "vbus.h"
 
 
-#define VBUS_MAX_SUM                18
+#define VBUS_MAX_SUM                 18
 #define VBUS_DATA_MAX_SIZE          22
+#define VBUS_DEBUG                   0
 
 struct vbus_sch_data
 {

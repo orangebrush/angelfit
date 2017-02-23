@@ -11,6 +11,7 @@
 
 
 #include "protocol_sync_activity_resolve.h"
+
 static protocol_sync_activity_resolve_data_cb_t data_handle = NULL;
 
 static void protocol_sync_activity_data_cb_handle(const struct activity_packet_data data[],uint16_t serial_count)
@@ -20,6 +21,9 @@ static void protocol_sync_activity_data_cb_handle(const struct activity_packet_d
 
 	struct protocol_activity_data activity_data;
 	memset(&activity_data,0,sizeof(activity_data));
+
+	static uint8_t hr_item_buf[PROTOCOL_SYNC_ACTIVITY_RESOLVE_HR_ITME_MAX_SIZE];
+	activity_data.hr_value = hr_item_buf;
 
 	memcpy(&activity_data.head,&data[1].hr_data,sizeof(activity_data.head));
 	memcpy(&activity_data.ex_data1,&data[2].hr_data,sizeof(activity_data.ex_data1));

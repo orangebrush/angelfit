@@ -236,7 +236,7 @@
         <attribute name="sportCount" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <relationship name="sportData" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SportData" inverseName="sportItem" inverseEntity="SportData" syncable="YES"/>
     </entity>
-    <entity name="Track" representedClassName="Track" syncable="YES" codeGenerationType="class">
+    <entity name="Track" representedClassName=".Track" syncable="YES">
         <attribute name="aerobicMinutes" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="avgrageHeartrate" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="burnFatMinutes" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
@@ -244,7 +244,7 @@
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="distance" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="durations" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="heartrateList" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="heartrateList" optional="YES" attributeType="Transformable" customClassName=".NSArray" syncable="YES"/>
         <attribute name="limitMinutes" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="maxHeartrate" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="serial" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
@@ -289,8 +289,8 @@
         <element name="SleepItem" positionX="-47" positionY="882" width="128" height="103"/>
         <element name="SportData" positionX="-254" positionY="522" width="128" height="253"/>
         <element name="SportItem" positionX="-254" positionY="806" width="128" height="148"/>
+        <element name="Track" positionX="367" positionY="468" width="128" height="255"/>
         <element name="Unit" positionX="-378" positionY="360" width="128" height="118"/>
         <element name="User" positionX="-101" positionY="-207" width="128" height="193"/>
-        <element name="Track" positionX="367" positionY="468" width="128" height="253"/>
     </elements>
 </model>
