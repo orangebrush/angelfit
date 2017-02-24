@@ -214,6 +214,7 @@ struct protocol_switch_ble_ing
 {
 	struct protocol_head head;
 	struct protocol_start_time start_time;
+    uint32_t distance : 24;
 
 };
 

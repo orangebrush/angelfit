@@ -19,7 +19,7 @@ import CoreBluetooth
 
 @objc public protocol SatanManagerDelegate {
     func satanManager(didUpdateState state: SatanManagerState)              //状态(主要控制定位)
-    func satanManagerDistanceByLocation() -> Int                            //返回手机定位距离
+    func satanManagerDistanceByLocation(withBleDistance distance: UInt32) -> UInt32                            //返回手机定位距离
     func satanManagerDuration() -> Int                                      //返回手机持续时间
     func satanManager(didSwitchingReplyCalories calories: UInt32, distance: UInt32, step: UInt32, curHeartrate: UInt8, heartrateSerial: UInt8, available: Bool, heartrateValue: [UInt8])
 }
@@ -175,10 +175,10 @@ public class SatanManager: NSObject {
         swiftBleSwitching = {
             //需要添加交换距离接口
             data in
-            //let doing: protocol_switch_ble_ing = data.assumingMemoryBound(to: protocol_switch_ble_ing.self).pointee
+            let doing: protocol_switch_ble_ing = data.assumingMemoryBound(to: protocol_switch_ble_ing.self).pointee
             //传入要交换的的距离，如gps信号不好，则直接把未添加的距离返回去
             DispatchQueue.main.async {
-                if let distance = self.delegate?.satanManagerDistanceByLocation(){
+                if let distance = self.delegate?.satanManagerDistanceByLocation(withBleDistance: doing.distance){
                     DispatchQueue.global().async {
                         self.sendSwitchDoing(distance)
                     }
@@ -286,11 +286,12 @@ public class SatanManager: NSObject {
     
     //MARK:- 自动开始与停止交换
     private var task: TimeTask?
+    private var bleDistance: UInt32 = 0
     private func appSwitch(flag: Bool){
         if flag {
             //交换数据
             let switchDoing = SwitchDoing()
-            if let distance = self.delegate?.satanManagerDistanceByLocation(){
+            if let distance = self.delegate?.satanManagerDistanceByLocation(withBleDistance: bleDistance){
                 switchDoing.distance = UInt32(distance)
             }
             if let duration = self.delegate?.satanManagerDuration(){
@@ -305,6 +306,7 @@ public class SatanManager: NSObject {
                     return
                 }
                 DispatchQueue.main.async {
+                    self.bleDistance = reply.distance
                     self.delegate?.satanManager(didSwitchingReplyCalories: reply.calories,
                                                 distance: reply.distance, step: reply.step,
                                                 curHeartrate: reply.curHrValue,
@@ -324,6 +326,7 @@ public class SatanManager: NSObject {
         }else{
             cancel(task)
             task = nil
+            bleDistance = 0
         }
     }
     
@@ -401,7 +404,12 @@ public class SatanManager: NSObject {
             return
         }
         
-        let components = calendar.dateComponents([.day, .hour, .minute, .second], from: pause.date)
+        guard let date = curDate else {
+            closure(ErrorCode.failure)
+            return
+        }
+        
+        let components = calendar.dateComponents([.day, .hour, .minute, .second], from: date)
         
         var switchPause = protocol_switch_app_pause()
         switchPause.start_time.day   = UInt8(components.day!)
@@ -435,7 +443,12 @@ public class SatanManager: NSObject {
             return
         }
         
-        let components = calendar.dateComponents([.day, .hour, .minute, .second], from: restore.date)
+        guard let date = curDate else {
+            closure(ErrorCode.failure)
+            return
+        }
+        
+        let components = calendar.dateComponents([.day, .hour, .minute, .second], from: date)
         
         var switchRestore = protocol_switch_app_pause()
         switchRestore.start_time.day   = UInt8(components.day!)
@@ -463,7 +476,7 @@ public class SatanManager: NSObject {
     }
     
     //交换数据结束
-    private func appSwitchEnd(withParam end: SwitchEnd, closure:@escaping (_ errorCode: Int16 , _ reply: SwitchEndReply?)->()){
+    public func appSwitchEnd(withParam end: SwitchEnd, closure:@escaping (_ errorCode: Int16 , _ reply: SwitchEndReply?)->()){
         
         guard isPeripheralConnected() else {
             closure(ErrorCode.failure, nil)
@@ -697,12 +710,11 @@ public class SatanManager: NSObject {
         vbus_tx_data(VBUS_EVT_BASE_APP_SET, VBUS_EVT_APP_SWITCH_BLE_END_REPLY, &reply, length, &ret_code)
         
     }
-    private func sendSwitchDoing(_ distance:Int){
+    private func sendSwitchDoing(_ distance: UInt32){
         var ret_code:UInt32 = 0
         var reply:protocol_switch_ble_ing_reply = protocol_switch_ble_ing_reply()
         let length = UInt32(MemoryLayout<UInt8>.size * 3)
-        reply.distance = UInt32(distance)       //总距离
-        
+        reply.distance = distance           //总距离                                                                                                                                                                                                                               z
         vbus_tx_data(VBUS_EVT_BASE_APP_SET, VBUS_EVT_APP_SWITCH_BLE_ING_REPLY, &reply,length, &ret_code)
         
     }
