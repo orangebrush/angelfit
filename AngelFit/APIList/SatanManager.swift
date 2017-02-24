@@ -253,12 +253,17 @@ public class SatanManager: NSObject {
                 return
             }
             //开始定位
-            if status == .normal {                
-                DispatchQueue.main.async {
+            DispatchQueue.main.async {
+                if status == .normal {
                     self.delegate?.satanManager(didUpdateState: .start)
                     
                     //创建新路线
                     self.curDate = Date()
+                    
+                    //自动调用数据交换
+                    self.appSwitch(flag: true)
+                    
+                    closure(ErrorCode.success, status)
                     
                     guard let macaddress = self.angelManager?.macAddress else{
                         return
@@ -275,12 +280,8 @@ public class SatanManager: NSObject {
                         return
                     }
                 }
+                
             }
-            
-            //自动调用数据交换
-            self.appSwitch(flag: true)
-            
-            closure(ErrorCode.success, status)
         }
     }
     
@@ -317,8 +318,8 @@ public class SatanManager: NSObject {
             }
             
             //循环
-            guard task == nil else {
-                return
+            if task != nil{
+                cancel(task)
             }
             task = delay(2){
                 self.appSwitch(flag: flag)
@@ -450,7 +451,7 @@ public class SatanManager: NSObject {
         
         let components = calendar.dateComponents([.day, .hour, .minute, .second], from: date)
         
-        var switchRestore = protocol_switch_app_pause()
+        var switchRestore = protocol_switch_app_restore()
         switchRestore.start_time.day   = UInt8(components.day!)
         switchRestore.start_time.hour = UInt8(components.hour!) 
         switchRestore.start_time.minute = UInt8(components.minute!)
