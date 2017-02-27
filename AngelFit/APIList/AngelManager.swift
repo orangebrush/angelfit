@@ -1295,7 +1295,7 @@ public final class AngelManager: NSObject {
                 return
             }
             
-            let realDate = date.GMT()
+            let realDate = date
             
             guard let sport = self.coredataHandler.insertSportData(userId: 1, withMacAddress: realMacAddress, withDate: realDate, withItems: nil) else {
                 return
@@ -1383,7 +1383,7 @@ public final class AngelManager: NSObject {
                 return
             }
             
-            let realDate = date.GMT()
+            let realDate = date
             
             guard let sleep = self.coredataHandler.insertSleepData(userId: 1, withMacAddress: realMacAddress, withDate: realDate, withItems: nil) else {
                 return
@@ -1459,7 +1459,7 @@ public final class AngelManager: NSObject {
                 return
             }
             
-            let realDate = date.GMT()
+            let realDate = date
             
             guard let heartRate = self.coredataHandler.insertHeartRateData(userId: 1, withMacAddress: realMacAddress, withDate: realDate, withItems: nil) else {
                 return

@@ -2,4 +2,70 @@
 <Bucket
    type = "0"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "AngelFit/APIList/AngelManager.swift"
+            timestampString = "509873377.753558"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1464"
+            endingLineNumber = "1464"
+            landmarkName = "setSynchronizationHealthData(_:closure:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "AngelFit/APIList/AngelManager.swift"
+            timestampString = "509873380.313817"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1497"
+            endingLineNumber = "1497"
+            landmarkName = "setSynchronizationHealthData(_:closure:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "AngelFit.AngelManager.(setSynchronizationHealthData (Swift.Optional&lt;Swift.String&gt;, closure : (Swift.Bool, Swift.Int16) -&gt; ()) -&gt; ()).(closure #4)"
+                  moduleName = "AngelFit"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ganyi/Documents/git/angelfit/AngelFit/APIList/AngelManager.swift"
+                  timestampString = "509873421.794745"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1497"
+                  endingLineNumber = "1497"
+                  offsetFromSymbolStart = "4368">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "AngelFit.AngelManager.(setSynchronizationHealthData (Swift.Optional&lt;Swift.String&gt;, closure : (Swift.Bool, Swift.Int16) -&gt; ()) -&gt; ()).(closure #4).(closure #2)"
+                  moduleName = "AngelFit"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ganyi/Documents/git/angelfit/AngelFit/APIList/AngelManager.swift"
+                  timestampString = "509873421.795973"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1498"
+                  endingLineNumber = "1498"
+                  offsetFromSymbolStart = "16">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>

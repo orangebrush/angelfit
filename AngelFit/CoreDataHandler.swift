@@ -109,7 +109,7 @@ public class CoreDataHandler {
         
         let components = calender.dateComponents([.year, .month, .day], from: resultDate)
 
-        return calender.date(from: components)!.GMT()
+        return calender.date(from: components)!
     }
     
     // MARK: - Core Data Saving support
@@ -1090,9 +1090,9 @@ extension CoreDataHandler{
             let sportData = sportDataList.first
             if let dict = items{
                 sportData?.setValuesForKeys(dict)
-            }
-            guard commit() else{
-                return nil
+                guard commit() else{
+                    return nil
+                }
             }
             return sportDataList.first
         }
@@ -1216,9 +1216,9 @@ extension CoreDataHandler{
             let sleepData = sleepDataList.first
             if let dict = items{
                 sleepData?.setValuesForKeys(dict)
-            }
-            guard commit() else{
-                return nil
+                guard commit() else{
+                    return nil
+                }
             }
             return sleepDataList.first
         }
@@ -1342,9 +1342,9 @@ extension CoreDataHandler{
             let sleepData = heartRateDataList.first
             if let dict = items{
                 sleepData?.setValuesForKeys(dict)
-            }
-            guard commit() else{
-                return nil
+                guard commit() else{
+                    return nil
+                }
             }
             return heartRateDataList.first
         }
