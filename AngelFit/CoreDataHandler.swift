@@ -109,7 +109,7 @@ public class CoreDataHandler {
         
         let components = calender.dateComponents([.year, .month, .day], from: resultDate)
 
-        return calender.date(from: components)!
+        return calender.date(from: components)!.GMT()
     }
     
     // MARK: - Core Data Saving support

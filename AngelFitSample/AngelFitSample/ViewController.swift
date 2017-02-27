@@ -60,53 +60,27 @@ class ViewController: UIViewController {
         let satanExist = false  //默认无时间轴个数 test
         let satanManager = SatanManager.share()
         //同步数据
-//        angelManager?.setSynchronizationHealthData{
-//            complete, progress in
-//            DispatchQueue.main.async {
-//                var message: String
-//                if complete{
-//                    message = "健康数据同步完成"
-//                    debugPrint(message)
-        
-                    //同步时间轴
-        satanManager?.getSynchronizationActiveCount(angelManager?.macAddress){
-            count in
-            print("count:", count)
-            satanManager?.setSynchronizationActiveData{
-                complete, progress, timeout in
-                DispatchQueue.main.async {
-                    var message: String
-                    guard !timeout else{
-                        message = "同步运动数据超时"
-                        return
-                    }
+        angelManager?.setSynchronizationHealthData{
+            complete, progress in
+            DispatchQueue.main.async {
+                var message: String
+                if complete{
+                    message = "健康数据同步完成"
+                    debugPrint(message)
                     
-                    if complete {
-                        message = "同步运动数据完成"
-                        let coredataHandler = CoreDataHandler.share()
-                        if let macaddress = angelManager?.macAddress{
-                            
-                            let tracks = coredataHandler.selectTrack(userId: 1, withMacAddress: macaddress, withDate: Date(), withDayRange: 0)
-                            print(tracks)
-                        }
-                    }else{
-                        message = "正在同步运动数据:\(progress / 2 + 50)%"
-                    }
+                }else{
+                    message = "正在同步健康数据:\(satanExist ? progress / 2 : progress)%"
+                    debugPrint(message)
                 }
             }
         }
-//                }else{
-//                    message = "正在同步健康数据:\(satanExist ? progress / 2 : progress)%"
-//                    debugPrint(message)
-//                }
-//            }
-//        }
         
     }
 }
 
 //MARK:- GodManager 代理实现
 extension ViewController: GodManagerDelegate{
+    //获取已连接设备
     func godManager(currentConnectPeripheral peripheral: CBPeripheral, peripheralName name: String) {
         peripheralTuple.append((name, 0, peripheral))
         peripheralTuple = peripheralTuple.sorted{fabs($0.RSSI.floatValue) < fabs($1.RSSI.floatValue)}

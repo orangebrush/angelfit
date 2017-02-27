@@ -1295,10 +1295,12 @@ public final class AngelManager: NSObject {
                 return
             }
             
-            guard let sport = self.coredataHandler.insertSportData(withMacAddress: realMacAddress) else {
+            let realDate = date.GMT()
+            
+            guard let sport = self.coredataHandler.insertSportData(userId: 1, withMacAddress: realMacAddress, withDate: realDate, withItems: nil) else {
                 return
             }
-            sport.date = date as NSDate
+            sport.date = realDate as NSDate
             sport.id = Int16(id)
             sport.itemCount = Int16(itemCount)
             sport.minuteDuration = Int16(minuteDuration)
@@ -1321,7 +1323,7 @@ public final class AngelManager: NSObject {
                 if let item = items?[i]{
                     print("item 步数 :" , item.sport_count, Thread.isMainThread);
                     
-                    if let sportItem = self.coredataHandler.createSportItem(withMacAddress: realMacAddress, withDate: date, withItemId: Int16(i)){
+                    if let sportItem = self.coredataHandler.createSportItem(withMacAddress: realMacAddress, withDate: realDate, withItemId: Int16(i)){
                         sportItem.activeTime = Int16(item.active_time)
                         sportItem.calories = Int16(item.calories)
                         sportItem.distance = Int16(item.distance)
@@ -1381,10 +1383,12 @@ public final class AngelManager: NSObject {
                 return
             }
             
-            guard let sleep = self.coredataHandler.insertSleepData(withMacAddress: realMacAddress) else {
+            let realDate = date.GMT()
+            
+            guard let sleep = self.coredataHandler.insertSleepData(userId: 1, withMacAddress: realMacAddress, withDate: realDate, withItems: nil) else {
                 return
             }
-            sleep.date = date as NSDate
+            sleep.date = realDate as NSDate
             sleep.id = Int16(id)
 
             sleep.itemsCount = Int16(itemCount)
@@ -1411,7 +1415,7 @@ public final class AngelManager: NSObject {
             (0..<96).forEach(){
                 i in
                 if let item = items?[i]{
-                    if let sleepItem = self.coredataHandler.createSleepItem(withMacAddress: realMacAddress, withDate: date, withItemId: Int16(i)){
+                    if let sleepItem = self.coredataHandler.createSleepItem(withMacAddress: realMacAddress, withDate: realDate, withItemId: Int16(i)){
                         sleepItem.durations = Int16(item.durations)
                         sleepItem.id = Int16(i)
                         sleepItem.sleepStatus = Int16(item.sleep_status)
@@ -1455,10 +1459,12 @@ public final class AngelManager: NSObject {
                 return
             }
             
-            guard let heartRate = self.coredataHandler.insertHeartRateData(withMacAddress: realMacAddress) else {
+            let realDate = date.GMT()
+            
+            guard let heartRate = self.coredataHandler.insertHeartRateData(userId: 1, withMacAddress: realMacAddress, withDate: realDate, withItems: nil) else {
                 return
             }
-            heartRate.date = date as NSDate
+            heartRate.date = realDate as NSDate
             heartRate.id = Int16(id)
             heartRate.itemCount = Int16(itemCount)
             heartRate.aerobicMinutes = Int16(aerobicMinutes)
@@ -1481,7 +1487,7 @@ public final class AngelManager: NSObject {
                 i in
                 if let item = items?[i]{
                     
-                    if let heartRateItem = self.coredataHandler.createHeartRateItem(withMacAddress: realMacAddress, withDate: date, withItemId: Int16(i)){
+                    if let heartRateItem = self.coredataHandler.createHeartRateItem(withMacAddress: realMacAddress, withDate: realDate, withItemId: Int16(i)){
                         heartRateItem.data = Int16(item.data)
                         heartRateItem.id = Int16(i)
                         heartRateItem.offset = Int16(item.offset)

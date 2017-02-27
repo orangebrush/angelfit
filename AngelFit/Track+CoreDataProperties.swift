@@ -2,7 +2,7 @@
 //  Track+CoreDataProperties.swift
 //  AngelFit
 //
-//  Created by ganyi on 2017/2/23.
+//  Created by ganyi on 2017/2/24.
 //  Copyright © 2017年 aiju_huangjing1. All rights reserved.
 //
 
@@ -23,12 +23,13 @@ extension Track {
     @NSManaged public var date: NSDate?
     @NSManaged public var distance: Int16
     @NSManaged public var durations: Int16
-    @NSManaged public var heartrateList: NSObject?
+    @NSManaged public var heartrateList: NSMutableArray?
     @NSManaged public var limitMinutes: Int16
     @NSManaged public var maxHeartrate: Int16
     @NSManaged public var serial: Int16
     @NSManaged public var step: Int16
     @NSManaged public var type: Int16
+    @NSManaged public var coordinateList: NSMutableArray?
     @NSManaged public var device: Device?
 
 }

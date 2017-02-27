@@ -273,7 +273,7 @@ public class SatanManager: NSObject {
                     guard let track = self.coredataHandler.insertTrack(userId: 1, withMacAddress: macaddress, withDate: Date(), withItems: nil) else{
                         return
                     }
-                    track.heartrateList = NSArray()
+                    track.heartrateList = NSMutableArray()
                     track.type = Int16(start.sportType)         //运动类型
                     
                     guard self.coredataHandler.commit() else {
@@ -387,9 +387,15 @@ public class SatanManager: NSObject {
             track.step = Int16(switchReply.step)
             if switchReply.available {
                 let tuple = switchReply.hrValue
-                (track.heartrateList as! NSArray).addingObjects(from: [tuple.0, tuple.1, tuple.2, tuple.3, tuple.4, tuple.5])       //添加心率数据
+                if track.heartrateList == nil{
+                    track.heartrateList = NSMutableArray()
+                }
+                track.heartrateList?.addingObjects(from: [tuple.0, tuple.1, tuple.2, tuple.3, tuple.4, tuple.5])       //添加心率数据
             }else{
-                (track.heartrateList as! NSArray).addingObjects(from: [0, 0, 0, 0, 0, 0])                                           //补零
+                if track.heartrateList == nil{
+                    track.heartrateList = NSMutableArray()
+                }
+                track.heartrateList?.addingObjects(from: [0, 0, 0, 0, 0, 0])                                           //补零
             }
             guard self.coredataHandler.commit() else {
                 return
