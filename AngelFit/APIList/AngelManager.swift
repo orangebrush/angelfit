@@ -64,13 +64,14 @@ public final class AngelManager: NSObject {
     }
     
     //MARK:- 从数据库获取数据-用户信息
-    public func getUserinfo(userId id: Int16 = 1, closure: (User?)->()){
+    public func getUserinfo(closure: (User?)->()){
         
-        closure(coredataHandler.selectUser(userId: id))
+        let userId = UserManager.share().userId
+        closure(coredataHandler.selectUser(userId: userId))
     }
     
     //MARK:- 从数据库获取数据-设备信息
-    public func getDevice(_ macAddress: String? = nil, userId id: Int16 = 1, closure: @escaping (Device?) -> ()){
+    public func getDevice(_ macAddress: String? = nil, closure: @escaping (Device?) -> ()){
         //为空直接返回失败
         var realMacAddress: String!
         if let md = macAddress{
@@ -82,11 +83,12 @@ public final class AngelManager: NSObject {
             return
         }
         
-        guard let device = coredataHandler.selectDevice(userId: id, withMacAddress: realMacAddress) else {
+        let userId = UserManager.share().userId
+        guard let device = coredataHandler.selectDevice(userId: userId, withMacAddress: realMacAddress) else {
             getDeviceInfoFromBand(){
                 errorCode, value in
                 if errorCode == ErrorCode.success{
-                    closure(self.coredataHandler.selectDevice(userId: id, withMacAddress: realMacAddress))
+                    closure(self.coredataHandler.selectDevice(userId: userId, withMacAddress: realMacAddress))
                 }else{
                     closure(nil)
                 }
@@ -115,7 +117,7 @@ public final class AngelManager: NSObject {
     }
     
     //从数据库获取功能列表
-    public func getFuncTable(_ macAddress: String? = nil, userId id: Int16 = 1, closure: @escaping (FuncTable?) -> ()){
+    public func getFuncTable(_ macAddress: String? = nil, closure: @escaping (FuncTable?) -> ()){
         //为空直接返回失败
         var realMacAddress: String!
         if let md = macAddress{
@@ -132,7 +134,7 @@ public final class AngelManager: NSObject {
                 errorCode, value in
                 debug("funcTable errorCode: \(errorCode) value: \(value)")
                 if errorCode == ErrorCode.success{
-                    closure(self.coredataHandler.selectDevice(userId: id, withMacAddress: realMacAddress)?.funcTable)
+                    closure(self.coredataHandler.selectDevice(userId: UserManager.share().userId, withMacAddress: realMacAddress)?.funcTable)
                 }else{
                     closure(nil)
                 }
@@ -162,7 +164,7 @@ public final class AngelManager: NSObject {
                 let macAddress = macList.map(){String($0,radix:16)}.reduce(""){$0+$1}.uppercased()
                 
                 //保存macAddress到数据库
-                _ = self.coredataHandler.insertDevice(withMacAddress: macAddress)
+                _ = self.coredataHandler.insertDevice(userId: UserManager.share().userId, withMacAddress: macAddress, withItems: nil)
                 //保存macAddress到实例
                 print("1....", Unmanaged.passUnretained(self).toOpaque())
                 DispatchQueue.main.async {
@@ -190,7 +192,7 @@ public final class AngelManager: NSObject {
                     return
                 }
                 
-                let device = self.coredataHandler.selectDevice(withMacAddress: realMacAddress)
+                let device = self.coredataHandler.selectDevice(userId: UserManager.share().userId, withMacAddress: realMacAddress)
                 device?.bandStatus = Int16(deviceInfo.batt_status)
                 device?.battLevel = Int16(deviceInfo.batt_level)
                 device?.version = Int16(deviceInfo.version)
@@ -240,8 +242,7 @@ public final class AngelManager: NSObject {
                 
                 let funcTableModel = data.assumingMemoryBound(to: protocol_func_table.self).pointee
                 print("--------------\nprint:funcTable\n\(funcTableModel)")
-                let funcTable = self.coredataHandler.selectDevice(withMacAddress: realMacAddress)?.funcTable
-                
+                let funcTable = self.coredataHandler.selectDevice(userId: UserManager.share().userId, withMacAddress: realMacAddress)?.funcTable
                 funcTable?.alarmCount = Int16(funcTableModel.alarm_count)
                 
                 funcTable?.main2_logIn = funcTableModel.main1.logIn
@@ -461,8 +462,8 @@ public final class AngelManager: NSObject {
         userInfoModel.monute = userInfo.birthMonth
         userInfoModel.day = userInfo.birthDay
         
-        var ret_code:UInt32 = 0
-        let length = UInt32(MemoryLayout<UInt16>.size+MemoryLayout<UInt8>.size*7)
+        var ret_code: UInt32 = 0
+        let length = UInt32(MemoryLayout<UInt16>.size+MemoryLayout<UInt8>.size * 7)
         vbus_tx_data(VBUS_EVT_BASE_APP_SET, VBUS_EVT_APP_SET_USER_INFO, &userInfoModel, length, &ret_code)
         
         guard ret_code==0 else {
@@ -525,7 +526,7 @@ public final class AngelManager: NSObject {
             closure(false)
             return
         }
-        let dbLongsit = coredataHandler.selectLongSit(withMacAddress: realMacAddress)
+        let dbLongsit = coredataHandler.selectLongSit(userID: UserManager.share().userId, withMacAddress: realMacAddress)
         let calender = Calendar.current
         var components = calender.dateComponents([.hour, .minute], from: Date())
         components.hour = Int(sit.startHour)
@@ -587,8 +588,7 @@ public final class AngelManager: NSObject {
         }
         
         //创建单位模型
-        let unit = coredataHandler.selectUnit(withMacAddress: realMacAddress)
-        
+        let unit = coredataHandler.selectUnit(userId: UserManager.share().userId, withMacAddress: realMacAddress)
         //赋值
         unitsType.forEach(){
             body in
@@ -630,7 +630,7 @@ public final class AngelManager: NSObject {
         /*
          stride 为步长，根据身高和男女运算，详情见协议 70是默认的
          */
-        guard let user = coredataHandler.selectUser() else{
+        guard let user = coredataHandler.selectUser(userId: UserManager.share().userId) else{
             closure(false)
             return
         }
@@ -673,7 +673,7 @@ public final class AngelManager: NSObject {
             closure(nil)
             return
         }
-        closure(coredataHandler.selectUnit(withMacAddress: realMacAddress))
+        closure(coredataHandler.selectUnit(userId: UserManager.share().userId, withMacAddress: realMacAddress))
     }
     
     //设置目标
@@ -687,9 +687,9 @@ public final class AngelManager: NSObject {
         setGoal.sleep_hour = goal.sleepHour
         setGoal.sleep_minute = goal.sleepMinute
         
-        let length:UInt32 = UInt32(MemoryLayout<UInt32>.size+MemoryLayout<UInt8>.size * 5)
+        let length: UInt32 = UInt32(MemoryLayout<UInt32>.size+MemoryLayout<UInt8>.size * 5)
         
-        vbus_tx_data(VBUS_EVT_BASE_APP_SET, VBUS_EVT_APP_SET_SPORT_GOAL, &setGoal, length,&ret_code)
+        vbus_tx_data(VBUS_EVT_BASE_APP_SET, VBUS_EVT_APP_SET_SPORT_GOAL, &setGoal, length, &ret_code)
         
         guard ret_code == 0 else {
             closure(false)
@@ -762,7 +762,7 @@ public final class AngelManager: NSObject {
             return
         }
         //保存数据库
-        let device = coredataHandler.selectDevice(withMacAddress: realMacAddress)
+        let device = coredataHandler.selectDevice(userId: UserManager.share().userId, withMacAddress: realMacAddress)
         device?.findPhoneSwitch = open
         guard coredataHandler.commit() else{
             closure(false)
@@ -785,7 +785,7 @@ public final class AngelManager: NSObject {
             return
         }
         
-        guard let device = coredataHandler.selectDevice(withMacAddress: realMacAddress) else{
+        guard let device = coredataHandler.selectDevice(userId: UserManager.share().userId, withMacAddress: realMacAddress) else{
             closure(nil)
             return
         }
@@ -830,7 +830,7 @@ public final class AngelManager: NSObject {
             return
         }
         //保存数据库
-        let device = coredataHandler.selectDevice(withMacAddress: realMacAddress)
+        let device = coredataHandler.selectDevice(userId: UserManager.share().userId, withMacAddress: realMacAddress)
         device?.sos = open
         guard coredataHandler.commit() else{
             closure(false)
@@ -852,7 +852,7 @@ public final class AngelManager: NSObject {
             return
         }
         
-        guard let device = coredataHandler.selectDevice(withMacAddress: realMacAddress) else{
+        guard let device = coredataHandler.selectDevice(userId: UserManager.share().userId, withMacAddress: realMacAddress) else{
             closure(nil)
             return
         }
@@ -899,7 +899,7 @@ public final class AngelManager: NSObject {
         
         let length = UInt32(MemoryLayout<UInt8>.size * 4)
 
-        var ret_code:UInt32 = 0
+        var ret_code: UInt32 = 0
         vbus_tx_data(VBUS_EVT_BASE_APP_SET, VBUS_EVT_APP_SET_UP_HAND_GESTURE, &wrist, length, &ret_code);
 
         guard ret_code == 0 else {
@@ -908,7 +908,7 @@ public final class AngelManager: NSObject {
         }
         
         //保存数据库
-        let handGresture = coredataHandler.selectHandGesture(withMacAddress: realMacAddress)
+        let handGresture = coredataHandler.selectHandGesture(userId: UserManager.share().userId, withMacAddress: realMacAddress)
         handGresture?.isOpen = open
         handGresture?.displayTime = Int16(lightDuring)
         guard coredataHandler.commit() else{
@@ -932,7 +932,7 @@ public final class AngelManager: NSObject {
             return
         }
         
-        closure(coredataHandler.selectHandGesture(withMacAddress: realMacAddress))
+        closure(coredataHandler.selectHandGesture(userId: UserManager.share().userId, withMacAddress: realMacAddress))
     }
     
     //设置勿扰模式
@@ -967,7 +967,7 @@ public final class AngelManager: NSObject {
         }
         
         //保存数据库
-        let silent = coredataHandler.selectSilentDistrube(withMacAddress: realMacAddress)
+        let silent = coredataHandler.selectSilentDistrube(userId: UserManager.share().userId, withMacAddress: realMacAddress)
         silent?.startHour = Int16(silentModel.startHour)
         silent?.startMinute = Int16(silentModel.startMinute)
         silent?.endHour = Int16(silentModel.endHour)
@@ -1009,7 +1009,7 @@ public final class AngelManager: NSObject {
         }
         
         //保存数据库
-        guard let heartInterval = coredataHandler.selectHeartInterval(withMacAddress: realMacAddress) else {
+        guard let heartInterval = coredataHandler.selectHeartInterval(userId: UserManager.share().userId, withMacAddress: realMacAddress) else {
             closure(false)
             return
         }
@@ -1037,7 +1037,7 @@ public final class AngelManager: NSObject {
             return
         }
         
-        closure(coredataHandler.selectHeartInterval(withMacAddress: realMacAddress))
+        closure(coredataHandler.selectHeartInterval(userId: UserManager.share().userId, withMacAddress: realMacAddress))
     }
     
     //MARK:- 设置左右手穿戴
@@ -1059,15 +1059,15 @@ public final class AngelManager: NSObject {
         handle.hand_type = leftHand ? 0x00 : 0x01
         
         let length = UInt32(MemoryLayout<UInt8>.size*3)
-        var ret_code:UInt32 = 0
-        vbus_tx_data(VBUS_EVT_BASE_APP_SET,VBUS_EVT_APP_SET_HAND,&handle,length,&ret_code)
+        var ret_code: UInt32 = 0
+        vbus_tx_data(VBUS_EVT_BASE_APP_SET,VBUS_EVT_APP_SET_HAND, &handle, length, &ret_code)
         
         guard ret_code == 0 else {
             closure(false)
             return
         }
         //保存数据库
-        guard let handGesture = coredataHandler.selectHandGesture(withMacAddress: realMacAddress) else {
+        guard let handGesture = coredataHandler.selectHandGesture(userId: UserManager.share().userId, withMacAddress: realMacAddress) else {
             closure(false)
             return
         }
@@ -1093,7 +1093,7 @@ public final class AngelManager: NSObject {
             return
         }
         
-        guard let handGesture = coredataHandler.selectHandGesture(withMacAddress: realMacAddress) else {
+        guard let handGesture = coredataHandler.selectHandGesture(userId: UserManager.share().userId, withMacAddress: realMacAddress) else {
             closure(nil)
             return
         }
@@ -1128,14 +1128,14 @@ public final class AngelManager: NSObject {
         
         let length = UInt32(MemoryLayout<UInt8>.size * 3)
         var ret_code:UInt32 = 0
-        vbus_tx_data(VBUS_EVT_BASE_APP_SET,VBUS_EVT_APP_SET_HEART_RATE_MODE,&mode,length,&ret_code);
+        vbus_tx_data(VBUS_EVT_BASE_APP_SET,VBUS_EVT_APP_SET_HEART_RATE_MODE, &mode, length, &ret_code);
 
         guard ret_code == 0 else {
             closure(false)
             return
         }
         //保存数据库
-        guard let heartInterval = coredataHandler.selectHeartInterval(withMacAddress: realMacAddress) else {
+        guard let heartInterval = coredataHandler.selectHeartInterval(userId: UserManager.share().userId, withMacAddress: realMacAddress) else {
             closure(false)
             return
         }
@@ -1160,7 +1160,7 @@ public final class AngelManager: NSObject {
             return
         }
         
-        guard let heartInterval = coredataHandler.selectHeartInterval(withMacAddress: realMacAddress) else {
+        guard let heartInterval = coredataHandler.selectHeartInterval(userId: UserManager.share().userId, withMacAddress: realMacAddress) else {
             closure(nil)
             return
         }
@@ -1191,20 +1191,20 @@ public final class AngelManager: NSObject {
             return
         }
         
-        var mode:protocol_display_mode = protocol_display_mode.init()
+        var mode: protocol_display_mode = protocol_display_mode.init()
         
         mode.mode = flag ? 0x01 : 0x02
 
         let length = UInt32(MemoryLayout<UInt8>.size*3)
-        var ret_code:UInt32 = 0
-        vbus_tx_data(VBUS_EVT_BASE_APP_SET,VBUS_EVT_APP_SET_DISPLAY_MODE,&mode,length,&ret_code);
+        var ret_code: UInt32 = 0
+        vbus_tx_data(VBUS_EVT_BASE_APP_SET, VBUS_EVT_APP_SET_DISPLAY_MODE, &mode, length, &ret_code);
  
         guard ret_code == 0 else {
             closure(false)
             return
         }
         //保存数据库
-        guard let device = coredataHandler.selectDevice(withMacAddress: realMacAddress) else {
+        guard let device = coredataHandler.selectDevice(userId: UserManager.share().userId, withMacAddress: realMacAddress) else {
             closure(false)
             return
         }
@@ -1229,7 +1229,7 @@ public final class AngelManager: NSObject {
             return
         }
         
-        guard let device = coredataHandler.selectDevice(withMacAddress: realMacAddress) else {
+        guard let device = coredataHandler.selectDevice(userId: UserManager.share().userId, withMacAddress: realMacAddress) else {
             closure(nil)
             return
         }
@@ -1296,8 +1296,8 @@ public final class AngelManager: NSObject {
             }
             
             let realDate = date
-            
-            guard let sport = self.coredataHandler.insertSportData(userId: 1, withMacAddress: realMacAddress, withDate: realDate, withItems: nil) else {
+            let userId = UserManager.share().userId
+            guard let sport = self.coredataHandler.insertSportData(userId: userId, withMacAddress: realMacAddress, withDate: realDate, withItems: nil) else {
                 return
             }
             sport.date = realDate as NSDate
@@ -1322,8 +1322,7 @@ public final class AngelManager: NSObject {
                 i in
                 if let item = items?[i]{
                     print("item 步数 :" , item.sport_count, Thread.isMainThread);
-                    
-                    if let sportItem = self.coredataHandler.createSportItem(withMacAddress: realMacAddress, withDate: realDate, withItemId: Int16(i)){
+                    if let sportItem = self.coredataHandler.createSportItem(userId: userId, withMacAddress: realMacAddress, withDate: realDate, withItemId: Int16(i)){
                         sportItem.activeTime = Int16(item.active_time)
                         sportItem.calories = Int16(item.calories)
                         sportItem.distance = Int16(item.distance)
@@ -1384,8 +1383,8 @@ public final class AngelManager: NSObject {
             }
             
             let realDate = date
-            
-            guard let sleep = self.coredataHandler.insertSleepData(userId: 1, withMacAddress: realMacAddress, withDate: realDate, withItems: nil) else {
+            let userId = UserManager.share().userId
+            guard let sleep = self.coredataHandler.insertSleepData(userId: userId, withMacAddress: realMacAddress, withDate: realDate, withItems: nil) else {
                 return
             }
             sleep.date = realDate as NSDate
@@ -1415,7 +1414,7 @@ public final class AngelManager: NSObject {
             (0..<96).forEach(){
                 i in
                 if let item = items?[i]{
-                    if let sleepItem = self.coredataHandler.createSleepItem(withMacAddress: realMacAddress, withDate: realDate, withItemId: Int16(i)){
+                    if let sleepItem = self.coredataHandler.createSleepItem(userId: userId, withMacAddress: realMacAddress, withDate: realDate, withItemId: Int16(i)){
                         sleepItem.durations = Int16(item.durations)
                         sleepItem.id = Int16(i)
                         sleepItem.sleepStatus = Int16(item.sleep_status)
@@ -1460,8 +1459,8 @@ public final class AngelManager: NSObject {
             }
             
             let realDate = date
-            
-            guard let heartRate = self.coredataHandler.insertHeartRateData(userId: 1, withMacAddress: realMacAddress, withDate: realDate, withItems: nil) else {
+            let userId = UserManager.share().userId
+            guard let heartRate = self.coredataHandler.insertHeartRateData(userId: userId, withMacAddress: realMacAddress, withDate: realDate, withItems: nil) else {
                 return
             }
             heartRate.date = realDate as NSDate
@@ -1487,7 +1486,7 @@ public final class AngelManager: NSObject {
                 i in
                 if let item = items?[i]{
                     
-                    if let heartRateItem = self.coredataHandler.createHeartRateItem(withMacAddress: realMacAddress, withDate: realDate, withItemId: Int16(i)){
+                    if let heartRateItem = self.coredataHandler.createHeartRateItem(userId: userId, withMacAddress: realMacAddress, withDate: realDate, withItemId: Int16(i)){
                         heartRateItem.data = Int16(item.data)
                         heartRateItem.id = Int16(i)
                         heartRateItem.offset = Int16(item.offset)
@@ -1503,7 +1502,7 @@ public final class AngelManager: NSObject {
     }
     
     //MARK:- 获取健康数据
-    public func getSportData(_ macAddress: String? = nil, userId id: Int16? = 1, date: Date = Date(), offset: Int = 0, closure:(_ result: [SportData]) ->()){
+    public func getSportData(_ macAddress: String? = nil, date: Date = Date(), offset: Int = 0, closure:(_ result: [SportData]) ->()){
         
         //判断mac地址是否存在
         var realMacAddress: String!
@@ -1516,9 +1515,9 @@ public final class AngelManager: NSObject {
             return
         }
         
-        closure(coredataHandler.selectSportData(userId: (id ?? 1), withMacAddress: realMacAddress, withDate: date, withDayRange: offset))
+        closure(coredataHandler.selectSportData(userId: UserManager.share().userId, withMacAddress: realMacAddress, withDate: date, withDayRange: offset))
     }
-    public func getSleepData(_ macAddress: String? = nil, userId id: Int16? = 1, date: Date = Date(), offset: Int = 0, closure:(_ result: [SleepData]) ->()){
+    public func getSleepData(_ macAddress: String? = nil, date: Date = Date(), offset: Int = 0, closure:(_ result: [SleepData]) ->()){
         
         //判断mac地址是否存在
         var realMacAddress: String!
@@ -1531,9 +1530,9 @@ public final class AngelManager: NSObject {
             return
         }
         
-        closure(coredataHandler.selectSleepData(userId: (id ?? 1), withMacAddress: realMacAddress, withDate: date, withDayRange: offset))
+        closure(coredataHandler.selectSleepData(userId: UserManager.share().userId, withMacAddress: realMacAddress, withDate: date, withDayRange: offset))
     }
-    public func getHeartRateData(_ macAddress: String? = nil, userId id: Int16? = 1, date: Date = Date(), offset: Int = 0, closure:(_ result: [HeartRateData]) ->()){
+    public func getHeartRateData(_ macAddress: String? = nil, date: Date = Date(), offset: Int = 0, closure:(_ result: [HeartRateData]) ->()){
         
         //判断mac地址是否存在
         var realMacAddress: String!
@@ -1546,7 +1545,7 @@ public final class AngelManager: NSObject {
             return
         }
         
-        closure(coredataHandler.selectHeartRateData(userId: (id ?? 1), withMacAddress: realMacAddress, withDate: date, withDayRange: offset))
+        closure(coredataHandler.selectHeartRateData(userId: UserManager.share().userId, withMacAddress: realMacAddress, withDate: date, withDayRange: offset))
     }
     
     //MARK:- 同步配置
@@ -1572,7 +1571,7 @@ public final class AngelManager: NSObject {
             return
         }
         
-        let alarmList = coredataHandler.selectAlarm(alarmId: alarmId, withMacAddress: realMacAddress)
+        let alarmList = coredataHandler.selectAlarm(userId: UserManager.share().userId, alarmId: alarmId, withMacAddress: realMacAddress)
         debug("update alarmList:", alarmList)
         guard !alarmList.isEmpty else {
             closure(false)
@@ -1611,7 +1610,7 @@ public final class AngelManager: NSObject {
             return
         }
         //数据库操作
-        guard let alarm = coredataHandler.insertAlarm(withMacAddress: realMacAddress) else{
+        guard let alarm = coredataHandler.insertAlarm(userId: UserManager.share().userId, withMacAddress: realMacAddress) else{
             closure(false, nil)
             return
         }
@@ -1639,7 +1638,7 @@ public final class AngelManager: NSObject {
         }
         
         //数据库操作
-        let alarmList = coredataHandler.selectAlarm(alarmId: alarmId, withMacAddress: realMacAddress)
+        let alarmList = coredataHandler.selectAlarm(userId: UserManager.share().userId, alarmId: alarmId, withMacAddress: realMacAddress)
         
         guard !alarmList.isEmpty else {
             closure(false)
@@ -1659,7 +1658,7 @@ public final class AngelManager: NSObject {
         var ret_code: UInt32 = 0
         vbus_tx_data(VBUS_EVT_BASE_APP_SET,VBUS_EVT_APP_SET_ALARM, &alarm, length, &ret_code)
         if ret_code == 0 {
-            coredataHandler.deleteAlarm(alarmId: alarmId, withMacAddress: realMacAddress)
+            coredataHandler.deleteAlarm(userId: UserManager.share().userId, alarmId: alarmId, withMacAddress: realMacAddress)
             closure(true)
         }
     }
@@ -1677,7 +1676,7 @@ public final class AngelManager: NSObject {
             return
         }
         
-        closure(coredataHandler.selectAlarm(alarmId: alarmId, withMacAddress: realMacAddress).first)
+        closure(coredataHandler.selectAlarm(userId: UserManager.share().userId, alarmId: alarmId, withMacAddress: realMacAddress).first)
     }
     
     //MARK:- 获取所有闹钟
@@ -1693,7 +1692,7 @@ public final class AngelManager: NSObject {
             return
         }
         
-        closure(coredataHandler.selectAllAlarm(withMacAddress: realMacAddress))
+        closure(coredataHandler.selectAllAlarm(userId: UserManager.share().userId, withMacAddress: realMacAddress))
     }
     
     //同步闹钟数据
@@ -1713,7 +1712,7 @@ public final class AngelManager: NSObject {
         protocol_set_alarm_clean()
     //2.再添加 添加的闹钟是从数据库获取的
         //获取所有闹钟
-        let alarmList = coredataHandler.selectAllAlarm(withMacAddress: realMacAddress)
+        let alarmList = coredataHandler.selectAllAlarm(userId: UserManager.share().userId, withMacAddress: realMacAddress)
         print("alarmList: \(alarmList)")
         alarmList.forEach(){
             localAlarm in
@@ -1734,7 +1733,7 @@ public final class AngelManager: NSObject {
         swiftSynchronizationAlarm = { complete in
             
             closure(complete)
-            let alarmList = self.coredataHandler.selectAllAlarm(withMacAddress: realMacAddress)
+            let alarmList = self.coredataHandler.selectAllAlarm(userId: UserManager.share().userId, withMacAddress: realMacAddress)
             alarmList.forEach(){
                 localAlarm in
                 localAlarm.synchronize = true
@@ -1771,8 +1770,8 @@ public final class AngelManager: NSObject {
         notice.call_delay = 0x00
         
         let length = UInt32(MemoryLayout<UInt8>.size * 7)
-        var ret_code:UInt32 = 0
-        vbus_tx_data(VBUS_EVT_BASE_APP_SET, VBUS_EVT_APP_SET_NOTICE, &notice, length,&ret_code)
+        var ret_code: UInt32 = 0
+        vbus_tx_data(VBUS_EVT_BASE_APP_SET, VBUS_EVT_APP_SET_NOTICE, &notice, length, &ret_code)
         guard ret_code == 0 else {
             closure(false)
             return
@@ -1798,7 +1797,7 @@ public final class AngelManager: NSObject {
         musicOn.switch_status = open ? 0xAA :0x55
         
         let length = UInt32(MemoryLayout<UInt8>.size * 3)
-        var ret_code:UInt32 = 0
+        var ret_code: UInt32 = 0
         vbus_tx_data(VBUS_EVT_BASE_APP_SET,VBUS_EVT_APP_SET_MUISC_ONOFF, &musicOn, length, &ret_code)
         
         guard ret_code==0 else {
@@ -1817,7 +1816,7 @@ public final class AngelManager: NSObject {
                 return
             }
             //保存音乐开关
-            let notice = coredataHandler.selectNotice(withMacAddress: realMacAddress)
+            let notice = coredataHandler.selectNotice(userId: UserManager.share().userId, withMacAddress: realMacAddress)
             notice?.musicSwitch = open
             guard coredataHandler.commit() else{
                 closure(false)
@@ -1845,7 +1844,7 @@ public final class AngelManager: NSObject {
         var call = protocol_set_notice()
         call.notify_switch = 0x88
         
-        let notice = coredataHandler.selectNotice(withMacAddress: realMacAddress)
+        let notice = coredataHandler.selectNotice(userId: UserManager.share().userId, withMacAddress: realMacAddress)
         call.call_switch = open ? 0x55 :0xAA
         call.call_delay = delay
         call.notify_itme1 = UInt8(notice?.notifyItem0 ?? 0)
@@ -1926,7 +1925,7 @@ public final class AngelManager: NSObject {
         call.notify_switch = 0x88
         
         //从数据库查询出提醒模型赋给call,暂时填为0
-        let notice = coredataHandler.selectNotice(withMacAddress: realMacAddress)
+        let notice = coredataHandler.selectNotice(userId: UserManager.share().userId, withMacAddress: realMacAddress)
         call.notify_itme1 = UInt8(notice?.notifyItem0 ?? 0)
         call.notify_itme2 = UInt8(notice?.notifyItem1 ?? 0)
         call.call_switch = (notice?.callSwitch ?? false) ? 0x55 : 0xAA
@@ -1939,7 +1938,7 @@ public final class AngelManager: NSObject {
         call.notify_itme2 = itmes2
         
         let length = UInt32(MemoryLayout<UInt8>.size * 7)
-        var ret_code:UInt32 = 0
+        var ret_code: UInt32 = 0
         vbus_tx_data(VBUS_EVT_BASE_APP_SET,VBUS_EVT_APP_SET_NOTICE, &call, length, &ret_code)
         
         guard ret_code==0 else {

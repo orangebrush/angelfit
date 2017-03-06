@@ -143,7 +143,8 @@ public class SatanManager: NSObject {
                 let distance = end.distance
                 let hrValue = end.hr_value
                 
-                guard let track = self.coredataHandler.selectTrack(userId: 1, withMacAddress: macaddress, withDate: date, withDayRange: nil).last else {
+                let userId = UserManager.share().userId
+                guard let track = self.coredataHandler.selectTrack(userId: userId, withMacAddress: macaddress, withDate: date, withDayRange: nil).last else {
                     return
                 }
                 track.step = Int16(step)
@@ -157,7 +158,8 @@ public class SatanManager: NSObject {
                 }
             }else{
                 //删除当天最后一条交换数据
-                self.coredataHandler.deleteTrack(userId: 1, withMacAddress: macaddress, withDate: date)
+                let userId = UserManager.share().userId
+                self.coredataHandler.deleteTrack(userId: userId, withMacAddress: macaddress, withDate: date)
             }
         }
         
@@ -270,7 +272,8 @@ public class SatanManager: NSObject {
                     }
                     
                     //插入数据库
-                    guard let track = self.coredataHandler.insertTrack(userId: 1, withMacAddress: macaddress, withDate: Date(), withItems: nil) else{
+                    let userId = UserManager.share().userId
+                    guard let track = self.coredataHandler.insertTrack(userId: userId, withMacAddress: macaddress, withDate: Date(), withItems: nil) else{
                         return
                     }
                     track.heartrateList = NSMutableArray()
@@ -379,7 +382,8 @@ public class SatanManager: NSObject {
             guard let date = self.curDate, let macaddress = self.angelManager?.macAddress else {
                 return
             }
-            guard let track = self.coredataHandler.selectTrack(userId: 1, withMacAddress: macaddress, withDate: date, withDayRange: 0).last else {
+            let userId = UserManager.share().userId
+            guard let track = self.coredataHandler.selectTrack(userId: userId, withMacAddress: macaddress, withDate: date, withDayRange: 0).last else {
                 return
             }
             track.calories = Int16(switchReply.calories)
@@ -509,7 +513,7 @@ public class SatanManager: NSObject {
         switchEnd.is_save = UInt8(end.isSave)           // < 10m false
         let length = UInt32(MemoryLayout<UInt8>.size * 7) + UInt32(MemoryLayout<UInt32>.size * 3)
         var  ret_code: UInt32 = 0
-        vbus_tx_data(VBUS_EVT_BASE_APP_SET,VBUS_EVT_APP_SWITCH_APP_END,&switchEnd,length,&ret_code)
+        vbus_tx_data(VBUS_EVT_BASE_APP_SET,VBUS_EVT_APP_SWITCH_APP_END, &switchEnd, length, &ret_code)
         
         guard ret_code == 0 else {
             closure(ErrorCode.failure, nil)
@@ -533,7 +537,8 @@ public class SatanManager: NSObject {
             guard let date = self.curDate, let macaddress = self.angelManager?.macAddress else {
                 return
             }
-            guard let track = self.coredataHandler.selectTrack(userId: 1, withMacAddress: macaddress, withDate: date, withDayRange: nil).last else {
+            let userId = UserManager.share().userId
+            guard let track = self.coredataHandler.selectTrack(userId: userId, withMacAddress: macaddress, withDate: date, withDayRange: nil).last else {
                 return
             }
             track.step = Int16(endReplyResult.step)
@@ -622,7 +627,8 @@ public class SatanManager: NSObject {
             guard let date = self.calendar.date(from: components) else{
                 return
             }
-            guard let track = self.coredataHandler.insertTrack(userId: 1, withMacAddress: realMacAddress, withDate: date, withItems: nil) else {
+            let userId = UserManager.share().userId
+            guard let track = self.coredataHandler.insertTrack(userId: userId, withMacAddress: realMacAddress, withDate: date, withItems: nil) else {
                 return
             }
             track.aerobicMinutes = Int16(data2.aerobic_mins)
@@ -692,7 +698,7 @@ public class SatanManager: NSObject {
     
     private func sendSwitchPause(_ retCode:Int){
         var ret_code:UInt32 = 0
-        var reply:protocol_switch_ble_pause_reply = protocol_switch_ble_pause_reply()
+        var reply: protocol_switch_ble_pause_reply = protocol_switch_ble_pause_reply()
         let length = UInt32(MemoryLayout<UInt8>.size * 3)
         reply.ret_code = UInt8(retCode)
 
@@ -701,7 +707,7 @@ public class SatanManager: NSObject {
     }
     private func sendSwitchRestore(_ retCode:Int){
         var ret_code:UInt32 = 0
-        var reply:protocol_switch_ble_restore_reply = protocol_switch_ble_restore_reply()
+        var reply: protocol_switch_ble_restore_reply = protocol_switch_ble_restore_reply()
         let length = UInt32(MemoryLayout<UInt8>.size * 3)
         reply.ret_code = UInt8(retCode)
 
@@ -710,7 +716,7 @@ public class SatanManager: NSObject {
     }
     private func sendSwitchEnd(_ retCode:Int){
         var ret_code:UInt32 = 0
-        var reply:protocol_switch_ble_end_reply = protocol_switch_ble_end_reply()
+        var reply: protocol_switch_ble_end_reply = protocol_switch_ble_end_reply()
         let length = UInt32(MemoryLayout<UInt8>.size * 3)
         reply.ret_code = UInt8(retCode);
 
@@ -719,7 +725,7 @@ public class SatanManager: NSObject {
     }
     private func sendSwitchDoing(_ distance: UInt32){
         var ret_code:UInt32 = 0
-        var reply:protocol_switch_ble_ing_reply = protocol_switch_ble_ing_reply()
+        var reply: protocol_switch_ble_ing_reply = protocol_switch_ble_ing_reply()
         let length = UInt32(MemoryLayout<UInt8>.size * 3)
         reply.distance = distance           //总距离                                                                                                                                                                                                                               z
         vbus_tx_data(VBUS_EVT_BASE_APP_SET, VBUS_EVT_APP_SWITCH_BLE_ING_REPLY, &reply,length, &ret_code)
