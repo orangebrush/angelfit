@@ -144,7 +144,7 @@ extension CBridgingManager{
             
         }
         swiftSetUserInfo = {
-            var userInfo:UserInfoModel = UserInfoModel();
+            let userInfo: UserInfoModel = UserInfoModel();
             
             let user = CoreDataHandler.share().selectUser()
             guard user != nil else {
@@ -162,10 +162,10 @@ extension CBridgingManager{
             }
             userInfo.gender = UInt8((user?.gender)!)
             userInfo.height = UInt8((user?.height)!)
-            userInfo.weight = UInt16(UInt8((user?.weight)!))
+            userInfo.weight = UInt16((user?.currentWeight)!)
             let birthday = user?.birthday ?? NSDate()
             let calender = Calendar.current
-            var components = calender.dateComponents([.year, .month, .day], from: birthday as! Date)
+            var components = calender.dateComponents([.year, .month, .day], from: birthday as Date)
             userInfo.birthYear = UInt16(components.year!)
             userInfo.birthMonth = UInt8(components.month!)
             userInfo.birthDay = UInt8(components.day!)

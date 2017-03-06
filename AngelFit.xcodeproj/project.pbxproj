@@ -91,8 +91,6 @@
 		32C103371DC9741D0001D415 /* BindingPeripherals.plist in Resources */ = {isa = PBXBuildFile; fileRef = 32C103361DC9741D0001D415 /* BindingPeripherals.plist */; };
 		32C103391DC974410001D415 /* GodFS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C103381DC974410001D415 /* GodFS.swift */; };
 		32C1033D1DC988130001D415 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 32C1033B1DC988130001D415 /* Model.xcdatamodeld */; };
-		32E2E0DD1DE2EDC000DC2C89 /* User+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E0BF1DE2EDC000DC2C89 /* User+CoreDataClass.swift */; };
-		32E2E0DE1DE2EDC000DC2C89 /* User+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E0C01DE2EDC000DC2C89 /* User+CoreDataProperties.swift */; };
 		32E2E0E11DE2EDC000DC2C89 /* SilentDistrube+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E0C31DE2EDC000DC2C89 /* SilentDistrube+CoreDataClass.swift */; };
 		32E2E0E21DE2EDC000DC2C89 /* SilentDistrube+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E0C41DE2EDC000DC2C89 /* SilentDistrube+CoreDataProperties.swift */; };
 		32E2E0E51DE2EDC000DC2C89 /* LostFind+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E0C71DE2EDC000DC2C89 /* LostFind+CoreDataClass.swift */; };
@@ -126,6 +124,10 @@
 		32E971DD1DE7DAD60029DE9F /* Alarm+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E971D91DE7DAD60029DE9F /* Alarm+CoreDataClass.swift */; };
 		32E971DE1DE7DAD60029DE9F /* Alarm+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E971DA1DE7DAD60029DE9F /* Alarm+CoreDataProperties.swift */; };
 		BE198BE21E6D03BA00B11A90 /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE198BE11E6D03BA00B11A90 /* UserManager.swift */; };
+		BE198BF11E6D1A5400B11A90 /* Weight+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE198BEF1E6D1A5400B11A90 /* Weight+CoreDataClass.swift */; };
+		BE198BF21E6D1A5400B11A90 /* Weight+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE198BF01E6D1A5400B11A90 /* Weight+CoreDataProperties.swift */; };
+		BE198BF51E6D45EE00B11A90 /* User+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE198BF31E6D45EE00B11A90 /* User+CoreDataClass.swift */; };
+		BE198BF61E6D45EE00B11A90 /* User+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE198BF41E6D45EE00B11A90 /* User+CoreDataProperties.swift */; };
 		BE1F53971DC84FC500EAD9BA /* Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1F53961DC84FC500EAD9BA /* Time.swift */; };
 		BE54766E1E602D1C00B1DC2D /* Track+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE54766C1E602D1C00B1DC2D /* Track+CoreDataClass.swift */; };
 		BE54766F1E602D1C00B1DC2D /* Track+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE54766D1E602D1C00B1DC2D /* Track+CoreDataProperties.swift */; };
@@ -234,8 +236,6 @@
 		32C103361DC9741D0001D415 /* BindingPeripherals.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = BindingPeripherals.plist; sourceTree = "<group>"; };
 		32C103381DC974410001D415 /* GodFS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GodFS.swift; sourceTree = "<group>"; };
 		32C1033C1DC988130001D415 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
-		32E2E0BF1DE2EDC000DC2C89 /* User+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "User+CoreDataClass.swift"; sourceTree = "<group>"; };
-		32E2E0C01DE2EDC000DC2C89 /* User+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "User+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		32E2E0C31DE2EDC000DC2C89 /* SilentDistrube+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SilentDistrube+CoreDataClass.swift"; sourceTree = "<group>"; };
 		32E2E0C41DE2EDC000DC2C89 /* SilentDistrube+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SilentDistrube+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		32E2E0C71DE2EDC000DC2C89 /* LostFind+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "LostFind+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -268,6 +268,10 @@
 		32E971D91DE7DAD60029DE9F /* Alarm+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Alarm+CoreDataClass.swift"; sourceTree = "<group>"; };
 		32E971DA1DE7DAD60029DE9F /* Alarm+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Alarm+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		BE198BE11E6D03BA00B11A90 /* UserManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
+		BE198BEF1E6D1A5400B11A90 /* Weight+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Weight+CoreDataClass.swift"; sourceTree = "<group>"; };
+		BE198BF01E6D1A5400B11A90 /* Weight+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Weight+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		BE198BF31E6D45EE00B11A90 /* User+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "User+CoreDataClass.swift"; sourceTree = "<group>"; };
+		BE198BF41E6D45EE00B11A90 /* User+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "User+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		BE1F53961DC84FC500EAD9BA /* Time.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Time.swift; sourceTree = "<group>"; };
 		BE54766C1E602D1C00B1DC2D /* Track+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Track+CoreDataClass.swift"; sourceTree = "<group>"; };
 		BE54766D1E602D1C00B1DC2D /* Track+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Track+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -485,6 +489,10 @@
 		32C1033A1DC987CC0001D415 /* coredata */ = {
 			isa = PBXGroup;
 			children = (
+				BE198BF31E6D45EE00B11A90 /* User+CoreDataClass.swift */,
+				BE198BF41E6D45EE00B11A90 /* User+CoreDataProperties.swift */,
+				BE198BEF1E6D1A5400B11A90 /* Weight+CoreDataClass.swift */,
+				BE198BF01E6D1A5400B11A90 /* Weight+CoreDataProperties.swift */,
 				BE54766C1E602D1C00B1DC2D /* Track+CoreDataClass.swift */,
 				BE54766D1E602D1C00B1DC2D /* Track+CoreDataProperties.swift */,
 				BE7DF73C1E56E9F2000E115E /* Device+CoreDataClass.swift */,
@@ -511,8 +519,6 @@
 				32E2E11E1DE3F5A900DC2C89 /* SportData+CoreDataProperties.swift */,
 				32E2E0FD1DE2F8F900DC2C89 /* HandGesture+CoreDataClass.swift */,
 				32E2E0FE1DE2F8F900DC2C89 /* HandGesture+CoreDataProperties.swift */,
-				32E2E0BF1DE2EDC000DC2C89 /* User+CoreDataClass.swift */,
-				32E2E0C01DE2EDC000DC2C89 /* User+CoreDataProperties.swift */,
 				32E2E0C31DE2EDC000DC2C89 /* SilentDistrube+CoreDataClass.swift */,
 				32E2E0C41DE2EDC000DC2C89 /* SilentDistrube+CoreDataProperties.swift */,
 				32E2E0C71DE2EDC000DC2C89 /* LostFind+CoreDataClass.swift */,
@@ -700,7 +706,6 @@
 				22122F871E53F8E700AA61F4 /* vbus.c in Sources */,
 				22122F7A1E53F8E700AA61F4 /* protocol_switch_data.c in Sources */,
 				32E2E1261DE3F5A900DC2C89 /* HeartRateData+CoreDataProperties.swift in Sources */,
-				32E2E0DD1DE2EDC000DC2C89 /* User+CoreDataClass.swift in Sources */,
 				BE7DF73E1E56E9F2000E115E /* Device+CoreDataClass.swift in Sources */,
 				32E2E1211DE3F5A900DC2C89 /* SleepItem+CoreDataClass.swift in Sources */,
 				BEF78B901DC9E2A000A2D528 /* CoreDataConfigure.swift in Sources */,
@@ -716,6 +721,7 @@
 				BE1F53971DC84FC500EAD9BA /* Time.swift in Sources */,
 				222B89A11DC732C80056861C /* GodManager.swift in Sources */,
 				22122F7C1E53F8E700AA61F4 /* protocol_sync_activity.c in Sources */,
+				BE198BF11E6D1A5400B11A90 /* Weight+CoreDataClass.swift in Sources */,
 				32E2E1381DE42A0100DC2C89 /* Notice+CoreDataProperties.swift in Sources */,
 				32E971DE1DE7DAD60029DE9F /* Alarm+CoreDataProperties.swift in Sources */,
 				22DF61DD1DD99EA20080B77A /* SocketLog.m in Sources */,
@@ -732,7 +738,6 @@
 				32E971D51DE6A0560029DE9F /* HeartInterval+CoreDataClass.swift in Sources */,
 				32C1033D1DC988130001D415 /* Model.xcdatamodeld in Sources */,
 				32E2E12A1DE3F5A900DC2C89 /* SportData+CoreDataProperties.swift in Sources */,
-				32E2E0DE1DE2EDC000DC2C89 /* User+CoreDataProperties.swift in Sources */,
 				22122F621E53F8E700AA61F4 /* mem.c in Sources */,
 				32E2E1331DE3F9AD00DC2C89 /* SleepData+CoreDataClass.swift in Sources */,
 				22122F681E53F8E700AA61F4 /* protocol_exec.c in Sources */,
@@ -761,6 +766,7 @@
 				22122F851E53F8E700AA61F4 /* protocol_write.c in Sources */,
 				32E971D81DE7D13F0029DE9F /* Debug.swift in Sources */,
 				22DF62591DDBE9440080B77A /* Protocol_ios.m in Sources */,
+				BE198BF51E6D45EE00B11A90 /* User+CoreDataClass.swift in Sources */,
 				32E2E0E11DE2EDC000DC2C89 /* SilentDistrube+CoreDataClass.swift in Sources */,
 				32C103391DC974410001D415 /* GodFS.swift in Sources */,
 				BEB057301DD025D500B80678 /* Peripheral+Extension.swift in Sources */,
@@ -771,6 +777,8 @@
 				22122F701E53F8E700AA61F4 /* protocol_health_resolve_sleep.c in Sources */,
 				32E2E1231DE3F5A900DC2C89 /* SportItem+CoreDataClass.swift in Sources */,
 				32E2E1241DE3F5A900DC2C89 /* SportItem+CoreDataProperties.swift in Sources */,
+				BE198BF21E6D1A5400B11A90 /* Weight+CoreDataProperties.swift in Sources */,
+				BE198BF61E6D45EE00B11A90 /* User+CoreDataProperties.swift in Sources */,
 				32E2E1481DE44C0F00DC2C89 /* FuncTable+CoreDataProperties.swift in Sources */,
 				32E2E0E51DE2EDC000DC2C89 /* LostFind+CoreDataClass.swift in Sources */,
 				2238E0EB1DDC3CC200211F82 /* CDataManager.c in Sources */,

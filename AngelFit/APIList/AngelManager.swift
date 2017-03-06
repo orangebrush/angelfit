@@ -481,7 +481,7 @@ public final class AngelManager: NSObject {
         user?.birthday = birthDay as NSDate?
         user?.gender = Int16(userInfo.gender)
         user?.height = Int16(userInfo.height)
-        user?.weight = Int16(userInfo.weight)
+        user?.currentWeight = Float(userInfo.weight)
         guard coredataHandler.commit() else{
             closure(false)
             return

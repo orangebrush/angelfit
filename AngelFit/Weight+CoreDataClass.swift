@@ -1,5 +1,5 @@
 //
-//  User+CoreDataClass.swift
+//  Weight+CoreDataClass.swift
 //  AngelFit
 //
 //  Created by ganyi on 2017/3/6.
@@ -10,6 +10,6 @@ import Foundation
 import CoreData
 
 
-public class User: NSManagedObject {
+public class Weight: NSManagedObject {
 
 }

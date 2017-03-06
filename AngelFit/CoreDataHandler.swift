@@ -281,6 +281,105 @@ extension CoreDataHandler{
             print(error)
         }
     }
+    
+    //添加体重
+    public func insertWeightItem(userId id: Int16 = 1, withDate date: Date, withValue value: Float) -> Weight?{
+        //判断user是否存在
+        let weightList = selectWeightByRange(userId: id, withDate: date, withDayRange: 0)
+        guard weightList.isEmpty else {
+            weightList.first?.date = translate(date) as NSDate?
+            weightList.first?.value = value
+            return weightList.first
+        }
+        
+        //创建体重模型
+        let weight = NSEntityDescription.insertNewObject(forEntityName: "Weight", into: context) as! Weight
+        weight.date = translate(date) as NSDate?
+        weight.value = value
+        
+        let user = selectUser(userId: id)
+        user?.currentWeight = value
+        user?.addToWeights(weight)
+        
+        guard commit() else {
+            return nil
+        }
+        return weight
+    }
+    
+    //获取体重 天周月年
+    public func selectWeightByComponent(userId id: Int16 = 1, currentDate date: Date, withWeightComponent component: WeightComponent) -> [Weight]{
+        let request: NSFetchRequest<Weight> = Weight.fetchRequest()
+        
+        let calendar = Calendar.current
+        var predicate: NSPredicate?
+        switch component {
+        case .day:
+            let startDate = translate(date)
+            let endDate = translate(date)
+            predicate = NSPredicate(format: "user.userId = \(id) AND date >= %@ AND date <= %@", startDate as! CVarArg, endDate as! CVarArg)
+        case .week:
+            let weekday = calendar.component(.weekday, from: date)
+            let startDate = translate(date, withDayOffset: -weekday)
+            let endDate = translate(date, withDayOffset: 7 - weekday)
+            predicate = NSPredicate(format: "user.userId = \(id) AND date >= %@ AND date <= %@", startDate as! CVarArg, endDate as! CVarArg)
+        case .month:
+            let day = calendar.component(.day, from: date)
+            if let dayRange = calendar.range(of: .day, in: .month, for: date){
+                let daysOfMonth: Int = Int(dayRange.count)
+                
+                let startDate = translate(date, withDayOffset: -day)
+                let endDate = translate(date, withDayOffset: daysOfMonth - day)
+                predicate = NSPredicate(format: "user.userId = \(id) AND date >= %@ AND date <= %@", startDate as! CVarArg, endDate as! CVarArg)
+            }
+        case .year:
+            var components = calendar.dateComponents([.year, .month, .day], from: date)
+            components.month = 1
+            components.day = 1
+            let startDate = calendar.date(from: components)
+            if let year = components.year{
+                components.year = year + 1
+            }
+            let endDate = translate(calendar.date(from: components)!, withDayOffset: -1)
+            predicate = NSPredicate(format: "user.userId = \(id) AND date >= %@ AND date <= %@", startDate as! CVarArg, endDate as! CVarArg)
+        case .all:
+            predicate = NSPredicate(format: "user.userId = \(id)")
+        }
+        
+        request.predicate = predicate
+        do{
+            let resultList = try context.fetch(request)
+            return resultList
+        }catch let error{
+            debugPrint(error)
+        }
+        return []
+    }
+    
+    //获取体重 偏移天数
+    public func selectWeightByRange(userId id: Int16 = 1, withDate date: Date, withDayRange dayRange: Int = 0) -> [Weight]{
+        let request: NSFetchRequest<Weight> = Weight.fetchRequest()
+        let startDate = translate(date)
+        let endDate = translate(date, withDayOffset: dayRange)
+        let predicate = NSPredicate(format: "user.userId = \(id) AND date >= %@ AND date <= %@", startDate as! CVarArg, endDate as! CVarArg)
+        request.predicate = predicate
+        do{
+            let resultList = try context.fetch(request)
+            return resultList
+        }catch let error{
+            debugPrint(error)
+        }
+        return []
+    }
+}
+
+//MARK:- 获取体重方式
+public enum WeightComponent {
+    case day
+    case week
+    case month
+    case year
+    case all
 }
 
 //MARK:- Device
@@ -1339,9 +1438,9 @@ extension CoreDataHandler{
         //判断当前日期heartRateData是否存在
         let heartRateDataList = selectHeartRateData(userId: id, withMacAddress: macAddress, withDate: date)
         guard heartRateDataList.isEmpty else {
-            let sleepData = heartRateDataList.first
+            let heartRateData = heartRateDataList.first
             if let dict = items{
-                sleepData?.setValuesForKeys(dict)
+                heartRateData?.setValuesForKeys(dict)
                 guard commit() else{
                     return nil
                 }
@@ -1425,9 +1524,7 @@ extension CoreDataHandler{
         
         heartRateItem = NSEntityDescription.insertNewObject(forEntityName: "HeartRateItem", into: context) as? HeartRateItem
         heartRateItem?.id = itemId
-//        guard commit() else{
-//            return nil
-//        }
+
         
         heartRateData.addToHeartRateItem(heartRateItem!)
         
