@@ -241,11 +241,11 @@
         <attribute name="avgrageHeartrate" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="burnFatMinutes" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="calories" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="coordinateList" optional="YES" attributeType="Transformable" customClassName=".NSMutableArray" syncable="YES"/>
+        <attribute name="coordinateList" optional="YES" attributeType="Transformable" valueTransformerName="transformer name" customClassName=".NSArray" syncable="YES"/>
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="distance" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="durations" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="heartrateList" optional="YES" attributeType="Transformable" customClassName=".NSMutableArray" syncable="YES"/>
+        <attribute name="heartrateList" optional="YES" attributeType="Transformable" valueTransformerName="transformer name" customClassName=".NSArray" syncable="YES"/>
         <attribute name="limitMinutes" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="maxHeartrate" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="serial" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>

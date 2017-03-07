@@ -1581,6 +1581,8 @@ extension CoreDataHandler{
         //创建运动数据模型
         let track = NSEntityDescription.insertNewObject(forEntityName: "Track", into: context) as! Track
         track.date = date as NSDate
+        track.coordinateList = NSArray()
+        track.heartrateList = NSArray()
         
         if let dict = items{
             track.setValuesForKeys(dict)

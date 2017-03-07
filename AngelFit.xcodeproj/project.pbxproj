@@ -128,9 +128,9 @@
 		BE198BF21E6D1A5400B11A90 /* Weight+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE198BF01E6D1A5400B11A90 /* Weight+CoreDataProperties.swift */; };
 		BE198BF51E6D45EE00B11A90 /* User+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE198BF31E6D45EE00B11A90 /* User+CoreDataClass.swift */; };
 		BE198BF61E6D45EE00B11A90 /* User+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE198BF41E6D45EE00B11A90 /* User+CoreDataProperties.swift */; };
+		BE198C0F1E6E957D00B11A90 /* Track+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE198C0D1E6E957D00B11A90 /* Track+CoreDataClass.swift */; };
+		BE198C101E6E957D00B11A90 /* Track+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE198C0E1E6E957D00B11A90 /* Track+CoreDataProperties.swift */; };
 		BE1F53971DC84FC500EAD9BA /* Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1F53961DC84FC500EAD9BA /* Time.swift */; };
-		BE54766E1E602D1C00B1DC2D /* Track+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE54766C1E602D1C00B1DC2D /* Track+CoreDataClass.swift */; };
-		BE54766F1E602D1C00B1DC2D /* Track+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE54766D1E602D1C00B1DC2D /* Track+CoreDataProperties.swift */; };
 		BE5476711E60369C00B1DC2D /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE5476701E60369C00B1DC2D /* Date+Extension.swift */; };
 		BE7DF73E1E56E9F2000E115E /* Device+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE7DF73C1E56E9F2000E115E /* Device+CoreDataClass.swift */; };
 		BE7DF73F1E56E9F2000E115E /* Device+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE7DF73D1E56E9F2000E115E /* Device+CoreDataProperties.swift */; };
@@ -272,9 +272,9 @@
 		BE198BF01E6D1A5400B11A90 /* Weight+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Weight+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		BE198BF31E6D45EE00B11A90 /* User+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "User+CoreDataClass.swift"; sourceTree = "<group>"; };
 		BE198BF41E6D45EE00B11A90 /* User+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "User+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		BE198C0D1E6E957D00B11A90 /* Track+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Track+CoreDataClass.swift"; sourceTree = "<group>"; };
+		BE198C0E1E6E957D00B11A90 /* Track+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Track+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		BE1F53961DC84FC500EAD9BA /* Time.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Time.swift; sourceTree = "<group>"; };
-		BE54766C1E602D1C00B1DC2D /* Track+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Track+CoreDataClass.swift"; sourceTree = "<group>"; };
-		BE54766D1E602D1C00B1DC2D /* Track+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Track+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		BE5476701E60369C00B1DC2D /* Date+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
 		BE7DF73C1E56E9F2000E115E /* Device+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Device+CoreDataClass.swift"; sourceTree = "<group>"; };
 		BE7DF73D1E56E9F2000E115E /* Device+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Device+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -489,12 +489,12 @@
 		32C1033A1DC987CC0001D415 /* coredata */ = {
 			isa = PBXGroup;
 			children = (
+				BE198C0D1E6E957D00B11A90 /* Track+CoreDataClass.swift */,
+				BE198C0E1E6E957D00B11A90 /* Track+CoreDataProperties.swift */,
 				BE198BF31E6D45EE00B11A90 /* User+CoreDataClass.swift */,
 				BE198BF41E6D45EE00B11A90 /* User+CoreDataProperties.swift */,
 				BE198BEF1E6D1A5400B11A90 /* Weight+CoreDataClass.swift */,
 				BE198BF01E6D1A5400B11A90 /* Weight+CoreDataProperties.swift */,
-				BE54766C1E602D1C00B1DC2D /* Track+CoreDataClass.swift */,
-				BE54766D1E602D1C00B1DC2D /* Track+CoreDataProperties.swift */,
 				BE7DF73C1E56E9F2000E115E /* Device+CoreDataClass.swift */,
 				BE7DF73D1E56E9F2000E115E /* Device+CoreDataProperties.swift */,
 				32E971D91DE7DAD60029DE9F /* Alarm+CoreDataClass.swift */,
@@ -700,11 +700,13 @@
 			files = (
 				22122F801E53F8E700AA61F4 /* protocol_sync_config.c in Sources */,
 				22122F821E53F8E700AA61F4 /* protocol_util.c in Sources */,
+				BE198C101E6E957D00B11A90 /* Track+CoreDataProperties.swift in Sources */,
 				32E2E15D1DE5777500DC2C89 /* AngelManager.swift in Sources */,
 				222E7D731DC87A55001BA04A /* PeripheralManager.swift in Sources */,
 				22DF62031DD9B63C0080B77A /* CBridgingManager.swift in Sources */,
 				22122F871E53F8E700AA61F4 /* vbus.c in Sources */,
 				22122F7A1E53F8E700AA61F4 /* protocol_switch_data.c in Sources */,
+				BE198C0F1E6E957D00B11A90 /* Track+CoreDataClass.swift in Sources */,
 				32E2E1261DE3F5A900DC2C89 /* HeartRateData+CoreDataProperties.swift in Sources */,
 				BE7DF73E1E56E9F2000E115E /* Device+CoreDataClass.swift in Sources */,
 				32E2E1211DE3F5A900DC2C89 /* SleepItem+CoreDataClass.swift in Sources */,
@@ -715,7 +717,6 @@
 				32E2E0E61DE2EDC000DC2C89 /* LostFind+CoreDataProperties.swift in Sources */,
 				32E2E0EF1DE2EDC000DC2C89 /* Unit+CoreDataClass.swift in Sources */,
 				22122F6C1E53F8E700AA61F4 /* protocol_health.c in Sources */,
-				BE54766F1E602D1C00B1DC2D /* Track+CoreDataProperties.swift in Sources */,
 				22122F661E53F8E700AA61F4 /* protocol_data.c in Sources */,
 				22122F641E53F8E700AA61F4 /* protocol.c in Sources */,
 				BE1F53971DC84FC500EAD9BA /* Time.swift in Sources */,
@@ -746,7 +747,6 @@
 				222B89A31DC735B70056861C /* UUIDConfigure.swift in Sources */,
 				22DF61DB1DD99EA20080B77A /* GCDAsyncSocket.m in Sources */,
 				32E2E0FF1DE2F8F900DC2C89 /* HandGesture+CoreDataClass.swift in Sources */,
-				BE54766E1E602D1C00B1DC2D /* Track+CoreDataClass.swift in Sources */,
 				22122F6A1E53F8E700AA61F4 /* protocol_func_table.c in Sources */,
 				32E2E1001DE2F8F900DC2C89 /* HandGesture+CoreDataProperties.swift in Sources */,
 				32E2E0E21DE2EDC000DC2C89 /* SilentDistrube+CoreDataProperties.swift in Sources */,

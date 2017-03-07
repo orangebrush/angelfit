@@ -9,6 +9,7 @@
 import UIKit
 import CoreData
 import CoreBluetooth
+import CoreLocation
 //MARK:- 数据交换状态
 @objc public enum SatanManagerState: Int{
     case start = 0
@@ -273,19 +274,54 @@ public class SatanManager: NSObject {
                     
                     //插入数据库
                     let userId = UserManager.share().userId
-                    guard let track = self.coredataHandler.insertTrack(userId: userId, withMacAddress: macaddress, withDate: Date(), withItems: nil) else{
+                    guard let track = self.coredataHandler.insertTrack(userId: userId, withMacAddress: macaddress, withDate: self.curDate!, withItems: nil) else{
                         return
                     }
-                    track.heartrateList = NSMutableArray()
+//                    track.heartrateList = NSArray()
                     track.type = Int16(start.sportType)         //运动类型
                     
                     guard self.coredataHandler.commit() else {
                         return
                     }
                 }
-                
             }
         }
+    }
+    
+    //MARK:- 运动中存储坐标数据
+    public func addTrack(withCoordinate locationList: [CLLocationCoordinate2D], pastTimeList timeList: [TimeInterval], totalDistance distance: Double, addedDistanceList subDistanceList: [Double]){
+        guard let macaddress = angelManager?.macAddress else {
+            return
+        }
+        
+        guard let date = curDate else {
+            return
+        }
+
+        let userId = UserManager.share().userId
+        if let track = coredataHandler.selectTrack(userId: userId, withMacAddress: macaddress, withDate: date, withDayRange: nil).first{
+            
+            track.coordinateList = NSArray(array: [locationList, timeList, subDistanceList])
+            if coredataHandler.commit() {
+                debugPrint("存储坐标")
+            }
+        }
+    }
+    
+    //MARK:- 当运动距离过小，从数据库移除该次运动
+    public func resetTrack(){
+        guard let macaddress = angelManager?.macAddress else {
+            return
+        }
+        guard let date = curDate else {
+            return
+        }
+
+        curDate = nil
+        
+        let coredataHandler = CoreDataHandler.share()
+        let userId = UserManager.share().userId
+        coredataHandler.deleteTrack(userId: userId, withMacAddress: macaddress, withDate: date)
     }
     
     //MARK:- 自动开始与停止交换
@@ -644,7 +680,7 @@ public class SatanManager: NSObject {
                 i in
                 arrays.add(hrValues?[i] ?? 0)
             }
-            track.heartrateList = arrays
+            track.heartrateList = NSArray(array: arrays)
             track.limitMinutes = Int16(data2.limit_mins)
             track.maxHeartrate = Int16(data2.max_hr_value)
             track.serial = Int16(head.serial)
