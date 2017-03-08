@@ -241,17 +241,31 @@
         <attribute name="avgrageHeartrate" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="burnFatMinutes" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="calories" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="coordinateList" optional="YES" attributeType="Transformable" valueTransformerName="transformer name" customClassName=".NSArray" syncable="YES"/>
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="distance" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="distance" optional="YES" attributeType="Double" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="durations" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="heartrateList" optional="YES" attributeType="Transformable" valueTransformerName="transformer name" customClassName=".NSArray" syncable="YES"/>
         <attribute name="limitMinutes" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="maxHeartrate" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="serial" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="step" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <relationship name="device" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Device" inverseName="tracks" inverseEntity="Device" syncable="YES"/>
+        <relationship name="trackHeartrateItems" toMany="YES" deletionRule="Nullify" destinationEntity="TrackHeartrateItem" inverseName="track" inverseEntity="TrackHeartrateItem" syncable="YES"/>
+        <relationship name="trackItems" toMany="YES" deletionRule="Nullify" destinationEntity="TrackItem" inverseName="track" inverseEntity="TrackItem" syncable="YES"/>
+    </entity>
+    <entity name="TrackHeartrateItem" representedClassName=".TrackHeartrateItem" syncable="YES">
+        <attribute name="data" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="offset" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <relationship name="track" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Track" inverseName="trackHeartrateItems" inverseEntity="Track" syncable="YES"/>
+    </entity>
+    <entity name="TrackItem" representedClassName=".TrackItem" syncable="YES">
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="interval" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="longtitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="subDistance" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <relationship name="track" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Track" inverseName="trackItems" inverseEntity="Track" syncable="YES"/>
     </entity>
     <entity name="Unit" representedClassName=".Unit" syncable="YES">
         <attribute name="distance" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
@@ -304,5 +318,7 @@
         <element name="Unit" positionX="-378" positionY="360" width="128" height="118"/>
         <element name="User" positionX="-92" positionY="-252" width="128" height="268"/>
         <element name="Weight" positionX="160" positionY="-90" width="128" height="88"/>
+        <element name="TrackItem" positionX="-459" positionY="-81" width="128" height="135"/>
+        <element name="TrackHeartrateItem" positionX="-450" positionY="-72" width="128" height="105"/>
     </elements>
 </model>

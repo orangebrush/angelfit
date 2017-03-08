@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreData
+import CoreLocation
 
 //数据库错误信息
 public enum GodError: Error{
@@ -1581,8 +1582,6 @@ extension CoreDataHandler{
         //创建运动数据模型
         let track = NSEntityDescription.insertNewObject(forEntityName: "Track", into: context) as! Track
         track.date = date as NSDate
-        track.coordinateList = NSArray()
-        track.heartrateList = NSArray()
         
         if let dict = items{
             track.setValuesForKeys(dict)
@@ -1653,4 +1652,53 @@ extension CoreDataHandler{
         guard commit() else{
             return
         }
-    }}
+    }
+    
+    //插入 trackItem
+    public func createTrackItem(userId id: Int16 = 1, withMacAddress macAddress: String, withDate date: Date, withTotalDistance distance: Double, withCoordinate coordinate: CLLocationCoordinate2D, interval: TimeInterval, childDistance subDistance: Double) -> TrackItem?{
+        
+        //判断track是否存在
+        guard let track = selectTrack(userId: id, withMacAddress: macAddress, withDate: date, withDayRange: nil).first else {
+            return nil
+        }
+        
+        track.distance = distance
+        
+        let trackItem = NSEntityDescription.insertNewObject(forEntityName: "TrackItem", into: context) as? TrackItem
+        trackItem?.date = Date() as NSDate?
+        trackItem?.subDistance = subDistance
+        trackItem?.interval = interval
+        trackItem?.longtitude = coordinate.longitude
+        trackItem?.latitude = coordinate.latitude
+        
+        track.addToTrackItems(trackItem!)
+        
+        guard commit() else {
+            return nil
+        }
+        
+        return trackItem
+    }
+    
+    //插入 trackHeartrateItem
+    public func createTrackHeartrateItem(userId id: Int16 = 1, withMacAaddress macAddress: String, withDate date: Date, withHeartrateId heartrateId: Int16, withOffset offset: Int16, withData data: Int16) -> TrackHeartrateItem?{
+        //判断track是否存在
+        guard let track = selectTrack(userId: id, withMacAddress: macAddress, withDate: date, withDayRange: nil).first else {
+            return nil
+        }
+        
+        let trackHeartrateItem = NSEntityDescription.insertNewObject(forEntityName: "TrackHeartrateItem", into: context) as? TrackHeartrateItem
+
+        trackHeartrateItem?.data = data
+        trackHeartrateItem?.id = heartrateId
+        trackHeartrateItem?.offset = offset     //暂无用 5s一次
+
+        track.addToTrackHeartrateItems(trackHeartrateItem!)
+        
+        guard commit() else {
+            return nil
+        }
+        
+        return trackHeartrateItem
+    }
+}

@@ -1,5 +1,5 @@
 //
-//  Track+CoreDataClass.swift
+//  TrackHeartrateItem+CoreDataClass.swift
 //  AngelFit
 //
 //  Created by YiGan on 08/03/2017.
@@ -10,6 +10,6 @@ import Foundation
 import CoreData
 
 
-public class Track: NSManagedObject {
+public class TrackHeartrateItem: NSManagedObject {
 
 }

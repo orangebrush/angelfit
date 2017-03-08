@@ -153,7 +153,7 @@ public class SatanManager: NSObject {
                 track.avgrageHeartrate = Int16(hrValue.avg_hr_value)
                 track.burnFatMinutes = Int16(hrValue.burn_fat_mins)
                 track.calories = Int16(calories)
-                track.distance = Int16(distance)
+                track.distance = Double(distance)
                 guard self.coredataHandler.commit() else {
                     return
                 }
@@ -277,7 +277,6 @@ public class SatanManager: NSObject {
                     guard let track = self.coredataHandler.insertTrack(userId: userId, withMacAddress: macaddress, withDate: self.curDate!, withItems: nil) else{
                         return
                     }
-//                    track.heartrateList = NSArray()
                     track.type = Int16(start.sportType)         //运动类型
                     
                     guard self.coredataHandler.commit() else {
@@ -289,23 +288,13 @@ public class SatanManager: NSObject {
     }
     
     //MARK:- 运动中存储坐标数据
-    public func addTrack(withCoordinate locationList: [CLLocationCoordinate2D], pastTimeList timeList: [TimeInterval], totalDistance distance: Double, addedDistanceList subDistanceList: [Double]){
-        guard let macaddress = angelManager?.macAddress else {
+    public func addTrack(withCoordinate coordinate: CLLocationCoordinate2D, withInterval interval: TimeInterval, totalDistance distance: Double, childDistance subDistance: Double){
+        guard let macaddress = angelManager?.macAddress, let date = curDate else {
             return
         }
         
-        guard let date = curDate else {
-            return
-        }
-
         let userId = UserManager.share().userId
-        if let track = coredataHandler.selectTrack(userId: userId, withMacAddress: macaddress, withDate: date, withDayRange: nil).first{
-            
-            track.coordinateList = NSArray(array: [locationList, timeList, subDistanceList])
-            if coredataHandler.commit() {
-                debugPrint("存储坐标")
-            }
-        }
+        _ = coredataHandler.createTrackItem(userId: userId, withMacAddress: macaddress, withDate: date, withTotalDistance: distance, withCoordinate: coordinate, interval: interval, childDistance: subDistance)
     }
     
     //MARK:- 当运动距离过小，从数据库移除该次运动
@@ -423,19 +412,20 @@ public class SatanManager: NSObject {
                 return
             }
             track.calories = Int16(switchReply.calories)
-            track.distance = Int16(switchReply.distance)
+            track.distance = Double(switchReply.distance)
             track.step = Int16(switchReply.step)
+            let serial = Int16(doingReply.hr_item.hr_value_serial)      //序列号 * 6 for heartrateId
             if switchReply.available {
                 let tuple = switchReply.hrValue
-                if track.heartrateList == nil{
-                    track.heartrateList = NSMutableArray()
-                }
-                track.heartrateList?.addingObjects(from: [tuple.0, tuple.1, tuple.2, tuple.3, tuple.4, tuple.5])       //添加心率数据
+                //添加心率数据
+                _ = self.coredataHandler.createTrackHeartrateItem(userId: userId, withMacAaddress: macaddress, withDate: date, withHeartrateId: serial * 6 + 0, withOffset: 0, withData: Int16(tuple.0))
+                _ = self.coredataHandler.createTrackHeartrateItem(userId: userId, withMacAaddress: macaddress, withDate: date, withHeartrateId: serial * 6 + 1, withOffset: 0, withData: Int16(tuple.1))
+                _ = self.coredataHandler.createTrackHeartrateItem(userId: userId, withMacAaddress: macaddress, withDate: date, withHeartrateId: serial * 6 + 2, withOffset: 0, withData: Int16(tuple.2))
+                _ = self.coredataHandler.createTrackHeartrateItem(userId: userId, withMacAaddress: macaddress, withDate: date, withHeartrateId: serial * 6 + 3, withOffset: 0, withData: Int16(tuple.3))
+                _ = self.coredataHandler.createTrackHeartrateItem(userId: userId, withMacAaddress: macaddress, withDate: date, withHeartrateId: serial * 6 + 4, withOffset: 0, withData: Int16(tuple.4))
+                _ = self.coredataHandler.createTrackHeartrateItem(userId: userId, withMacAaddress: macaddress, withDate: date, withHeartrateId: serial * 6 + 5, withOffset: 0, withData: Int16(tuple.5))
             }else{
-                if track.heartrateList == nil{
-                    track.heartrateList = NSMutableArray()
-                }
-                track.heartrateList?.addingObjects(from: [0, 0, 0, 0, 0, 0])                                           //补零
+                               
             }
             guard self.coredataHandler.commit() else {
                 return
@@ -582,7 +572,7 @@ public class SatanManager: NSObject {
             track.avgrageHeartrate = Int16(endReplyResult.avgHrValue)
             track.burnFatMinutes = Int16(endReplyResult.burnFatMins)
             track.calories = Int16(endReplyResult.calories)
-            track.distance = Int16(endReplyResult.distance)
+            track.distance = Double(endReplyResult.distance)
             guard self.coredataHandler.commit() else {
                 return
             }
@@ -672,15 +662,18 @@ public class SatanManager: NSObject {
             track.burnFatMinutes = Int16(data2.burn_fat_mins)
             track.calories = Int16(data1.calories)
             track.date = date as NSDate?
-            track.distance = Int16(data1.distance)
+            track.distance = Double(data1.distance)
             track.durations = Int16(data1.durations)
+            //存储心率
             let count: Int = 2 * 60 * 60 / 5
-            let arrays = NSMutableArray()
             (0..<count).forEach{
                 i in
-                arrays.add(hrValues?[i] ?? 0)
+                if let value = hrValues?[i]{
+                    if value != 0{
+                        _ = self.coredataHandler.createTrackHeartrateItem(userId: userId, withMacAaddress: realMacAddress, withDate: date, withHeartrateId: Int16(i), withOffset: 0, withData: Int16(value))
+                    }
+                }
             }
-            track.heartrateList = NSArray(array: arrays)
             track.limitMinutes = Int16(data2.limit_mins)
             track.maxHeartrate = Int16(data2.max_hr_value)
             track.serial = Int16(head.serial)
