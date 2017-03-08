@@ -80,6 +80,9 @@ public class CoreDataHandler {
         return coordinator
     }()
     
+    //读写锁
+    static var rwlock: pthread_mutex_t = pthread_mutex_t()
+    
     //MARK:- init
     private static var __once: () = {
         singleton.instance = CoreDataHandler()
@@ -98,7 +101,8 @@ public class CoreDataHandler {
     }
     
     private func config(){
-
+        pthread_mutex_init(&CoreDataHandler.rwlock, nil)
+        
         context.persistentStoreCoordinator = persistentStoreCoordinator
 
     }
@@ -246,6 +250,7 @@ extension CoreDataHandler{
     
     //获取 user
     public func selectUser(userId id: Int16 = 1) -> User?{
+        pthread_mutex_lock(&CoreDataHandler.rwlock)
         let request: NSFetchRequest<User> = User.fetchRequest()
         
         let predicate = NSPredicate(format: "userId = \(id)", "")
@@ -253,6 +258,7 @@ extension CoreDataHandler{
 
         do{
             let resultList = try context.fetch(request)
+            pthread_mutex_unlock(&CoreDataHandler.rwlock)
             if resultList.isEmpty {
                 return nil
             }else{
@@ -260,6 +266,7 @@ extension CoreDataHandler{
             }
         }catch let error{
             print(error)
+            pthread_mutex_unlock(&CoreDataHandler.rwlock)
             return nil
         }
     }
@@ -1221,6 +1228,8 @@ extension CoreDataHandler{
     
     //获取 sportData
     public func selectSportData(userId id: Int16 = 1, withMacAddress macAddress: String, withDate date: Date = Date(), withDayRange dayRange: Int = 0) -> [SportData]{
+        pthread_mutex_lock(&CoreDataHandler.rwlock)
+        
         //根据用户设备列表获取设备
         let request: NSFetchRequest<SportData> = SportData.fetchRequest()
         let startDate = translate(date) //as NSDate
@@ -1230,10 +1239,13 @@ extension CoreDataHandler{
         request.predicate = predicate
         do{
             let resultList = try context.fetch(request)
+            pthread_mutex_unlock(&CoreDataHandler.rwlock)
             return resultList
         }catch let error{
+            pthread_mutex_unlock(&CoreDataHandler.rwlock)
             print(error)
         }
+        pthread_mutex_unlock(&CoreDataHandler.rwlock)
         return []
     }
     
@@ -1347,6 +1359,8 @@ extension CoreDataHandler{
     
     //获取 sleepData
     public func selectSleepData(userId id: Int16 = 1, withMacAddress macAddress: String, withDate date: Date = Date(), withDayRange dayRange: Int = 0) -> [SleepData]{
+        
+        pthread_mutex_lock(&CoreDataHandler.rwlock)
         //根据用户设备列表获取设备
         let request: NSFetchRequest<SleepData> = SleepData.fetchRequest()
         let startDate = translate(date)
@@ -1356,10 +1370,13 @@ extension CoreDataHandler{
     
         do{
             let resultList = try context.fetch(request)
+            pthread_mutex_unlock(&CoreDataHandler.rwlock)
             return resultList
         }catch let error{
+            pthread_mutex_unlock(&CoreDataHandler.rwlock)
             print(error)
         }
+        pthread_mutex_unlock(&CoreDataHandler.rwlock)
         return []
     }
     
@@ -1473,6 +1490,9 @@ extension CoreDataHandler{
     
     //获取 heartRateData
     public func selectHeartRateData(userId id: Int16 = 1, withMacAddress macAddress: String, withDate date: Date = Date(), withDayRange dayRange: Int = 0) -> [HeartRateData]{
+        
+        pthread_mutex_lock(&CoreDataHandler.rwlock)
+        
         //根据用户设备列表获取设备
         let request: NSFetchRequest<HeartRateData> = HeartRateData.fetchRequest()
         let startDate = translate(date)
@@ -1481,10 +1501,13 @@ extension CoreDataHandler{
         request.predicate = predicate
         do{
             let resultList = try context.fetch(request)
+            pthread_mutex_unlock(&CoreDataHandler.rwlock)
             return resultList
         }catch let error{
             print(error)
         }
+        
+        pthread_mutex_unlock(&CoreDataHandler.rwlock)
         return []
     }
     
@@ -1512,6 +1535,7 @@ extension CoreDataHandler{
     
     //插入 heartRateItem
     public func createHeartRateItem(userId id: Int16 = 1, withMacAddress macAddress: String, withDate date: Date, withItemId itemId: Int16) -> HeartRateItem?{
+        
         //判断sportItem是否存在
         var heartRateItem = selectHeartRateItem(userId: id, withMacAddress: macAddress, withDate: date, withItemId: itemId)
         guard heartRateItem == nil else {
@@ -1598,6 +1622,7 @@ extension CoreDataHandler{
     
     //获取 Track   dayRange置空则获取准确数据
     public func selectTrack(userId id: Int16 = 1, withMacAddress macAddress: String, withDate date: Date = Date(), withDayRange dayRange: Int? = 0) -> [Track]{
+        pthread_mutex_lock(&CoreDataHandler.rwlock)
         //根据用户设备列表获取设备
         let request: NSFetchRequest<Track> = Track.fetchRequest()
         let startDate = translate(date)
@@ -1608,10 +1633,12 @@ extension CoreDataHandler{
         request.predicate = predicate
         do{
             let resultList = try context.fetch(request)
+            pthread_mutex_unlock(&CoreDataHandler.rwlock)
             return resultList
         }catch let error{
             print(error)
         }
+        pthread_mutex_unlock(&CoreDataHandler.rwlock)
         return []
     }
     
