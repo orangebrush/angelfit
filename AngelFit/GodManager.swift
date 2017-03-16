@@ -75,7 +75,7 @@ public final class GodManager: NSObject {
     }
 
     //Mark:- 开始扫描
-    public func startScan(){
+    public func startScan(closure: (()->())? = nil){
         
         //判断已连接的话，添加到列表
         if let peripherals = centralManager?.retrieveConnectedPeripherals(withServices: [service.uuid]){
@@ -93,6 +93,7 @@ public final class GodManager: NSObject {
         //3秒后停止扫描
         _ = delay(3){
             self.stopScan()
+            closure?()
         }
     }
     
