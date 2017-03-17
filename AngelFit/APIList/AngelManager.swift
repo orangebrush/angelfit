@@ -1259,6 +1259,14 @@ public final class AngelManager: NSObject {
         }
         //同步进度回调
         swiftSynchronizationHealthData = { data in
+            if data.0{
+                //存储最后同步时间
+                let userId = UserManager.share().userId
+                if let device = self.coredataHandler.selectDevice(userId: userId, withMacAddress: realMacAddress){
+                    device.synDate = Date() as NSDate?
+                    _ = self.coredataHandler.commit()
+                }
+            }
             closure(data.0,Int16(data.1))
         }
         

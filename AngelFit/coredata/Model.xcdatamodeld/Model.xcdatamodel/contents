@@ -24,6 +24,7 @@
         <attribute name="pairFlag" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="rebootFlag" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="sos" optional="YES" attributeType="Boolean" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="synDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="version" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <relationship name="alarms" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Alarm" inverseName="device" inverseEntity="Alarm" syncable="YES"/>
@@ -300,7 +301,7 @@
     <fetchRequest name="DefaultUserRequest" entity="User" predicateString="userId == 1"/>
     <elements>
         <element name="Alarm" positionX="259" positionY="59" width="128" height="180"/>
-        <element name="Device" positionX="-90" positionY="63" width="200" height="463"/>
+        <element name="Device" positionX="-90" positionY="63" width="200" height="480"/>
         <element name="FuncTable" positionX="-686" positionY="-9" width="128" height="1305"/>
         <element name="HandGesture" positionX="259" positionY="287" width="128" height="88"/>
         <element name="HeartInterval" positionX="-549" positionY="261" width="128" height="105"/>
@@ -315,10 +316,10 @@
         <element name="SportData" positionX="-254" positionY="522" width="128" height="253"/>
         <element name="SportItem" positionX="-254" positionY="806" width="128" height="148"/>
         <element name="Track" positionX="367" positionY="468" width="128" height="270"/>
+        <element name="TrackHeartrateItem" positionX="-450" positionY="-72" width="128" height="105"/>
+        <element name="TrackItem" positionX="-459" positionY="-81" width="128" height="135"/>
         <element name="Unit" positionX="-378" positionY="360" width="128" height="118"/>
         <element name="User" positionX="-92" positionY="-252" width="128" height="268"/>
         <element name="Weight" positionX="160" positionY="-90" width="128" height="88"/>
-        <element name="TrackItem" positionX="-459" positionY="-81" width="128" height="135"/>
-        <element name="TrackHeartrateItem" positionX="-450" positionY="-72" width="128" height="105"/>
     </elements>
 </model>

@@ -2,7 +2,7 @@
 //  Device+CoreDataClass.swift
 //  AngelFit
 //
-//  Created by ganyi on 2017/2/17.
+//  Created by ganyi on 2017/3/17.
 //  Copyright © 2017年 aiju_huangjing1. All rights reserved.
 //
 
