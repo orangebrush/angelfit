@@ -84,15 +84,15 @@ public final class AngelManager: NSObject {
         }
         
         let userId = UserManager.share().userId
+        getDeviceInfoFromBand(){
+            errorCode, value in
+//            if errorCode == ErrorCode.success{
+//                closure(self.coredataHandler.selectDevice(userId: userId, withMacAddress: realMacAddress))
+//            }else{
+//                closure(nil)
+//            }
+        }
         guard let device = coredataHandler.selectDevice(userId: userId, withMacAddress: realMacAddress) else {
-            getDeviceInfoFromBand(){
-                errorCode, value in
-                if errorCode == ErrorCode.success{
-                    closure(self.coredataHandler.selectDevice(userId: userId, withMacAddress: realMacAddress))
-                }else{
-                    closure(nil)
-                }
-            }
             return
         }
         closure(device)
