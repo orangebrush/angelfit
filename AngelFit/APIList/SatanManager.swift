@@ -261,7 +261,7 @@ public class SatanManager: NSObject {
                     self.delegate?.satanManager(didUpdateState: .start)
                     
                     //创建新路线
-                    self.curDate = Date()
+                    self.curDate = start.date//Date()
                     
                     //自动调用数据交换
                     self.appSwitch(flag: true)
