@@ -28,7 +28,7 @@ import CoreLocation
 public class SatanManager: NSObject {
     
     //delegate
-    public var delegate: SatanManagerDelegate?
+    public weak var delegate: SatanManagerDelegate?
     
     private let calendar = Calendar.current
     
