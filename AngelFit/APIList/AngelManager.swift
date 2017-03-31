@@ -178,7 +178,6 @@ public final class AngelManager: NSObject {
 
         case .deviceInfo:
             swiftDeviceInfo = { data in
-                
                 let deviceInfo = data.assumingMemoryBound(to: protocol_device_info.self).pointee
                 
                 //保存数据库

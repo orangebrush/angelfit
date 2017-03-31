@@ -108,8 +108,10 @@ extension CBridgingManager{
         swiftSetLongSit = {
             var longSitModel:LongSitModel = LongSitModel()
             
-            
-            let longSit = CoreDataHandler.share().selectLongSit(withMacAddress: self.currentMacAddress!)
+            guard let macaddress = self.currentMacAddress else {
+                return
+            }
+            let longSit = CoreDataHandler.share().selectLongSit(withMacAddress: macaddress)
             guard (longSit != nil) else {
                 longSitModel.startHour = UInt8(9)
                 longSitModel.startMinute = UInt8(0)
@@ -195,20 +197,25 @@ extension CBridgingManager{
                 if unit?.timeFormat == 0x02{
                     unitType.insert(UnitType.timeFormat_12)
                 }
-                AngelManager.share()?.setUnit(unitType, macAddress: self.currentMacAddress!, closure: { _ in
-                    
-                })
+                if let macaddress = self.currentMacAddress{
+                    AngelManager.share()?.setUnit(unitType, macAddress: macaddress, closure: { _ in
+                        
+                    })
+                }
             }
         }
         
         swiftFuncTable = { data in
             
-            
+            guard let macaddress = self.currentMacAddress else {
+                return
+            }
             let funcTableModel = data.assumingMemoryBound(to: protocol_func_table.self).pointee
             
             print("获取到功能列表: \(funcTableModel)")
             
-            let funcTable = CoreDataHandler.share().selectDevice(withMacAddress: "MDEDSEDFTGFD")?.funcTable
+//            let funcTable = CoreDataHandler.share().selectDevice(withMacAddress: "MDEDSEDFTGFD")?.funcTable
+            let funcTable = CoreDataHandler.share().selectDevice(withMacAddress: macaddress)?.funcTable
             
             funcTable?.alarmCount = Int16(funcTableModel.alarm_count)
             

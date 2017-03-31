@@ -160,7 +160,9 @@ void manageData(VBUS_EVT_BASE evt_base,VBUS_EVT_TYPE evt_type,void * __nonnull d
                 c_get_macAddress(data);
                 break;
             case VBUS_EVT_APP_GET_DEVICE_INFO:{
-                c_get_device_info(data);
+                if (data != NULL) {                    
+                    c_get_device_info(data);
+                }
             }
                 break;
             case VBUS_EVT_APP_GET_FUNC_TABLE_USER:{
