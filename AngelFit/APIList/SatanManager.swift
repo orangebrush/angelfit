@@ -249,6 +249,12 @@ public class SatanManager: NSObject {
         }
         swiftSwitchStartReply = {
             data in
+            
+            //判断是否已开始，避免重复创建
+            guard self.curDate == nil else{
+                return
+            }
+            
             let startReply: protocol_switch_app_start_reply = data.assumingMemoryBound(to: protocol_switch_app_start_reply.self).pointee
             //0x00:成功; 0x01:设备已经进入运动模式失败;0x02: 设备电量低失败
             guard let status = SwitchStartStatus(rawValue: startReply.ret_code) else{
@@ -258,6 +264,8 @@ public class SatanManager: NSObject {
             //开始定位
             DispatchQueue.main.async {
                 if status == .normal {
+                    
+                    
                     self.delegate?.satanManager(didUpdateState: .start)
                     
                     //创建新路线

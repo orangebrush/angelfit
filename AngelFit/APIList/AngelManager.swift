@@ -441,8 +441,14 @@ public final class AngelManager: NSObject {
         time.hour = UInt8(components.hour!)
         time.minute = UInt8(components.minute!)
         time.second = UInt8(components.second!)
-        time.week = UInt8(components.weekday!)
-        
+        var weekday = UInt8(components.weekday!)
+        //修正: component.weekday 1~7(从星期天开始) time.week 0~6(从星期一开始)
+        if weekday == 1{
+            weekday = 6
+        }else{
+            weekday -= 2
+        }
+        time.week = weekday
         let length = UInt32(MemoryLayout<UInt16>.size+MemoryLayout<UInt8>.size * 8)
         
         var ret_code:UInt32 = 0
