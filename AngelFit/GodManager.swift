@@ -173,6 +173,7 @@ extension GodManager: CBCentralManagerDelegate{
             }
             
             guard let peripheralList = centralManager?.retrievePeripherals(withIdentifiers: [nearPeripheralUUID]), !peripheralList.isEmpty else{
+                _ = PeripheralManager.share().delete(UUIDString: nearUUIDString)
                 return
             }
             
