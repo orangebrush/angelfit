@@ -91,8 +91,8 @@ public final class GodManager: NSObject {
         //扫描
         centralManager?.scanForPeripherals(withServices: [service.uuid], options: nil)
 
-        //3秒后停止扫描
-        _ = delay(3){
+        //5秒后停止扫描
+        _ = delay(5){
             self.stopScan()
             closure?()
         }
