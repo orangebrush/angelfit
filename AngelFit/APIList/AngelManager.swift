@@ -49,6 +49,8 @@ public final class AngelManager: NSObject {
     override init(){
         super.init()
         
+        _ = CBridgingManager.share()
+        
         //初始化获取macAddress
         getMacAddressFromBand(){
             errorCode, data in
@@ -60,6 +62,11 @@ public final class AngelManager: NSObject {
                     NotificationCenter.default.post(name: connected_notiy, object: nil, userInfo: nil)
                 }
             }
+        }
+        
+        //象征性初始化
+        swiftSynchronizationConfig = { data in
+            
         }
     }
     
@@ -1260,7 +1267,7 @@ public final class AngelManager: NSObject {
         }else{
             debugPrint("同步获取macaddress失败")
             closure(false, 0)
-           return
+            return
         }
         //同步进度回调
         swiftSynchronizationHealthData = { data in

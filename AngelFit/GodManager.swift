@@ -83,6 +83,7 @@ public final class GodManager: NSObject {
                 //判断UUID重复，避免重复存储
                 
                 centralManager?.cancelPeripheralConnection(peripheral)
+//                let standardName = peripheral.name?.lowercased().replacingOccurrences(of: " ", with: "") ?? ""
                 delegate?.godManager(currentConnectPeripheral: peripheral, peripheralName: peripheral.name ?? "")
             }
         }
@@ -119,8 +120,27 @@ public final class GodManager: NSObject {
 extension GodManager: CBCentralManagerDelegate{
     
     public func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
+        
+        //facturerData判断设备类型 目前筛选掉id为空的情况
+        guard let data = advertisementData["kCBAdvDataManufacturerData"] as? Data else {
+            return
+        }
+        
+        //获取设备name
+        guard let name = advertisementData["kCBAdvDataLocalName"] as? String else {
+            return
+        }
+        
+//        //获取id
+//        var val: [UInt8] = Array(repeating: 0x00, count: 2)
+//        (data as NSData).getBytes(&val, length: val.count)
+//        
+//        debugPrint("---name:\(name)--i:\(val)--data:\(data)")
+        
+//        let standardName = name.lowercased().replacingOccurrences(of: " ", with: "")
+
         DispatchQueue.main.async {
-            self.delegate?.godManager(didDiscoverPeripheral: peripheral, withRSSI: RSSI, peripheralName: advertisementData["kCBAdvDataLocalName"] as! String)
+            self.delegate?.godManager(didDiscoverPeripheral: peripheral, withRSSI: RSSI, peripheralName: name)
         }
     }
     
