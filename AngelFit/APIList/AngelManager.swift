@@ -711,7 +711,7 @@ public final class AngelManager: NSObject {
         //保存数据库
         let user = coredataHandler.selectUser()
         if goal.type == 0x00 {
-            user?.goalStep = Int16(goal.value)
+            user?.goalStep = Int32(goal.value)
         }else if goal.type == 0x01{
             user?.goalCal = Int16(goal.value)
         }else if goal.type == 0x02{

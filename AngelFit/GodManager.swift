@@ -49,6 +49,12 @@ public final class GodManager: NSObject {
     public var isAutoReconnect: Bool = true               //自动重连
     fileprivate var task:TimeTask?
     
+    //判断是否正在扫描
+    @available(iOS 9.0, *)
+    public var isScaning: Bool{
+        return centralManager?.isScanning ?? false
+    }
+    
     //MARK:- init ++++++++++++++++++++++++++++
     private static let __once = GodManager()
     public class func share() -> GodManager{
@@ -158,14 +164,14 @@ extension GodManager: CBCentralManagerDelegate{
         print("蓝牙状态更新: \(state.rawValue)")
         //判断蓝牙是否可用
         guard central.state == .poweredOn else {
-            print("蓝牙不可用")
+            debugPrint("蓝牙不可用")
             cancel(task)
             return
         }
         
         //自动重连
         if isAutoReconnect{            
-            print("调用重连")
+            debugPrint("调用重连")
             self.loop()
         }
         
@@ -175,7 +181,7 @@ extension GodManager: CBCentralManagerDelegate{
     private func loop(){
     
         guard let peripheral = PeripheralManager.share().currentPeripheral else{
-            print("未能获取到设备 重新连接...")
+            debugPrint("未能获取到设备 重新连接...")
             
             //弹出绑定设备列表
             let uuidStringList = PeripheralManager.share().selectUUIDStringList()
@@ -207,7 +213,7 @@ extension GodManager: CBCentralManagerDelegate{
         }
         
         guard peripheral.state == .connected else {
-            print("正在重连: \(peripheral)")
+            debugPrint("正在重连: \(peripheral)")
             
             task = delay(2){
                 //...
@@ -217,7 +223,7 @@ extension GodManager: CBCentralManagerDelegate{
             }
             return
         }
-        print("设备已连接")
+        debugPrint("设备已连接")
         cancel(task)
     }
     
@@ -231,7 +237,7 @@ extension GodManager: CBCentralManagerDelegate{
         //自动重连
         if isAutoReconnect {
 
-            print("调用重连")
+            debugPrint("调用重连")
             self.loop()
             
             DispatchQueue.main.async {
@@ -247,7 +253,7 @@ extension GodManager: CBCentralManagerDelegate{
     
     public func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
         
-        print("\(PeripheralManager.share().UUID)连接成功")
+        debugPrint("\(PeripheralManager.share().UUID)连接成功")
         cancel(task)
         
         //init currentPeripheral
@@ -271,7 +277,7 @@ extension GodManager: CBCentralManagerDelegate{
     }
     
     public func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
-        print("\(peripheral.name)连接失败")
+        debugPrint("\(peripheral.name)连接失败")
         PeripheralManager.share().peripheralMap[peripheral.identifier.uuidString] = nil
         DispatchQueue.main.async {
            self.delegate?.godManager(didUpdateConnectState: .failed, withPeripheral: peripheral, withError: error)
@@ -290,7 +296,7 @@ extension GodManager:CBPeripheralDelegate{
 
     public func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
         guard let err = error else {
-            print("1.\(peripheral.name)发现服务成功")
+            debugPrint("1.\(peripheral.name)发现服务成功")
             peripheral.services?.forEach(){
                 service in
                 peripheral.discoverCharacteristics(nil, for: service)
@@ -298,7 +304,7 @@ extension GodManager:CBPeripheralDelegate{
             return
         }
         
-        print("发现服务error:\n error:\(err)\n")
+        debugPrint("发现服务error:\n error:\(err)\n")
         DispatchQueue.main.async {
             
             let name = peripheral.name ?? ""

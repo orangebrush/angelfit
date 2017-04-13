@@ -153,16 +153,14 @@ void manageData(VBUS_EVT_BASE evt_base,VBUS_EVT_TYPE evt_type,void * __nonnull d
     DEBUG_INFO("VBUS EVT , base = %s,type = %s",protocol_util_vbus_base_to_str(evt_base),protocol_util_vbus_evt_to_str(evt_type));
      uint32_t ret_code;
     
-    if (evt_base == VBUS_EVT_BASE_NOTICE_APP) {
+    if (evt_base == VBUS_EVT_BASE_NOTICE_APP && error_code == SUCCESS) {
         switch (evt_type) {
             case VBUS_EVT_APP_APP_GET_MAC:
                 printf("获取mac地址 ：%s",data);
                 c_get_macAddress(data);
                 break;
             case VBUS_EVT_APP_GET_DEVICE_INFO:{
-                if (data != NULL) {                    
-                    c_get_device_info(data);
-                }
+                c_get_device_info(data);
             }
                 break;
             case VBUS_EVT_APP_GET_FUNC_TABLE_USER:{

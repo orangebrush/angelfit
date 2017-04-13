@@ -20,7 +20,7 @@ extension User {
     @NSManaged public var gender: Int16
     @NSManaged public var goalCal: Int16
     @NSManaged public var goalDistance: Int16
-    @NSManaged public var goalStep: Int16
+    @NSManaged public var goalStep: Int32
     @NSManaged public var height: Int16
     @NSManaged public var userId: Int16
     @NSManaged public var goalWeight: Float

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="11759" systemVersion="16D32" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="12141" systemVersion="16E195" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Alarm" representedClassName=".Alarm" syncable="YES">
         <attribute name="duration" optional="YES" attributeType="Integer 16" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="hour" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
@@ -282,13 +282,13 @@
         <attribute name="gender" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="goalCal" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="goalDistance" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="goalStep" optional="YES" attributeType="Integer 16" defaultValueString="10000" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="goalStep" optional="YES" attributeType="Integer 32" minValueString="1000" maxValueString="80000" defaultValueString="8000" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="goalWeight" optional="YES" attributeType="Float" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="height" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="sleepHour" optional="YES" attributeType="Integer 16" defaultValueString="22" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="sleepHour" optional="YES" attributeType="Integer 16" defaultValueString="23" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="sleepMinute" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="userId" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="wakeHour" optional="YES" attributeType="Integer 16" defaultValueString="8" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="wakeHour" optional="YES" attributeType="Integer 16" defaultValueString="7" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="wakeMinute" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <relationship name="devices" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Device" inverseName="user" inverseEntity="Device" syncable="YES"/>
         <relationship name="weights" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Weight" inverseName="user" inverseEntity="Weight" syncable="YES"/>
@@ -317,7 +317,7 @@
         <element name="SportItem" positionX="-254" positionY="806" width="128" height="148"/>
         <element name="Track" positionX="367" positionY="468" width="128" height="270"/>
         <element name="TrackHeartrateItem" positionX="-450" positionY="-72" width="128" height="105"/>
-        <element name="TrackItem" positionX="-459" positionY="-81" width="128" height="135"/>
+        <element name="TrackItem" positionX="-452" positionY="-234" width="128" height="135"/>
         <element name="Unit" positionX="-378" positionY="360" width="128" height="118"/>
         <element name="User" positionX="-92" positionY="-252" width="128" height="268"/>
         <element name="Weight" positionX="160" positionY="-90" width="128" height="88"/>
