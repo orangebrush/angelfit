@@ -42,11 +42,17 @@ class ViewController: UIViewController {
     }
     
     var secClick = false
+    //MARK:- text
     @IBAction func bandDevice(_ sender: Any) {
         
         
         
         let angelManager = AngelManager.share()
+        
+        angelManager?.getMacAddressFromBand(closure: {
+            errorcode, macaddress in
+            debugPrint("errorcode: \(errorcode)", "macaddress: \(macaddress)")
+        })
         //初始化设置用户信息
         let userInfoModel = UserInfoModel()
         userInfoModel.birthDay = 27
