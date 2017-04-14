@@ -1265,7 +1265,7 @@ public final class AngelManager: NSObject {
         }else if let md = self.macAddress{
             realMacAddress = md
         }else{
-            debugPrint("同步获取macaddress失败")
+            debugPrint("<sync healthData>同步获取macaddress失败")
             closure(false, 0)
             return
         }
