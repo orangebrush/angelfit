@@ -253,7 +253,7 @@ extension GodManager: CBCentralManagerDelegate{
     
     public func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
         
-        debugPrint("\(PeripheralManager.share().UUID)连接成功")
+        debugPrint("<连接前>\(String(describing: PeripheralManager.share().UUID))连接成功<连接后>\(peripheral.identifier.uuidString)")
         cancel(task)
         
         //init currentPeripheral
@@ -277,7 +277,7 @@ extension GodManager: CBCentralManagerDelegate{
     }
     
     public func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
-        debugPrint("\(peripheral.name)连接失败")
+        debugPrint("\(String(describing: peripheral.name))连接失败")
         PeripheralManager.share().peripheralMap[peripheral.identifier.uuidString] = nil
         DispatchQueue.main.async {
            self.delegate?.godManager(didUpdateConnectState: .failed, withPeripheral: peripheral, withError: error)

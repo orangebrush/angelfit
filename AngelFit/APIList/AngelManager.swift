@@ -389,14 +389,16 @@ public final class AngelManager: NSObject {
         case .unbind:
             closure(protocol_set_mode(PROTOCOL_MODE_UNBIND) == 0)
             //解绑当前设备uuid
-            let uuid = PeripheralManager.share().UUID
-            _ = PeripheralManager.share().delete(UUIDString: uuid!)
-            PeripheralManager.share().UUID = nil
+            if let uuid = PeripheralManager.share().UUID{
+                _ = PeripheralManager.share().delete(UUIDString: uuid)
+                PeripheralManager.share().UUID = nil
+            }
         case .bind:
             closure(protocol_set_mode(PROTOCOL_MODE_BIND) == 0)
             //保存绑定当前设备uuid
-            let uuid = PeripheralManager.share().UUID
-            _ = PeripheralManager.share().add(newUUIDString: uuid!)
+            if let uuid = PeripheralManager.share().UUID{
+                _ = PeripheralManager.share().add(newUUIDString: uuid)
+            }
         case .levelup:
             vbus_tx_evt(VBUS_EVT_BASE_APP_SET, VBUS_EVT_APP_OTA_START, &ret_code)
             
