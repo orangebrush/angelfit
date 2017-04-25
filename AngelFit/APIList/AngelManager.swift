@@ -1886,7 +1886,7 @@ public final class AngelManager: NSObject {
             closure(false)
             return
         }
-        print("打开总开关")
+        
         setOpenNoticeSwitch(closure: { success in
             print("打开总开关 \(success)")
             guard success else{

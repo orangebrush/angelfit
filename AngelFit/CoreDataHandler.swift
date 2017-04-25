@@ -374,7 +374,7 @@ extension CoreDataHandler{
         do{
             let resultList = try context.fetch(request)
             return resultList
-        }catch let error{
+        }catch let error{            
             debugPrint(error)
         }
         return []

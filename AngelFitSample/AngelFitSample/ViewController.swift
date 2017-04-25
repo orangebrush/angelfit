@@ -48,38 +48,42 @@ class ViewController: UIViewController {
         
         
         let angelManager = AngelManager.share()
-        
-        angelManager?.getMacAddressFromBand(closure: {
-            errorcode, macaddress in
-            debugPrint("errorcode: \(errorcode)", "macaddress: \(macaddress)")
-        })
-        //初始化设置用户信息
-        let userInfoModel = UserInfoModel()
-        userInfoModel.birthDay = 27
-        userInfoModel.birthMonth = 1
-        userInfoModel.birthYear = 1988
-        userInfoModel.gender = 1
-        userInfoModel.height = 172
-        userInfoModel.weight = 65
-        angelManager?.setUserInfo(userInfoModel){_ in}
-        
-        let satanExist = false  //默认无时间轴个数 test
-        let satanManager = SatanManager.share()
-        //同步数据
-        angelManager?.setSynchronizationHealthData{
-            complete, progress in
-            DispatchQueue.main.async {
-                var message: String
-                if complete{
-                    message = "健康数据同步完成"
-                    debugPrint(message)
-                    
-                }else{
-                    message = "正在同步健康数据:\(satanExist ? progress / 2 : progress)%"
-                    debugPrint(message)
-                }
-            }
+        angelManager?.setCallRemind(true, delay: 1){
+            success in
         }
+        
+        
+//        angelManager?.getMacAddressFromBand(closure: {
+//            errorcode, macaddress in
+//            debugPrint("errorcode: \(errorcode)", "macaddress: \(macaddress)")
+//        })
+//        //初始化设置用户信息
+//        let userInfoModel = UserInfoModel()
+//        userInfoModel.birthDay = 27
+//        userInfoModel.birthMonth = 1
+//        userInfoModel.birthYear = 1988
+//        userInfoModel.gender = 1
+//        userInfoModel.height = 172
+//        userInfoModel.weight = 65
+//        angelManager?.setUserInfo(userInfoModel){_ in}
+//        
+//        let satanExist = false  //默认无时间轴个数 test
+//        let satanManager = SatanManager.share()
+//        //同步数据
+//        angelManager?.setSynchronizationHealthData{
+//            complete, progress in
+//            DispatchQueue.main.async {
+//                var message: String
+//                if complete{
+//                    message = "健康数据同步完成"
+//                    debugPrint(message)
+//                    
+//                }else{
+//                    message = "正在同步健康数据:\(satanExist ? progress / 2 : progress)%"
+//                    debugPrint(message)
+//                }
+//            }
+//        }
         
     }
 }

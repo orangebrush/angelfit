@@ -713,15 +713,14 @@ public class SatanManager: NSObject {
             return
         }
         
-        var ret_code: UInt32 = 0
-        vbus_tx_evt(VBUS_EVT_BASE_APP_GET, VBUS_EVT_APP_GET_ACTIVITY_COUNT, &ret_code)
-
         swiftGetActiveCount = {
             data in
             let activeCount: protocol_new_health_activity_count = data.assumingMemoryBound(to: protocol_new_health_activity_count.self).pointee
             closure(activeCount.count)
         }
-
+        
+        var ret_code: UInt32 = 0
+        vbus_tx_evt(VBUS_EVT_BASE_APP_GET, VBUS_EVT_APP_GET_ACTIVITY_COUNT, &ret_code)
     }
     //回复手环端发起的请求
     private func sendSwitchStart(_ retCode: Int){

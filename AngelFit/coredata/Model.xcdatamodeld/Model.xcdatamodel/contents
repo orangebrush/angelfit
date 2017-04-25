@@ -283,7 +283,7 @@
         <attribute name="goalCal" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="goalDistance" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="goalStep" optional="YES" attributeType="Integer 32" minValueString="1000" maxValueString="80000" defaultValueString="8000" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="goalWeight" optional="YES" attributeType="Float" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="goalWeight" optional="YES" attributeType="Float" defaultValueString="60" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="height" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="sleepHour" optional="YES" attributeType="Integer 16" defaultValueString="23" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="sleepMinute" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
@@ -319,7 +319,7 @@
         <element name="TrackHeartrateItem" positionX="-450" positionY="-72" width="128" height="105"/>
         <element name="TrackItem" positionX="-452" positionY="-234" width="128" height="135"/>
         <element name="Unit" positionX="-378" positionY="360" width="128" height="118"/>
-        <element name="User" positionX="-92" positionY="-252" width="128" height="268"/>
+        <element name="User" positionX="-92" positionY="-252" width="128" height="270"/>
         <element name="Weight" positionX="160" positionY="-90" width="128" height="88"/>
     </elements>
 </model>
