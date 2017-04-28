@@ -269,7 +269,7 @@ public class SatanManager: NSObject {
                     self.delegate?.satanManager(didUpdateState: .start)
                     
                     //创建新路线
-                    self.curDate = start.date//Date()
+                    self.curDate = start.date
                     
                     //自动调用数据交换
                     self.appSwitch(flag: true)
@@ -669,7 +669,7 @@ public class SatanManager: NSObject {
             track.avgrageHeartrate = Int16(data2.avg_hr_value)
             track.burnFatMinutes = Int16(data2.burn_fat_mins)
             track.calories = Int16(data1.calories)
-            track.date = date as NSDate?
+//            track.date = date as NSDate?
             track.distance = Double(data1.distance)
             track.durations = Int16(data1.durations)
             //存储心率

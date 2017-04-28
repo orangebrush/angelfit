@@ -1605,7 +1605,7 @@ extension CoreDataHandler{
         
         //创建运动数据模型
         let track = NSEntityDescription.insertNewObject(forEntityName: "Track", into: context) as! Track
-        track.date = date as NSDate
+        track.date = translate(date) as NSDate
         
         if let dict = items{
             track.setValuesForKeys(dict)
@@ -1628,8 +1628,8 @@ extension CoreDataHandler{
         let startDate = translate(date)
         let endDate = translate(date, withDayOffset: dayRange == nil ? 0 : dayRange! + 1)       //+1偏移日期 第二天0点
         let predicate = dayRange == nil ?
-            NSPredicate(format: "device.user.userId = \(id) AND device.macAddress = '\(macAddress)' AND date == %@", date as! CVarArg) :
-            NSPredicate(format: "device.user.userId = \(id) AND device.macAddress = '\(macAddress)' AND date >= %@ AND date <= %@", startDate as! CVarArg, endDate as! CVarArg)
+            NSPredicate(format: "device.user.userId = \(id) AND device.macAddress = '\(macAddress)' AND date == %@", date as CVarArg) :
+            NSPredicate(format: "device.user.userId = \(id) AND device.macAddress = '\(macAddress)' AND date >= %@ AND date <= %@", startDate as CVarArg, endDate as CVarArg)
         request.predicate = predicate
         do{
             let resultList = try context.fetch(request)
