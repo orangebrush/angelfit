@@ -234,6 +234,11 @@ extension GodManager: CBCentralManagerDelegate{
 //        var ret_code:UInt32 = 0
 //        vbus_tx_evt(VBUS_EVT_BASE_APP_SET, SET_BLE_EVT_DISCONNECT, &ret_code)
         
+        if peripheral.state == .disconnected{
+            //发送连接失败消息
+            NotificationCenter.default.post(name: disconnected_notiy, object: nil, userInfo: nil)
+        }
+        
         //自动重连
         if isAutoReconnect {
 
@@ -241,14 +246,10 @@ extension GodManager: CBCentralManagerDelegate{
             self.loop()
             
             DispatchQueue.main.async {
-                //发送连接失败消息
-                NotificationCenter.default.post(name: disconnected_notiy, object: nil, userInfo: nil)
                 
                 self.delegate?.godManager(didUpdateConnectState: .disConnect, withPeripheral: peripheral, withError: error)
             }
-
         }
-        
     }
     
     public func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
@@ -269,8 +270,8 @@ extension GodManager: CBCentralManagerDelegate{
         
         //callback
         DispatchQueue.main.async {
-            //发送连接成功消息-  迁移至获取物理地址位置
-            //NotificationCenter.default.post(name: connected_notiy, object: nil, userInfo: nil)
+            //发送连接成功消息-  迁移至获取物理地址位置(需注释掉)
+            NotificationCenter.default.post(name: connected_notiy, object: nil, userInfo: nil)
             
             self.delegate?.godManager(didUpdateConnectState: .connect, withPeripheral: peripheral, withError: nil)
         }
@@ -288,7 +289,6 @@ extension GodManager: CBCentralManagerDelegate{
     public func centralManager(_ central: CBCentralManager, willRestoreState dict: [String : Any]) {
      
     }
-    
 }
 
 //MARK:- 设备delegate
@@ -312,7 +312,6 @@ extension GodManager:CBPeripheralDelegate{
             let alertController = UIAlertController(title: "Error", message: "\(name)\n连接服务失败", preferredStyle: .alert)
             let action = UIAlertAction(title: "返回", style: .default, handler: nil)
             alertController.addAction(action)
-            
         }
     }
     
@@ -375,7 +374,6 @@ extension GodManager:CBPeripheralDelegate{
         var val: [UInt8] = Array(repeating: 0x00, count: 20)
         (data as NSData).getBytes(&val, length: val.count)
         protocol_receive_data(val,UInt16(length))
-        print("3.\(peripheral.name)接收蓝牙数据成功 \n \(val)")
+        print("3.\(String(describing: peripheral.name))接收蓝牙数据成功 \n \(val)")
     }
-    
 }

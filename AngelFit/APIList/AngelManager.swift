@@ -115,6 +115,13 @@ public final class AngelManager: NSObject {
         getLiveDataFromBring(withActionType: .macAddress){
             errorCode, aValue in
             closure(errorCode, aValue as! String)
+            
+            if errorCode == ErrorCode.success{
+                DispatchQueue.main.async {
+                    //发送连接成功消息
+                    NotificationCenter.default.post(name: connected_notiy, object: nil, userInfo: nil)
+                }
+            }
         }
     }
     
