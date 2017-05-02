@@ -148,6 +148,7 @@ public class SatanManager: NSObject {
                 guard let track = self.coredataHandler.selectTrack(userId: userId, withMacAddress: macaddress, withDate: date, withDayRange: nil).last else {
                     return
                 }
+                track.date = date as NSDate?
                 track.step = Int16(step)
                 track.aerobicMinutes = Int16(hrValue.aerobic_mins)
                 track.avgrageHeartrate = Int16(hrValue.avg_hr_value)
@@ -268,8 +269,9 @@ public class SatanManager: NSObject {
                     
                     self.delegate?.satanManager(didUpdateState: .start)
                     
-                    //创建新路线
-                    self.curDate = start.date
+                    //创建新路线 存储当前时间
+                    let components = self.calendar.dateComponents([.year, .month, .day, .hour, .minute, .second], from: start.date)
+                    self.curDate = self.calendar.date(from: components)
                     
                     //自动调用数据交换
                     self.appSwitch(flag: true)
@@ -575,6 +577,7 @@ public class SatanManager: NSObject {
             guard let track = self.coredataHandler.selectTrack(userId: userId, withMacAddress: macaddress, withDate: date, withDayRange: nil).last else {
                 return
             }
+            track.date = date as NSDate?
             track.step = Int16(endReplyResult.step)
             track.aerobicMinutes = Int16(endReplyResult.aerobicMins)
             track.avgrageHeartrate = Int16(endReplyResult.avgHrValue)
@@ -669,7 +672,7 @@ public class SatanManager: NSObject {
             track.avgrageHeartrate = Int16(data2.avg_hr_value)
             track.burnFatMinutes = Int16(data2.burn_fat_mins)
             track.calories = Int16(data1.calories)
-//            track.date = date as NSDate?
+            track.date = date as NSDate?
             track.distance = Double(data1.distance)
             track.durations = Int16(data1.durations)
             //存储心率
