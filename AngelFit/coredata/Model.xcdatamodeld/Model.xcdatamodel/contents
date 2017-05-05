@@ -279,6 +279,7 @@
     <entity name="User" representedClassName=".User" isAbstract="YES" syncable="YES">
         <attribute name="birthday" optional="YES" attributeType="Date" minDateTimeInterval="-3187274743" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="currentWeight" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="gender" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="goalCal" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="goalDistance" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
@@ -305,21 +306,21 @@
         <element name="FuncTable" positionX="-686" positionY="-9" width="128" height="1305"/>
         <element name="HandGesture" positionX="259" positionY="287" width="128" height="88"/>
         <element name="HeartInterval" positionX="-549" positionY="261" width="128" height="105"/>
-        <element name="HeartRateData" positionX="162" positionY="477" width="128" height="253"/>
-        <element name="HeartRateItem" positionX="160" positionY="770" width="128" height="103"/>
+        <element name="HeartRateData" positionX="135" positionY="738" width="128" height="253"/>
+        <element name="HeartRateItem" positionX="142" positionY="1062" width="128" height="103"/>
         <element name="LongSit" positionX="-380" positionY="117" width="128" height="118"/>
         <element name="LostFind" positionX="259" positionY="387" width="128" height="58"/>
         <element name="Notice" positionX="-380" positionY="243" width="128" height="133"/>
         <element name="SilentDistrube" positionX="-549" positionY="369" width="128" height="118"/>
-        <element name="SleepData" positionX="-47" positionY="540" width="128" height="313"/>
-        <element name="SleepItem" positionX="-47" positionY="882" width="128" height="103"/>
-        <element name="SportData" positionX="-254" positionY="522" width="128" height="253"/>
-        <element name="SportItem" positionX="-254" positionY="806" width="128" height="148"/>
-        <element name="Track" positionX="367" positionY="468" width="128" height="270"/>
-        <element name="TrackHeartrateItem" positionX="-450" positionY="-72" width="128" height="105"/>
-        <element name="TrackItem" positionX="-452" positionY="-234" width="128" height="135"/>
+        <element name="SleepData" positionX="-47" positionY="630" width="128" height="313"/>
+        <element name="SleepItem" positionX="-47" positionY="972" width="128" height="103"/>
+        <element name="SportData" positionX="-254" positionY="630" width="128" height="253"/>
+        <element name="SportItem" positionX="-254" positionY="914" width="128" height="148"/>
+        <element name="Track" positionX="360" positionY="477" width="128" height="270"/>
+        <element name="TrackHeartrateItem" positionX="522" positionY="525" width="128" height="105"/>
+        <element name="TrackItem" positionX="538" positionY="819" width="128" height="135"/>
         <element name="Unit" positionX="-378" positionY="360" width="128" height="118"/>
-        <element name="User" positionX="-92" positionY="-252" width="128" height="270"/>
+        <element name="User" positionX="-92" positionY="-252" width="128" height="283"/>
         <element name="Weight" positionX="160" positionY="-90" width="128" height="88"/>
     </elements>
 </model>

@@ -9,7 +9,7 @@
 import Foundation
 public class UserManager {
     
-    public var userId: Int16 = 1
+    public var userId: Int64?
     
     //MARK: init--------------------------------------------
     private static var __once: () = {
@@ -20,7 +20,6 @@ public class UserManager {
     }
     
     public class func share() -> UserManager{
-        
         _ = UserManager.__once
         return singleton.instance
     }

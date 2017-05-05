@@ -39,21 +39,22 @@ fileprivate enum TableClass: String{
 public class CoreDataHandler {
     
     //coredata-context
-    fileprivate let context = NSManagedObjectContext(concurrencyType: NSManagedObjectContextConcurrencyType.privateQueueConcurrencyType)
+    let context = NSManagedObjectContext(concurrencyType: NSManagedObjectContextConcurrencyType.privateQueueConcurrencyType)
     
-    private let calender = Calendar.current
+    //日历
+    fileprivate let calender = Calendar.current
     
     // MARK: - Core Data stack
     lazy var applicationDocumentsDirectory: URL = {
         
         let urls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-        return urls[urls.count-1]
+        return urls[urls.count - 1]
     }()
     
     //MARK:- 加载编译后数据模型路径 momd
     lazy var managedObjectModel: NSManagedObjectModel = {
-        print(Bundle.main)
-        let modelURL = Bundle.main.url(forResource: "Frameworks/AngelFit.framework/Model", withExtension: "momd")!
+        let modelURL = Bundle.main.url(forResource: "Frameworks/AngelFit.framework/FunsportDataModel", withExtension: "momd")!
+        debugPrint("<Core Data> mode url: \(modelURL)")
         return NSManagedObjectModel(contentsOf: modelURL)!
     }()
     
@@ -61,7 +62,7 @@ public class CoreDataHandler {
     lazy var persistentStoreCoordinator: NSPersistentStoreCoordinator = {
         
         let coordinator = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
-        let url = self.applicationDocumentsDirectory.appendingPathComponent("angelfitData.sqlite")
+        let url = self.applicationDocumentsDirectory.appendingPathComponent("funsport.sqlite")
         var failureReason = "There was an error creating or loading the application's saved data."
         do {
             try coordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: url, options: nil)
@@ -73,7 +74,7 @@ public class CoreDataHandler {
             dict[NSUnderlyingErrorKey] = error as NSError
             let wrappedError = NSError(domain: "YOUR_ERROR_DOMAIN", code: 9999, userInfo: dict)
             
-            NSLog("Unresolved error \(wrappedError), \(wrappedError.userInfo)")
+            debugPrint("<Core Data> Unresolved error \(wrappedError), \(wrappedError.userInfo)")
             abort()
         }
         
@@ -83,7 +84,7 @@ public class CoreDataHandler {
     //读写锁
     static var rwlock: pthread_mutex_t = pthread_mutex_t()
     
-    //MARK:- init
+    //MARK:- class init *****************************************************************************************************
     private static var __once: () = {
         singleton.instance = CoreDataHandler()
     }()
@@ -95,7 +96,7 @@ public class CoreDataHandler {
         return singleton.instance!
     }
     
-    //MARK:- init
+    //MARK:- init *****************************************************************************************************
     public init() {
         config()
     }
@@ -104,7 +105,7 @@ public class CoreDataHandler {
         pthread_mutex_init(&CoreDataHandler.rwlock, nil)
         
         context.persistentStoreCoordinator = persistentStoreCoordinator
-
+        
     }
     
     //MARK:- 修正日期 范围包含年月日日期
@@ -113,7 +114,7 @@ public class CoreDataHandler {
         let resultDate = Date(timeInterval: TimeInterval(offset) * 60 * 60 * 24, since: date)
         
         let components = calender.dateComponents([.year, .month, .day], from: resultDate)
-
+        
         return calender.date(from: components)!
     }
     
@@ -121,18 +122,18 @@ public class CoreDataHandler {
     public func commit() -> Bool{
         if context.hasChanges {
             do {
-                print("context:", context)
+                debugPrint("<Core Data Commit> context:", context)
                 try context.save()
                 return true
             } catch let error {
-                print("error context:", context)
-                print(error)
+                debugPrint("<Core Data Commit> error context: \(context), error: \(error)")
                 abort()
             }
         }
         return false
     }
     
+    //MARK:- 丢弃修改
     public func reset() -> Bool{
         if context.hasChanges {
             context.reset()
@@ -162,10 +163,10 @@ public class CoreDataHandler {
         
         let entityDescription = NSEntityDescription.entity(forEntityName: "\(tableClass.self)", in: context)
         request.entity = entityDescription
-
+        
         let predicate = NSPredicate(format: conditionFormat, "")
         request.predicate = predicate
-
+        
         let resultList = try context.fetch(request) as! [NSManagedObject]
         if resultList.isEmpty {
             throw GodError.fetchNoResult
@@ -227,168 +228,10 @@ public class CoreDataHandler {
 
 //MARK:- User
 extension CoreDataHandler{
-    
-    //初始化 user: with userid
-    public func insertUser(userId id: Int16 = 1) -> User?{
 
-        //判断user是否存在
-        var user = selectUser(userId: id)
-        guard user == nil else{
-            return user
-        }
-        
-        let entityDescription = NSEntityDescription.entity(forEntityName: "User", in: context)
-        user = User(entity: entityDescription!, insertInto: context)
-        user?.userId = id
-
-        guard commit() else {
-            return nil
-        }
-        return user
-
-    }
-    
-    //获取 user
-    public func selectUser(userId id: Int16 = 1) -> User?{
-        pthread_mutex_lock(&CoreDataHandler.rwlock)
-        let request: NSFetchRequest<User> = User.fetchRequest()
-        
-        let predicate = NSPredicate(format: "userId = \(id)", "")
-        request.predicate = predicate
-
-        do{
-            let resultList = try context.fetch(request)
-            pthread_mutex_unlock(&CoreDataHandler.rwlock)
-            if resultList.isEmpty {
-                return nil
-            }else{
-                return resultList[0]
-            }
-        }catch let error{
-            print(error)
-            pthread_mutex_unlock(&CoreDataHandler.rwlock)
-            return nil
-        }
-    }
-    
-    //设置 user
-    public func updateUser(userId id: Int16 = 1, withItems items: [String: Any]){
-        do{
-            try update(User.self, byConditionFormat: "userId = 1", withUpdateItems: items)
-        }catch let error{
-            print(error)
-        }
-    }
-    
-    //删除 user
-    public func deleteUser(userId id: Int16 = 1){
-       
-        do{
-            try delete(User.self, byConditionFormat: "userId = \(id)")
-        }catch let error{
-            print(error)
-        }
-    }
-    
-    //添加体重
-    public func insertWeightItem(userId id: Int16 = 1, withDate date: Date, withValue value: Float) -> Weight?{
-        //判断user是否存在
-        let weightList = selectWeightByRange(userId: id, withDate: date, withDayRange: 0)
-        guard weightList.isEmpty else {
-            weightList.first?.date = translate(date) as NSDate?
-            weightList.first?.value = value
-            return weightList.first
-        }
-        
-        //创建体重模型
-        let weight = NSEntityDescription.insertNewObject(forEntityName: "Weight", into: context) as! Weight
-        weight.date = translate(date) as NSDate?
-        weight.value = value
-        
-        let user = selectUser(userId: id)
-        user?.currentWeight = value
-        user?.addToWeights(weight)
-        
-        guard commit() else {
-            return nil
-        }
-        return weight
-    }
-    
-    //获取体重 天周月年
-    public func selectWeightByComponent(userId id: Int16 = 1, currentDate date: Date, withWeightComponent component: WeightComponent) -> [Weight]{
-        let request: NSFetchRequest<Weight> = Weight.fetchRequest()
-        
-        let calendar = Calendar.current
-        var predicate: NSPredicate?
-        switch component {
-        case .day:
-            let startDate = translate(date)
-            let endDate = translate(date)
-            predicate = NSPredicate(format: "user.userId = \(id) AND date >= %@ AND date <= %@", startDate as! CVarArg, endDate as! CVarArg)
-        case .week:
-            let weekday = calendar.component(.weekday, from: date)
-            let startDate = translate(date, withDayOffset: -weekday)
-            let endDate = translate(date, withDayOffset: 7 - weekday)
-            predicate = NSPredicate(format: "user.userId = \(id) AND date >= %@ AND date <= %@", startDate as! CVarArg, endDate as! CVarArg)
-        case .month:
-            let day = calendar.component(.day, from: date)
-            if let dayRange = calendar.range(of: .day, in: .month, for: date){
-                let daysOfMonth: Int = Int(dayRange.count)
-                
-                let startDate = translate(date, withDayOffset: -day)
-                let endDate = translate(date, withDayOffset: daysOfMonth - day)
-                predicate = NSPredicate(format: "user.userId = \(id) AND date >= %@ AND date <= %@", startDate as! CVarArg, endDate as! CVarArg)
-            }
-        case .year:
-            var components = calendar.dateComponents([.year, .month, .day], from: date)
-            components.month = 1
-            components.day = 1
-            let startDate = calendar.date(from: components)
-            if let year = components.year{
-                components.year = year + 1
-            }
-            let endDate = translate(calendar.date(from: components)!, withDayOffset: -1)
-            predicate = NSPredicate(format: "user.userId = \(id) AND date >= %@ AND date <= %@", startDate as! CVarArg, endDate as! CVarArg)
-        case .all:
-            predicate = NSPredicate(format: "user.userId = \(id)")
-        }
-        
-        request.predicate = predicate
-        do{
-            let resultList = try context.fetch(request)
-            return resultList
-        }catch let error{
-            debugPrint(error)
-        }
-        return []
-    }
-    
-    //获取体重 偏移天数
-    public func selectWeightByRange(userId id: Int16 = 1, withDate date: Date, withDayRange dayRange: Int = 0) -> [Weight]{
-        let request: NSFetchRequest<Weight> = Weight.fetchRequest()
-        let startDate = translate(date)
-        let endDate = translate(date, withDayOffset: dayRange)
-        let predicate = NSPredicate(format: "user.userId = \(id) AND date >= %@ AND date <= %@", startDate as! CVarArg, endDate as! CVarArg)
-        request.predicate = predicate
-        do{
-            let resultList = try context.fetch(request)
-            return resultList
-        }catch let error{            
-            debugPrint(error)
-        }
-        return []
-    }
 }
 
-//MARK:- 获取体重方式
-public enum WeightComponent {
-    case day
-    case week
-    case month
-    case year
-    case all
-}
+
 
 //MARK:- Device
 extension CoreDataHandler{
@@ -1367,7 +1210,7 @@ extension CoreDataHandler{
         let endDate = translate(date, withDayOffset: dayRange)
         let predicate = NSPredicate(format: "device.user.userId = \(id) AND device.macAddress = '\(macAddress)' AND date >= %@ AND date <= %@", startDate as CVarArg, endDate as CVarArg)
         request.predicate = predicate
-    
+        
         do{
             let resultList = try context.fetch(request)
             pthread_mutex_unlock(&CoreDataHandler.rwlock)
@@ -1417,7 +1260,7 @@ extension CoreDataHandler{
         
         sleepItem = NSEntityDescription.insertNewObject(forEntityName: "SleepItem", into: context) as? SleepItem
         sleepItem?.id = itemId
-
+        
         sleepData.addToSleepItem(sleepItem!)
         
         guard commit() else {
@@ -1549,7 +1392,7 @@ extension CoreDataHandler{
         
         heartRateItem = NSEntityDescription.insertNewObject(forEntityName: "HeartRateItem", into: context) as? HeartRateItem
         heartRateItem?.id = itemId
-
+        
         
         heartRateData.addToHeartRateItem(heartRateItem!)
         
@@ -1715,11 +1558,11 @@ extension CoreDataHandler{
         }
         
         let trackHeartrateItem = NSEntityDescription.insertNewObject(forEntityName: "TrackHeartrateItem", into: context) as? TrackHeartrateItem
-
+        
         trackHeartrateItem?.data = data
         trackHeartrateItem?.id = heartrateId
         trackHeartrateItem?.offset = offset     //暂无用 5s一次
-
+        
         track.addToTrackHeartrateItems(trackHeartrateItem!)
         
         guard commit() else {

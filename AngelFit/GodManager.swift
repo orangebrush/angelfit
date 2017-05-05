@@ -97,8 +97,8 @@ public final class GodManager: NSObject {
         //扫描
         centralManager?.scanForPeripherals(withServices: [service.uuid], options: nil)
 
-        //5秒后停止扫描
-        _ = delay(5){
+        //7秒后停止扫描
+        _ = delay(7){
             self.stopScan()
             closure?()
         }
@@ -326,7 +326,7 @@ extension GodManager:CBPeripheralDelegate{
             let characteristicList = service.characteristics
             
             if let characteristics = characteristicList {
-                print("2.\(peripheral.name)发现特征成功")
+                print("2.\(String(describing: peripheral.name))发现特征成功")
                 for characteristic in characteristics {
                     switch characteristic.uuid {
                     case MainUUID.read:
@@ -341,7 +341,7 @@ extension GodManager:CBPeripheralDelegate{
                         peripheral.setNotifyValue(true, for: characteristic)
                         
                     default:
-                        print("otherUUID:\(characteristic.descriptors)")
+                        print("otherUUID:\(String(describing: characteristic.descriptors))")
                     }
                 }
             }
@@ -372,7 +372,7 @@ extension GodManager:CBPeripheralDelegate{
         let length = (data as NSData).length
         
         var val: [UInt8] = Array(repeating: 0x00, count: 20)
-        (data as NSData).getBytes(&val, length: val.count)
+        (data as NSData).getBytes(&val, length: length)
         protocol_receive_data(val,UInt16(length))
         print("3.\(String(describing: peripheral.name))接收蓝牙数据成功 \n \(val)")
     }

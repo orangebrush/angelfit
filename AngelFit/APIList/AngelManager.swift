@@ -1278,11 +1278,14 @@ public final class AngelManager: NSObject {
             closure(false, 0)
             return
         }
+        
+        //获取用户id
+        let userId = UserManager.share().userId
+        
         //同步进度回调
         swiftSynchronizationHealthData = { data in
             if data.0{
                 //存储最后同步时间
-                let userId = UserManager.share().userId
                 if let device = self.coredataHandler.selectDevice(userId: userId, withMacAddress: realMacAddress){
                     device.synDate = Date() as NSDate?
                     _ = self.coredataHandler.commit()
@@ -1309,7 +1312,7 @@ public final class AngelManager: NSObject {
             component.month = Int(month)
             component.year = Int(year)
             let optionDate = Calendar.current.date(from: component)       //日期
-            let id = 0
+            let id = userId
             let itemCount = sportData.items_count
             let minuteDuration = sportData.head1.per_minute
             let minuteOffset = sportData.head1.minute_offset
@@ -1320,12 +1323,10 @@ public final class AngelManager: NSObject {
             let perMinute = sportData.head1.per_minute
             let packetCount = sportData.head1.packet_count
             
-            guard let date = optionDate  else {
+            guard let realDate = optionDate  else {
                 return
             }
             
-            let realDate = date
-            let userId = UserManager.share().userId
             guard let sport = self.coredataHandler.insertSportData(userId: userId, withMacAddress: realMacAddress, withDate: realDate, withItems: nil) else {
                 return
             }
@@ -1383,7 +1384,7 @@ public final class AngelManager: NSObject {
             component.year = Int(year)
             
             let optionDate = Calendar.current.date(from: component)       //日期
-            let id = 0
+            let id = userId
             let itemCount = sleepData.itmes_count
             let deepSleepCount = sleepData.head2.deep_sleep_count
             let deepSleepMinute = sleepData.head2.deep_sleep_minute
@@ -1407,12 +1408,10 @@ public final class AngelManager: NSObject {
             }
             let startTimeMinute = endTimeMinute - deltaMinute
             
-            guard let date = optionDate  else {
+            guard let realDate = optionDate  else {
                 return
             }
             
-            let realDate = date
-            let userId = UserManager.share().userId
             guard let sleep = self.coredataHandler.insertSleepData(userId: userId, withMacAddress: realMacAddress, withDate: realDate, withItems: nil) else {
                 return
             }
@@ -1471,7 +1470,7 @@ public final class AngelManager: NSObject {
             component.month = Int(month)
             component.year = Int(year)
             let optionDate = Calendar.current.date(from: component)       //日期
-            let id = 0
+            let id = userId
             let itemCount = heartRateData.items_count
             let aerobicMinutes = heartRateData.head2.aerobic_mins
             let aerobicThreshld = heartRateData.head2.aerobic_threshold
@@ -1483,12 +1482,10 @@ public final class AngelManager: NSObject {
             let packetsCount = heartRateData.head1.packets_count
             let silentHeartRate = heartRateData.head1.silent_heart_rate
             
-            guard let date = optionDate  else {
+            guard let realDate = optionDate  else {
                 return
             }
             
-            let realDate = date
-            let userId = UserManager.share().userId
             guard let heartRate = self.coredataHandler.insertHeartRateData(userId: userId, withMacAddress: realMacAddress, withDate: realDate, withItems: nil) else {
                 return
             }
