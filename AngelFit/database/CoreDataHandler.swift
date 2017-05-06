@@ -42,7 +42,7 @@ public class CoreDataHandler {
     let context = NSManagedObjectContext(concurrencyType: NSManagedObjectContextConcurrencyType.privateQueueConcurrencyType)
     
     //日历
-    fileprivate let calender = Calendar.current
+    let calendar = Calendar.current
     
     // MARK: - Core Data stack
     lazy var applicationDocumentsDirectory: URL = {
@@ -109,13 +109,13 @@ public class CoreDataHandler {
     }
     
     //MARK:- 修正日期 范围包含年月日日期
-    fileprivate func translate(_ date: Date, withDayOffset offset: Int = 0) -> Date{
+    func translate(_ date: Date, withDayOffset offset: Int = 0) -> Date{
         
         let resultDate = Date(timeInterval: TimeInterval(offset) * 60 * 60 * 24, since: date)
         
-        let components = calender.dateComponents([.year, .month, .day], from: resultDate)
+        let components = calendar.dateComponents([.year, .month, .day], from: resultDate)
         
-        return calender.date(from: components)!
+        return calendar.date(from: components)!
     }
     
     // MARK: - Core Data Saving support
@@ -126,10 +126,11 @@ public class CoreDataHandler {
                 try context.save()
                 return true
             } catch let error {
-                debugPrint("<Core Data Commit> error context: \(context), error: \(error)")
+                fatalError("<Core Data Commit> error context: \(context), error: \(error)")
                 abort()
             }
         }
+        debugPrint("<Core Data Commit> context has no changes!")
         return false
     }
     
@@ -157,25 +158,29 @@ public class CoreDataHandler {
     }
     
     //MARK:- *删* deleteTable by condition
-    fileprivate func delete(_ tableClass: NSManagedObject.Type, byConditionFormat conditionFormat: String) throws {
+    func delete(_ tableClass: NSManagedObject.Type, byConditionFormat conditionFormat: String) {
         
         let request: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest()
         
         let entityDescription = NSEntityDescription.entity(forEntityName: "\(tableClass.self)", in: context)
         request.entity = entityDescription
         
-        let predicate = NSPredicate(format: conditionFormat, "")
+        let predicate = NSPredicate(format: conditionFormat)
         request.predicate = predicate
         
-        let resultList = try context.fetch(request) as! [NSManagedObject]
-        if resultList.isEmpty {
-            throw GodError.fetchNoResult
-        }else{
-            
-            context.delete(resultList[0])
-            guard commit() else{
-                return
+        do{
+            let resultList = try context.fetch(request) as! [NSManagedObject]
+            if resultList.isEmpty {
+                fatalError("<Core Data> delete not exist result")
+            }else{
+                
+                context.delete(resultList[0])
+                guard commit() else{
+                    return
+                }
             }
+        }catch let error{
+            fatalError("<Core Data Delete> \(tableClass) error: \(error)")
         }
     }
     
