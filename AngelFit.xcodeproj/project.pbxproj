@@ -97,10 +97,24 @@
 		BE1F53971DC84FC500EAD9BA /* Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1F53961DC84FC500EAD9BA /* Time.swift */; };
 		BE5476711E60369C00B1DC2D /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE5476701E60369C00B1DC2D /* Date+Extension.swift */; };
 		BE5C1F0F1EBDCBC70069C65E /* CDH+UserActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE5C1F0E1EBDCBC70069C65E /* CDH+UserActivity.swift */; };
-		BE5C1F111EBDD5270069C65E /* CDH_Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE5C1F101EBDD5270069C65E /* CDH_Device.swift */; };
+		BE5C1F111EBDD5270069C65E /* CDH+Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE5C1F101EBDD5270069C65E /* CDH+Device.swift */; };
+		BE7919BA1EC00E580094DBFA /* CoreDataConfigure.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE7919B91EC00E580094DBFA /* CoreDataConfigure.swift */; };
+		BE7919BD1EC047B80094DBFA /* CDH+DoctorHaSuggestionFeedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE7919BC1EC047B80094DBFA /* CDH+DoctorHaSuggestionFeedback.swift */; };
 		BE9B799A1EBC78AE00463D59 /* CDH+User.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9B79991EBC78AE00463D59 /* CDH+User.swift */; };
-		BE9B799E1EBDA73500463D59 /* CDH+UserHome.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9B799D1EBDA73500463D59 /* CDH+UserHome.swift */; };
+		BE9B799E1EBDA73500463D59 /* CDH+UserFamily.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9B799D1EBDA73500463D59 /* CDH+UserFamily.swift */; };
 		BE9B79A31EBDB77100463D59 /* CDH+UserDataInServerLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9B79A21EBDB77100463D59 /* CDH+UserDataInServerLog.swift */; };
+		BEA1F6801EC0553E00A55E82 /* CDH+UserActivityComment.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA1F67F1EC0553E00A55E82 /* CDH+UserActivityComment.swift */; };
+		BEA1F6821EC06C5000A55E82 /* CDH+UserActivityLiker.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA1F6811EC06C5000A55E82 /* CDH+UserActivityLiker.swift */; };
+		BEA1F6841EC06F7400A55E82 /* CDH+DoctorHaSuggestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA1F6831EC06F7400A55E82 /* CDH+DoctorHaSuggestion.swift */; };
+		BEA1F6871EC0779A00A55E82 /* CDH+BloodPressureEverydayData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA1F6861EC0779A00A55E82 /* CDH+BloodPressureEverydayData.swift */; };
+		BEA1F6891EC078E700A55E82 /* CDH+DeviceAlarm.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA1F6881EC078E700A55E82 /* CDH+DeviceAlarm.swift */; };
+		BEA1F68B1EC16FB400A55E82 /* CDH+HeartRateEverydayData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA1F68A1EC16FB400A55E82 /* CDH+HeartRateEverydayData.swift */; };
+		BEA1F68D1EC173B300A55E82 /* CDH+SportEverydayData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA1F68C1EC173B300A55E82 /* CDH+SportEverydayData.swift */; };
+		BEA1F68F1EC175A200A55E82 /* CDH+SleepEverydayData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA1F68E1EC175A200A55E82 /* CDH+SleepEverydayData.swift */; };
+		BEA1F6911EC1781300A55E82 /* CDH+EachTrainingData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA1F6901EC1781300A55E82 /* CDH+EachTrainingData.swift */; };
+		BEA1F6931EC197EB00A55E82 /* CDH+MindBodyState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA1F6921EC197EB00A55E82 /* CDH+MindBodyState.swift */; };
+		BEA1F6951EC1A06000A55E82 /* CDH+WeightData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA1F6941EC1A06000A55E82 /* CDH+WeightData.swift */; };
+		BEA1F6971EC1A17E00A55E82 /* CDH+UserSyncToServerLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA1F6961EC1A17E00A55E82 /* CDH+UserSyncToServerLog.swift */; };
 		BEB057301DD025D500B80678 /* Peripheral+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB0572F1DD025D500B80678 /* Peripheral+Extension.swift */; };
 		BEB057321DD02E1700B80678 /* AngelManager+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB057311DD02E1700B80678 /* AngelManager+Extension.swift */; };
 		BED368A91EBAC919004BCDE1 /* FunsportDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = BED368A71EBAC919004BCDE1 /* FunsportDataModel.xcdatamodeld */; };
@@ -248,12 +262,26 @@
 		BE1F53961DC84FC500EAD9BA /* Time.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Time.swift; sourceTree = "<group>"; };
 		BE5476701E60369C00B1DC2D /* Date+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
 		BE5C1F0E1EBDCBC70069C65E /* CDH+UserActivity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CDH+UserActivity.swift"; sourceTree = "<group>"; };
-		BE5C1F101EBDD5270069C65E /* CDH_Device.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CDH_Device.swift; sourceTree = "<group>"; };
+		BE5C1F101EBDD5270069C65E /* CDH+Device.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CDH+Device.swift"; sourceTree = "<group>"; };
 		BE60558E1E7B797B00039CA0 /* Device+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Device+CoreDataClass.swift"; sourceTree = "<group>"; };
 		BE60558F1E7B797B00039CA0 /* Device+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Device+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		BE7919B91EC00E580094DBFA /* CoreDataConfigure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataConfigure.swift; sourceTree = "<group>"; };
+		BE7919BC1EC047B80094DBFA /* CDH+DoctorHaSuggestionFeedback.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CDH+DoctorHaSuggestionFeedback.swift"; sourceTree = "<group>"; };
 		BE9B79991EBC78AE00463D59 /* CDH+User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CDH+User.swift"; sourceTree = "<group>"; };
-		BE9B799D1EBDA73500463D59 /* CDH+UserHome.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CDH+UserHome.swift"; sourceTree = "<group>"; };
+		BE9B799D1EBDA73500463D59 /* CDH+UserFamily.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CDH+UserFamily.swift"; sourceTree = "<group>"; };
 		BE9B79A21EBDB77100463D59 /* CDH+UserDataInServerLog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CDH+UserDataInServerLog.swift"; sourceTree = "<group>"; };
+		BEA1F67F1EC0553E00A55E82 /* CDH+UserActivityComment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CDH+UserActivityComment.swift"; sourceTree = "<group>"; };
+		BEA1F6811EC06C5000A55E82 /* CDH+UserActivityLiker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CDH+UserActivityLiker.swift"; sourceTree = "<group>"; };
+		BEA1F6831EC06F7400A55E82 /* CDH+DoctorHaSuggestion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CDH+DoctorHaSuggestion.swift"; sourceTree = "<group>"; };
+		BEA1F6861EC0779A00A55E82 /* CDH+BloodPressureEverydayData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CDH+BloodPressureEverydayData.swift"; sourceTree = "<group>"; };
+		BEA1F6881EC078E700A55E82 /* CDH+DeviceAlarm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CDH+DeviceAlarm.swift"; sourceTree = "<group>"; };
+		BEA1F68A1EC16FB400A55E82 /* CDH+HeartRateEverydayData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CDH+HeartRateEverydayData.swift"; sourceTree = "<group>"; };
+		BEA1F68C1EC173B300A55E82 /* CDH+SportEverydayData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CDH+SportEverydayData.swift"; sourceTree = "<group>"; };
+		BEA1F68E1EC175A200A55E82 /* CDH+SleepEverydayData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CDH+SleepEverydayData.swift"; sourceTree = "<group>"; };
+		BEA1F6901EC1781300A55E82 /* CDH+EachTrainingData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CDH+EachTrainingData.swift"; sourceTree = "<group>"; };
+		BEA1F6921EC197EB00A55E82 /* CDH+MindBodyState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CDH+MindBodyState.swift"; sourceTree = "<group>"; };
+		BEA1F6941EC1A06000A55E82 /* CDH+WeightData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CDH+WeightData.swift"; sourceTree = "<group>"; };
+		BEA1F6961EC1A17E00A55E82 /* CDH+UserSyncToServerLog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CDH+UserSyncToServerLog.swift"; sourceTree = "<group>"; };
 		BEB0572F1DD025D500B80678 /* Peripheral+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Peripheral+Extension.swift"; sourceTree = "<group>"; };
 		BEB057311DD02E1700B80678 /* AngelManager+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "AngelManager+Extension.swift"; path = "../AngelManager+Extension.swift"; sourceTree = "<group>"; };
 		BED368A81EBAC919004BCDE1 /* FunsportDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FunsportDataModel.xcdatamodel; sourceTree = "<group>"; };
@@ -527,16 +555,46 @@
 			name = SupportingFiles;
 			sourceTree = "<group>";
 		};
+		BE7919BB1EC047680094DBFA /* userActivity */ = {
+			isa = PBXGroup;
+			children = (
+				BE7919BC1EC047B80094DBFA /* CDH+DoctorHaSuggestionFeedback.swift */,
+				BEA1F6831EC06F7400A55E82 /* CDH+DoctorHaSuggestion.swift */,
+				BEA1F67F1EC0553E00A55E82 /* CDH+UserActivityComment.swift */,
+				BEA1F6811EC06C5000A55E82 /* CDH+UserActivityLiker.swift */,
+			);
+			name = userActivity;
+			sourceTree = "<group>";
+		};
+		BEA1F6851EC0775A00A55E82 /* recordData */ = {
+			isa = PBXGroup;
+			children = (
+				BEA1F6861EC0779A00A55E82 /* CDH+BloodPressureEverydayData.swift */,
+				BEA1F68A1EC16FB400A55E82 /* CDH+HeartRateEverydayData.swift */,
+				BEA1F68C1EC173B300A55E82 /* CDH+SportEverydayData.swift */,
+				BEA1F68E1EC175A200A55E82 /* CDH+SleepEverydayData.swift */,
+				BEA1F6901EC1781300A55E82 /* CDH+EachTrainingData.swift */,
+			);
+			name = recordData;
+			sourceTree = "<group>";
+		};
 		BED368A31EBAC8E8004BCDE1 /* database */ = {
 			isa = PBXGroup;
 			children = (
 				BED368A71EBAC919004BCDE1 /* FunsportDataModel.xcdatamodeld */,
 				BED368AA1EBB2426004BCDE1 /* CoreDataHandler.swift */,
+				BE7919B91EC00E580094DBFA /* CoreDataConfigure.swift */,
 				BE9B79A21EBDB77100463D59 /* CDH+UserDataInServerLog.swift */,
-				BE9B799D1EBDA73500463D59 /* CDH+UserHome.swift */,
+				BE9B799D1EBDA73500463D59 /* CDH+UserFamily.swift */,
 				BE9B79991EBC78AE00463D59 /* CDH+User.swift */,
 				BE5C1F0E1EBDCBC70069C65E /* CDH+UserActivity.swift */,
-				BE5C1F101EBDD5270069C65E /* CDH_Device.swift */,
+				BE7919BB1EC047680094DBFA /* userActivity */,
+				BE5C1F101EBDD5270069C65E /* CDH+Device.swift */,
+				BEA1F6881EC078E700A55E82 /* CDH+DeviceAlarm.swift */,
+				BEA1F6851EC0775A00A55E82 /* recordData */,
+				BEA1F6921EC197EB00A55E82 /* CDH+MindBodyState.swift */,
+				BEA1F6941EC1A06000A55E82 /* CDH+WeightData.swift */,
+				BEA1F6961EC1A17E00A55E82 /* CDH+UserSyncToServerLog.swift */,
 			);
 			path = database;
 			sourceTree = "<group>";
@@ -699,11 +757,15 @@
 				22122F821E53F8E700AA61F4 /* protocol_util.c in Sources */,
 				32E2E15D1DE5777500DC2C89 /* AngelManager.swift in Sources */,
 				222E7D731DC87A55001BA04A /* PeripheralManager.swift in Sources */,
+				BEA1F6801EC0553E00A55E82 /* CDH+UserActivityComment.swift in Sources */,
 				22DF62031DD9B63C0080B77A /* CBridgingManager.swift in Sources */,
 				22122F871E53F8E700AA61F4 /* vbus.c in Sources */,
 				BE9B799A1EBC78AE00463D59 /* CDH+User.swift in Sources */,
+				BE7919BA1EC00E580094DBFA /* CoreDataConfigure.swift in Sources */,
+				BEA1F68B1EC16FB400A55E82 /* CDH+HeartRateEverydayData.swift in Sources */,
 				22122F7A1E53F8E700AA61F4 /* protocol_switch_data.c in Sources */,
 				32060CF81DE28409007BC7B3 /* AngelModel.swift in Sources */,
+				BEA1F6821EC06C5000A55E82 /* CDH+UserActivityLiker.swift in Sources */,
 				22122F6C1E53F8E700AA61F4 /* protocol_health.c in Sources */,
 				22122F661E53F8E700AA61F4 /* protocol_data.c in Sources */,
 				22122F641E53F8E700AA61F4 /* protocol.c in Sources */,
@@ -712,37 +774,47 @@
 				22122F7C1E53F8E700AA61F4 /* protocol_sync_activity.c in Sources */,
 				BE9B79A31EBDB77100463D59 /* CDH+UserDataInServerLog.swift in Sources */,
 				22DF61DD1DD99EA20080B77A /* SocketLog.m in Sources */,
+				BE7919BD1EC047B80094DBFA /* CDH+DoctorHaSuggestionFeedback.swift in Sources */,
 				22DF62401DDAFF2A0080B77A /* CBridgingManager+Extension.swift in Sources */,
+				BEA1F6931EC197EB00A55E82 /* CDH+MindBodyState.swift in Sources */,
 				22122F721E53F8E700AA61F4 /* protocol_health_resolve_sport.c in Sources */,
-				BE9B799E1EBDA73500463D59 /* CDH+UserHome.swift in Sources */,
+				BE9B799E1EBDA73500463D59 /* CDH+UserFamily.swift in Sources */,
 				BE5C1F0F1EBDCBC70069C65E /* CDH+UserActivity.swift in Sources */,
 				BE198BE21E6D03BA00B11A90 /* UserManager.swift in Sources */,
 				22DF623A1DDAA8260080B77A /* Timer.swift in Sources */,
+				BEA1F6891EC078E700A55E82 /* CDH+DeviceAlarm.swift in Sources */,
 				32C1033D1DC988130001D415 /* Model.xcdatamodeld in Sources */,
 				22122F621E53F8E700AA61F4 /* mem.c in Sources */,
+				BEA1F6841EC06F7400A55E82 /* CDH+DoctorHaSuggestion.swift in Sources */,
 				BED368AB1EBB2426004BCDE1 /* CoreDataHandler.swift in Sources */,
 				22122F681E53F8E700AA61F4 /* protocol_exec.c in Sources */,
 				222E7D781DC88AA7001BA04A /* ViewController+Extension.swift in Sources */,
 				22DF62071DD9B6900080B77A /* SF2C.c in Sources */,
 				222B89A31DC735B70056861C /* UUIDConfigure.swift in Sources */,
 				22DF61DB1DD99EA20080B77A /* GCDAsyncSocket.m in Sources */,
-				BE5C1F111EBDD5270069C65E /* CDH_Device.swift in Sources */,
+				BE5C1F111EBDD5270069C65E /* CDH+Device.swift in Sources */,
 				22122F6A1E53F8E700AA61F4 /* protocol_func_table.c in Sources */,
 				BE5476711E60369C00B1DC2D /* Date+Extension.swift in Sources */,
 				22DF625A1DDBE9440080B77A /* Protocol_ios_port.c in Sources */,
 				22122F6E1E53F8E700AA61F4 /* protocol_health_resolve_heart_rate.c in Sources */,
 				22DF62431DDB06E10080B77A /* CFunc.c in Sources */,
+				BEA1F68F1EC175A200A55E82 /* CDH+SleepEverydayData.swift in Sources */,
+				BEA1F6911EC1781300A55E82 /* CDH+EachTrainingData.swift in Sources */,
 				22DF625D1DDBE9440080B77A /* Protocol_model.m in Sources */,
 				22122F741E53F8E700AA61F4 /* protocol_send_notice.c in Sources */,
+				BEA1F6871EC0779A00A55E82 /* CDH+BloodPressureEverydayData.swift in Sources */,
 				22122F761E53F8E700AA61F4 /* protocol_set_alarm.c in Sources */,
 				22DF61DF1DD99EA20080B77A /* SocketLogC.m in Sources */,
 				22122F7E1E53F8E700AA61F4 /* protocol_sync_activity_resolve.c in Sources */,
+				BEA1F68D1EC173B300A55E82 /* CDH+SportEverydayData.swift in Sources */,
 				22122F5A1E53F8E600AA61F4 /* app_timer.c in Sources */,
 				22122F851E53F8E700AA61F4 /* protocol_write.c in Sources */,
 				BED368A91EBAC919004BCDE1 /* FunsportDataModel.xcdatamodeld in Sources */,
 				32E971D81DE7D13F0029DE9F /* Debug.swift in Sources */,
+				BEA1F6971EC1A17E00A55E82 /* CDH+UserSyncToServerLog.swift in Sources */,
 				22DF62591DDBE9440080B77A /* Protocol_ios.m in Sources */,
 				32C103391DC974410001D415 /* GodFS.swift in Sources */,
+				BEA1F6951EC1A06000A55E82 /* CDH+WeightData.swift in Sources */,
 				BEB057301DD025D500B80678 /* Peripheral+Extension.swift in Sources */,
 				BEB057321DD02E1700B80678 /* AngelManager+Extension.swift in Sources */,
 				22439F861E4D48EF00087C52 /* SatanManager.swift in Sources */,

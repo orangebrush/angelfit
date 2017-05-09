@@ -18,6 +18,8 @@ extension CoreDataHandler{
             if let entityDescription = NSEntityDescription.entity(forEntityName: "UserDataInServerLog", in: context){
                 userDataInServerLog = UserDataInServerLog(entity: entityDescription, insertInto: context)
                 
+                userDataInServerLog?.lastUpdatedTime = Date() as NSDate
+                
                 guard commit() else {
                     return nil
                 }

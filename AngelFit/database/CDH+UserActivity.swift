@@ -11,7 +11,7 @@ import CoreData
 //MARK:- userActivity
 extension CoreDataHandler{
     //初始化 device
-    public func insertUserActivity() -> UserActivity?{
+    func insertUserActivity(withActivityType activityType: Int16) -> UserActivity?{
         
         guard let id = currentUserId() else {
             return nil
@@ -22,28 +22,58 @@ extension CoreDataHandler{
             return nil
         }
         
+        //获取序列id
+        var objectId: Int64 = 0
+        let userActivityList = selectAllUserActivities(byUserId: id)
+        if let lastUserActivity = userActivityList.last {
+            objectId = lastUserActivity.objectId + 1        //增1
+        }
+        
         //创建设备模型
         if let userActivity = NSEntityDescription.insertNewObject(forEntityName: "UserActivity", into: context) as? UserActivity{
+            
+            //根据type与objectId标示唯一对象
+            userActivity.type = activityType
+            userActivity.objectId = objectId
             
             //为用户添加活动项信息
             user.addToUserActivityList(userActivity)
             
-            //添加关系表... ontToOne
-            
             guard commit() else {
                 return nil
-            }
-            
+            }            
             return userActivity
         }
         return nil
     }
     
     //获取 device
-    public func selectUserActivity() -> UserActivity?{
+    public func selectUserActivity(withObjectId objectId: Int64, byUserId userId: Int64? = nil) -> UserActivity?{
         
-        guard let id = currentUserId() else {
+        //判断userId
+        guard let id = checkoutUserId(withOptionUserId: userId) else {
             return nil
+        }
+        
+        //根据用户设备列表获取设备
+        let request: NSFetchRequest<UserActivity> = UserActivity.fetchRequest()
+        let predicate = NSPredicate(format: "user.userId = \(id) AND objectId = \(objectId)")
+        request.predicate = predicate
+        do{
+            let resultList = try context.fetch(request)
+            return resultList.first
+        }catch let error{
+            fatalError("<Core Data> select user activity error: \(error), by userId: \(id)")
+        }
+        return nil
+    }
+    
+    //MARK:- 获取所有userActivity
+    public func selectAllUserActivities(byUserId userId: Int64? = nil) -> [UserActivity]{
+        
+        //判断userId
+        guard let id = checkoutUserId(withOptionUserId: userId) else {
+            return []
         }
         
         //根据用户设备列表获取设备
@@ -51,18 +81,12 @@ extension CoreDataHandler{
         let predicate = NSPredicate(format: "user.userId = \(id)")
         request.predicate = predicate
         do{
-            
             let resultList = try context.fetch(request)
-            if resultList.isEmpty {
-                return nil
-            }else{
-                return resultList[0]
-            }
-            
+            return resultList
         }catch let error{
-            print(error)
+            fatalError("<Core Data> select all user activity error: \(error), by userId: \(id)")
         }
-        return nil
+        return []
     }
     
     //删除 device

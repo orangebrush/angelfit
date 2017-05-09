@@ -1,5 +1,5 @@
 //
-//  CDH+UserHome.swift
+//  CDH+UserFamily.swift
 //  AngelFit
 //
 //  Created by ganyi on 2017/5/6.
@@ -10,15 +10,15 @@ import Foundation
 import CoreData
 //MARK:- userhome
 extension CoreDataHandler{
-    //插入用户
-    func userHome() -> UserHome?{
+    //插入家庭用户
+    func insertUserFamily() -> UserFamily?{
         
         //判断user是否存在
-        var userHome = selectUserHome()
+        var userFamily = selectUserFamily()
         
-        if userHome == nil{
-            if let entityDescription = NSEntityDescription.entity(forEntityName: "UserHome", in: context){
-                userHome = UserHome(entity: entityDescription, insertInto: context)
+        if userFamily == nil{
+            if let entityDescription = NSEntityDescription.entity(forEntityName: "UserFamily", in: context){
+                userFamily = UserFamily(entity: entityDescription, insertInto: context)
                 
                 guard commit() else {
                     return nil
@@ -28,13 +28,13 @@ extension CoreDataHandler{
                 return nil
             }
         }
-        return userHome
+        return userFamily
     }
     
     //查找 userhome
-    func selectUserHome() -> UserHome?{
+    func selectUserFamily() -> UserFamily?{
         
-        let request: NSFetchRequest<UserHome> = UserHome.fetchRequest()
+        let request: NSFetchRequest<UserFamily> = UserFamily.fetchRequest()
         let predicate = NSPredicate()
         
         request.predicate = predicate
@@ -64,7 +64,7 @@ extension CoreDataHandler{
         }
         
         //设置在线用户userId
-        userHome()?.isOnlineUserId = id
+        insertUserFamily()?.isOnlineUserId = id
         
         guard commit() else {
             return nil
@@ -75,13 +75,20 @@ extension CoreDataHandler{
         return user
     }
     
-    //获取当前登录用户userId
-    public func currentUserId() -> Int64?{
-        guard  let userHome = userHome() else {
+    //获取主用户userId
+    public func mainUserId() -> Int64?{
+        guard let userFamily = insertUserFamily() else {
             return nil
         }
         
-        let userId = userHome.isOnlineUserId
-        return userId
+        return userFamily.userId
+    }
+    
+    //获取当前登录用户userId
+    public func currentUserId() -> Int64?{
+        guard  let userFamily = insertUserFamily() else {
+            return nil
+        }
+        return userFamily.isOnlineUserId
     }
 }

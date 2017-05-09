@@ -74,7 +74,7 @@ public final class AngelManager: NSObject {
     public func getUserinfo(closure: (User?)->()){
         
         let userId = UserManager.share().userId
-        closure(coredataHandler.selectUser(userId: userId))
+        closure(coredataHandler.selectUser(withUserId: userId))
     }
     
     //MARK:- 从数据库获取数据-设备信息
@@ -99,6 +99,7 @@ public final class AngelManager: NSObject {
 //                closure(nil)
 //            }
         }
+        
         guard let device = coredataHandler.selectDevice(userId: userId, withMacAddress: realMacAddress) else {
             return
         }
