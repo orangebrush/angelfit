@@ -9,7 +9,7 @@
 import Foundation
 public class UserManager {
     
-    public var userId: Int64?
+    public var userId: Int16 = 1
     
     //MARK: init--------------------------------------------
     private static var __once: () = {

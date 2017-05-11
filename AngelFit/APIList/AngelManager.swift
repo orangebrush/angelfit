@@ -74,7 +74,8 @@ public final class AngelManager: NSObject {
     public func getUserinfo(closure: (User?)->()){
         
         let userId = UserManager.share().userId
-        closure(coredataHandler.selectUser(withUserId: userId))
+//        closure(coredataHandler.selectUser(withUserId: userId))
+        closure(coredataHandler.selectUser(userId: userId))
     }
     
     //MARK:- 从数据库获取数据-设备信息
@@ -147,7 +148,7 @@ public final class AngelManager: NSObject {
 //        guard let funcTable = coredataHandler.selectDevice(userId: id, withMacAddress: realMacAddress)?.funcTable else{
             getFuncTableFromBand(realMacAddress){
                 errorCode, value in
-                debug("funcTable errorCode: \(errorCode) value: \(value)")
+                debug("funcTable errorCode: \(errorCode) value: \(String(describing: value))")
                 if errorCode == ErrorCode.success{
                     closure(self.coredataHandler.selectDevice(userId: UserManager.share().userId, withMacAddress: realMacAddress)?.funcTable)
                 }else{
@@ -356,7 +357,7 @@ public final class AngelManager: NSObject {
                 funcTable?.notify2_instagram = funcTableModel.ontify2.instagram
                 funcTable?.notify2_alarmClock = funcTableModel.ontify2.alarmClock
                 
-                debug("coreData functable: \(funcTable)")
+                debug("coreData functable: \(String(describing: funcTable))")
                 guard self.coredataHandler.commit() else {
                     closure(ErrorCode.failure, nil)
                     return

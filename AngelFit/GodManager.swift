@@ -206,8 +206,10 @@ extension GodManager: CBCentralManagerDelegate{
             task = delay(2){
                 //...
                 
-                self.connect(peripheralList[0])
-                self.loop()
+                if self.isAutoReconnect{                    
+                    self.connect(peripheralList[0])
+                    self.loop()
+                }
             }
             return
         }
@@ -218,8 +220,10 @@ extension GodManager: CBCentralManagerDelegate{
             task = delay(2){
                 //...
 
-                self.connect(peripheral)
-                self.loop()
+                if self.isAutoReconnect{
+                    self.connect(peripheral)
+                    self.loop()
+                }
             }
             return
         }
