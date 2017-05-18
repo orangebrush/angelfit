@@ -136,16 +136,24 @@ extern void c_get_active_count(void * __nonnull data){
     swiftGetActiveCount(data);
 }
 extern void c_sync_active_timeout(){
-    swiftSyncActiveTimeOut();
+    if (swiftSyncActiveTimeOut) {
+        swiftSyncActiveTimeOut();
+    }
 }
 extern void c_sync_active_progress(int progress){
-    swiftSyncActiveProgress(progress);
+    if (swiftSyncActiveProgress) {
+        swiftSyncActiveProgress(progress);
+    }
 }
 extern void c_sync_active_complete(){
-    swiftSyncActiveComplete();
+    if (swiftSyncActiveComplete) {
+        swiftSyncActiveComplete();
+    }
 }
 extern void c_sync_active_data(void * __nonnull data){
-    swiftSyncActiveData(data);
+    if (swiftSyncActiveData) {
+        swiftSyncActiveData(data);
+    }
 }
 
 

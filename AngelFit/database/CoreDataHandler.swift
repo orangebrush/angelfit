@@ -10,32 +10,6 @@ import Foundation
 import CoreData
 import CoreLocation
 
-//数据库错误信息
-public enum GodError: Error{
-    case fetchNoResult
-}
-
-//数据库表类
-fileprivate enum TableClass: String{
-    case user = "User"                      //用户
-    case device = "Device"                  //设备
-    
-    case lostFind = "LostFind"              //丢失查找
-    case unit = "Unit"                      //单位
-    case alarm = "Alarm"                    //闹钟
-    case longSit = "LongSit"                //久坐提醒
-    case handGesture = "HandGesture"        //手势
-    case notice = "Notice"                  //提醒
-    
-    case sportData = "SportData"            //运动数据
-    case sportItem = "SportItem"            //运动详情
-    case sleepData = "SleepData"            //睡眠数据
-    case sleepItem = "SleepItem"            //睡眠详情
-    case heartRateData = "HeartRateData"    //心率数据
-    case heartRateItem = "HeartRateItem"    //心率详情
-}
-
-
 public class CoreDataHandler {
     
     //coredata-context

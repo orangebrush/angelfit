@@ -250,7 +250,6 @@ extension CoreDataHandler{
     
     //获取 user
     public func selectUser(userId id: Int16 = 1) -> User?{
-        pthread_mutex_lock(&CoreDataHandler.rwlock)
         let request: NSFetchRequest<User> = User.fetchRequest()
         
         let predicate = NSPredicate(format: "userId = \(id)", "")
@@ -258,17 +257,15 @@ extension CoreDataHandler{
 
         do{
             let resultList = try context.fetch(request)
-            pthread_mutex_unlock(&CoreDataHandler.rwlock)
             if resultList.isEmpty {
                 return nil
             }else{
                 return resultList[0]
             }
         }catch let error{
-            print(error)
-            pthread_mutex_unlock(&CoreDataHandler.rwlock)
-            return nil
+            debugPrint(error)
         }
+        return nil
     }
     
     //设置 user
