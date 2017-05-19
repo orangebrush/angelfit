@@ -151,7 +151,7 @@ extern void c_sync_active_complete(){
     }
 }
 extern void c_sync_active_data(void * __nonnull data){
-    if (swiftSyncActiveData) {
+    if (swiftSyncActiveData && data) {
         swiftSyncActiveData(data);
     }
 }
