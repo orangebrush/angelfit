@@ -1394,7 +1394,7 @@ public final class AngelManager: NSObject {
             let endTimeMinute = Int16(sleepData.head1.end_time_minute)
             let lightSleepCount = sleepData.head2.light_sleep_count
             let lightSleepMinute = sleepData.head2.ligth_sleep_minute
-            let totalMinute = sleepData.head2.deep_sleep_minute
+            let totalMinute = sleepData.head1.total_minute
             let packetCount = sleepData.head1.packet_count
             let sleepItemCount = sleepData.head1.sleep_item_count
             let wakeCount = sleepData.head2.wake_count
@@ -1509,6 +1509,7 @@ public final class AngelManager: NSObject {
             }
             
             let items = heartRateData.items
+            //heartRateData.items_count
             //let length = MemoryLayout<ble_sync_heart_rate_item>.size
             (0..<96).forEach(){
                 i in

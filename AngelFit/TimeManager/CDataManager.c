@@ -74,7 +74,9 @@ extern void c_synchronization_alarm(bool status){
     swiftSynchronizationAlarm(status);
 }
 extern void c_get_notice_status(int8_t notice,int8_t status,int8_t errorCode){
-    swiftGetNoticeStatus(notice,status,errorCode);
+    if (swiftGetNoticeStatus) {
+        swiftGetNoticeStatus(notice,status,errorCode);
+    }
 }
 
 extern void c_send_sync_alarm(){
