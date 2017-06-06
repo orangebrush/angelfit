@@ -95,6 +95,7 @@ uint32_t protocol_write_data(const uint8_t *data,uint16_t length)
     
 	if(write_data_handle != NULL)
 	{
+        //DEBUG_PRINT("write_data_handle = 0x%X", write_data_handle);
 		return write_data_handle(data,length);
 	}
 
