@@ -31,11 +31,21 @@ class ViewController: UIViewController {
     
     private func createContents(){
         let networkHandler = NetworkHandler.share()
-        networkHandler.login(withUserId: "testUserId5", withPassword: "543256", closure: {
+        let param: [String: Any] = ["userId": "ganyi",
+                                    "password": "123456",
+                                    "email": "123456@qq.com"]
+        networkHandler.register(withParam: param, closure: {
             resultCode, message, data in
             print(resultCode)
             print(message)
             print(data)
+            
+            networkHandler.login(withUserId: "ganyi", withPassword: "123456", closure: {
+                resultCode, message, data in
+                print(resultCode)
+                print(message)
+                print(data)
+            })
         })
     }
     

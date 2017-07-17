@@ -19,7 +19,7 @@ public struct Method{
 
 //actions
 public struct Actions{
-    static let register             = "/register"               //注册
+    static let register             = "/user/add"               //注册
     static let logon                = "/user/logon"             //登录
     static let getInfo = "/getinfo"
     static let setInfo = "/setinfo"
@@ -43,6 +43,9 @@ public final class NetworkHandler {
     }
     
     //MARK:-注册
+    public func register(withParam param: [String: Any], closure: @escaping (_ resultCode: Int, _ message: String, _ data: Any?) -> ()){
+        Session.session(withAction: Actions.register, withMethod: Method.post, withParam: param, closure: closure)
+    }
     
     //MARK:-登陆
     public func login(withUserId userId: String, withPassword password: String, closure: @escaping (_ resultCode: Int, _ message: String, _ data: Any?) -> ()){
