@@ -18,9 +18,10 @@ public struct Method{
 }
 
 //actions
-public struct Actions{
-    static let register             = "/user/add"               //注册
-    static let logon                = "/user/logon"             //登录
+enum Actions{
+    static let userAdd              = "/user/add"               //注册
+    static let userLogon            = "/user/logon"             //登录
+    static let userUpdate           = "/user/update"            //更新用户
     static let getInfo = "/getinfo"
     static let setInfo = "/setinfo"
     static let getPhoto = "/getphoto"
@@ -35,20 +36,15 @@ public struct ResultCode{
 }
 
 public final class NetworkHandler {
-
+    
+    //用户
+    public lazy var user: NWHUser = {
+        return NWHUser.share()
+    }()
+    
     //MARK:- init ++++++++++++++++++++++++++++
     private static let __once = NetworkHandler()
     public class func share() -> NetworkHandler{
         return __once
-    }
-    
-    //MARK:-注册
-    public func register(withParam param: [String: Any], closure: @escaping (_ resultCode: Int, _ message: String, _ data: Any?) -> ()){
-        Session.session(withAction: Actions.register, withMethod: Method.post, withParam: param, closure: closure)
-    }
-    
-    //MARK:-登陆
-    public func login(withUserId userId: String, withPassword password: String, closure: @escaping (_ resultCode: Int, _ message: String, _ data: Any?) -> ()){
-        Session.session(withAction: Actions.logon, withMethod: Method.post, withParam: ["userId": userId, "password": password], closure: closure)
     }
 }

@@ -90,6 +90,7 @@
 		32060CF81DE28409007BC7B3 /* AngelModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32060CF71DE28409007BC7B3 /* AngelModel.swift */; };
 		327D17AC1F1C4D20001669FC /* NetworkHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 327D17AB1F1C4D20001669FC /* NetworkHandler.swift */; };
 		327D17AE1F1C4DA8001669FC /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 327D17AD1F1C4DA8001669FC /* Session.swift */; };
+		327D17B01F1CB5CF001669FC /* NWH+User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 327D17AF1F1CB5CF001669FC /* NWH+User.swift */; };
 		32C103371DC9741D0001D415 /* BindingPeripherals.plist in Resources */ = {isa = PBXBuildFile; fileRef = 32C103361DC9741D0001D415 /* BindingPeripherals.plist */; };
 		32C103391DC974410001D415 /* GodFS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C103381DC974410001D415 /* GodFS.swift */; };
 		32C1033D1DC988130001D415 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 32C1033B1DC988130001D415 /* Model.xcdatamodeld */; };
@@ -247,6 +248,7 @@
 		321DE9DD1E6FAB76006D9CFF /* Track+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Track+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		327D17AB1F1C4D20001669FC /* NetworkHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkHandler.swift; sourceTree = "<group>"; };
 		327D17AD1F1C4DA8001669FC /* Session.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
+		327D17AF1F1CB5CF001669FC /* NWH+User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NWH+User.swift"; sourceTree = "<group>"; };
 		32C103361DC9741D0001D415 /* BindingPeripherals.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = BindingPeripherals.plist; sourceTree = "<group>"; };
 		32C103381DC974410001D415 /* GodFS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GodFS.swift; sourceTree = "<group>"; };
 		32C1033C1DC988130001D415 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
@@ -517,6 +519,7 @@
 			children = (
 				327D17AB1F1C4D20001669FC /* NetworkHandler.swift */,
 				327D17AD1F1C4DA8001669FC /* Session.swift */,
+				327D17AF1F1CB5CF001669FC /* NWH+User.swift */,
 			);
 			name = Network;
 			sourceTree = "<group>";
@@ -804,6 +807,7 @@
 				22122F7A1E53F8E700AA61F4 /* protocol_switch_data.c in Sources */,
 				BE42B4FC1EC3F7C100A3E85B /* TrackHeartrateItem+CoreDataProperties.swift in Sources */,
 				32060CF81DE28409007BC7B3 /* AngelModel.swift in Sources */,
+				327D17B01F1CB5CF001669FC /* NWH+User.swift in Sources */,
 				BE42B5061EC3F7C100A3E85B /* HeartInterval+CoreDataProperties.swift in Sources */,
 				BE42B5031EC3F7C100A3E85B /* Alarm+CoreDataClass.swift in Sources */,
 				22122F6C1E53F8E700AA61F4 /* protocol_health.c in Sources */,
