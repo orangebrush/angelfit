@@ -31,7 +31,7 @@ class ViewController: UIViewController {
     
     private func createContents(){
         let networkHandler = NetworkHandler.share()
-        networkHandler.login(withUserId: "testUserId5", withPassword: "1111111", closure: {
+        networkHandler.login(withUserId: "testUserId5", withPassword: "543256", closure: {
             resultCode, message, data in
             print(resultCode)
             print(message)
