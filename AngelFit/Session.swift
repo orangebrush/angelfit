@@ -8,60 +8,77 @@
 
 import Foundation
 class Session {
-    class func session(withAction action: String, withParam param: [String: Any], closure: @escaping (_ resultCode: Int, _ message:String, _ data: Any?) -> ()) {
+    class func session(withAction action: String, withMethod method: String, withParam param: [String: Any], closure: @escaping (_ resultCode: Int, _ message:String, _ data: Any?) -> ()) {
         
-        do{
-            let body = try JSONSerialization.data(withJSONObject: param, options: JSONSerialization.WritingOptions.prettyPrinted)
+        //回调函数
+        let completionHandler = {(binaryData: Data?, response: URLResponse?, error: Error?) in
+            guard error == nil else{
+                closure(ResultCode.failure, "error", nil)
+                debugPrint("<Session> 请求错误: \(String(describing: error))")
+                return
+            }
             
-            let urlStr = host + action
+            do{
+                guard let result = try JSONSerialization.jsonObject(with: binaryData!, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String: Any] else{
+                    closure(ResultCode.failure, "获取数据错误", nil)
+                    return
+                }
+                
+                debugPrint("<Session> result: \(result)")
+                
+                guard let resultCode = result["resultCode"] as? Int, let message = result["message"] as? String else {
+                    closure(ResultCode.failure, "解析数据错误", nil)
+                    return
+                }
+                
+                if let data = result["data"]{
+                    closure(resultCode, message, data)
+                }else{
+                    closure(resultCode, message, nil)
+                }
+            }catch let responseError{
+                debugPrint("<Session> 数据处理错误: \(responseError)")
+            }
+        }
+        
+        //post or get
+        let isPost = method == Method.post
+        do{
+            
+            var urlStr = host + action
+            if !isPost {
+                for (offset: index, element: (key: key, value: value)) in param.enumerated(){
+                    if index == 0{
+                        urlStr += "?"
+                    }else{
+                        urlStr += "&"
+                    }
+                    let v = value as! String
+                    urlStr.append(key + "=" + v)
+                }
+            }
+            
+            //生成url
             guard let url = URL(string: urlStr) else{
                 return
             }
             
-            var request =  URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 10)
-            request.httpMethod = "POST"
-            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-            request.httpBody = body
+            var request: URLRequest!
+            if isPost {
+                let body = try JSONSerialization.data(withJSONObject: param, options: JSONSerialization.WritingOptions.prettyPrinted)
+                request =  URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 10)
+                request.httpMethod = method
+                request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+                request.httpBody = body
+            }
             
             let session = URLSession.shared
-            let task = session.dataTask(with: request, completionHandler: {
-                binaryData, response, error in
-                
-                /*
-                 通过response["result"]判断后台返回数据是否合法
-                 resultCode == 1 ------成功
-                 resultCode == 0 ------失败
-                 resultCode == 2 ------待定
-                 */
-                guard error == nil else{
-                    closure(0, "error", nil)
-                    debugPrint("<Session> 请求错误: \(String(describing: error))")
-                    return
-                }
-                
-                do{
-                    guard let result = try JSONSerialization.jsonObject(with: binaryData!, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String: Any] else{
-                        closure(0, "获取数据错误", nil)
-                        return
-                    }
-                    
-                    debugPrint("<Session> result: \(result)")
-                    
-                    guard let resultCode = result["resultCode"] as? Int, let message = result["message"] as? String else {
-                        closure(0, "解析数据错误", nil)
-                        return
-                    }
-                    
-                    if let data = result["data"]{
-                        closure(resultCode, message, data)
-                    }else{
-                        closure(resultCode, message, nil)
-                    }
-                }catch let responseError{
-                    debugPrint("<Session> 数据处理错误: \(responseError)")
-                }
-            })
-            
+            var task: URLSessionDataTask
+            if isPost {
+                task = session.dataTask(with: request, completionHandler: completionHandler)
+            }else{
+                task = session.dataTask(with: url, completionHandler: completionHandler)
+            }
             task.resume()
         }catch let error{
             debugPrint("<Session> 解析二进制数据错误: \(error)")
