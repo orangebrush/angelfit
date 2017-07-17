@@ -91,6 +91,7 @@
 		327D17AC1F1C4D20001669FC /* NetworkHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 327D17AB1F1C4D20001669FC /* NetworkHandler.swift */; };
 		327D17AE1F1C4DA8001669FC /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 327D17AD1F1C4DA8001669FC /* Session.swift */; };
 		327D17B01F1CB5CF001669FC /* NWH+User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 327D17AF1F1CB5CF001669FC /* NWH+User.swift */; };
+		327D17B21F1CC03E001669FC /* NWH+Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = 327D17B11F1CC03E001669FC /* NWH+Device.swift */; };
 		32C103371DC9741D0001D415 /* BindingPeripherals.plist in Resources */ = {isa = PBXBuildFile; fileRef = 32C103361DC9741D0001D415 /* BindingPeripherals.plist */; };
 		32C103391DC974410001D415 /* GodFS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C103381DC974410001D415 /* GodFS.swift */; };
 		32C1033D1DC988130001D415 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 32C1033B1DC988130001D415 /* Model.xcdatamodeld */; };
@@ -249,6 +250,7 @@
 		327D17AB1F1C4D20001669FC /* NetworkHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkHandler.swift; sourceTree = "<group>"; };
 		327D17AD1F1C4DA8001669FC /* Session.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
 		327D17AF1F1CB5CF001669FC /* NWH+User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NWH+User.swift"; sourceTree = "<group>"; };
+		327D17B11F1CC03E001669FC /* NWH+Device.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NWH+Device.swift"; sourceTree = "<group>"; };
 		32C103361DC9741D0001D415 /* BindingPeripherals.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = BindingPeripherals.plist; sourceTree = "<group>"; };
 		32C103381DC974410001D415 /* GodFS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GodFS.swift; sourceTree = "<group>"; };
 		32C1033C1DC988130001D415 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
@@ -520,6 +522,7 @@
 				327D17AB1F1C4D20001669FC /* NetworkHandler.swift */,
 				327D17AD1F1C4DA8001669FC /* Session.swift */,
 				327D17AF1F1CB5CF001669FC /* NWH+User.swift */,
+				327D17B11F1CC03E001669FC /* NWH+Device.swift */,
 			);
 			name = Network;
 			sourceTree = "<group>";
@@ -838,6 +841,7 @@
 				22DF62071DD9B6900080B77A /* SF2C.c in Sources */,
 				BE42B51B1EC3F7C100A3E85B /* LostFind+CoreDataClass.swift in Sources */,
 				222B89A31DC735B70056861C /* UUIDConfigure.swift in Sources */,
+				327D17B21F1CC03E001669FC /* NWH+Device.swift in Sources */,
 				22DF61DB1DD99EA20080B77A /* GCDAsyncSocket.m in Sources */,
 				BE42B4FB1EC3F7C100A3E85B /* TrackHeartrateItem+CoreDataClass.swift in Sources */,
 				22122F6A1E53F8E700AA61F4 /* protocol_func_table.c in Sources */,

@@ -68,7 +68,9 @@ class Session {
                 let body = try JSONSerialization.data(withJSONObject: param, options: JSONSerialization.WritingOptions.prettyPrinted)
                 request =  URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 10)
                 request.httpMethod = method
-                if action == Actions.userLogon || action == Actions.userAdd {
+                
+                //与用户相关请求采用form格式
+                if action == Actions.userLogon || action == Actions.userAdd || action == Actions.userUpdate {
                     request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
                     var form = ""
                     for (offset: index, element: (key: key, value: value)) in param.enumerated() {

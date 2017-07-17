@@ -19,9 +19,13 @@ public struct Method{
 
 //actions
 enum Actions{
-    static let userAdd              = "/user/add"               //注册
-    static let userLogon            = "/user/logon"             //登录
+    static let userAdd              = "/user/add"               //新增用户
+    static let userLogon            = "/user/logon"             //用户登陆
     static let userUpdate           = "/user/update"            //更新用户
+    
+    static let deviceAdd            = "/device/add"             //新增设备
+    static let deviceUpdate         = "/device/update"          //更新设备
+    
     static let getInfo = "/getinfo"
     static let setInfo = "/setinfo"
     static let getPhoto = "/getphoto"
@@ -40,6 +44,11 @@ public final class NetworkHandler {
     //用户
     public lazy var user: NWHUser = {
         return NWHUser.share()
+    }()
+    
+    //设备
+    public lazy var device: NWHDevice = {
+        return NWHDevice.share()
     }()
     
     //MARK:- init ++++++++++++++++++++++++++++
