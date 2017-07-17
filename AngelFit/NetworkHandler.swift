@@ -49,6 +49,6 @@ public final class NetworkHandler {
     
     //MARK:-登陆
     public func login(withUserId userId: String, withPassword password: String, closure: @escaping (_ resultCode: Int, _ message: String, _ data: Any?) -> ()){
-        Session.session(withAction: Actions.logon, withMethod: Method.get, withParam: ["userId": userId, "password": password], closure: closure)
+        Session.session(withAction: Actions.logon, withMethod: Method.post, withParam: ["userId": userId, "password": password], closure: closure)
     }
 }

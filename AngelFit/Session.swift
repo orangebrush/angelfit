@@ -68,8 +68,21 @@ class Session {
                 let body = try JSONSerialization.data(withJSONObject: param, options: JSONSerialization.WritingOptions.prettyPrinted)
                 request =  URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 10)
                 request.httpMethod = method
-                request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-                request.httpBody = body
+                if action == Actions.logon || action == Actions.register {
+                    request.setValue("appliction/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+                    var form = ""
+                    for (offset: index, element: (key: key, value: value)) in param.enumerated() {
+                        if index != 0 {
+                            form += "&"
+                        }
+                        let v = value as! String
+                        form.append(key + "=" + v)
+                    }
+                    request.httpBody = form.data(using: .utf8)
+                }else {
+                    request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+                    request.httpBody = body
+                }
             }
             
             let session = URLSession.shared
