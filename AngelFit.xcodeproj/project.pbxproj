@@ -88,6 +88,8 @@
 		22DF625D1DDBE9440080B77A /* Protocol_model.m in Sources */ = {isa = PBXBuildFile; fileRef = 22DF62571DDBE9440080B77A /* Protocol_model.m */; };
 		22DF625E1DDBFA530080B77A /* PeripheralManager.swift in Headers */ = {isa = PBXBuildFile; fileRef = 222E7D721DC87A55001BA04A /* PeripheralManager.swift */; settings = {ATTRIBUTES = (Public, ); }; };
 		32060CF81DE28409007BC7B3 /* AngelModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32060CF71DE28409007BC7B3 /* AngelModel.swift */; };
+		327D17AC1F1C4D20001669FC /* NetworkHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 327D17AB1F1C4D20001669FC /* NetworkHandler.swift */; };
+		327D17AE1F1C4DA8001669FC /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 327D17AD1F1C4DA8001669FC /* Session.swift */; };
 		32C103371DC9741D0001D415 /* BindingPeripherals.plist in Resources */ = {isa = PBXBuildFile; fileRef = 32C103361DC9741D0001D415 /* BindingPeripherals.plist */; };
 		32C103391DC974410001D415 /* GodFS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C103381DC974410001D415 /* GodFS.swift */; };
 		32C1033D1DC988130001D415 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 32C1033B1DC988130001D415 /* Model.xcdatamodeld */; };
@@ -243,6 +245,8 @@
 		321DE9D11E6FA060006D9CFF /* TrackHeartrateItem+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TrackHeartrateItem+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		321DE9DC1E6FAB76006D9CFF /* Track+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Track+CoreDataClass.swift"; sourceTree = "<group>"; };
 		321DE9DD1E6FAB76006D9CFF /* Track+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Track+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		327D17AB1F1C4D20001669FC /* NetworkHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkHandler.swift; sourceTree = "<group>"; };
+		327D17AD1F1C4DA8001669FC /* Session.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
 		32C103361DC9741D0001D415 /* BindingPeripherals.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = BindingPeripherals.plist; sourceTree = "<group>"; };
 		32C103381DC974410001D415 /* GodFS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GodFS.swift; sourceTree = "<group>"; };
 		32C1033C1DC988130001D415 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
@@ -410,6 +414,7 @@
 			children = (
 				22122F291E53F8E600AA61F4 /* Protocol_c */,
 				22DF625F1DDC2F5E0080B77A /* APIList */,
+				327D17AA1F1C4CFA001669FC /* Network */,
 				22DF62511DDBE9440080B77A /* iOSManager */,
 				22DF61F81DD9B63C0080B77A /* TimeManager */,
 				22DF61D31DD99EA20080B77A /* SocketLog */,
@@ -505,6 +510,15 @@
 				32E971D71DE7D13F0029DE9F /* Debug.swift */,
 			);
 			path = APIList;
+			sourceTree = "<group>";
+		};
+		327D17AA1F1C4CFA001669FC /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				327D17AB1F1C4D20001669FC /* NetworkHandler.swift */,
+				327D17AD1F1C4DA8001669FC /* Session.swift */,
+			);
+			name = Network;
 			sourceTree = "<group>";
 		};
 		32C103351DC973D80001D415 /* fs */ = {
@@ -724,7 +738,7 @@
 				TargetAttributes = {
 					222B89841DC7325B0056861C = {
 						CreatedOnToolsVersion = 8.1;
-						DevelopmentTeam = T65EE75V48;
+						DevelopmentTeam = NWGF84NL9Q;
 						LastSwiftMigration = 0810;
 						ProvisioningStyle = Automatic;
 					};
@@ -783,6 +797,7 @@
 				222E7D731DC87A55001BA04A /* PeripheralManager.swift in Sources */,
 				BE42B5141EC3F7C100A3E85B /* HeartRateItem+CoreDataProperties.swift in Sources */,
 				22DF62031DD9B63C0080B77A /* CBridgingManager.swift in Sources */,
+				327D17AC1F1C4D20001669FC /* NetworkHandler.swift in Sources */,
 				22122F871E53F8E700AA61F4 /* vbus.c in Sources */,
 				BE42B51E1EC3F7C100A3E85B /* LongSit+CoreDataProperties.swift in Sources */,
 				BE42B5151EC3F7C100A3E85B /* SportData+CoreDataClass.swift in Sources */,
@@ -825,6 +840,7 @@
 				BE5476711E60369C00B1DC2D /* Date+Extension.swift in Sources */,
 				22DF625A1DDBE9440080B77A /* Protocol_ios_port.c in Sources */,
 				22122F6E1E53F8E700AA61F4 /* protocol_health_resolve_heart_rate.c in Sources */,
+				327D17AE1F1C4DA8001669FC /* Session.swift in Sources */,
 				BE42B5121EC3F7C100A3E85B /* HeartRateData+CoreDataProperties.swift in Sources */,
 				22DF62431DDB06E10080B77A /* CFunc.c in Sources */,
 				BE42B5171EC3F7C100A3E85B /* HandGesture+CoreDataClass.swift in Sources */,
@@ -998,7 +1014,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = T65EE75V48;
+				DEVELOPMENT_TEAM = NWGF84NL9Q;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -1025,7 +1041,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = T65EE75V48;
+				DEVELOPMENT_TEAM = NWGF84NL9Q;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
