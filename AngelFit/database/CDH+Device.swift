@@ -11,7 +11,7 @@ import CoreData
 extension CoreDataHandler{
     
     //MARK:- 插入设备
-    public func insertDevice(withAccessoryId accessoryId: Int64, byUserId userId: Int64? = nil) -> Device?{
+    public func insertDevice(withAccessoryId accessoryId: String, byUserId userId: Int64? = nil) -> Device?{
         
         //判断userId
         guard let id = checkoutUserId(withOptionUserId: userId) else {
@@ -52,7 +52,7 @@ extension CoreDataHandler{
     }
     
     //MARK:- 根据userId accessoryId获取设备
-    public func selectDevice(withAccessoryId accessoryId: Int64, byUserId userId: Int64? = nil) -> Device?{
+    public func selectDevice(withAccessoryId accessoryId: String, byUserId userId: Int64? = nil) -> Device?{
         
         //判断userId
         guard let id = checkoutUserId(withOptionUserId: userId) else {

@@ -10,7 +10,7 @@ import Foundation
 import CoreData
 extension CoreDataHandler{
     //插入 alarm
-    public func insertDeviceAlarm(withUserId userId: Int64? = nil, withAccessoryId accessoryId: Int64) -> DeviceAlarm?{
+    public func insertDeviceAlarm(withUserId userId: Int64? = nil, withAccessoryId accessoryId: String) -> DeviceAlarm?{
         
         guard let uid = checkoutUserId(withOptionUserId: userId) else {
             return nil
@@ -18,7 +18,7 @@ extension CoreDataHandler{
         
         //获取设备
         let device = selectDevice(withAccessoryId: accessoryId, byUserId: uid)
-        
+
         //获取最大闹钟数
         guard let maxAlarmCount = device?.deviceFunctionSwitchSetting?.alarmOnCount else{
             return nil

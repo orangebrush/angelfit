@@ -12,11 +12,11 @@ import CoreLocation
 //MARK:- EachTrainningData
 extension CoreDataHandler{
     
-    //插入单日血压数据
-    public func insertEachTrainningData(byUserId userId: Int64? = nil, withDate date: Date = Date()) -> EachTrainningData? {
+    //插入单日运动数据
+    public func insertEachTrainningData(withAccessoryId accessoryId: String, byUserId userId: Int64? = nil, withDate date: Date = Date()) -> EachTrainningData? {
         
         //判断是否已存在当日数据
-        var eachTrainningData = selectEachTrainningData(byUserId: userId, withDate: date)
+        var eachTrainningData = selectEachTrainningData(withAccessoryId: accessoryId, byUserId: userId, withDate: date)
         if let oldResult = eachTrainningData {
             return oldResult
         }
@@ -39,11 +39,11 @@ extension CoreDataHandler{
         
         eachTrainningData?.objectId = userActivity.objectId
         
-        //获取需插入的用户
-        guard let user = selectUser(withUserId: uid) else{
+        //获取需插入的设备
+        guard let device = selectDevice(withAccessoryId: accessoryId, byUserId: userId) else {
             return nil
         }
-        user.addToEachTrainningDataList(newResult)
+        device.addToEachTrainningDataList(newResult)
         
         guard commit() else {
             return nil
@@ -53,14 +53,14 @@ extension CoreDataHandler{
     }
     
     //根据日期获取EachTrainningData
-    public func selectEachTrainningData(byUserId userId: Int64?, withDate date: Date = Date()) -> EachTrainningData?{
+    public func selectEachTrainningData(withAccessoryId accessoryId: String, byUserId userId: Int64?, withDate date: Date = Date()) -> EachTrainningData?{
         guard let uid = checkoutUserId(withOptionUserId: userId) else {
             return nil
         }
         
         //根据用户设备列表获取设备
         let request: NSFetchRequest<EachTrainningData> = EachTrainningData.fetchRequest()
-        let predicate = NSPredicate(format: "user.userId = \(uid) AND date = \(date)")
+        let predicate = NSPredicate(format: "device.accessoryId = \(accessoryId) AND date = \(date)")
         
         request.predicate = predicate
         do{
@@ -73,7 +73,7 @@ extension CoreDataHandler{
     }
     
     //根据日期范围获取EachTrainningData
-    public func selectEachTrainningDataList(byUserId userId: Int64?, withDate date: Date = Date(), withDayOffset dayOffset: Int = 0) -> [EachTrainningData]{
+    public func selectEachTrainningDataList(withAccessoryId accessoryId: String, byUserId userId: Int64?, withDate date: Date = Date(), withDayOffset dayOffset: Int = 0) -> [EachTrainningData]{
         
         guard let uid = checkoutUserId(withOptionUserId: userId) else {
             return []
@@ -83,7 +83,7 @@ extension CoreDataHandler{
         let request: NSFetchRequest<EachTrainningData> = EachTrainningData.fetchRequest()
         let startDate = dayOffset >= 0 ? translate(date) : translate(date, withDayOffset: dayOffset)  //as NSDate
         let endDate = dayOffset >= 0 ? translate(date, withDayOffset: dayOffset) : translate(date)    //as NSDate
-        let predicate = NSPredicate(format: "user.userId = \(uid) AND date >= %@ AND date <= %@", startDate as CVarArg, endDate as CVarArg)
+        let predicate = NSPredicate(format: "device.accessoryId = \(accessoryId) AND date >= %@ AND date <= %@", startDate as CVarArg, endDate as CVarArg)
         
         request.predicate = predicate
         do{
@@ -96,7 +96,7 @@ extension CoreDataHandler{
     }
     
     //根据日期范围获取EachTrainningData 日周月年
-    public func selectEachTrainningDataList(byUserId userId: Int64?, withDate date: Date = Date(), withCDHRange cdhRange: CDHRange) -> [EachTrainningData]{
+    public func selectEachTrainningDataList(withAccessoryId accessoryId: String, byUserId userId: Int64?, withDate date: Date = Date(), withCDHRange cdhRange: CDHRange) -> [EachTrainningData]{
         
         guard let uid = userId else {
             return []
@@ -109,12 +109,12 @@ extension CoreDataHandler{
         case .day:
             let startDate = translate(date)
             let endDate = translate(date)
-            predicate = NSPredicate(format: "user.userId = \(uid) AND date >= %@ AND date <= %@", startDate as CVarArg, endDate as CVarArg)
+            predicate = NSPredicate(format: "device.accessoryId = \(accessoryId) AND date >= %@ AND date <= %@", startDate as CVarArg, endDate as CVarArg)
         case .week:
             let weekday = calendar.component(.weekday, from: date)
             let startDate = translate(date, withDayOffset: -weekday)
             let endDate = translate(date, withDayOffset: 7 - weekday)
-            predicate = NSPredicate(format: "user.userId = \(uid) AND date >= %@ AND date <= %@", startDate as CVarArg, endDate as CVarArg)
+            predicate = NSPredicate(format: "device.accessoryId = \(accessoryId) AND date >= %@ AND date <= %@", startDate as CVarArg, endDate as CVarArg)
         case .month:
             let day = calendar.component(.day, from: date)
             if let dayRange = calendar.range(of: .day, in: .month, for: date){
@@ -122,7 +122,7 @@ extension CoreDataHandler{
                 
                 let startDate = translate(date, withDayOffset: -day)
                 let endDate = translate(date, withDayOffset: daysOfMonth - day)
-                predicate = NSPredicate(format: "user.userId = \(uid) AND date >= %@ AND date <= %@", startDate as CVarArg, endDate as CVarArg)
+                predicate = NSPredicate(format: "device.accessoryId = \(accessoryId) AND date >= %@ AND date <= %@", startDate as CVarArg, endDate as CVarArg)
             }else{
                 return []
             }
@@ -138,7 +138,7 @@ extension CoreDataHandler{
                     //创建结束日期
                     if let date2 = calendar.date(from: components){
                         let endDate = translate(date2.GMT(), withDayOffset: -1)
-                        predicate = NSPredicate(format: "user.userId = \(uid) AND date >= %@ AND date <= %@", startDate as CVarArg, endDate as CVarArg)
+                        predicate = NSPredicate(format: "device.accessoryId = \(accessoryId) AND date >= %@ AND date <= %@", startDate as CVarArg, endDate as CVarArg)
                     }else{
                         return []
                     }
@@ -149,7 +149,7 @@ extension CoreDataHandler{
                 return []
             }
         case .all:
-            predicate = NSPredicate(format: "user.userId = \(uid)")
+            predicate = NSPredicate(format: "device.accessoryId = \(accessoryId)")
         }
         
         request.predicate = predicate
@@ -163,8 +163,8 @@ extension CoreDataHandler{
     }
     
     //MARK:- 根据日期删除对应userId血压数据
-    public func deleteEachTrainningData(byUserId userId: Int64, withDate date: Date = Date()){
-        guard let eachTrainningData = selectEachTrainningData(byUserId: userId, withDate: date) else {
+    public func deleteEachTrainningData(withAccessoryId accessoryId: String, byUserId userId: Int64, withDate date: Date = Date()){
+        guard let eachTrainningData = selectEachTrainningData(withAccessoryId: accessoryId, byUserId: userId, withDate: date) else {
             return
         }
         
@@ -175,9 +175,9 @@ extension CoreDataHandler{
     }
     
     //MARK:- 坐标操作
-    public func createEachTrainningGPSLoggerItem(byUserId userId: Int64?, withDate date: Date, withItemId itemId: Int16, withCoordinate2D coordinate: CLLocationCoordinate2D) -> EachTrainningGPSLoggerItem? {
+    public func createEachTrainningGPSLoggerItem(withAccessoryId accessoryId: String, byUserId userId: Int64?, withDate date: Date, withItemId itemId: Int16, withCoordinate2D coordinate: CLLocationCoordinate2D) -> EachTrainningGPSLoggerItem? {
         //判断item是否存在
-        var eachTrainningGPSLoggerItem = selectEachTrainningGPSLoggerItem(byUserId: userId, withDate: date, withItemId: itemId)
+        var eachTrainningGPSLoggerItem = selectEachTrainningGPSLoggerItem(withAccessoryId: accessoryId, byUserId: userId, withDate: date, withItemId: itemId)
         if let oldItem = eachTrainningGPSLoggerItem{
             return oldItem
         }
@@ -191,7 +191,7 @@ extension CoreDataHandler{
         newItem.latitude = coordinate.latitude
         
         //插入EachTrainningData item列表
-        guard let eachTrainningData = selectEachTrainningData(byUserId: userId, withDate: date) else {
+        guard let eachTrainningData = selectEachTrainningData(withAccessoryId: accessoryId, byUserId: userId, withDate: date) else {
             return nil
         }
         
@@ -203,13 +203,13 @@ extension CoreDataHandler{
         return newItem
     }
     
-    public func selectEachTrainningGPSLoggerItem(byUserId userId: Int64?, withDate date: Date, withItemId itemId: Int16) -> EachTrainningGPSLoggerItem? {
+    public func selectEachTrainningGPSLoggerItem(withAccessoryId accessoryId: String, byUserId userId: Int64?, withDate date: Date, withItemId itemId: Int16) -> EachTrainningGPSLoggerItem? {
         guard let uid = userId else {
             return nil
         }
         
         let request: NSFetchRequest<EachTrainningGPSLoggerItem> = EachTrainningGPSLoggerItem.fetchRequest()
-        let predicate = NSPredicate(format: "eachTrainningData.date = \(date) AND eachTrainningData.user.userId = \(uid)")
+        let predicate = NSPredicate(format: "eachTrainningData.date = \(date) AND eachTrainningData.device.accessoryid = \(accessoryId)")
         request.predicate = predicate
         
         do {
@@ -222,9 +222,9 @@ extension CoreDataHandler{
     }
     
     //MARK:- 心率操作
-    public func createEachTrainningHeartRateItem(byUserId userId: Int64?, withDate date: Date, withItemId itemId: Int16, withHeartrateValue hrValue: Int16) -> EachTrainningHeartRateItem? {
+    public func createEachTrainningHeartRateItem(withAccessoryId accessoryId: String, byUserId userId: Int64?, withDate date: Date, withItemId itemId: Int16, withHeartrateValue hrValue: Int16) -> EachTrainningHeartRateItem? {
         //判断item是否存在
-        var eachTrainningHeartRateItem = selectEachTrainningHeartRateItem(byUserId: userId, withDate: date, withItemId: itemId)
+        var eachTrainningHeartRateItem = selectEachTrainningHeartRateItem(withAccessoryId: accessoryId, byUserId: userId, withDate: date, withItemId: itemId)
         if let oldItem = eachTrainningHeartRateItem{
             return oldItem
         }
@@ -234,10 +234,10 @@ extension CoreDataHandler{
         }
         
         newItem.id = itemId
-        newItem.value = hrValue
+        newItem.value = Int32(hrValue)
         
         //插入EachTrainningData item列表
-        guard let eachTrainningData = selectEachTrainningData(byUserId: userId, withDate: date) else {
+        guard let eachTrainningData = selectEachTrainningData(withAccessoryId: accessoryId, byUserId: userId, withDate: date) else {
             return nil
         }
         
@@ -249,13 +249,13 @@ extension CoreDataHandler{
         return newItem
     }
     
-    public func selectEachTrainningHeartRateItem(byUserId userId: Int64?, withDate date: Date, withItemId itemId: Int16) -> EachTrainningHeartRateItem? {
+    public func selectEachTrainningHeartRateItem(withAccessoryId accessoryId: String, byUserId userId: Int64?, withDate date: Date, withItemId itemId: Int16) -> EachTrainningHeartRateItem? {
         guard let uid = userId else {
             return nil
         }
         
         let request: NSFetchRequest<EachTrainningHeartRateItem> = EachTrainningHeartRateItem.fetchRequest()
-        let predicate = NSPredicate(format: "eachTrainningData.date = \(date) AND eachTrainningData.user.userId = \(uid)")
+        let predicate = NSPredicate(format: "eachTrainningData.date = \(date) AND eachTrainningData.device.accessoryId = \(accessoryId)")
         request.predicate = predicate
         
         do {
@@ -268,9 +268,9 @@ extension CoreDataHandler{
     }
     
     //MARK:- 步数操作
-    public func createEachTrainningStepItem(byUserId userId: Int64?, withDate date: Date, withItemId itemId: Int16, withSteps steps: Int16) -> EachTrainningStepItem? {
+    public func createEachTrainningStepItem(withAccessoryId accessoryId: String, byUserId userId: Int64?, withDate date: Date, withItemId itemId: Int16, withSteps steps: Int16) -> EachTrainningStepItem? {
         //判断item是否存在
-        var eachTrainningStepItem = selectEachTrainningStepItem(byUserId: userId, withDate: date, withItemId: itemId)
+        var eachTrainningStepItem = selectEachTrainningStepItem(withAccessoryId: accessoryId, byUserId: userId, withDate: date, withItemId: itemId)
         if let oldItem = eachTrainningStepItem{
             return oldItem
         }
@@ -283,7 +283,7 @@ extension CoreDataHandler{
         newItem.steps = steps
         
         //插入EachTrainningData item列表
-        guard let eachTrainningData = selectEachTrainningData(byUserId: userId, withDate: date) else {
+        guard let eachTrainningData = selectEachTrainningData(withAccessoryId: accessoryId, byUserId: userId, withDate: date) else {
             return nil
         }
         
@@ -295,13 +295,13 @@ extension CoreDataHandler{
         return newItem
     }
     
-    public func selectEachTrainningStepItem(byUserId userId: Int64?, withDate date: Date, withItemId itemId: Int16) -> EachTrainningStepItem? {
+    public func selectEachTrainningStepItem(withAccessoryId accessoryId: String, byUserId userId: Int64?, withDate date: Date, withItemId itemId: Int16) -> EachTrainningStepItem? {
         guard let uid = userId else {
             return nil
         }
         
         let request: NSFetchRequest<EachTrainningStepItem> = EachTrainningStepItem.fetchRequest()
-        let predicate = NSPredicate(format: "eachTrainningData.date = \(date) AND eachTrainningData.user.userId = \(uid)")
+        let predicate = NSPredicate(format: "eachTrainningData.date = \(date) AND eachTrainningData.device.accessoryId = \(accessoryId)")
         request.predicate = predicate
         
         do {

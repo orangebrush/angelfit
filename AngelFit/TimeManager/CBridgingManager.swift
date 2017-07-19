@@ -29,8 +29,11 @@ public class CBridgingManager {
         }
     }
     
-    //零时保存当前macAddress
+    //临时保存当前macAddress
     var currentMacAddress: String?
+    
+    //临时保存当前accessoryId
+    var currentAccessoryId: String?
     
     
     //MARK:- SHARE

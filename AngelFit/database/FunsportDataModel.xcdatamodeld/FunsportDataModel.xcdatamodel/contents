@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="12141" systemVersion="16E195" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="12141" systemVersion="16F73" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="BloodPressureEverydayData" representedClassName="BloodPressureEverydayData" syncable="YES" codeGenerationType="class">
         <attribute name="avgDiastolicPressure" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="avgSystolicPressure" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
@@ -7,8 +7,7 @@
         <attribute name="objectId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="offset" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <relationship name="bloodPressureEverydayDataItemList" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="BloodPressureEverydayDataItem" inverseName="bloodPressureEverydayData" inverseEntity="BloodPressureEverydayDataItem" syncable="YES"/>
-        <relationship name="device" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Device" syncable="YES"/>
-        <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="bloodPressureEverydayDataList" inverseEntity="User" syncable="YES"/>
+        <relationship name="device" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Device" inverseName="bloodPressureEverydayDataList" inverseEntity="Device" syncable="YES"/>
     </entity>
     <entity name="BloodPressureEverydayDataItem" representedClassName="BloodPressureEverydayDataItem" syncable="YES" codeGenerationType="class">
         <attribute name="diastolicPressure" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
@@ -18,9 +17,11 @@
         <relationship name="bloodPressureEverydayData" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="BloodPressureEverydayData" inverseName="bloodPressureEverydayDataItemList" inverseEntity="BloodPressureEverydayData" syncable="YES"/>
     </entity>
     <entity name="Device" representedClassName="Device" syncable="YES" codeGenerationType="class">
-        <attribute name="accessoryId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="accessoryId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="batteryLevel" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="batteryLife" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="batteryStatus" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="creativeDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="isLogin" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="isPaired" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="isRebooted" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
@@ -30,8 +31,9 @@
         <attribute name="runMode" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="showName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="usageHour" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="usageMinutes" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="uuid" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="bloodPressureEverydayDataList" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="BloodPressureEverydayData" inverseName="device" inverseEntity="BloodPressureEverydayData" syncable="YES"/>
         <relationship name="deviceAlarmList" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="DeviceAlarm" inverseName="device" inverseEntity="DeviceAlarm" syncable="YES"/>
         <relationship name="deviceAntiLostSetting" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DeviceAntiLostSetting" inverseName="device" inverseEntity="DeviceAntiLostSetting" syncable="YES"/>
         <relationship name="deviceFunction" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DeviceFunction" inverseName="device" inverseEntity="DeviceFunction" syncable="YES"/>
@@ -43,7 +45,12 @@
         <relationship name="deviceLongSitSetting" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DeviceLongSitSetting" inverseName="device" inverseEntity="DeviceLongSitSetting" syncable="YES"/>
         <relationship name="deviceMsgNotifySwitch" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DeviceMsgNotifySwitch" inverseName="device" inverseEntity="DeviceMsgNotifySwitch" syncable="YES"/>
         <relationship name="deviceSportShortcut" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DeviceSportShortcut" inverseName="device" inverseEntity="DeviceSportShortcut" syncable="YES"/>
+        <relationship name="eachTrainningDataList" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EachTrainningData" inverseName="device" inverseEntity="EachTrainningData" syncable="YES"/>
+        <relationship name="heartRateEverydayDataList" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="HeartRateEverydayData" inverseName="device" inverseEntity="HeartRateEverydayData" syncable="YES"/>
+        <relationship name="sleepEverydayDataList" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SleepEverydayData" inverseName="device" inverseEntity="SleepEverydayData" syncable="YES"/>
+        <relationship name="sportEverydayDataList" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SportEverydayData" inverseName="device" inverseEntity="SportEverydayData" syncable="YES"/>
         <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="deviceList" inverseEntity="User" syncable="YES"/>
+        <relationship name="userActivityList" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="UserActivity" syncable="YES"/>
     </entity>
     <entity name="DeviceAlarm" representedClassName="DeviceAlarm" syncable="YES" codeGenerationType="class">
         <attribute name="alarmId" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
@@ -266,12 +273,12 @@
         <attribute name="objectId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="startedAt" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="steps" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="stepsIntervalSeconds" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <relationship name="device" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Device" syncable="YES"/>
+        <relationship name="device" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Device" inverseName="eachTrainningDataList" inverseEntity="Device" syncable="YES"/>
         <relationship name="gpsLoggerItems" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EachTrainningGPSLoggerItem" inverseName="eachTrainningData" inverseEntity="EachTrainningGPSLoggerItem" syncable="YES"/>
         <relationship name="heartRateActivityItems" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EachTrainningHeartRateItem" inverseName="eachTrainningData" inverseEntity="EachTrainningHeartRateItem" syncable="YES"/>
         <relationship name="stepPreMinuteItems" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EachTrainningStepItem" inverseName="eachTrainningData" inverseEntity="EachTrainningStepItem" syncable="YES"/>
-        <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="eachTrainningDataList" inverseEntity="User" syncable="YES"/>
     </entity>
     <entity name="EachTrainningGPSLoggerItem" representedClassName="EachTrainningGPSLoggerItem" syncable="YES" codeGenerationType="class">
         <attribute name="id" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
@@ -300,6 +307,7 @@
     <entity name="HeartRateEverydayData" representedClassName="HeartRateEverydayData" syncable="YES" codeGenerationType="class">
         <attribute name="aerobicMinutes" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="aerobicThreshold" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="burnFatMinutes" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="burnFatThreshold" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="limitMinutes" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
@@ -307,9 +315,8 @@
         <attribute name="objectId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="offset" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="silentHeartRate" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <relationship name="device" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Device" syncable="YES"/>
+        <relationship name="device" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Device" inverseName="heartRateEverydayDataList" inverseEntity="Device" syncable="YES"/>
         <relationship name="heartRateEverydayItemList" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="HeartRateEverydayDataItem" inverseName="heartRateEverydayData" inverseEntity="HeartRateEverydayDataItem" syncable="YES"/>
-        <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="heartRateEverydayDataList" inverseEntity="User" syncable="YES"/>
     </entity>
     <entity name="HeartRateEverydayDataItem" representedClassName="HeartRateEverydayDataItem" syncable="YES" codeGenerationType="class">
         <attribute name="id" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
@@ -336,9 +343,8 @@
         <attribute name="objectId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="remSleepMinutes" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="totalMinutes" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <relationship name="device" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Device" syncable="YES"/>
+        <relationship name="device" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Device" inverseName="sleepEverydayDataList" inverseEntity="Device" syncable="YES"/>
         <relationship name="sleepEverydayDataItemList" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SleepEverydayDataItem" inverseName="sleepEverydayData" inverseEntity="SleepEverydayDataItem" syncable="YES"/>
-        <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="sleepEverydayDataList" inverseEntity="User" syncable="YES"/>
     </entity>
     <entity name="SleepEverydayDataItem" representedClassName="SleepEverydayDataItem" syncable="YES" codeGenerationType="class">
         <attribute name="durationsMinute" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
@@ -356,9 +362,8 @@
         <attribute name="totalCalories" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="totalDistances" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="totalSteps" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <relationship name="device" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Device" syncable="YES"/>
+        <relationship name="device" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Device" inverseName="sportEverydayDataList" inverseEntity="Device" syncable="YES"/>
         <relationship name="sportEverydayDataItemList" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SportEverydayDataItem" inverseName="sportEverydayData" inverseEntity="SportEverydayDataItem" syncable="YES"/>
-        <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="sportEverydayDataList" inverseEntity="User" syncable="YES"/>
     </entity>
     <entity name="SportEverydayDataItem" representedClassName="SportEverydayDataItem" syncable="YES" codeGenerationType="class">
         <attribute name="activeDurationMinutes" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
@@ -382,14 +387,9 @@
     <entity name="User" representedClassName="User" syncable="YES" codeGenerationType="class">
         <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="userId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <relationship name="bloodPressureEverydayDataList" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="BloodPressureEverydayData" inverseName="user" inverseEntity="BloodPressureEverydayData" syncable="YES"/>
         <relationship name="deviceList" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Device" inverseName="user" inverseEntity="Device" syncable="YES"/>
-        <relationship name="eachTrainningDataList" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EachTrainningData" inverseName="user" inverseEntity="EachTrainningData" syncable="YES"/>
         <relationship name="goal" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Goal" inverseName="user" inverseEntity="Goal" syncable="YES"/>
-        <relationship name="heartRateEverydayDataList" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="HeartRateEverydayData" inverseName="user" inverseEntity="HeartRateEverydayData" syncable="YES"/>
         <relationship name="mindBodyStateList" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MindBodyState" inverseName="user" inverseEntity="MindBodyState" syncable="YES"/>
-        <relationship name="sleepEverydayDataList" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SleepEverydayData" inverseName="user" inverseEntity="SleepEverydayData" syncable="YES"/>
-        <relationship name="sportEverydayDataList" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SportEverydayData" inverseName="user" inverseEntity="SportEverydayData" syncable="YES"/>
         <relationship name="unitSetting" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="UnitSetting" inverseName="user" inverseEntity="UnitSetting" syncable="YES"/>
         <relationship name="userActivityList" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="UserActivity" inverseName="user" inverseEntity="UserActivity" syncable="YES"/>
         <relationship name="userFamily" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="UserFamily" inverseName="users" inverseEntity="UserFamily" syncable="YES"/>
@@ -418,7 +418,7 @@
         <relationship name="userActivity" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="UserActivity" inverseName="userActivityCommentList" inverseEntity="UserActivity" syncable="YES"/>
     </entity>
     <entity name="UserActivityLiker" representedClassName="UserActivityLiker" syncable="YES" codeGenerationType="class">
-        <attribute name="id" optional="YES" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="likeUserId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <relationship name="userActivity" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="UserActivity" inverseName="userActivityLikerList" inverseEntity="UserActivity" syncable="YES"/>
@@ -464,9 +464,9 @@
         <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="weightDataList" inverseEntity="User" syncable="YES"/>
     </entity>
     <elements>
-        <element name="BloodPressureEverydayData" positionX="-7011" positionY="-12777" width="128" height="163"/>
+        <element name="BloodPressureEverydayData" positionX="-7011" positionY="-12807" width="128" height="148"/>
         <element name="BloodPressureEverydayDataItem" positionX="-6833" positionY="-12756" width="128" height="120"/>
-        <element name="Device" positionX="-7470" positionY="-12009" width="128" height="433"/>
+        <element name="Device" positionX="-7454" positionY="-12009" width="128" height="555"/>
         <element name="DeviceAlarm" positionX="-7623" positionY="-12096" width="128" height="180"/>
         <element name="DeviceAntiLostSetting" positionX="-7787" positionY="-11592" width="128" height="150"/>
         <element name="DeviceFunction" positionX="-7940" positionY="-12114" width="128" height="510"/>
@@ -475,7 +475,7 @@
         <element name="DeviceFunctionSportItem" positionX="-7956" positionY="-11553" width="128" height="465"/>
         <element name="DeviceFunctionSwitchSetting" positionX="-7805" positionY="-12096" width="128" height="300"/>
         <element name="DeviceHeartRateMonitorSetting" positionX="-7803" positionY="-11772" width="128" height="135"/>
-        <element name="DeviceLongSitSetting" positionX="-7454" positionY="-11322" width="128" height="150"/>
+        <element name="DeviceLongSitSetting" positionX="-7461" positionY="-11304" width="128" height="150"/>
         <element name="DeviceMsgNotifySwitch" positionX="-7598" positionY="-11403" width="128" height="315"/>
         <element name="DeviceSportShortcut" positionX="-7157" positionY="-11385" width="128" height="300"/>
         <element name="DoctorHaSuggestion" positionX="-7724" positionY="-13008" width="128" height="133"/>
@@ -488,12 +488,12 @@
         <element name="HeartRateEverydayData" positionX="-6995" positionY="-12609" width="128" height="223"/>
         <element name="HeartRateEverydayDataItem" positionX="-6831" positionY="-12501" width="128" height="105"/>
         <element name="MindBodyState" positionX="-7659" positionY="-12591" width="128" height="103"/>
-        <element name="SleepEverydayData" positionX="-6959" positionY="-12141" width="128" height="268"/>
+        <element name="SleepEverydayData" positionX="-6959" positionY="-12141" width="128" height="253"/>
         <element name="SleepEverydayDataItem" positionX="-6797" positionY="-12006" width="128" height="105"/>
-        <element name="SportEverydayData" positionX="-6986" positionY="-12375" width="128" height="223"/>
+        <element name="SportEverydayData" positionX="-6986" positionY="-12375" width="128" height="208"/>
         <element name="SportEverydayDataItem" positionX="-6815" positionY="-12303" width="128" height="150"/>
         <element name="UnitSetting" positionX="-7578" positionY="-12483" width="128" height="163"/>
-        <element name="User" positionX="-7344" positionY="-12442" width="128" height="298"/>
+        <element name="User" positionX="-7344" positionY="-12442" width="128" height="223"/>
         <element name="UserActivity" positionX="-7344" positionY="-13011" width="128" height="193"/>
         <element name="UserActivityComment" positionX="-7722" positionY="-12870" width="128" height="118"/>
         <element name="UserActivityLiker" positionX="-7661" positionY="-12744" width="128" height="103"/>

@@ -16,9 +16,16 @@ public class NWHDevice{
     
     //MARK:-新增设备
     /*
-     * @param 
+     * @param id            require 由设备唯一id,由functoryId与uuid组成
+     * @param macAddress    require 设备物理地址
+     * @param uuid          require 设备uuid
      */
     public func add(withParam param: [String: Any], closure: @escaping (_ resultCode: Int, _ message: String, _ data: Any?) -> ()){
         Session.session(withAction: Actions.deviceAdd, withMethod: Method.post, withParam: param, closure: closure)
+    }
+    
+    //MARK:-设备更新
+    public func update(withParam param: [String: Any], closure: @escaping (_ resultCode: Int, _ message: String, _ data: Any?) -> ()){
+        Session.session(withAction: Actions.deviceUpdate, withMethod: Method.post, withParam: param, closure: closure)
     }
 }

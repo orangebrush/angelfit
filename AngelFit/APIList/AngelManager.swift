@@ -14,6 +14,10 @@ public final class AngelManager: NSObject {
     
     private var peripheral: CBPeripheral?       //当前设备
     public var macAddress: String?              //当前设备macAddress
+    public var type: Int16?                     //设备类型
+    public var deviceId: String?               //工厂id
+    
+    public var accessoryId: String?             //设备id
     
     //MARK:- 获取数据库句柄
     private lazy var coredataHandler = {
@@ -52,17 +56,26 @@ public final class AngelManager: NSObject {
         _ = CBridgingManager.share()
         
         //初始化获取macAddress
-        getMacAddressFromBand(){
+        getMacAddressFromBand{
             errorCode, data in
             if errorCode == ErrorCode.success{
+                self.accessoryId = data
+                
+                //初始化获取deviceId&type
+                self.getDeviceInfoFromBand{
+                    errorCode, data in
+                    if errorCode == ErrorCode.success{
+                        
+                    }
+                }
+                
                 DispatchQueue.main.async {
-                    self.macAddress = data
-                    
                     //发送连接成功消息
                     NotificationCenter.default.post(name: connected_notiy, object: nil, userInfo: nil)
                 }
             }
         }
+        
         
         //象征性初始化
         swiftSynchronizationConfig = { data in
@@ -74,18 +87,17 @@ public final class AngelManager: NSObject {
     public func getUserinfo(closure: (User?)->()){
         
         let userId = UserManager.share().userId
-//        closure(coredataHandler.selectUser(withUserId: userId))
-        closure(coredataHandler.selectUser(userId: userId))
+        closure(coredataHandler.selectUser(withUserId: userId))
     }
     
     //MARK:- 从数据库获取数据-设备信息
-    public func getDevice(_ macAddress: String? = nil, closure: @escaping (Device?) -> ()){
+    public func getDevice(_ accessoryId: String? = nil, closure: @escaping (Device?) -> ()){
         //为空直接返回失败
-        var realMacAddress: String!
-        if let md = macAddress{
-            realMacAddress = md
-        }else if let md = self.macAddress{
-            realMacAddress = md
+        var realAccessoryId: String!
+        if let accId = accessoryId{
+            realAccessoryId = accId
+        }else if let md = self.accessoryId{
+            realAccessoryId = md
         }else{
             closure(nil)
             return
@@ -94,14 +106,9 @@ public final class AngelManager: NSObject {
         let userId = UserManager.share().userId
         getDeviceInfoFromBand(){
             errorCode, value in
-//            if errorCode == ErrorCode.success{
-//                closure(self.coredataHandler.selectDevice(userId: userId, withMacAddress: realMacAddress))
-//            }else{
-//                closure(nil)
-//            }
         }
         
-        guard let device = coredataHandler.selectDevice(userId: userId, withMacAddress: realMacAddress) else {
+        guard let device = coredataHandler.selectDevice(withAccessoryId: realAccessoryId, byUserId: userId) else {
             return
         }
         closure(device)
@@ -113,7 +120,8 @@ public final class AngelManager: NSObject {
     }
     
     //获取mac地址
-    public func getMacAddressFromBand( closure: @escaping (_ errorCode:Int16 ,_ value: String)->()){
+    public func getMacAddressFromBand(closure: @escaping (_ errorCode:Int16 ,_ value: String)->()){
+        
         getLiveDataFromBring(withActionType: .macAddress){
             errorCode, aValue in
             closure(errorCode, aValue as! String)
@@ -128,37 +136,33 @@ public final class AngelManager: NSObject {
     }
     
     //获取功能列表
-    private func getFuncTableFromBand(_ macAddress: String? = nil, closure : @escaping (_ errorCode:Int16 ,_ value: Any?)->()){
-        getLiveDataFromBring(withActionType: .funcTable, macAddress: macAddress, closure: closure)
+    private func getFuncTableFromBand(_ accessoryId: String? = nil, closure : @escaping (_ errorCode:Int16 ,_ value: Any?)->()){
+        getLiveDataFromBring(withActionType: .funcTable, accessoryId: accessoryId, closure: closure)
     }
     
     //从数据库获取功能列表
-    public func getFuncTable(_ macAddress: String? = nil, closure: @escaping (FuncTable?) -> ()){
+    public func getFuncTable(_ accessoryId: String? = nil, closure: @escaping (DeviceFunction?) -> ()){
         //为空直接返回失败
-        var realMacAddress: String!
-        if let md = macAddress{
-            realMacAddress = md
-        }else if let md = self.macAddress{
-            realMacAddress = md
+        var realAccessoryId: String!
+        if let accId = accessoryId{
+            realAccessoryId = accId
+        }else if let accId = self.accessoryId{
+            realAccessoryId = accId
         }else{
             closure(nil)
             return
         }
         
-//        guard let funcTable = coredataHandler.selectDevice(userId: id, withMacAddress: realMacAddress)?.funcTable else{
-            getFuncTableFromBand(realMacAddress){
-                errorCode, value in
-                debug("funcTable errorCode: \(errorCode) value: \(String(describing: value))")
-                if errorCode == ErrorCode.success{
-                    closure(self.coredataHandler.selectDevice(userId: UserManager.share().userId, withMacAddress: realMacAddress)?.funcTable)
-                }else{
-                    closure(nil)
-                }
+        getFuncTableFromBand(realAccessoryId){
+            errorCode, value in
+            debug("funcTable errorCode: \(errorCode) value: \(String(describing: value))")
+            if errorCode == ErrorCode.success{
+                closure(self.coredataHandler.selectDevice(withAccessoryId: realAccessoryId, byUserId: UserManager.share().userId)?.deviceFunction)
+            }else{
+                closure(nil)
             }
-            return
-//        }
-        
-//        closure(funcTable)
+        }
+        return
     }
     
     //获取实时数据
@@ -167,7 +171,7 @@ public final class AngelManager: NSObject {
     }
     
     //MARK:- 从手环端获取数据
-    private func getLiveDataFromBring(withActionType actionType:ActionType, macAddress: String? = nil, closure: @escaping (_ errorCode:Int16 ,_ value: Any?) ->()){
+    private func getLiveDataFromBring(withActionType actionType:ActionType, accessoryId: String? = nil, closure: @escaping (_ errorCode:Int16 ,_ value: Any?) ->()){
         
         switch actionType {
         case .macAddress:
@@ -177,17 +181,19 @@ public final class AngelManager: NSObject {
                 let macStruct:protocol_device_mac = data.assumingMemoryBound(to: protocol_device_mac.self).pointee
                 let macCList = macStruct.mac_addr
                 let macList = [macCList.0, macCList.1, macCList.2, macCList.3, macCList.4, macCList.5]
-                let macAddress = macList.map(){String($0,radix:16)}.reduce(""){$0+$1}.uppercased()
+                let tempMacAddress = macList.map(){String($0,radix:16)}.reduce(""){$0+$1}.uppercased()
                 
-                //保存macAddress到数据库
-                _ = self.coredataHandler.insertDevice(userId: UserManager.share().userId, withMacAddress: macAddress, withItems: nil)
+                //保存macAddress
+                self.accessoryId = tempMacAddress
+                //_ = self.coredataHandler.insertDevice(withAccessoryId: tempAccessoryId, byUserId: UserManager.share().userId)
+                
                 //保存macAddress到实例
                 print("1....", Unmanaged.passUnretained(self).toOpaque())
                 DispatchQueue.main.async {
-                    self.macAddress = macAddress
+                    self.accessoryId = tempMacAddress
                 }
                 //返回
-                closure(ErrorCode.success,macAddress)
+                closure(ErrorCode.success,tempMacAddress)
             }
             var ret_code:UInt32 = 0
             vbus_tx_evt(VBUS_EVT_BASE_APP_GET, VBUS_EVT_APP_APP_GET_MAC, &ret_code);
@@ -196,42 +202,39 @@ public final class AngelManager: NSObject {
             swiftDeviceInfo = { data in
                 let deviceInfo = data.assumingMemoryBound(to: protocol_device_info.self).pointee
                 
-                //保存数据库
-                var realMacAddress: String!
-                if let md = macAddress{
-                    realMacAddress = md
-                }else if let md = self.macAddress{
-                    realMacAddress = md
-                }else{
-                    closure(ErrorCode.failure, "macaddress is empty")
-                    return
-                }
+                let deviceId = "\(deviceInfo.device_id)"
+                self.deviceId = deviceId
                 
-                let device = self.coredataHandler.selectDevice(userId: UserManager.share().userId, withMacAddress: realMacAddress)
-                device?.bandStatus = Int16(deviceInfo.batt_status)
-                device?.battLevel = Int16(deviceInfo.batt_level)
-                device?.version = Int16(deviceInfo.version)
-                device?.pairFlag = deviceInfo.pair_flag == 0x01 ? true : false
-                device?.rebootFlag = deviceInfo.reboot_flag == 0x01 ? true : false
-                device?.mode = Int16(deviceInfo.mode)
-                device?.deviceId = Int16(deviceInfo.device_id)
-                //象征性初始化
-                swiftSynchronizationConfig = { data in
+                //当设备物理地址存在时，插入设备项
+                if let macAddress = self.macAddress {
+                    let accessoryId = "1" + macAddress + deviceId
+                    self.accessoryId = accessoryId
                     
-                }
-                if deviceInfo.reboot_flag == 0x01 {
-                    //如果有重启标志==1,同步设备信息
-                    self.setSynchronizationConfig(){
-                        complete in
+                    let device = self.coredataHandler.insertDevice(withAccessoryId: accessoryId, byUserId: UserManager.share().userId)
+                    device?.batteryStatus = Int16(deviceInfo.batt_status)
+                    device?.batteryLevel = Int16(deviceInfo.batt_level)
+                    _ = Int16(deviceInfo.version)
+                    device?.isPaired = deviceInfo.pair_flag == 0x01 ? true : false
+                    device?.isRebooted = deviceInfo.reboot_flag == 0x01 ? true : false
+                    device?.runMode = Int16(deviceInfo.mode)
+                    device?.accessoryId = accessoryId
+                    //象征性初始化
+                    swiftSynchronizationConfig = { data in
+                        
+                    }
+                    if deviceInfo.reboot_flag == 0x01 {
+                        //如果有重启标志==1,同步设备信息
+                        self.setSynchronizationConfig(){
+                            complete in
+                        }
+                    }
+                    
+                    
+                    guard self.coredataHandler.commit() else{
+                        closure(ErrorCode.failure, "commit fail")
+                        return
                     }
                 }
-                
-                
-                guard self.coredataHandler.commit() else{
-                    closure(ErrorCode.failure, "commit fail")
-                    return
-                }
-                
                 closure(ErrorCode.success, deviceInfo)
             }
             
@@ -241,11 +244,11 @@ public final class AngelManager: NSObject {
         case .funcTable:
             
             //为空直接返回失败
-            var realMacAddress: String!
-            if let md = macAddress{
-                realMacAddress = md
-            }else if let md = self.macAddress{
-                realMacAddress = md
+            var realAccessoryId: String!
+            if let ai = accessoryId{
+                realAccessoryId = ai
+            }else if let ai = self.accessoryId{
+                realAccessoryId = ai
             }else{
                 closure(ErrorCode.failure, nil)
                 break
@@ -257,112 +260,151 @@ public final class AngelManager: NSObject {
                 
                 let funcTableModel = data.assumingMemoryBound(to: protocol_func_table.self).pointee
                 print("--------------\nprint:funcTable\n\(funcTableModel)")
-                let funcTable = self.coredataHandler.selectDevice(userId: UserManager.share().userId, withMacAddress: realMacAddress)?.funcTable
-                funcTable?.alarmCount = Int16(funcTableModel.alarm_count)
+                let device = self.coredataHandler.selectDevice(withAccessoryId: realAccessoryId, byUserId: UserManager.share().userId)
+                let deviceFunction = device?.deviceFunction
+//                let deviceFunctionAlarm = device?.deviceFunctionAlarm
+//                let deviceFunctionMsgItem = device?.deviceFunctionMsgItem
+//                let deviceFunctionSportItem = device?.deviceFunctionSportItem
+//                let deviceFunctionSwitchSetting = device?.deviceFunctionSwitchSetting
+
+                deviceFunction?.haveAlarm = funcTableModel.alarm_count > 0
+                deviceFunction?.haveAllMsgNotification = funcTableModel.ohter2.allAppNotice
+                deviceFunction?.haveAncs = funcTableModel.main.Ancs
+                deviceFunction?.haveAntiLost = funcTableModel.ohter2.bilateralAntiLost
+                deviceFunction?.haveCallNumber = funcTableModel.call.callingNum
+                deviceFunction?.haveCallContact = funcTableModel.call.callingContact
+                deviceFunction?.haveCallNotification = funcTableModel.call.calling
+                deviceFunction?.haveCameraControl = funcTableModel.control.takePhoto
+                deviceFunction?.haveFindPhone = funcTableModel.other.findPhone
+                deviceFunction?.haveHeartRateMonitor = funcTableModel.ohter2.heartRateMonitor
+                deviceFunction?.haveHeartRateMonitorControl = true
+                deviceFunction?.haveLogin = funcTableModel.main1.logIn
+                deviceFunction?.haveLongSit = true
+                deviceFunction?.haveMsgContent = funcTableModel.sms.tipInfoContact
+                deviceFunction?.haveMultiSport = true
+                deviceFunction?.haveNotDisturbMode = funcTableModel.ohter2.doNotDisturb
+                deviceFunction?.haveOta = true
+                deviceFunction?.havePedometer = true
+                deviceFunction?.havePlayMusicControl = funcTableModel.control.music
+                deviceFunction?.haveRealData = funcTableModel.main.realtimeData
+                deviceFunction?.haveScreenDisplay180Rotate = true
+                deviceFunction?.haveScreenDisplayMode = funcTableModel.ohter2.displayMode
+                deviceFunction?.haveShortcutCall = funcTableModel.other.onetouchCalling
+                deviceFunction?.haveShortcutReset = true
+                deviceFunction?.haveSleepMonitor = funcTableModel.main.sleepMonitor
+                deviceFunction?.haveTimeline = funcTableModel.main.timeLine
+                deviceFunction?.haveTraininTracking = true
+                deviceFunction?.haveWakeScreenOnWristRaise = true
+                deviceFunction?.haveWeatherForecast = funcTableModel.other.weather
+                deviceFunction?.isHeartRateMonitorSilent = funcTableModel.ohter2.staticHR
                 
-                funcTable?.main2_logIn = funcTableModel.main1.logIn
+                /*
+                deviceFunction?.alarmCount = Int16(funcTableModel.alarm_count)
                 
-                funcTable?.main_ancs = funcTableModel.main.Ancs
-                funcTable?.main_timeLine = funcTableModel.main.timeLine
-                funcTable?.main_heartRate = funcTableModel.main.heartRate
-                funcTable?.main_singleSport = funcTableModel.main.singleSport
-                funcTable?.main_deviceUpdate = funcTableModel.main.deviceUpdate
-                funcTable?.main_realtimeData = funcTableModel.main.realtimeData
-                funcTable?.main_sleepMonitor = funcTableModel.main.sleepMonitor
-                funcTable?.main_stepCalculation = funcTableModel.main.stepCalculation
+                deviceFunction?.main2_logIn = funcTableModel.main1.logIn
                 
-                funcTable?.alarmType_custom = funcTableModel.type.custom
-                funcTable?.alarmType_party = funcTableModel.type.party
-                funcTable?.alarmType_sleep = funcTableModel.type.sleep
-                funcTable?.alarmType_sport = funcTableModel.type.sport
-                funcTable?.alarmType_dating = funcTableModel.type.dating
-                funcTable?.alarmType_wakeUp = funcTableModel.type.wakeUp
-                funcTable?.alarmType_metting = funcTableModel.type.metting
-                funcTable?.alarmType_medicine = funcTableModel.type.medicine
+                deviceFunction?.main_ancs = funcTableModel.main.Ancs
+                deviceFunction?.main_timeLine = funcTableModel.main.timeLine
+                deviceFunction?.main_heartRate = funcTableModel.main.heartRate
+                deviceFunction?.main_singleSport = funcTableModel.main.singleSport
+                deviceFunction?.main_deviceUpdate = funcTableModel.main.deviceUpdate
+                deviceFunction?.main_realtimeData = funcTableModel.main.realtimeData
+                deviceFunction?.main_sleepMonitor = funcTableModel.main.sleepMonitor
+                deviceFunction?.main_stepCalculation = funcTableModel.main.stepCalculation
                 
-                funcTable?.call_calling = funcTableModel.call.calling
-                funcTable?.call_callingNum = funcTableModel.call.callingNum
-                funcTable?.call_callingContact = funcTableModel.call.callingContact
+                deviceFunction?.alarmType_custom = funcTableModel.type.custom
+                deviceFunction?.alarmType_party = funcTableModel.type.party
+                deviceFunction?.alarmType_sleep = funcTableModel.type.sleep
+                deviceFunction?.alarmType_sport = funcTableModel.type.sport
+                deviceFunction?.alarmType_dating = funcTableModel.type.dating
+                deviceFunction?.alarmType_wakeUp = funcTableModel.type.wakeUp
+                deviceFunction?.alarmType_metting = funcTableModel.type.metting
+                deviceFunction?.alarmType_medicine = funcTableModel.type.medicine
                 
-                funcTable?.sport_run = funcTableModel.sport_type0.run
-                funcTable?.sport_bike = funcTableModel.sport_type0.by_bike
-                funcTable?.sport_foot = funcTableModel.sport_type0.on_foot
-                funcTable?.sport_swim = funcTableModel.sport_type0.swim
-                funcTable?.sport_walk = funcTableModel.sport_type0.walk
-                funcTable?.sport_other = funcTableModel.sport_type0.other
-                funcTable?.sport_climbing = funcTableModel.sport_type0.mountain_climbing
-                funcTable?.sport_badminton = funcTableModel.sport_type0.badminton
+                deviceFunction?.call_calling = funcTableModel.call.calling
+                deviceFunction?.call_callingNum = funcTableModel.call.callingNum
+                deviceFunction?.call_callingContact = funcTableModel.call.callingContact
                 
-                funcTable?.sport2_sitUp = funcTableModel.sport_type1.sit_up
-                funcTable?.sport2_fitness = funcTableModel.sport_type1.fitness
-                funcTable?.sport2_dumbbell = funcTableModel.sport_type1.dumbbell
-                funcTable?.sport2_spinning = funcTableModel.sport_type1.spinning
-                funcTable?.sport2_ellipsoid = funcTableModel.sport_type1.ellipsoid
-                funcTable?.sport2_treadmill = funcTableModel.sport_type1.treadmill
-                funcTable?.sport2_weightLifting = funcTableModel.sport_type1.weightlifting
-                funcTable?.sport_pushUp = funcTableModel.sport_type1.push_up
+                deviceFunction?.sport_run = funcTableModel.sport_type0.run
+                deviceFunction?.sport_bike = funcTableModel.sport_type0.by_bike
+                deviceFunction?.sport_foot = funcTableModel.sport_type0.on_foot
+                deviceFunction?.sport_swim = funcTableModel.sport_type0.swim
+                deviceFunction?.sport_walk = funcTableModel.sport_type0.walk
+                deviceFunction?.sport_other = funcTableModel.sport_type0.other
+                deviceFunction?.sport_climbing = funcTableModel.sport_type0.mountain_climbing
+                deviceFunction?.sport_badminton = funcTableModel.sport_type0.badminton
                 
-                funcTable?.sport3_yoga = funcTableModel.sport_type2.yoga
-                funcTable?.sport3_tennis = funcTableModel.sport_type2.tennis
-                funcTable?.sport3_football = funcTableModel.sport_type2.footballl
-                funcTable?.sport3_pingpang = funcTableModel.sport_type2.table_tennis
-                funcTable?.sport3_basketball = funcTableModel.sport_type2.basketball
-                funcTable?.sport3_volleyball = funcTableModel.sport_type2.volleyball
-                funcTable?.sport3_ropeSkipping = funcTableModel.sport_type2.rope_skipping
-                funcTable?.sport3_bodybuildingExercise = funcTableModel.sport_type2.bodybuilding_exercise
+                deviceFunction?.sport2_sitUp = funcTableModel.sport_type1.sit_up
+                deviceFunction?.sport2_fitness = funcTableModel.sport_type1.fitness
+                deviceFunction?.sport2_dumbbell = funcTableModel.sport_type1.dumbbell
+                deviceFunction?.sport2_spinning = funcTableModel.sport_type1.spinning
+                deviceFunction?.sport2_ellipsoid = funcTableModel.sport_type1.ellipsoid
+                deviceFunction?.sport2_treadmill = funcTableModel.sport_type1.treadmill
+                deviceFunction?.sport2_weightLifting = funcTableModel.sport_type1.weightlifting
+                deviceFunction?.sport_pushUp = funcTableModel.sport_type1.push_up
                 
-                funcTable?.sport4_golf = funcTableModel.sport_type3.golf
-                funcTable?.sport4_dance = funcTableModel.sport_type3.dance
-                funcTable?.sport4_skiing = funcTableModel.sport_type3.skiing
-                funcTable?.sport4_baseball = funcTableModel.sport_type3.baseball
-                funcTable?.sport4_rollerSkating = funcTableModel.sport_type3.roller_skating
+                deviceFunction?.sport3_yoga = funcTableModel.sport_type2.yoga
+                deviceFunction?.sport3_tennis = funcTableModel.sport_type2.tennis
+                deviceFunction?.sport3_football = funcTableModel.sport_type2.footballl
+                deviceFunction?.sport3_pingpang = funcTableModel.sport_type2.table_tennis
+                deviceFunction?.sport3_basketball = funcTableModel.sport_type2.basketball
+                deviceFunction?.sport3_volleyball = funcTableModel.sport_type2.volleyball
+                deviceFunction?.sport3_ropeSkipping = funcTableModel.sport_type2.rope_skipping
+                deviceFunction?.sport3_bodybuildingExercise = funcTableModel.sport_type2.bodybuilding_exercise
                 
-                funcTable?.sms_tipInfoNum = funcTableModel.sms.tipInfoNum
-                funcTable?.sms_tipInfoContact = funcTableModel.sms.tipInfoContact
-                funcTable?.sms_tipInfoContent = funcTableModel.sms.tipInfoContent
+                deviceFunction?.sport4_golf = funcTableModel.sport_type3.golf
+                deviceFunction?.sport4_dance = funcTableModel.sport_type3.dance
+                deviceFunction?.sport4_skiing = funcTableModel.sport_type3.skiing
+                deviceFunction?.sport4_baseball = funcTableModel.sport_type3.baseball
+                deviceFunction?.sport4_rollerSkating = funcTableModel.sport_type3.roller_skating
                 
-                funcTable?.other_weather = funcTableModel.other.weather
-                funcTable?.other_antilost = funcTableModel.other.antilost
-                funcTable?.other_findPhone = funcTableModel.other.findPhone
-                funcTable?.other_findDevice = funcTableModel.other.findDevice
-                funcTable?.other_configDefault = funcTableModel.other.configDefault
-                funcTable?.other_sedentariness = funcTableModel.other.sedentariness
-                funcTable?.other_upHandGesture = funcTableModel.other.upHandGesture
-                funcTable?.other_oneTouchCalling = funcTableModel.other.onetouchCalling
+                deviceFunction?.sms_tipInfoNum = funcTableModel.sms.tipInfoNum
+                deviceFunction?.sms_tipInfoContact = funcTableModel.sms.tipInfoContact
+                deviceFunction?.sms_tipInfoContent = funcTableModel.sms.tipInfoContent
                 
-                funcTable?.other2_staticHR = funcTableModel.ohter2.staticHR
-                funcTable?.other2_flipScreen = funcTableModel.ohter2.flipScreen
-                funcTable?.other2_displayMode = funcTableModel.ohter2.displayMode
-                funcTable?.other2_allAppNotice = funcTableModel.ohter2.allAppNotice
-                funcTable?.other2_doNotDisturb = funcTableModel.ohter2.doNotDisturb
-                funcTable?.other2_heartRateMonitor = funcTableModel.ohter2.heartRateMonitor
-                funcTable?.other2_bilateralAntiLost = funcTableModel.ohter2.bilateralAntiLost
+                deviceFunction?.other_weather = funcTableModel.other.weather
+                deviceFunction?.other_antilost = funcTableModel.other.antilost
+                deviceFunction?.other_findPhone = funcTableModel.other.findPhone
+                deviceFunction?.other_findDevice = funcTableModel.other.findDevice
+                deviceFunction?.other_configDefault = funcTableModel.other.configDefault
+                deviceFunction?.other_sedentariness = funcTableModel.other.sedentariness
+                deviceFunction?.other_upHandGesture = funcTableModel.other.upHandGesture
+                deviceFunction?.other_oneTouchCalling = funcTableModel.other.onetouchCalling
                 
-                funcTable?.control_music = funcTableModel.control.music
-                funcTable?.control_takePhoto = funcTableModel.control.takePhoto
+                deviceFunction?.other2_staticHR = funcTableModel.ohter2.staticHR
+                deviceFunction?.other2_flipScreen = funcTableModel.ohter2.flipScreen
+                deviceFunction?.other2_displayMode = funcTableModel.ohter2.displayMode
+                deviceFunction?.other2_allAppNotice = funcTableModel.ohter2.allAppNotice
+                deviceFunction?.other2_doNotDisturb = funcTableModel.ohter2.doNotDisturb
+                deviceFunction?.other2_heartRateMonitor = funcTableModel.ohter2.heartRateMonitor
+                deviceFunction?.other2_bilateralAntiLost = funcTableModel.ohter2.bilateralAntiLost
                 
-                funcTable?.notify_qq = funcTableModel.notify.qq
-                funcTable?.notify_email = funcTableModel.notify.email
-                funcTable?.notify_weixin = funcTableModel.notify.weixin
-                funcTable?.notify_message = funcTableModel.notify.message
-                funcTable?.notify_twitter = funcTableModel.notify.twitter
-                funcTable?.notify_facebook = funcTableModel.notify.facebook
-                funcTable?.notify_sinaWeibo = funcTableModel.notify.sinaWeibo
+                deviceFunction?.control_music = funcTableModel.control.music
+                deviceFunction?.control_takePhoto = funcTableModel.control.takePhoto
                 
-                funcTable?.notify2_skype = funcTableModel.ontify2.skype
-                funcTable?.notify2_message = funcTableModel.ontify2.messengre
-                funcTable?.notify2_calendar = funcTableModel.ontify2.calendar
-                funcTable?.notify2_linkedIn = funcTableModel.ontify2.linked_in
-                funcTable?.notify2_whatsapp = funcTableModel.ontify2.whatsapp
-                funcTable?.notify2_instagram = funcTableModel.ontify2.instagram
-                funcTable?.notify2_alarmClock = funcTableModel.ontify2.alarmClock
+                deviceFunction?.notify_qq = funcTableModel.notify.qq
+                deviceFunction?.notify_email = funcTableModel.notify.email
+                deviceFunction?.notify_weixin = funcTableModel.notify.weixin
+                deviceFunction?.notify_message = funcTableModel.notify.message
+                deviceFunction?.notify_twitter = funcTableModel.notify.twitter
+                deviceFunction?.notify_facebook = funcTableModel.notify.facebook
+                deviceFunction?.notify_sinaWeibo = funcTableModel.notify.sinaWeibo
                 
-                debug("coreData functable: \(String(describing: funcTable))")
+                deviceFunction?.notify2_skype = funcTableModel.ontify2.skype
+                deviceFunction?.notify2_message = funcTableModel.ontify2.messengre
+                deviceFunction?.notify2_calendar = funcTableModel.ontify2.calendar
+                deviceFunction?.notify2_linkedIn = funcTableModel.ontify2.linked_in
+                deviceFunction?.notify2_whatsapp = funcTableModel.ontify2.whatsapp
+                deviceFunction?.notify2_instagram = funcTableModel.ontify2.instagram
+                deviceFunction?.notify2_alarmClock = funcTableModel.ontify2.alarmClock
+                */
+                
+                debug("coreData functable: \(String(describing: deviceFunction))")
                 guard self.coredataHandler.commit() else {
                     closure(ErrorCode.failure, nil)
                     return
                 }
-                closure(ErrorCode.success, funcTable)
+                closure(ErrorCode.success, deviceFunction)
             }
             debug("--------------\n开始获取funcTable")
             var ret_code:UInt32 = 0
@@ -393,7 +435,7 @@ public final class AngelManager: NSObject {
             return
         }
         
-        var ret_code:UInt32 = 0
+        var ret_code: UInt32 = 0
         switch bandMode {
         case .unbind:
             closure(protocol_set_mode(PROTOCOL_MODE_UNBIND) == 0)
@@ -494,17 +536,18 @@ public final class AngelManager: NSObject {
             return
         }
         //保存到数据库
-        let user = coredataHandler.selectUser()
+        let userId = UserManager.share().userId
+        let user = coredataHandler.selectUser(withUserId: userId)
         let calender = Calendar.current
         var components = calender.dateComponents([.year, .month, .day], from: Date())
         components.year = Int(userInfo.birthYear)
         components.month = Int(userInfo.birthMonth)
         components.day = Int(userInfo.birthDay)
         let birthDay = calender.date(from: components)
-        user?.birthday = birthDay as NSDate?
-        user?.gender = Int16(userInfo.gender)
-        user?.height = Int16(userInfo.height)
-        user?.currentWeight = Float(userInfo.weight)
+        user?.userInfo?.birthday = birthDay as NSDate?
+        user?.userInfo?.gender = Int16(userInfo.gender)
+        user?.userInfo?.height100TimesCM = Int16(userInfo.height)
+        user?.userInfo?.weight10000TimesKG = Int32(userInfo.weight)
         guard coredataHandler.commit() else{
             closure(false)
             return
@@ -514,7 +557,7 @@ public final class AngelManager: NSObject {
     }
     
     //MARK:- 设置久坐提醒
-    public func setLongSit(_ sit:LongSitModel, macAddress: String? = nil, closure:(_ success:Bool) ->()){
+    public func setLongSit(_ sit:LongSitModel, accessoryId: String? = nil, closure:(_ success:Bool) ->()){
         
         var long_sit = protocol_long_sit()
         
@@ -540,44 +583,47 @@ public final class AngelManager: NSObject {
         }
         
         //保存数据库
-        var realMacAddress: String!
-        if let md = macAddress{
-            realMacAddress = md
-        }else if let md = self.macAddress{
-            realMacAddress = md
+        var realAccessoryId: String!
+        if let ai = accessoryId{
+            realAccessoryId = ai
+        }else if let ai = self.accessoryId{
+            realAccessoryId = ai
         }else{
             closure(false)
             return
         }
-        let dbLongsit = coredataHandler.selectLongSit(userID: UserManager.share().userId, withMacAddress: realMacAddress)
-        let calender = Calendar.current
-        var components = calender.dateComponents([.hour, .minute], from: Date())
-        components.hour = Int(sit.startHour)
-        components.minute = Int(sit.startMinute)
-        let startDate = calender.date(from: components)
-        dbLongsit?.startDate = startDate as NSDate?
         
-        components.hour = Int(sit.endHour)
-        components.minute = Int(sit.endMinute)
-        let endDate = calender.date(from: components)
-        dbLongsit?.endDate = endDate as NSDate?
+        let userId = UserManager.share().userId
+        let device = coredataHandler.selectDevice(withAccessoryId: realAccessoryId, byUserId: userId)
+        let dbLongsit = device?.deviceLongSitSetting
+
+        dbLongsit?.startHour = Int16(sit.startHour)
+        dbLongsit?.startMinute = Int16(sit.startMinute)
+
+        dbLongsit?.endHour = Int16(sit.endHour)
+        dbLongsit?.endMinute = Int16(sit.endMinute)
+
+        dbLongsit?.intervalMinute = Int32(Int16(sit.duringTime))
+        //dbLongsit?.isOpen = sit.isOpen
         
-        dbLongsit?.interval = Int16(sit.duringTime)
-        dbLongsit?.isOpen = sit.isOpen
-        
-        dbLongsit?.weekdayList = sit.weekdayList as NSObject?
+        var repetition: Int16 = 0x00
+        for i in sit.weekdayList{
+            repetition = repetition & 0x01 << Int16(i)
+        }
+        dbLongsit?.repetition = repetition
         
         closure(true)
     }
     
     //MARK:- 设置公英制
+    /*
     public func setUnit(_ unitsType: Set<UnitType>, macAddress: String? = nil, closure:(_ success:Bool) ->()){
         
         //为空直接返回失败
         var realMacAddress: String!
         if let md = macAddress{
             realMacAddress = md
-        }else if let md = self.macAddress{
+        }else if let md = self.accessoryId{
             realMacAddress = md
         }else{
             closure(false)
@@ -611,6 +657,8 @@ public final class AngelManager: NSObject {
         }
         
         //创建单位模型
+        let userId = UserManager.share().userId
+        let device = coredataHandler.selectDevice(withAccessoryId: realMacAddress, byUserId: userId)
         let unit = coredataHandler.selectUnit(userId: UserManager.share().userId, withMacAddress: realMacAddress)
         //赋值
         unitsType.forEach(){
@@ -690,7 +738,7 @@ public final class AngelManager: NSObject {
         var realMacAddress: String!
         if let md = macAddress{
             realMacAddress = md
-        }else if let md = self.macAddress{
+        }else if let md = self.accessoryId{
             realMacAddress = md
         }else{
             closure(nil)
@@ -698,6 +746,7 @@ public final class AngelManager: NSObject {
         }
         closure(coredataHandler.selectUnit(userId: UserManager.share().userId, withMacAddress: realMacAddress))
     }
+     */
     
     //设置目标
     public func setGoal(_ goal:GoalDataModel , closure: @escaping (_ success:Bool) ->()){
@@ -720,13 +769,14 @@ public final class AngelManager: NSObject {
         }
 
         //保存数据库
-        let user = coredataHandler.selectUser()
+        let userId = UserManager.share().userId
+        let user = coredataHandler.selectUser(withUserId: userId)
         if goal.type == 0x00 {
-            user?.goalStep = Int32(goal.value)
+            user?.goal?.steps = Int32(goal.value)
         }else if goal.type == 0x01{
-            user?.goalCal = Int16(goal.value)
+//            user?.goalCal = Int16(goal.value)
         }else if goal.type == 0x02{
-            user?.goalDistance = Int16(goal.value)
+//            user?.goalDistance = Int16(goal.value)
         }
         guard coredataHandler.commit() else{
             closure(false)
@@ -758,18 +808,25 @@ public final class AngelManager: NSObject {
         }
     }
     
-    //MARK:- 设置寻找手机 timeOut 超时时间
-    public func setFindPhone(_ open:Bool, timeOut: UInt8 = 5, macAddress: String? = nil, closure: (_ success:Bool) ->()){
-        
-        var realMacAddress: String!
-        if let md = macAddress{
-            realMacAddress = md
-        }else if let md = self.macAddress{
-            realMacAddress = md
+    //MARK:-获取设备
+    private func getDevice(withAccessoryId accessoryId: String? = nil) -> Device?{
+        var realAccessoryId: String!
+        if let ai = accessoryId{
+            realAccessoryId = ai
+        }else if let ai = self.accessoryId{
+            realAccessoryId = ai
         }else{
-            closure(false)
-            return
+            return nil
         }
+        
+        let userId = UserManager.share().userId
+        let device = coredataHandler.selectDevice(withAccessoryId: realAccessoryId, byUserId: userId)
+        return device
+    }
+    
+    
+    //MARK:- 设置寻找手机 timeOut 超时时间
+    public func setFindPhone(_ open:Bool, timeOut: UInt8 = 5, accessoryId: String? = nil, closure: (_ success:Bool) ->()){
         
         var ret_code:UInt32 = 0
         var findPhone = protocol_find_phone()
@@ -785,8 +842,8 @@ public final class AngelManager: NSObject {
             return
         }
         //保存数据库
-        let device = coredataHandler.selectDevice(userId: UserManager.share().userId, withMacAddress: realMacAddress)
-        device?.findPhoneSwitch = open
+        let device = getDevice(withAccessoryId: accessoryId)
+        device?.deviceFunctionSwitchSetting?.isFindPhonesOn = open
         guard coredataHandler.commit() else{
             closure(false)
             return
@@ -796,23 +853,24 @@ public final class AngelManager: NSObject {
     }
     
     //MARK:- 获取是否开启寻找手机
-    public func getFindPhone(_ macAddress: String? = nil, closure: (_ open: Bool?)->()){
+    public func getFindPhone(_ accessoryId: String? = nil, closure: (_ open: Bool?)->()){
         
-        var realMacAddress: String!
-        if let md = macAddress{
-            realMacAddress = md
-        }else if let md = self.macAddress{
-            realMacAddress = md
+        var realAccessoryId: String!
+        if let ai = accessoryId{
+            realAccessoryId = ai
+        }else if let ai = self.accessoryId{
+            realAccessoryId = ai
         }else{
-            closure(nil)
+            closure(false)
             return
         }
         
-        guard let device = coredataHandler.selectDevice(userId: UserManager.share().userId, withMacAddress: realMacAddress) else{
+        let userId = UserManager.share().userId
+        guard let device = coredataHandler.selectDevice(withAccessoryId: realAccessoryId, byUserId: userId) else{
             closure(nil)
             return
         }
-        closure(device.findPhoneSwitch)
+        closure(device.deviceFunctionSwitchSetting?.isFindPhonesOn)
     }
     
     //MARK:- 设置一键还原
@@ -829,18 +887,7 @@ public final class AngelManager: NSObject {
     }
     
     //MARK:- 设置一键呼叫
-    public func setQuickSOS(_ open:Bool, macAddress: String? = nil, closure:(_ success:Bool) ->()){
-        
-        var realMacAddress: String!
-        if let md = macAddress{
-            realMacAddress = md
-        }else if let md = self.macAddress{
-            realMacAddress = md
-        }else{
-            closure(false)
-            return
-        }
-        
+    public func setQuickSOS(_ open:Bool, accessoryId: String? = nil, closure:(_ success:Bool) ->()){
         var ret_code:UInt32 = 0
         var oneKey = protocol_set_onekey_sos()
         
@@ -853,8 +900,8 @@ public final class AngelManager: NSObject {
             return
         }
         //保存数据库
-        let device = coredataHandler.selectDevice(userId: UserManager.share().userId, withMacAddress: realMacAddress)
-        device?.sos = open
+        let device = getDevice(withAccessoryId: accessoryId)
+        //device?.sos = open
         guard coredataHandler.commit() else{
             closure(false)
             return
@@ -863,23 +910,10 @@ public final class AngelManager: NSObject {
     }
     
     //MARK:- 获取是否开启一键呼叫
-    public func getQuickSOSSwitch(_ macAddress: String? = nil, closure: (_ open: Bool?)->()){
+    public func getQuickSOSSwitch(_ accessoryId: String? = nil, closure: (_ open: Bool?)->()){
         
-        var realMacAddress: String!
-        if let md = macAddress{
-            realMacAddress = md
-        }else if let md = self.macAddress{
-            realMacAddress = md
-        }else{
-            closure(nil)
-            return
-        }
-        
-        guard let device = coredataHandler.selectDevice(userId: UserManager.share().userId, withMacAddress: realMacAddress) else{
-            closure(nil)
-            return
-        }
-        closure(device.sos)
+        let device = getDevice(withAccessoryId: accessoryId)
+        //closure(device.sos)
     }
     
     //MARK:- 重启设备
@@ -901,9 +935,9 @@ public final class AngelManager: NSObject {
         
         //判断mac地址是否存在
         var realMacAddress: String!
-        if let md = macAddress{
+        if let md = accessoryId{
             realMacAddress = md
-        }else if let md = self.macAddress{
+        }else if let md = self.accessoryId{
             realMacAddress = md
         }else{
             closure(false)
@@ -931,16 +965,18 @@ public final class AngelManager: NSObject {
         }
         
         //保存数据库
-        let handGresture = coredataHandler.selectHandGesture(userId: UserManager.share().userId, withMacAddress: realMacAddress)
-        handGresture?.isOpen = open
-        handGresture?.displayTime = Int16(lightDuring)
-        guard coredataHandler.commit() else{
-            closure(false)
-            return
-        }
-        closure(true)
+//        let device = getDevice(withAccessoryId: self.accessoryId)
+//        let handGresture = coredataHandler.selectHandGesture(userId: UserManager.share().userId, withMacAddress: realMacAddress)
+//        handGresture?.isOpen = open
+//        handGresture?.displayTime = Int16(lightDuring)
+//        guard coredataHandler.commit() else{
+//            closure(false)
+//            return
+//        }
+//        closure(true)
     }
     
+    /*
     //MARK:- 获取抬腕识别
     public func getWristRecognition(_ macAddress: String? = nil, closure: (HandGesture?)->()){
         
@@ -948,7 +984,7 @@ public final class AngelManager: NSObject {
         var realMacAddress: String!
         if let md = macAddress{
             realMacAddress = md
-        }else if let md = self.macAddress{
+        }else if let md = self.accessoryId{
             realMacAddress = md
         }else{
             closure(nil)
@@ -957,7 +993,9 @@ public final class AngelManager: NSObject {
         
         closure(coredataHandler.selectHandGesture(userId: UserManager.share().userId, withMacAddress: realMacAddress))
     }
+     */
     
+    /*
     //设置勿扰模式
     public func setSilent(_ silentModel:SilentModel, macAddress: String? = nil, closure:(_ success:Bool)->()){
         
@@ -965,7 +1003,7 @@ public final class AngelManager: NSObject {
         var realMacAddress: String!
         if let md = macAddress{
             realMacAddress = md
-        }else if let md = self.macAddress{
+        }else if let md = self.accessoryId{
             realMacAddress = md
         }else{
             closure(false)
@@ -990,6 +1028,8 @@ public final class AngelManager: NSObject {
         }
         
         //保存数据库
+        let device = getDevice(withAccessoryId: macAddress)
+        
         let silent = coredataHandler.selectSilentDistrube(userId: UserManager.share().userId, withMacAddress: realMacAddress)
         silent?.startHour = Int16(silentModel.startHour)
         silent?.startMinute = Int16(silentModel.startMinute)
@@ -1002,14 +1042,16 @@ public final class AngelManager: NSObject {
         }
         closure(true)
     }
+     */
     
+    /*
     //MARK:- 设置心率区间
     public func setHeartRateInterval(_ heartIntervalModel:HeartIntervalModel ,closure:(_ success:Bool) -> ()){
         //判断mac地址是否存在
         var realMacAddress: String!
-        if let md = macAddress{
+        if let md = accessoryId{
             realMacAddress = md
-        }else if let md = self.macAddress{
+        }else if let md = self.accessoryId{
             realMacAddress = md
         }else{
             closure(false)
@@ -1045,7 +1087,9 @@ public final class AngelManager: NSObject {
         }
         closure(true)
     }
+     */
     
+    /*
     //MARK:- 获取心率区间
     public func getHeartRateInterval(_ macAddress: String? = nil, closure: (HeartInterval?)->()){
         
@@ -1053,7 +1097,7 @@ public final class AngelManager: NSObject {
         var realMacAddress: String!
         if let md = macAddress{
             realMacAddress = md
-        }else if let md = self.macAddress{
+        }else if let md = self.accessoryId{
             realMacAddress = md
         }else{
             closure(nil)
@@ -1062,16 +1106,18 @@ public final class AngelManager: NSObject {
         
         closure(coredataHandler.selectHeartInterval(userId: UserManager.share().userId, withMacAddress: realMacAddress))
     }
+     */
     
+    /*
     //MARK:- 设置左右手穿戴
     /*handtype true为左手*/
     public func setHand(_ leftHand:Bool , closure:(_ success:Bool)->()){
 
         //判断mac地址是否存在
         var realMacAddress: String!
-        if let md = macAddress{
+        if let md = accessoryId{
             realMacAddress = md
-        }else if let md = self.macAddress{
+        }else if let md = self.accessoryId{
             realMacAddress = md
         }else{
             closure(false)
@@ -1101,7 +1147,9 @@ public final class AngelManager: NSObject {
         }
         closure(true)
     }
+     */
     
+    /*
     //MARK:- 获取左右手穿戴
     public func getHand(_ macAddress: String? = nil, closure: (_ isLeftHand: Bool?)->()){
         
@@ -1109,7 +1157,7 @@ public final class AngelManager: NSObject {
         var realMacAddress: String!
         if let md = macAddress{
             realMacAddress = md
-        }else if let md = self.macAddress{
+        }else if let md = self.accessoryId{
             realMacAddress = md
         }else{
             closure(nil)
@@ -1123,7 +1171,9 @@ public final class AngelManager: NSObject {
         
         closure(handGesture.leftHand)
     }
+     */
     
+    /*
     //MARK:- 设置心率模式
     public func setHeartRateMode(_ heartRateMode: HeartRateMode, macAddress: String? = nil, closure:(_ success:Bool) ->()){
         
@@ -1131,7 +1181,7 @@ public final class AngelManager: NSObject {
         var realMacAddress: String!
         if let md = macAddress{
             realMacAddress = md
-        }else if let md = self.macAddress{
+        }else if let md = self.accessoryId{
             realMacAddress = md
         }else{
             closure(false)
@@ -1169,14 +1219,16 @@ public final class AngelManager: NSObject {
         }
         closure(true)
     }
+     */
     
+    /*
     //MARK:- 获取心率模式
     public func getHeartRateMode(_ macAddress: String? = nil, closure: (HeartRateMode?)->()){
         //判断mac地址是否存在
         var realMacAddress: String!
         if let md = macAddress{
             realMacAddress = md
-        }else if let md = self.macAddress{
+        }else if let md = self.accessoryId{
             realMacAddress = md
         }else{
             closure(nil)
@@ -1199,7 +1251,9 @@ public final class AngelManager: NSObject {
             closure(nil)
         }
     }
+     */
     
+    /*
     //MARK:- 设置横屏
     public func setLandscape(_ flag: Bool, macAddress: String? = nil, closure:(_ success:Bool) ->()){
         
@@ -1207,7 +1261,7 @@ public final class AngelManager: NSObject {
         var realMacAddress: String!
         if let md = macAddress{
             realMacAddress = md
-        }else if let md = self.macAddress{
+        }else if let md = self.accessoryId{
             realMacAddress = md
         }else{
             closure(false)
@@ -1238,14 +1292,16 @@ public final class AngelManager: NSObject {
         }
         closure(true)
     }
+     */
     
+    /*
     //MARK:- 获取横屏消息
     public func getLangscape(_ macAddress: String? = nil, closure: (_ isLangScape: Bool?)->()){
         //判断mac地址是否存在
         var realMacAddress: String!
         if let md = macAddress{
             realMacAddress = md
-        }else if let md = self.macAddress{
+        }else if let md = self.accessoryId{
             realMacAddress = md
         }else{
             closure(nil)
@@ -1259,24 +1315,26 @@ public final class AngelManager: NSObject {
         
         closure(device.landscape)
     }
+     */
     
     //MARK:- 同步健康数据
     /*
      *  status 是否同步完成
      *  percent 同步百分比
      */
-    public func setSynchronizationHealthData(_ macAddress: String? = nil, closure:@escaping (_ complete: Bool, _ progress: Int16) -> ()){
+    public func setSynchronizationHealthData(_ accessoryId: String? = nil, closure:@escaping (_ complete: Bool, _ progress: Int16) -> ()){
         
         //判断mac地址是否存在
         print("2....", Unmanaged.passUnretained(self).toOpaque())
         
-        var realMacAddress: String!
-        if let md = macAddress{
-            realMacAddress = md
-        }else if let md = self.macAddress{
-            realMacAddress = md
+        //判断mac地址是否存在
+        var realAccessoryId: String!
+        if let ai = accessoryId{
+            realAccessoryId = ai
+        }else if let ai = self.accessoryId{
+            realAccessoryId = ai
         }else{
-            debugPrint("<sync healthData>同步获取macaddress失败")
+            debugPrint("<sync healthData> 同步获取accessoryId失败")
             closure(false, 0)
             return
         }
@@ -1288,8 +1346,8 @@ public final class AngelManager: NSObject {
         swiftSynchronizationHealthData = { data in
             if data.0{
                 //存储最后同步时间
-                if let device = self.coredataHandler.selectDevice(userId: userId, withMacAddress: realMacAddress){
-                    device.synDate = Date() as NSDate?
+                if let device = self.getDevice(withAccessoryId: accessoryId){
+                    device.lastSyncTime = Date() as NSDate?
                     _ = self.coredataHandler.commit()
                 }
             }
@@ -1329,20 +1387,22 @@ public final class AngelManager: NSObject {
                 return
             }
             
-            guard let sport = self.coredataHandler.insertSportData(userId: userId, withMacAddress: realMacAddress, withDate: realDate, withItems: nil) else {
+            
+            
+            guard let sport = self.coredataHandler.insertSportEverydayData(withAccessoryId: realAccessoryId, UserId: userId, withDate: realDate) else {
                 return
             }
             sport.date = realDate as NSDate
-            sport.id = Int16(id)
-            sport.itemCount = Int16(itemCount)
-            sport.minuteDuration = Int16(minuteDuration)
-            sport.minuteOffset = Int16(minuteOffset)
-            sport.totalActiveTime = Int16(totalActiveTime)
-            sport.totalCal = Int16(totalCal)
-            sport.totalDistance = Int16(totalDistance)
-            sport.perMinute = Int16(perMinute)
-            sport.packetCount = Int16(packetCount)
-            sport.totalStep = Int16(totalStep)
+            sport.objectId = Int64(id)
+            sport.sportItemCount = Int32(itemCount)
+            sport.perMinute = Int32(minuteDuration)
+            sport.offset = Int32(minuteOffset)
+            sport.totalActiveTimeSeconds = Int32(totalActiveTime)
+            sport.totalCalories = Int32(totalCal)
+            sport.totalDistances = Int32(totalDistance)
+            sport.perMinute = Int32(perMinute)
+            //sport.packetCount = Int16(packetCount)
+            sport.totalSteps = Int32(totalStep)
             guard self.coredataHandler.commit() else {
                 return
             }
@@ -1354,13 +1414,14 @@ public final class AngelManager: NSObject {
                 i in
                 if let item = items?[i]{
                     print("item 步数 :" , item.sport_count, Thread.isMainThread);
-                    if let sportItem = self.coredataHandler.createSportItem(userId: userId, withMacAddress: realMacAddress, withDate: realDate, withItemId: Int16(i)){
-                        sportItem.activeTime = Int16(item.active_time)
+                    
+                    if let sportItem = self.coredataHandler.createSportEverydayDataItem(withAccessoryId: realAccessoryId, byUserId: userId, withDate: realDate, withItemId: Int16(i)){
+                        //sportItem.activeTime = Int16(item.active_time)
                         sportItem.calories = Int16(item.calories)
-                        sportItem.distance = Int16(item.distance)
+                        sportItem.distancesM = Int16(item.distance)
                         sportItem.id = Int16(i)
                         sportItem.mode = Int16(item.mode)
-                        sportItem.sportCount = Int16(item.sport_count)
+                        sportItem.steps = Int16(item.sport_count)
                     }
                 }
             }
@@ -1414,26 +1475,27 @@ public final class AngelManager: NSObject {
                 return
             }
             
-            guard let sleep = self.coredataHandler.insertSleepData(userId: userId, withMacAddress: realMacAddress, withDate: realDate, withItems: nil) else {
+            
+            guard let sleep = self.coredataHandler.insertSleepEverydayData(withAccessoryId: realAccessoryId, byUserId: userId, withDate: realDate) else {
                 return
             }
             sleep.date = realDate as NSDate
-            sleep.id = Int16(id)
+            sleep.objectId = id
 
-            sleep.itemsCount = Int16(itemCount)
-            sleep.packetCount = Int16(packetCount)
-            sleep.deepSleepCount = Int16(deepSleepCount)
-            sleep.deepSleepMinute = Int16(deepSleepMinute)
-            sleep.endTimeHour = Int16(endTimeHour)
-            sleep.endTimeMinute = Int16(endTimeMinute)
-            sleep.id = Int16(id)
-            sleep.lightSleepCount = Int16(lightSleepCount)
-            sleep.lightSleepMinute = Int16(lightSleepMinute)
-            sleep.sleepItemCount = Int16(sleepItemCount)
-            sleep.totalMinute = Int16(totalMinute)
-            sleep.wakeCount = Int16(wakeCount)
-            sleep.startTimeHour = startTimeHour
-            sleep.startTimeMinute = startTimeMinute
+            sleep.itemsCount = Int32(itemCount)
+            //sleep.packetCount = Int16(packetCount)
+            sleep.deepSleepCount = Int32(deepSleepCount)
+            sleep.deepSleepMinutes = Int16(deepSleepMinute)
+            sleep.endedHour = Int32(endTimeHour)
+            sleep.endedMinute = Int32(endTimeMinute)
+            sleep.lightSleepCount = Int32(lightSleepCount)
+            sleep.lightSleepMinutes = Int16(lightSleepMinute)
+            sleep.deepSleepCount = Int32(deepSleepCount)
+            sleep.deepSleepMinutes = Int16(deepSleepMinute)
+            sleep.totalMinutes = Int16(totalMinute)
+            sleep.awakeCount = Int32(wakeCount)
+            sleep.endedHour = Int32(startTimeHour)
+            sleep.endedMinute = Int32(startTimeMinute)
             
             guard self.coredataHandler.commit() else {
                 return
@@ -1444,10 +1506,11 @@ public final class AngelManager: NSObject {
             (0..<96).forEach(){
                 i in
                 if let item = items?[i]{
-                    if let sleepItem = self.coredataHandler.createSleepItem(userId: userId, withMacAddress: realMacAddress, withDate: realDate, withItemId: Int16(i)){
-                        sleepItem.durations = Int16(item.durations)
+                    
+                    if let sleepItem = self.coredataHandler.createSleepEverydayDataItem(withAccessoryId: realAccessoryId, byUserId: userId, withDate: realDate, withItemId: Int16(i)){
+                        sleepItem.durationsMinute = Int16(item.durations)
                         sleepItem.id = Int16(i)
-                        sleepItem.sleepStatus = Int16(item.sleep_status)
+                        sleepItem.status = Int16(item.sleep_status)
                     }
                 }
             }
@@ -1488,20 +1551,20 @@ public final class AngelManager: NSObject {
                 return
             }
             
-            guard let heartRate = self.coredataHandler.insertHeartRateData(userId: userId, withMacAddress: realMacAddress, withDate: realDate, withItems: nil) else {
+            guard let heartRate = self.coredataHandler.insertHeartRateEverydayData(withAccessoryId: realAccessoryId, byUserId: userId, withDate: realDate) else {
                 return
             }
             heartRate.date = realDate as NSDate
-            heartRate.id = Int16(id)
-            heartRate.itemCount = Int16(itemCount)
+            heartRate.objectId = id
+            //heartRate.itemCount = Int16(itemCount)
             heartRate.aerobicMinutes = Int16(aerobicMinutes)
             heartRate.aerobicThreshold = Int16(aerobicThreshld)
             heartRate.burnFatMinutes = Int16(burnFatMinutes)
             heartRate.burnFatThreshold = Int16(burnFatThreshold)
             heartRate.limitMinutes = Int16(limitMinutes)
             heartRate.limitThreshold = Int16(limitThreshold)
-            heartRate.minuteOffset = Int16(minuteOffset)
-            heartRate.packetsCount = Int16(packetsCount)
+            heartRate.offset = Int16(minuteOffset)
+            //heartRate.packetsCount = Int16(packetsCount)
             heartRate.silentHeartRate = Int16(silentHeartRate)
          
             guard self.coredataHandler.commit() else {
@@ -1515,10 +1578,11 @@ public final class AngelManager: NSObject {
                 i in
                 if let item = items?[i]{
                     
-                    if let heartRateItem = self.coredataHandler.createHeartRateItem(userId: userId, withMacAddress: realMacAddress, withDate: realDate, withItemId: Int16(i)){
-                        heartRateItem.data = Int16(item.data)
+                    
+                    if let heartRateItem = self.coredataHandler.createHeartRateEverydayDataItem(withAccessoryId: realAccessoryId, byUserId: userId, withDate: realDate, withItemId: Int16(i)){
+                        heartRateItem.value = Int16(item.data)
                         heartRateItem.id = Int16(i)
-                        heartRateItem.offset = Int16(item.offset)
+                        heartRateItem.toLastMinutes = Int16(item.offset)
                     }
                 }
             }
@@ -1531,50 +1595,57 @@ public final class AngelManager: NSObject {
     }
     
     //MARK:- 获取健康数据
-    public func getSportData(_ macAddress: String? = nil, date: Date = Date(), offset: Int = 0, closure:(_ result: [SportData]) ->()){
-        
-        //判断mac地址是否存在
-        var realMacAddress: String!
-        if let md = macAddress{
-            realMacAddress = md
-        }else if let md = self.macAddress{
-            realMacAddress = md
+    public func getSportData(_ accessoryId: String? = nil, date: Date = Date(), offset: Int = 0, closure:(_ result: [SportEverydayData]) ->()){
+
+        //判断accessoryId地址是否存在
+        var realAccessoryId: String!
+        if let ai = accessoryId{
+            realAccessoryId = ai
+        }else if let ai = self.accessoryId{
+            realAccessoryId = ai
         }else{
             closure([])
             return
         }
         
-        closure(coredataHandler.selectSportData(userId: UserManager.share().userId, withMacAddress: realMacAddress, withDate: date, withDayRange: offset))
+        let userId = UserManager.share().userId
+        let sportEverydayDataList = coredataHandler.selectSportEverydayDataList(withAccessoryId: realAccessoryId, byUserId: userId, withDate: date, withDayOffset: offset)
+        closure(sportEverydayDataList)
     }
-    public func getSleepData(_ macAddress: String? = nil, date: Date = Date(), offset: Int = 0, closure:(_ result: [SleepData]) ->()){
+    
+    public func getSleepData(_ accessoryId: String? = nil, date: Date = Date(), offset: Int = 0, closure:(_ result: [SleepEverydayData]) ->()){
         
-        //判断mac地址是否存在
-        var realMacAddress: String!
-        if let md = macAddress{
-            realMacAddress = md
-        }else if let md = self.macAddress{
-            realMacAddress = md
+        //判断accessoryId地址是否存在
+        var realAccessoryId: String!
+        if let ai = accessoryId{
+            realAccessoryId = ai
+        }else if let ai = self.accessoryId{
+            realAccessoryId = ai
         }else{
             closure([])
             return
         }
         
-        closure(coredataHandler.selectSleepData(userId: UserManager.share().userId, withMacAddress: realMacAddress, withDate: date, withDayRange: offset))
+        let userId = UserManager.share().userId
+        let sleepDataList = coredataHandler.selectSleepEverydayDataList(withAccessoryId: realAccessoryId, byUserId: userId, withDate: date, withDayOffset: offset)
+        closure(sleepDataList)
     }
-    public func getHeartRateData(_ macAddress: String? = nil, date: Date = Date(), offset: Int = 0, closure:(_ result: [HeartRateData]) ->()){
+    public func getHeartRateData(_ accessoryId: String? = nil, date: Date = Date(), offset: Int = 0, closure:(_ result: [HeartRateEverydayData]) ->()){
         
-        //判断mac地址是否存在
-        var realMacAddress: String!
-        if let md = macAddress{
-            realMacAddress = md
-        }else if let md = self.macAddress{
-            realMacAddress = md
+        //判断accessoryId地址是否存在
+        var realAccessoryId: String!
+        if let ai = accessoryId{
+            realAccessoryId = ai
+        }else if let ai = self.accessoryId{
+            realAccessoryId = ai
         }else{
             closure([])
             return
         }
         
-        closure(coredataHandler.selectHeartRateData(userId: UserManager.share().userId, withMacAddress: realMacAddress, withDate: date, withDayRange: offset))
+        let userId = UserManager.share().userId
+        let heartrateDataList = coredataHandler.selectHeartRateEverydayDataList(withAccessoryId: realAccessoryId, byUserId: userId, withDate: date, withDayOffset: offset)
+        closure(heartrateDataList)
     }
     
     //MARK:- 同步配置
@@ -1586,6 +1657,7 @@ public final class AngelManager: NSObject {
         protocol_sync_config_start()
     }
     
+    /*
     //设置闹钟
     public func updateAlarm(_ macAddress: String? = nil, alarmId: Int16, customAlarm: CustomAlarm, closure: (_ success: Bool)->()){
       
@@ -1593,7 +1665,7 @@ public final class AngelManager: NSObject {
         var realMacAddress: String!
         if let md = macAddress{
             realMacAddress = md
-        }else if let md = self.macAddress{
+        }else if let md = self.accessoryId{
             realMacAddress = md
         }else{
             closure(false)
@@ -1626,13 +1698,13 @@ public final class AngelManager: NSObject {
     }
     
     //MARK:- 添加闹钟
-    public func addAlarm(_ macAddress: String? = nil, customAlarm: CustomAlarm, closure: (_ success: Bool, _ alarmId: Int16?)->()){
+    public func addAlarm(_ macAddress: String? = nil, customAlarm: CustomAlarm, closure: @escaping (_ success: Bool, _ alarmId: Int16?)->()){
         
         //判断mac地址是否存在
         var realMacAddress: String!
         if let md = macAddress{
             realMacAddress = md
-        }else if let md = self.macAddress{
+        }else if let md = self.accessoryId{
             realMacAddress = md
         }else{
             closure(false, nil)
@@ -1659,7 +1731,7 @@ public final class AngelManager: NSObject {
         var realMacAddress: String!
         if let md = macAddress{
             realMacAddress = md
-        }else if let md = self.macAddress{
+        }else if let md = self.accessoryId{
             realMacAddress = md
         }else{
             closure(false)
@@ -1698,7 +1770,7 @@ public final class AngelManager: NSObject {
         var realMacAddress: String!
         if let md = macAddress{
             realMacAddress = md
-        }else if let md = self.macAddress{
+        }else if let md = self.accessoryId{
             realMacAddress = md
         }else{
             closure(nil)
@@ -1712,9 +1784,9 @@ public final class AngelManager: NSObject {
     public func getAllAlarms(closure: ([Alarm])->()){
         //判断mac地址是否存在
         var realMacAddress: String!
-        if let md = macAddress{
+        if let md = accessoryId{
             realMacAddress = md
-        }else if let md = self.macAddress{
+        }else if let md = self.accessoryId{
             realMacAddress = md
         }else{
             closure([])
@@ -1730,7 +1802,7 @@ public final class AngelManager: NSObject {
         var realMacAddress: String!
         if let md = macAddress{
             realMacAddress = md
-        }else if let md = self.macAddress{
+        }else if let md = self.accessoryId{
             realMacAddress = md
         }else{
             closure(false)
@@ -1773,6 +1845,7 @@ public final class AngelManager: NSObject {
         }
         protocol_set_alarm_start_sync()
     }
+     */
     
     //获取总开关状态
     public func getNoticeStatus(_ closure:@escaping (_ status:Bool) -> ()){
@@ -1808,6 +1881,7 @@ public final class AngelManager: NSObject {
         closure(true)
     }
     
+    /*
     //MARK:- 设置音乐开关
     public func setMusicSwitch(_ open:Bool, macAddress: String? = nil, closure:@escaping (_ success:Bool) -> ()){
         
@@ -1815,7 +1889,7 @@ public final class AngelManager: NSObject {
         var realMacAddress: String!
         if let md = macAddress{
             realMacAddress = md
-        }else if let md = self.macAddress{
+        }else if let md = self.accessoryId{
             realMacAddress = md
         }else{
             closure(false)
@@ -1862,7 +1936,7 @@ public final class AngelManager: NSObject {
         var realMacAddress: String!
         if let md = macAddress{
             realMacAddress = md
-        }else if let md = self.macAddress{
+        }else if let md = self.accessoryId{
             realMacAddress = md
         }else{
             closure(false)
@@ -1942,7 +2016,7 @@ public final class AngelManager: NSObject {
         var realMacAddress: String!
         if let md = macAddress{
             realMacAddress = md
-        }else if let md = self.macAddress{
+        }else if let md = self.accessoryId{
             realMacAddress = md
         }else{
             closure(false)
@@ -1990,7 +2064,7 @@ public final class AngelManager: NSObject {
             loop(5, closure: closure)
         })
     }
-    
+    */
   
     
     

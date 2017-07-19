@@ -15,7 +15,7 @@ extension CoreDataHandler{
             return nil
         }
         
-        var id: Int64 = 0
+        var id: Int16 = 0
         if let lastUserActivityLiker = selectAllUserActivityLikers(byObjectId: objectId, byUserId: userId).last{
             id = lastUserActivityLiker.id + 1         //增1
         }

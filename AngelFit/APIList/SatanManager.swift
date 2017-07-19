@@ -134,7 +134,7 @@ public class SatanManager: NSObject {
             //数据库操作
             let end: protocol_switch_app_ble_end = data.assumingMemoryBound(to: protocol_switch_app_ble_end.self).pointee
             let isSave = end.is_save == 0x01 ? true : false
-            guard let date = self.curDate, let macaddress = self.angelManager?.macAddress else {
+            guard let date = self.curDate, let accessoryId = self.angelManager?.accessoryId else {
                 return
             }
             if isSave {
@@ -145,23 +145,24 @@ public class SatanManager: NSObject {
                 let hrValue = end.hr_value
                 
                 let userId = UserManager.share().userId
-                guard let track = self.coredataHandler.selectTrack(userId: userId, withMacAddress: macaddress, withDate: date, withDayRange: nil).last else {
+//                self.coredataHandler.selectEachTrainningData
+                guard let track = self.coredataHandler.selectEachTrainningDataList(withAccessoryId: accessoryId, byUserId: userId, withDate: date, withCDHRange: CDHRange.day).last else {
                     return
                 }
                 track.date = date as NSDate?
-                track.step = Int16(step)
+                track.steps = Int32(step)
                 track.aerobicMinutes = Int16(hrValue.aerobic_mins)
-                track.avgrageHeartrate = Int16(hrValue.avg_hr_value)
+                track.averageHeartRate = Int16(hrValue.avg_hr_value)
                 track.burnFatMinutes = Int16(hrValue.burn_fat_mins)
-                track.calories = Int16(calories)
-                track.distance = Double(distance)
+                track.calories = Int32(calories)
+                track.distances100TimesM = Int32(distance)
                 guard self.coredataHandler.commit() else {
                     return
                 }
             }else{
                 //删除当天最后一条交换数据
                 let userId = UserManager.share().userId
-                self.coredataHandler.deleteTrack(userId: userId, withMacAddress: macaddress, withDate: date)
+                self.coredataHandler.deleteEachTrainningData(withAccessoryId: accessoryId, byUserId: userId, withDate: date)
             }
         }
         
@@ -278,13 +279,13 @@ public class SatanManager: NSObject {
                     
                     closure(ErrorCode.success, status)
                     
-                    guard let macaddress = self.angelManager?.macAddress else{
+                    guard let accessoryId = self.angelManager?.accessoryId else{
                         return
                     }
                     
                     //插入数据库
                     let userId = UserManager.share().userId
-                    guard let track = self.coredataHandler.insertTrack(userId: userId, withMacAddress: macaddress, withDate: self.curDate!, withItems: nil) else{
+                    guard let track = self.coredataHandler.insertEachTrainningData(withAccessoryId: accessoryId, byUserId: userId, withDate: self.curDate!) else{
                         return
                     }
                     track.type = Int16(start.sportType)         //运动类型
@@ -299,17 +300,19 @@ public class SatanManager: NSObject {
     
     //MARK:- 运动中存储坐标数据
     public func addTrack(withCoordinate coordinate: CLLocationCoordinate2D, withInterval interval: TimeInterval, totalDistance distance: Double, childDistance subDistance: Double){
-        guard let macaddress = angelManager?.macAddress, let date = curDate else {
+        guard let accessoryId = angelManager?.accessoryId, let date = curDate else {
             return
         }
         
         let userId = UserManager.share().userId
-        _ = coredataHandler.createTrackItem(userId: userId, withMacAddress: macaddress, withDate: date, withTotalDistance: distance, withCoordinate: coordinate, interval: interval, childDistance: subDistance)
+//        _ = coredataHandler.createTrackItem(userId: userId, withMacAddress: accessoryId, withDate: date, withTotalDistance: distance, withCoordinate: coordinate, interval: interval, childDistance: subDistance)
+        //创建GPS item
+        _ = coredataHandler.createEachTrainningGPSLoggerItem(withAccessoryId: accessoryId, byUserId: userId, withDate: date, withItemId: 0, withCoordinate2D: coordinate)
     }
     
     //MARK:- 当运动距离过小，从数据库移除该次运动
     public func resetTrack(){
-        guard let macaddress = angelManager?.macAddress else {
+        guard let accessoryId = angelManager?.accessoryId else {
             return
         }
         guard let date = curDate else {
@@ -320,7 +323,7 @@ public class SatanManager: NSObject {
         
         let coredataHandler = CoreDataHandler.share()
         let userId = UserManager.share().userId
-        coredataHandler.deleteTrack(userId: userId, withMacAddress: macaddress, withDate: date)
+        coredataHandler.deleteEachTrainningData(withAccessoryId: accessoryId, byUserId: userId, withDate: date)
     }
     
     //MARK:- 自动开始与停止交换
@@ -344,6 +347,14 @@ public class SatanManager: NSObject {
                 guard let reply = switchDoingReply else{
                     return
                 }
+                
+                //创建步数 item
+                if let accessoryId = self.angelManager?.accessoryId{
+                    let subSteps = reply.step
+                    let userId = UserManager.share().userId
+                    _ = self.coredataHandler.createEachTrainningStepItem(withAccessoryId: accessoryId, byUserId: userId, withDate: self.curDate!, withItemId: 0, withSteps: Int16(subSteps))
+                }
+                
                 DispatchQueue.main.async {
                     self.bleDistance = reply.distance
                     self.delegate?.satanManager(didSwitchingReplyCalories: reply.calories,
@@ -414,26 +425,28 @@ public class SatanManager: NSObject {
             }
             
             //存数据库
-            guard let date = self.curDate, let macaddress = self.angelManager?.macAddress else {
+            guard let date = self.curDate, let accessoryId = self.angelManager?.accessoryId else {
                 return
             }
             let userId = UserManager.share().userId
-            guard let track = self.coredataHandler.selectTrack(userId: userId, withMacAddress: macaddress, withDate: date, withDayRange: 0).last else {
+            guard let track = self.coredataHandler.selectEachTrainningDataList(withAccessoryId: accessoryId, byUserId: userId, withDate: date, withCDHRange: CDHRange.day).last else {
                 return
             }
-            track.calories = Int16(switchReply.calories)
-            track.distance = Double(switchReply.distance)
-            track.step = Int16(switchReply.step)
+            
+            
+            track.calories = Int32(switchReply.calories)
+            track.distances100TimesM = Int32(switchReply.distance)
+            track.steps = Int32(switchReply.step)
             let serial = Int16(doingReply.hr_item.hr_value_serial)      //序列号 * 6 for heartrateId
             if switchReply.available {
                 let tuple = switchReply.hrValue
                 //添加心率数据
-                _ = self.coredataHandler.createTrackHeartrateItem(userId: userId, withMacAaddress: macaddress, withDate: date, withHeartrateId: serial * 6 + 0, withOffset: 0, withData: Int16(tuple.0))
-                _ = self.coredataHandler.createTrackHeartrateItem(userId: userId, withMacAaddress: macaddress, withDate: date, withHeartrateId: serial * 6 + 1, withOffset: 0, withData: Int16(tuple.1))
-                _ = self.coredataHandler.createTrackHeartrateItem(userId: userId, withMacAaddress: macaddress, withDate: date, withHeartrateId: serial * 6 + 2, withOffset: 0, withData: Int16(tuple.2))
-                _ = self.coredataHandler.createTrackHeartrateItem(userId: userId, withMacAaddress: macaddress, withDate: date, withHeartrateId: serial * 6 + 3, withOffset: 0, withData: Int16(tuple.3))
-                _ = self.coredataHandler.createTrackHeartrateItem(userId: userId, withMacAaddress: macaddress, withDate: date, withHeartrateId: serial * 6 + 4, withOffset: 0, withData: Int16(tuple.4))
-                _ = self.coredataHandler.createTrackHeartrateItem(userId: userId, withMacAaddress: macaddress, withDate: date, withHeartrateId: serial * 6 + 5, withOffset: 0, withData: Int16(tuple.5))
+                _ = self.coredataHandler.createEachTrainningHeartRateItem(withAccessoryId: accessoryId, byUserId: userId, withDate: date, withItemId: serial * 6 + 0, withHeartrateValue: Int16(tuple.0))
+                _ = self.coredataHandler.createEachTrainningHeartRateItem(withAccessoryId: accessoryId, byUserId: userId, withDate: date, withItemId: serial * 6 + 1, withHeartrateValue: Int16(tuple.1))
+                _ = self.coredataHandler.createEachTrainningHeartRateItem(withAccessoryId: accessoryId, byUserId: userId, withDate: date, withItemId: serial * 6 + 2, withHeartrateValue: Int16(tuple.2))
+                _ = self.coredataHandler.createEachTrainningHeartRateItem(withAccessoryId: accessoryId, byUserId: userId, withDate: date, withItemId: serial * 6 + 3, withHeartrateValue: Int16(tuple.3))
+                _ = self.coredataHandler.createEachTrainningHeartRateItem(withAccessoryId: accessoryId, byUserId: userId, withDate: date, withItemId: serial * 6 + 4, withHeartrateValue: Int16(tuple.4))
+                _ = self.coredataHandler.createEachTrainningHeartRateItem(withAccessoryId: accessoryId, byUserId: userId, withDate: date, withItemId: serial * 6 + 5, withHeartrateValue: Int16(tuple.5))
             }else{
                                
             }
@@ -570,20 +583,21 @@ public class SatanManager: NSObject {
             endReplyResult.aerobicMins = switchEndStruct.hr_value.aerobic_mins
             endReplyResult.limitMins = switchEndStruct.hr_value.limit_mins
             //存数据库
-            guard let date = self.curDate, let macaddress = self.angelManager?.macAddress else {
+            guard let date = self.curDate, let accessoryId = self.angelManager?.accessoryId else {
                 return
             }
             let userId = UserManager.share().userId
-            guard let track = self.coredataHandler.selectTrack(userId: userId, withMacAddress: macaddress, withDate: date, withDayRange: nil).last else {
+            guard let track = self.coredataHandler.selectEachTrainningDataList(withAccessoryId: accessoryId, byUserId: userId, withDate: date, withCDHRange: CDHRange.day).last else {
                 return
             }
+            
             track.date = date as NSDate?
-            track.step = Int16(endReplyResult.step)
+            track.steps = Int32(endReplyResult.step)
             track.aerobicMinutes = Int16(endReplyResult.aerobicMins)
-            track.avgrageHeartrate = Int16(endReplyResult.avgHrValue)
+            track.averageHeartRate = Int16(endReplyResult.avgHrValue)
             track.burnFatMinutes = Int16(endReplyResult.burnFatMins)
-            track.calories = Int16(endReplyResult.calories)
-            track.distance = Double(endReplyResult.distance)
+            track.calories = Int32(endReplyResult.calories)
+            track.distances100TimesM = Int32(endReplyResult.distance)
             guard self.coredataHandler.commit() else {
                 return
             }
@@ -605,18 +619,18 @@ public class SatanManager: NSObject {
     }
     
     //同步活动数据
-    public func setSynchronizationActiveData(_ macAddress: String? = nil, closure:@escaping (_ complete: Bool, _ progress: Int16 ,_ timeOut:Bool)->()){
+    public func setSynchronizationActiveData(_ accessoryId: String? = nil, closure:@escaping (_ complete: Bool, _ progress: Int16 ,_ timeOut:Bool)->()){
         
         guard isPeripheralConnected() else {
             closure(false, 0, false)
             return
         }
         
-        var realMacAddress: String!
-        if let md = macAddress{
-            realMacAddress = md
-        }else if let md = angelManager?.macAddress{
-            realMacAddress = md
+        var realAccessoryId: String!
+        if let ai = accessoryId{
+            realAccessoryId = ai
+        }else if let ai = angelManager?.accessoryId{
+            realAccessoryId = ai
         }else{
             return
         }
@@ -665,30 +679,31 @@ public class SatanManager: NSObject {
                 return
             }
             let userId = UserManager.share().userId
-            guard let track = self.coredataHandler.insertTrack(userId: userId, withMacAddress: realMacAddress, withDate: date, withItems: nil) else {
+            guard let track = self.coredataHandler.insertEachTrainningData(withAccessoryId: realAccessoryId, byUserId: userId, withDate: date) else {
                 return
             }
+            
             track.aerobicMinutes = Int16(data2.aerobic_mins)
-            track.avgrageHeartrate = Int16(data2.avg_hr_value)
+            track.averageHeartRate = Int16(data2.avg_hr_value)
             track.burnFatMinutes = Int16(data2.burn_fat_mins)
-            track.calories = Int16(data1.calories)
+            track.calories = Int32(data1.calories)
             track.date = date as NSDate?
-            track.distance = Double(data1.distance)
-            track.durations = Int16(data1.durations)
+            track.distances100TimesM = Int32(data1.distance)
+            track.durationS = Int32(data1.durations)
             //存储心率
             let count: Int = 2 * 60 * 60 / 5
             (0..<count).forEach{
                 i in
                 if let value = hrValues?[i]{
                     if value != 0{
-                        _ = self.coredataHandler.createTrackHeartrateItem(userId: userId, withMacAaddress: realMacAddress, withDate: date, withHeartrateId: Int16(i), withOffset: 0, withData: Int16(value))
+                        _ = self.coredataHandler.createEachTrainningHeartRateItem(withAccessoryId: realAccessoryId, byUserId: userId, withDate: date, withItemId: Int16(i), withHeartrateValue: Int16(value))
                     }
                 }
             }
             track.limitMinutes = Int16(data2.limit_mins)
-            track.maxHeartrate = Int16(data2.max_hr_value)
-            track.serial = Int16(head.serial)
-            track.step = Int16(data1.step)
+            track.maxHeartRate = Int16(data2.max_hr_value)
+            //track.serial = Int16(head.serial)
+            track.steps = Int32(data1.step)
             track.type = Int16(data1.type)
             DispatchQueue.main.async {
                 _ = self.coredataHandler.commit()
@@ -699,18 +714,18 @@ public class SatanManager: NSObject {
     }
     
     //获取同步项个数
-    public func getSynchronizationActiveCount(_ macAddress: String? = nil, closure:@escaping (_ count: UInt8) -> ()){
+    public func getSynchronizationActiveCount(_ accessoryId: String? = nil, closure:@escaping (_ count: UInt8) -> ()){
         
         guard isPeripheralConnected() else {
             closure(0)
             return
         }
         
-        var realMacAddress: String!
-        if let md = macAddress{
-            realMacAddress = md
-        }else if let md = angelManager?.macAddress{
-            realMacAddress = md
+        var realAccessoryId: String!
+        if let ai = accessoryId{
+            realAccessoryId = ai
+        }else if let ai = angelManager?.accessoryId{
+            realAccessoryId = ai
         }else{
             closure(0)
             return

@@ -10,6 +10,11 @@ import Foundation
 import CoreData
 import CoreLocation
 
+//数据库错误信息
+public enum GodError: Error{
+    case fetchNoResult
+}
+
 public class CoreDataHandler {
     
     //coredata-context

@@ -77,7 +77,7 @@ public final class GodManager: NSObject {
         _ = CBridgingManager.share()
         
         //初始化创建默认id=1的用户
-        _ = CoreDataHandler.share().insertUser()
+        _ = CoreDataHandler.share().insertUser(withUserId: 1)
     }
 
     //Mark:- 开始扫描
