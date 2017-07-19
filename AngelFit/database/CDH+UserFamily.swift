@@ -19,7 +19,7 @@ extension CoreDataHandler{
         if userFamily == nil{
             if let entityDescription = NSEntityDescription.entity(forEntityName: "UserFamily", in: context){
                 userFamily = UserFamily(entity: entityDescription, insertInto: context)
-                
+
                 guard commit() else {
                     return nil
                 }

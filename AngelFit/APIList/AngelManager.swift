@@ -213,7 +213,7 @@ public final class AngelManager: NSObject {
                     let device = self.coredataHandler.insertDevice(withAccessoryId: accessoryId, byUserId: UserManager.share().userId)
                     device?.batteryStatus = Int16(deviceInfo.batt_status)
                     device?.batteryLevel = Int16(deviceInfo.batt_level)
-                    _ = Int16(deviceInfo.version)
+                    device?.version = Int16(deviceInfo.version)
                     device?.isPaired = deviceInfo.pair_flag == 0x01 ? true : false
                     device?.isRebooted = deviceInfo.reboot_flag == 0x01 ? true : false
                     device?.runMode = Int16(deviceInfo.mode)

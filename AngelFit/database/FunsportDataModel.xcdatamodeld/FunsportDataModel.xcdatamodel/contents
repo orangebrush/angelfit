@@ -33,6 +33,7 @@
         <attribute name="type" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="usageMinutes" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="uuid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="version" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <relationship name="bloodPressureEverydayDataList" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="BloodPressureEverydayData" inverseName="device" inverseEntity="BloodPressureEverydayData" syncable="YES"/>
         <relationship name="deviceAlarmList" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="DeviceAlarm" inverseName="device" inverseEntity="DeviceAlarm" syncable="YES"/>
         <relationship name="deviceAntiLostSetting" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DeviceAntiLostSetting" inverseName="device" inverseEntity="DeviceAntiLostSetting" syncable="YES"/>
@@ -466,7 +467,7 @@
     <elements>
         <element name="BloodPressureEverydayData" positionX="-7011" positionY="-12807" width="128" height="148"/>
         <element name="BloodPressureEverydayDataItem" positionX="-6833" positionY="-12756" width="128" height="120"/>
-        <element name="Device" positionX="-7454" positionY="-12009" width="128" height="555"/>
+        <element name="Device" positionX="-7454" positionY="-12009" width="128" height="568"/>
         <element name="DeviceAlarm" positionX="-7623" positionY="-12096" width="128" height="180"/>
         <element name="DeviceAntiLostSetting" positionX="-7787" positionY="-11592" width="128" height="150"/>
         <element name="DeviceFunction" positionX="-7940" positionY="-12114" width="128" height="510"/>

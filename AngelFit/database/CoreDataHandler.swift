@@ -81,7 +81,6 @@ public class CoreDataHandler {
     }
     
     private func config(){
-        pthread_mutex_init(&CoreDataHandler.rwlock, nil)
         
         context.persistentStoreCoordinator = persistentStoreCoordinator
         
@@ -105,11 +104,10 @@ public class CoreDataHandler {
                 try context.save()
                 return true
             } catch let error {
-                fatalError("<Core Data Commit> error context: \(context), error: \(error)")
+                debugPrint("<Core Data Commit> error context: \(context), error: \(error)")
                 abort()
             }
         }
-        debugPrint("<Core Data Commit> context has no changes!")
         return false
     }
     

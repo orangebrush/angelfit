@@ -30,24 +30,26 @@ class ViewController: UIViewController {
     }
     
     private func createContents(){
-        let networkHandler = NetworkHandler.share()
-        let param: [String: Any] = ["userId": "ganyi",
-                                    "password": "123456",
-                                    "email": "123456@qq.com"]
+//        let networkHandler = NetworkHandler.share()
+//        let param: [String: Any] = ["userId": "ganyi",
+//                                    "password": "123456",
+//                                    "email": "123456@qq.com"]
+//        
+//        networkHandler.user.add(withParam: param, closure: {
+//            resultCode, message, data in
+//            print(resultCode)
+//            print(message)
+//            print(data)
+//            
+//            networkHandler.user.logon(withUserId: "ganyi", withPassword: "123456", closure: {
+//                resultCode, message, data in
+//                print(resultCode)
+//                print(message)
+//                print(data)
+//            })
+//        })
+        let godMan = GodManager.share()
         
-        networkHandler.user.add(withParam: param, closure: {
-            resultCode, message, data in
-            print(resultCode)
-            print(message)
-            print(data)
-            
-            networkHandler.user.logon(withUserId: "ganyi", withPassword: "123456", closure: {
-                resultCode, message, data in
-                print(resultCode)
-                print(message)
-                print(data)
-            })
-        })
     }
     
     override func didReceiveMemoryWarning() {

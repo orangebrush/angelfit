@@ -500,6 +500,13 @@
 			name = Network;
 			sourceTree = "<group>";
 		};
+		327D18591F1F5E00001669FC /* models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = models;
+			sourceTree = "<group>";
+		};
 		32C103351DC973D80001D415 /* fs */ = {
 			isa = PBXGroup;
 			children = (
@@ -597,6 +604,7 @@
 		BED368A31EBAC8E8004BCDE1 /* database */ = {
 			isa = PBXGroup;
 			children = (
+				327D18591F1F5E00001669FC /* models */,
 				BED368A71EBAC919004BCDE1 /* FunsportDataModel.xcdatamodeld */,
 				BED368AA1EBB2426004BCDE1 /* CoreDataHandler.swift */,
 				BE7919B91EC00E580094DBFA /* CoreDataConfigure.swift */,
