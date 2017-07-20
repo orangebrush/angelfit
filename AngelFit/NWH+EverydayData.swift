@@ -13,8 +13,8 @@ public enum NWHMapType: String {
 }
 public class NWHEverydayData {
     //MARK:- init ++++++++++++++++++++++++++++
-    private static let __once = NWHDevice()
-    public class func share() -> NWHDevice{
+    private static let __once = NWHEverydayData()
+    public class func share() -> NWHEverydayData{
         return __once
     }
     
