@@ -27,7 +27,7 @@ enum Actions{
     static let deviceUpdate         = "/device/update"          //更新设备
     
     static let everydayHeartratesAdd = "/heartrate/recordHeartRates"    //post上传每日心率
-    static let everydayHeartratesPull = "/heartrate/recordHeartRates"   //get下拉每日心率
+    static let everydayHeartratesPull = "/heartrate/recoverHeartRates"  //get下拉每日心率
     static let everydayStepAdd = "/sport/recordSteps"                   //post上传每日步数
     static let everydayStepPull = "/sport/recoverSteps"                 //get下拉每日步数
     static let everydaySleepAdd = "/sleep/recordSleeps"                 //post上传每日睡眠

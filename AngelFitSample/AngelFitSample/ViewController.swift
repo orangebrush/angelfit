@@ -31,49 +31,91 @@ class ViewController: UIViewController {
     
     private func createContents(){
         
-        /*
-         * @param id                require 由设备唯一id,由deviceType,deviceId与uuid组成
-         * @param macAddress        设备物理地址
-         * @param uuid              设备uuid
-         * @param name              设备名
-         * @param showName          显示名
-         * @param type              设备类型 NWHDeviceType
-         * @param batteryType       电池类型 NWHDeviceBatteryType
-         * @param totalUsedMinutes  总共使用分钟数
-         */
         let networkHandler = NetworkHandler.share()
-        var param: [String: Any] = [
-            "id": "1AESDFE2E8W9W101",
-            "macAddress": "sefe4r5r2eko",
-            "uuid": "12345612",
-            "name": "id111",
-            "showName": "ganyi's band",
-            "type": "1",
-            "batteryType": "\(NWHDeviceBatteryType.lithiumCell.rawValue)",
-            "totalUsedMinutes": 123]
-
-        networkHandler.device.add(withParam: param, closure: {
+        
+        let param: [[String: Any]] = [[
+            "deviceId": "1AESDFE2E8W9W101",
+            "userId": "",
+            "date": "2017-07-20 00:00:00",
+            "silentHeartRate": "58",
+            "burnFatThreshold": "90",
+            "aerobicThreshold": "120",
+            "limitThreshold": "136",
+            "burnFatMinutes": "0",
+            "aerobicMinute": "1",
+            "limitMinutes": "0",
+            "itemsStartTime": "2017-07-20 09:12:34",
+            "items": "[{5,12}, {6, 89}, {5, 34}, {7, 34}]"
+            ], [
+                "deviceId": "1AESDFE2E8W9W101",
+                "userId": "",
+                "date": "2017-07-20 00:00:00",
+                "silentHeartRate": "58",
+                "burnFatThreshold": "90",
+                "aerobicThreshold": "120",
+                "limitThreshold": "136",
+                "burnFatMinutes": "0",
+                "aerobicMinute": "1",
+                "limitMinutes": "0",
+                "itemsStartTime": "2017-07-20 09:12:34",
+                "items": "[{5,12}, {6, 89}, {5, 34}, {7, 34}]"
+            ]]
+        
+        networkHandler.everyday.addEverydayHeartrates(withParam: param, closure: {
             resultCode, message, data in
-            print(resultCode)
-            print(message)
-            print(data)
+            print("param: \(param)\nresultCode: \(resultCode)\nmessage: \(message)\ndata: \(data)")
             
-            param = [
-                "id": "1AESDFE2E8W9W101",
-                "macAddress": "sefe4r5r2eko",
-                "uuid": "12345612",
-                "name": "id1112",
-                "showName": "ganyi's band2",
-                "type": "1",
-                "batteryType": "\(NWHDeviceBatteryType.lithiumCell.rawValue)",
-                "totalUsedMinutes": 1234]
-            networkHandler.device.update(withParam: param, closure: {
+            let pullParam: [String: Any] = [
+                "deviceId": "1AESDFE2E8W9W101",
+                "userId": "gan123123",
+                "fromDate": "2017-07-19",
+                "endDate": "2017-07-20"
+            ]
+            networkHandler.everyday.pullEverydayHeartrates(withParam: pullParam, closure: {
                 resultCode, message, data in
-                print(resultCode)
-                print(message)
-                print(data)
+                print("param: \(pullParam)\nresultCode: \(resultCode)\nmessage: \(message)\ndata: \(data)")
             })
         })
+        
+//        var param: [String: Any] =
+//            [
+//                "id": "1AESDFE2E8W9W101",
+//                "macAddress": "sefe4r5r2eko",
+//                "uuid": "12345612",
+//                "name": "id111",
+//                "showName": "ganyi's band",
+//                "type": "1",
+//                "batteryType": "\(NWHDeviceBatteryType.lithiumCell.rawValue)",
+//                "totalUsedMinutes": 123
+//        ]
+//
+//        networkHandler.device.add(withParam: param, closure: {
+//            resultCode, message, data in
+//            print(resultCode)
+//            print(message)
+//            print(data)
+//            
+//            param = [
+//                "id": "1AESDFE2E8W9W101",
+//                "macAddress": "sefe4r5r2eko",
+//                "uuid": "12345612",
+//                "name": "id1112",
+//                "showName": "ganyi's band2",
+//                "type": "1",
+//                "batteryType": "\(NWHDeviceBatteryType.lithiumCell.rawValue)",
+//                "totalUsedMinutes": 1234]
+//            networkHandler.device.update(withParam: param, closure: {
+//                resultCode, message, data in
+//                print(resultCode)
+//                print(message)
+//                print(data)
+//            })
+//        })
+        
+//        let param = [
+//            "userId": "gan0720",
+//            "password": "123456"
+//        ]
 //        networkHandler.user.add(withParam: param, closure: {
 //            resultCode, message, data in
 //            print(resultCode)
@@ -87,7 +129,7 @@ class ViewController: UIViewController {
 //                print(data)
 //            })
 //        })
-        let godMan = GodManager.share()
+//        let godMan = GodManager.share()
     }
     
     override func didReceiveMemoryWarning() {

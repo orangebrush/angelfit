@@ -66,7 +66,6 @@ class Session {
             
             var request: URLRequest!
             if isPost {
-                let body = try JSONSerialization.data(withJSONObject: param, options: JSONSerialization.WritingOptions.prettyPrinted)
                 request =  URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 10)
                 request.httpMethod = method
                 
@@ -84,6 +83,7 @@ class Session {
                     }
                     request.httpBody = form.data(using: .utf8)
                 }else {
+                    let body = try JSONSerialization.data(withJSONObject: param, options: JSONSerialization.WritingOptions.prettyPrinted)
                     request.setValue("application/json", forHTTPHeaderField: "Content-Type")
                     request.httpBody = body
                 }
