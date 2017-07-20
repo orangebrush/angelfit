@@ -35,9 +35,9 @@ extension CoreDataHandler{
     func selectUserFamily() -> UserFamily?{
         
         let request: NSFetchRequest<UserFamily> = UserFamily.fetchRequest()
-        let predicate = NSPredicate()
-        
-        request.predicate = predicate
+//        let predicate = NSPredicate()
+//        
+//        request.predicate = predicate
         
         do{
             let resultList = try context.fetch(request)

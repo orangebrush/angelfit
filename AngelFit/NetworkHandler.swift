@@ -26,10 +26,18 @@ enum Actions{
     static let deviceAdd            = "/device/add"             //新增设备
     static let deviceUpdate         = "/device/update"          //更新设备
     
-    static let getInfo = "/getinfo"
-    static let setInfo = "/setinfo"
-    static let getPhoto = "/getphoto"
-    static let setPhoto = "/setphoto"
+    static let everydayHeartratesAdd = "/heartrate/recordHeartRates"    //post上传每日心率
+    static let everydayHeartratesPull = "/heartrate/recordHeartRates"   //get下拉每日心率
+    static let everydayStepAdd = "/sport/recordSteps"                   //post上传每日步数
+    static let everydayStepPull = "/sport/recoverSteps"                 //get下拉每日步数
+    static let everydaySleepAdd = "/sleep/recordSleeps"                 //post上传每日睡眠
+    static let everydaySleepPull = "/sleep/recoverSleeps"               //get下拉每日睡眠
+    static let everydayTrainingAdd = "/train/recordTrains"              //post上传每日训练
+    static let everydayTrainingPull = "/train/recoverTrains"            //get下拉每日训练
+    
+    static let lastAcynTime = "/"    //post查询用户与设备最后更新时间
+    
+    static let setPhote = "/setPhoto"                  //更新头像
 }
 
 //返回码

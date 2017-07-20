@@ -8,7 +8,7 @@
 
 import Foundation
 class Session {
-    class func session(withAction action: String, withMethod method: String, withParam param: [String: Any], closure: @escaping (_ resultCode: Int, _ message:String, _ data: Any?) -> ()) {
+    class func session(withAction action: String, withMethod method: String, withParam param: Any, closure: @escaping (_ resultCode: Int, _ message:String, _ data: Any?) -> ()) {
         
         //回调函数
         let completionHandler = {(binaryData: Data?, response: URLResponse?, error: Error?) in
@@ -47,7 +47,8 @@ class Session {
             
             var urlStr = host + action
             if !isPost {
-                for (offset: index, element: (key: key, value: value)) in param.enumerated(){
+                let dict = param as! [String: Any]
+                for (offset: index, element: (key: key, value: value)) in dict.enumerated(){
                     if index == 0{
                         urlStr += "?"
                     }else{
@@ -73,7 +74,8 @@ class Session {
                 if action == Actions.userLogon || action == Actions.userAdd || action == Actions.userUpdate {
                     request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
                     var form = ""
-                    for (offset: index, element: (key: key, value: value)) in param.enumerated() {
+                    let dict = param as! [String: Any]
+                    for (offset: index, element: (key: key, value: value)) in dict.enumerated() {
                         if index != 0 {
                             form += "&"
                         }
@@ -110,7 +112,7 @@ class Session {
         }
         
         //2.Request
-        let urlStr = host + Actions.setPhoto + "?userid=\(userid)"
+        let urlStr = host + Actions.setPhote + "?userid=\(userid)"
         guard let url = URL(string: urlStr) else{
             debugPrint("<Session> 生成url错误")
             return

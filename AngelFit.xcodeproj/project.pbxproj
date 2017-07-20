@@ -110,6 +110,7 @@
 		327D18551F1E03B5001669FC /* CDH+DoctorHaSuggestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA1F6831EC06F7400A55E82 /* CDH+DoctorHaSuggestion.swift */; };
 		327D18561F1E03B5001669FC /* CDH+UserActivityComment.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA1F67F1EC0553E00A55E82 /* CDH+UserActivityComment.swift */; };
 		327D18581F1F0F8E001669FC /* CDH+EachTrainingData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA1F6901EC1781300A55E82 /* CDH+EachTrainingData.swift */; };
+		327D185B1F2042A7001669FC /* NWH+EverydayData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 327D185A1F2042A7001669FC /* NWH+EverydayData.swift */; };
 		32C103371DC9741D0001D415 /* BindingPeripherals.plist in Resources */ = {isa = PBXBuildFile; fileRef = 32C103361DC9741D0001D415 /* BindingPeripherals.plist */; };
 		32C103391DC974410001D415 /* GodFS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C103381DC974410001D415 /* GodFS.swift */; };
 		32E2E15D1DE5777500DC2C89 /* AngelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DF62601DDC2FB30080B77A /* AngelManager.swift */; };
@@ -224,6 +225,7 @@
 		327D17AD1F1C4DA8001669FC /* Session.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
 		327D17AF1F1CB5CF001669FC /* NWH+User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NWH+User.swift"; sourceTree = "<group>"; };
 		327D17B11F1CC03E001669FC /* NWH+Device.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NWH+Device.swift"; sourceTree = "<group>"; };
+		327D185A1F2042A7001669FC /* NWH+EverydayData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NWH+EverydayData.swift"; sourceTree = "<group>"; };
 		32C103361DC9741D0001D415 /* BindingPeripherals.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = BindingPeripherals.plist; sourceTree = "<group>"; };
 		32C103381DC974410001D415 /* GodFS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GodFS.swift; sourceTree = "<group>"; };
 		32C1033C1DC988130001D415 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
@@ -496,6 +498,7 @@
 				327D17AD1F1C4DA8001669FC /* Session.swift */,
 				327D17AF1F1CB5CF001669FC /* NWH+User.swift */,
 				327D17B11F1CC03E001669FC /* NWH+Device.swift */,
+				327D185A1F2042A7001669FC /* NWH+EverydayData.swift */,
 			);
 			name = Network;
 			sourceTree = "<group>";
@@ -787,6 +790,7 @@
 				222E7D731DC87A55001BA04A /* PeripheralManager.swift in Sources */,
 				22DF62031DD9B63C0080B77A /* CBridgingManager.swift in Sources */,
 				327D17AC1F1C4D20001669FC /* NetworkHandler.swift in Sources */,
+				327D185B1F2042A7001669FC /* NWH+EverydayData.swift in Sources */,
 				327D18581F1F0F8E001669FC /* CDH+EachTrainingData.swift in Sources */,
 				22122F871E53F8E700AA61F4 /* vbus.c in Sources */,
 				22122F7A1E53F8E700AA61F4 /* protocol_switch_data.c in Sources */,
