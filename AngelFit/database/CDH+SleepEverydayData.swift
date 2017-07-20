@@ -64,7 +64,7 @@ extension CoreDataHandler{
         
         //根据用户设备列表获取设备
         let request: NSFetchRequest<SleepEverydayData> = SleepEverydayData.fetchRequest()
-        let predicate = NSPredicate(format: "device.accessoryId = \(accessoryId) AND date = \(date)")
+        let predicate = NSPredicate(format: "device.accessoryId = \"\(accessoryId)\" AND date = \(date)")
         
         request.predicate = predicate
         do{
@@ -87,7 +87,7 @@ extension CoreDataHandler{
         let request: NSFetchRequest<SleepEverydayData> = SleepEverydayData.fetchRequest()
         let startDate = dayOffset >= 0 ? translate(date) : translate(date, withDayOffset: dayOffset)  //as NSDate
         let endDate = dayOffset >= 0 ? translate(date, withDayOffset: dayOffset) : translate(date)    //as NSDate
-        let predicate = NSPredicate(format: "device.accessoryId = \(accessoryId) AND date >= %@ AND date <= %@", startDate as CVarArg, endDate as CVarArg)
+        let predicate = NSPredicate(format: "device.accessoryId = \"\(accessoryId)\" AND date >= %@ AND date <= %@", startDate as CVarArg, endDate as CVarArg)
         
         request.predicate = predicate
         do{
@@ -113,12 +113,12 @@ extension CoreDataHandler{
         case .day:
             let startDate = translate(date)
             let endDate = translate(date)
-            predicate = NSPredicate(format: "device.accessoryId = \(accessoryId) AND date >= %@ AND date <= %@", startDate as CVarArg, endDate as CVarArg)
+            predicate = NSPredicate(format: "device.accessoryId = \"\(accessoryId)\" AND date >= %@ AND date <= %@", startDate as CVarArg, endDate as CVarArg)
         case .week:
             let weekday = calendar.component(.weekday, from: date)
             let startDate = translate(date, withDayOffset: -weekday)
             let endDate = translate(date, withDayOffset: 7 - weekday)
-            predicate = NSPredicate(format: "device.accessoryId = \(accessoryId) AND date >= %@ AND date <= %@", startDate as CVarArg, endDate as CVarArg)
+            predicate = NSPredicate(format: "device.accessoryId = \"\(accessoryId)\" AND date >= %@ AND date <= %@", startDate as CVarArg, endDate as CVarArg)
         case .month:
             let day = calendar.component(.day, from: date)
             if let dayRange = calendar.range(of: .day, in: .month, for: date){
@@ -126,7 +126,7 @@ extension CoreDataHandler{
                 
                 let startDate = translate(date, withDayOffset: -day)
                 let endDate = translate(date, withDayOffset: daysOfMonth - day)
-                predicate = NSPredicate(format: "device.accessoryId = \(accessoryId) AND date >= %@ AND date <= %@", startDate as CVarArg, endDate as CVarArg)
+                predicate = NSPredicate(format: "device.accessoryId = \"\(accessoryId)\" AND date >= %@ AND date <= %@", startDate as CVarArg, endDate as CVarArg)
             }else{
                 return []
             }
@@ -142,7 +142,7 @@ extension CoreDataHandler{
                     //创建结束日期
                     if let date2 = calendar.date(from: components){
                         let endDate = translate(date2.GMT(), withDayOffset: -1)
-                        predicate = NSPredicate(format: "device.accessoryId = \(accessoryId) AND date >= %@ AND date <= %@", startDate as CVarArg, endDate as CVarArg)
+                        predicate = NSPredicate(format: "device.accessoryId = \"\(accessoryId)\" AND date >= %@ AND date <= %@", startDate as CVarArg, endDate as CVarArg)
                     }else{
                         return []
                     }
@@ -153,7 +153,7 @@ extension CoreDataHandler{
                 return []
             }
         case .all:
-            predicate = NSPredicate(format: "device.accessoryId = \(accessoryId)")
+            predicate = NSPredicate(format: "device.accessoryId = \"\(accessoryId)\"")
         }
         
         request.predicate = predicate

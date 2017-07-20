@@ -118,9 +118,12 @@ extension CBridgingManager{
             let macAddress = macList.map(){String($0,radix:16)}.reduce(""){$0+$1}.uppercased()
             self.currentMacAddress = macAddress
             AngelManager.share()?.macAddress = macAddress
-            //保存macAddress到数据库
-            let coreDataHandler = CoreDataHandler.share()
-            _ = coreDataHandler.insertDevice(withAccessoryId: macAddress)
+            //保存device到数据库
+            if let deviceId = AngelManager.share()?.deviceId{
+                let coreDataHandler = CoreDataHandler.share()
+                let accessoryId = "1" + macAddress + deviceId
+                _ = coreDataHandler.insertDevice(withAccessoryId: accessoryId)
+            }
         }
         /*
         swiftSyncAlarm = {

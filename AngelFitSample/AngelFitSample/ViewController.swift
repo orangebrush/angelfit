@@ -33,49 +33,49 @@ class ViewController: UIViewController {
         
         let networkHandler = NetworkHandler.share()
         
-        let param: [[String: Any]] = [[
-            "deviceId": "1AESDFE2E8W9W101",
-            "userId": "",
-            "date": "2017-07-20 00:00:00",
-            "silentHeartRate": "58",
-            "burnFatThreshold": "90",
-            "aerobicThreshold": "120",
-            "limitThreshold": "136",
-            "burnFatMinutes": "0",
-            "aerobicMinute": "1",
-            "limitMinutes": "0",
-            "itemsStartTime": "2017-07-20 09:12:34",
-            "items": "[{5,12}, {6, 89}, {5, 34}, {7, 34}]"
-            ], [
-                "deviceId": "1AESDFE2E8W9W101",
-                "userId": "",
-                "date": "2017-07-20 00:00:00",
-                "silentHeartRate": "58",
-                "burnFatThreshold": "90",
-                "aerobicThreshold": "120",
-                "limitThreshold": "136",
-                "burnFatMinutes": "0",
-                "aerobicMinute": "1",
-                "limitMinutes": "0",
-                "itemsStartTime": "2017-07-20 09:12:34",
-                "items": "[{5,12}, {6, 89}, {5, 34}, {7, 34}]"
-            ]]
-        
-        networkHandler.everyday.addEverydayHeartrates(withParam: param, closure: {
-            resultCode, message, data in
-            print("param: \(param)\nresultCode: \(resultCode)\nmessage: \(message)\ndata: \(data)")
-            
-            let pullParam: [String: Any] = [
-                "deviceId": "1AESDFE2E8W9W101",
-                "userId": "gan123123",
-                "fromDate": "2017-07-19",
-                "endDate": "2017-07-20"
-            ]
-            networkHandler.everyday.pullEverydayHeartrates(withParam: pullParam, closure: {
-                resultCode, message, data in
-                print("param: \(pullParam)\nresultCode: \(resultCode)\nmessage: \(message)\ndata: \(data)")
-            })
-        })
+//        let param: [[String: Any]] = [[
+//            "deviceId": "1AESDFE2E8W9W101",
+//            "userId": "",
+//            "date": "2017-07-20 00:00:00",
+//            "silentHeartRate": "58",
+//            "burnFatThreshold": "90",
+//            "aerobicThreshold": "120",
+//            "limitThreshold": "136",
+//            "burnFatMinutes": "0",
+//            "aerobicMinute": "1",
+//            "limitMinutes": "0",
+//            "itemsStartTime": "2017-07-20 09:12:34",
+//            "items": "[{5,12}, {6, 89}, {5, 34}, {7, 34}]"
+//            ], [
+//                "deviceId": "1AESDFE2E8W9W101",
+//                "userId": "",
+//                "date": "2017-07-20 00:00:00",
+//                "silentHeartRate": "58",
+//                "burnFatThreshold": "90",
+//                "aerobicThreshold": "120",
+//                "limitThreshold": "136",
+//                "burnFatMinutes": "0",
+//                "aerobicMinute": "1",
+//                "limitMinutes": "0",
+//                "itemsStartTime": "2017-07-20 09:12:34",
+//                "items": "[{5,12}, {6, 89}, {5, 34}, {7, 34}]"
+//            ]]
+//        
+//        networkHandler.everyday.addEverydayHeartrates(withParam: param, closure: {
+//            resultCode, message, data in
+//            print("param: \(param)\nresultCode: \(resultCode)\nmessage: \(message)\ndata: \(data)")
+//            
+//            let pullParam: [String: Any] = [
+//                "deviceId": "1AESDFE2E8W9W101",
+//                "userId": "gan123123",
+//                "fromDate": "2017-07-19",
+//                "endDate": "2017-07-20"
+//            ]
+//            networkHandler.everyday.pullEverydayHeartrates(withParam: pullParam, closure: {
+//                resultCode, message, data in
+//                print("param: \(pullParam)\nresultCode: \(resultCode)\nmessage: \(message)\ndata: \(data)")
+//            })
+//        })
         
 //        var param: [String: Any] =
 //            [
@@ -145,7 +145,11 @@ class ViewController: UIViewController {
     @IBAction func bandDevice(_ sender: Any) {
         
         
-        
+        let angelManager = AngelManager.share()
+        angelManager?.getHeartRateData{
+            resultList in
+            print(resultList)
+        }
     }
 }
 

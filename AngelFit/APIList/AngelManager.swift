@@ -185,7 +185,12 @@ public final class AngelManager: NSObject {
                 
                 //保存macAddress
                 self.accessoryId = tempMacAddress
-                //_ = self.coredataHandler.insertDevice(withAccessoryId: tempAccessoryId, byUserId: UserManager.share().userId)
+                if let deviceId = self.deviceId {
+                    
+                    let tempAccessoryId = "1" + tempMacAddress + deviceId
+                    _ = self.coredataHandler.insertDevice(withAccessoryId: tempAccessoryId, byUserId: UserManager.share().userId)
+                    _ = self.coredataHandler.commit()
+                }
                 
                 //保存macAddress到实例
                 print("1....", Unmanaged.passUnretained(self).toOpaque())

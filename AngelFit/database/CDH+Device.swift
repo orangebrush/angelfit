@@ -23,6 +23,7 @@ extension CoreDataHandler{
             device = NSEntityDescription.insertNewObject(forEntityName: "Device", into: context) as? Device
             
             device?.accessoryId = accessoryId
+            device?.userId = id
             
             //添加关系表... ontToOne
             device?.deviceAntiLostSetting = NSEntityDescription.insertNewObject(forEntityName: "DeviceAntiLostSetting", into: context) as? DeviceAntiLostSetting
@@ -61,7 +62,7 @@ extension CoreDataHandler{
         
         //查找
         let request: NSFetchRequest<Device> = Device.fetchRequest()
-        let predicate = NSPredicate(format: "user.userId = \(id) AND accessory = \(accessoryId)")
+        let predicate = NSPredicate(format: "userId = \(id) AND accessoryId = \"\(accessoryId)\"")
         
         request.predicate = predicate
         
@@ -88,7 +89,7 @@ extension CoreDataHandler{
         
         //查找
         let request: NSFetchRequest<Device> = Device.fetchRequest()
-        let predicate = NSPredicate(format: "user.userId = \(id)")
+        let predicate = NSPredicate(format: "userId = \(id)")
         
         request.predicate = predicate
         
@@ -115,7 +116,7 @@ extension CoreDataHandler{
             return
         }
         
-        delete(Device.self, byConditionFormat: "user.userId = \(id) AND accessoryId = \(accessoryId)")
+        delete(Device.self, byConditionFormat: "userId = \(id) AND accessoryId = \(accessoryId)")
         guard commit() else {
             return
         }
