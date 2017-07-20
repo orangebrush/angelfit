@@ -4,7 +4,7 @@
 //
 //  Created by YiGan on 20/07/2017.
 //  Copyright © 2017 aiju_huangjing1. All rights reserved.
-//1 stepitems96 2date 3deviceid
+//
 
 import Foundation
 //地图类型
@@ -60,7 +60,7 @@ public class NWHEverydayData {
      *  @param calories                     总卡路里
      *  @param distances                    总距离
      *  @param totalSeconds                 总时长
-     *  @param items                        数据[{步数},{}...{}]
+     *  @param items                        数据[{偏移,消耗卡路里,步数,距离米},{}...{}]
      * ]
      */
     public func addEverydayStep(withParam param: [[String: Any]], closure: @escaping (_ resultCode: Int, _ message: String, _ data: Any?) -> ()){

@@ -1421,7 +1421,7 @@ public final class AngelManager: NSObject {
                         sportItem.distancesM = Int16(item.distance)
                         sportItem.id = Int16(i)
                         sportItem.mode = Int16(item.mode)
-                        sportItem.steps = Int16(item.sport_count)
+                        sportItem.steps = Int16(item.sport_count)                       
                     }
                 }
             }

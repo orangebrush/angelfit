@@ -30,11 +30,50 @@ class ViewController: UIViewController {
     }
     
     private func createContents(){
-//        let networkHandler = NetworkHandler.share()
-//        let param: [String: Any] = ["userId": "ganyi",
-//                                    "password": "123456",
-//                                    "email": "123456@qq.com"]
-//        
+        
+        /*
+         * @param id                require 由设备唯一id,由deviceType,deviceId与uuid组成
+         * @param macAddress        设备物理地址
+         * @param uuid              设备uuid
+         * @param name              设备名
+         * @param showName          显示名
+         * @param type              设备类型 NWHDeviceType
+         * @param batteryType       电池类型 NWHDeviceBatteryType
+         * @param totalUsedMinutes  总共使用分钟数
+         */
+        let networkHandler = NetworkHandler.share()
+        var param: [String: Any] = [
+            "id": "1AESDFE2E8W9W101",
+            "macAddress": "sefe4r5r2eko",
+            "uuid": "12345612",
+            "name": "id111",
+            "showName": "ganyi's band",
+            "type": "1",
+            "batteryType": "\(NWHDeviceBatteryType.lithiumCell.rawValue)",
+            "totalUsedMinutes": 123]
+
+        networkHandler.device.add(withParam: param, closure: {
+            resultCode, message, data in
+            print(resultCode)
+            print(message)
+            print(data)
+            
+            param = [
+                "id": "1AESDFE2E8W9W101",
+                "macAddress": "sefe4r5r2eko",
+                "uuid": "12345612",
+                "name": "id1112",
+                "showName": "ganyi's band2",
+                "type": "1",
+                "batteryType": "\(NWHDeviceBatteryType.lithiumCell.rawValue)",
+                "totalUsedMinutes": 1234]
+            networkHandler.device.update(withParam: param, closure: {
+                resultCode, message, data in
+                print(resultCode)
+                print(message)
+                print(data)
+            })
+        })
 //        networkHandler.user.add(withParam: param, closure: {
 //            resultCode, message, data in
 //            print(resultCode)
@@ -49,7 +88,6 @@ class ViewController: UIViewController {
 //            })
 //        })
         let godMan = GodManager.share()
-        
     }
     
     override func didReceiveMemoryWarning() {
