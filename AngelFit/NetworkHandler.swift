@@ -59,6 +59,11 @@ public final class NetworkHandler {
         return NWHDevice.share()
     }()
     
+    //每日数据
+    public lazy var everyday: NWHEverydayData = {
+        return NWHEverydayData.share()
+    }()
+    
     //MARK:- init ++++++++++++++++++++++++++++
     private static let __once = NetworkHandler()
     public class func share() -> NetworkHandler{
