@@ -13,4 +13,11 @@ extension Date{
         let deltaTime: TimeInterval = TimeInterval(zone.secondsFromGMT(for: self))
         return self.addingTimeInterval(deltaTime)
     }
+    
+    //转换为字符串
+    func formatString(with dateFormat: String) -> String{
+        let format = DateFormatter()
+        format.dateFormat = dateFormat
+        return format.string(from: self)
+    }
 }

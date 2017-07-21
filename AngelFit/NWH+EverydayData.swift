@@ -7,9 +7,72 @@
 //
 
 import Foundation
-//地图类型
-public enum NWHMapType: String {
-    case apple = "A", baidu = "B", amap = "D"
+//上传心率参数
+public struct NWHHeartrateAddParam {
+    public var deviceId: String
+    public var userId: String
+    public var date: Date
+    public var silentHeartRate: UInt
+    public var burnFatThreshold: UInt
+    public var aerobicThreshold: UInt
+    public var limitThreshold: UInt
+    public var burnFatMinutes: UInt
+    public var aerobicMinutes: UInt
+    public var limitMinutes: UInt
+    public var itemsStartTime: Date
+    public var items: [(offset: UInt, heartrate: UInt)]
+}
+//上传步数参数
+public struct NWHStepAddParam {
+    public var deviceId: String
+    public var userId: String
+    public var date: Date
+    public var steps: UInt
+    public var calories: UInt
+    public var distances: UInt
+    public var totalSeconds: UInt
+    public var items: [(offset: UInt, calories: UInt, steps: UInt, distanceM: UInt)]
+}
+//上传睡眠参数
+public struct NWHSleepAddParam {
+    public var deviceId: String
+    public var userId: String
+    public var date: Date
+    public var endedDatetime: Date
+    public var totalMinutes: UInt
+    public var lightSleepMinutes: UInt
+    public var deepSleepMinutes: UInt
+    public var awakeSleepMinutes: UInt
+    public var items: [(offset: UInt, sleepType: UInt)]
+}
+//上传训练参数
+public struct NWHTrainingAddParam {
+    public var deviceId: String
+    public var userId: String
+    public var date: Date
+    public var startedAt: Date
+    public var heartRateItemIntervalSeconds: UInt
+    public var stepItemIntervalSeconds: UInt
+    public var type: UInt
+    public var durationSeconds: UInt
+    public var calories: UInt
+    public var distances: UInt
+    public var averageHeartRate: UInt
+    public var maxHeartRate: UInt
+    public var burnFatMinutes: UInt
+    public var aerobicMinutes: UInt
+    public var limitMinutes: UInt
+    public var mapSource: String
+    public var steps: [UInt]
+    public var heartRates: [UInt]
+    public var gps: [(longtitude: Double, latitude: Double, date: Date)]
+}
+//下拉心率参数
+public struct NWHEverydayDataPullParam {
+    public var deviceId: String
+    public var userId: String
+    public var fromDate: Date
+    public var endDate: Date
 }
 public class NWHEverydayData {
     //MARK:- init ++++++++++++++++++++++++++++
@@ -35,8 +98,34 @@ public class NWHEverydayData {
      *  @param items                        数据[{从开始时间偏移分钟数,心率值},{}...{}]
      * ]
      */
-    public func addEverydayHeartrates(withParam param: [[String: Any]], closure: @escaping (_ resultCode: Int, _ message: String, _ data: Any?) -> ()){
-        Session.session(withAction: Actions.everydayHeartratesAdd, withMethod: Method.post, withParam: param, closure: closure)
+    public func addEverydayHeartrates(withParam params: [NWHHeartrateAddParam], closure: @escaping (_ resultCode: Int, _ message: String, _ data: Any?) -> ()){
+        var dict = [[String: Any]]()
+        for param in params{
+            var items = "["
+            for (index, tuple) in param.items.enumerated() {
+                if index != 0{
+                    items += ","
+                }
+                items += "{\(tuple.offset),\(tuple.heartrate)}"
+            }
+            items += "]"
+            let subDict: [String: Any] = [
+                "deviceId": param.deviceId,
+                "userId": param.userId,
+                "date": param.date.formatString(with: "yyyy-MM-dd HH:mm:ss"),
+                "silentHeartRate": "\(param.silentHeartRate)",
+                "burnFatThreshold": "\(param.burnFatThreshold)",
+                "aerobicThreshold": "\(param.aerobicThreshold)",
+                "limitThreshold": "\(param.limitThreshold)",
+                "burnFatMinutes": "\(param.burnFatMinutes)",
+                "aerobicMinutes": "\(param.aerobicMinutes)",
+                "limitMinutes": "\(param.limitMinutes)",
+                "itemsStartTime": param.itemsStartTime.formatString(with: "yyyy-MM-dd HH:mm:ss"),
+                "items": items
+            ]
+            dict.append(subDict)
+        }
+        Session.session(withAction: Actions.everydayHeartratesAdd, withMethod: Method.post, withParam: dict, closure: closure)
     }
     
     //MARK:-下拉心率
@@ -46,8 +135,14 @@ public class NWHEverydayData {
      *  @params fromDate                    恢复开始日期yyyy-MM-dd
      *  @params endDate                     恢复结束日期yyyy-MM-dd
      */
-    public func pullEverydayHeartrates(withParam param: [String: Any], closure: @escaping (_ resultCode: Int, _ message: String, _ data: Any?) -> ()){
-        Session.session(withAction: Actions.everydayHeartratesPull, withMethod: Method.get, withParam: param, closure: closure)
+    public func pullEverydayHeartrates(withParam param: NWHEverydayDataPullParam, closure: @escaping (_ resultCode: Int, _ message: String, _ data: Any?) -> ()){
+        let dict = [
+            "deviceId": param.deviceId,
+            "userId": param.userId,
+            "fromDate": param.fromDate.formatString(with: "yyyy-MM-dd"),
+            "endDate": param.endDate.formatString(with: "yyyy-MM-dd")
+        ]
+        Session.session(withAction: Actions.everydayHeartratesPull, withMethod: Method.get, withParam: dict, closure: closure)
     }
     
     //MARK:-上传步数
@@ -63,8 +158,30 @@ public class NWHEverydayData {
      *  @param items                        数据[{偏移,消耗卡路里,步数,距离米},{}...{}]
      * ]
      */
-    public func addEverydayStep(withParam param: [[String: Any]], closure: @escaping (_ resultCode: Int, _ message: String, _ data: Any?) -> ()){
-        Session.session(withAction: Actions.everydayStepAdd, withMethod: Method.post, withParam: param, closure: closure)
+    public func addEverydayStep(withParam params: [NWHStepAddParam], closure: @escaping (_ resultCode: Int, _ message: String, _ data: Any?) -> ()){
+        var dict = [[String: Any]]()
+        for param in params{
+            var items = "["
+            for (index, tuple) in param.items.enumerated() {
+                if index != 0{
+                    items += ","
+                }
+                items += "{\(tuple.offset),\(tuple.calories),\(tuple.steps),\(tuple.distanceM)}"
+            }
+            items += "]"
+            let subDict: [String: Any] = [
+                "deviceId": param.deviceId,
+                "userId": param.userId,
+                "date": param.date.formatString(with: "yyyy-MM-dd HH:mm:ss"),
+                "steps": "\(param.steps)",
+                "calories": "\(param.calories)",
+                "distances": "\(param.distances)",
+                "totalSeconds": "\(param.totalSeconds)",
+                "items": items
+            ]
+            dict.append(subDict)
+        }
+        Session.session(withAction: Actions.everydayStepAdd, withMethod: Method.post, withParam: dict, closure: closure)
     }
     
     //MARK:-下拉步数
@@ -74,8 +191,14 @@ public class NWHEverydayData {
      *  @params fromDate                    恢复开始日期yyyy-MM-dd
      *  @params endDate                     恢复结束日期yyyy-MM-dd
      */
-    public func pullEverydayStep(withParam param: [String: Any], closure: @escaping (_ resultCode: Int, _ message: String, _ data: Any?) -> ()){
-        Session.session(withAction: Actions.everydayStepPull, withMethod: Method.get, withParam: param, closure: closure)
+    public func pullEverydayStep(withParam param: NWHEverydayDataPullParam, closure: @escaping (_ resultCode: Int, _ message: String, _ data: Any?) -> ()){
+        let dict = [
+            "deviceId": param.deviceId,
+            "userId": param.userId,
+            "fromDate": param.fromDate.formatString(with: "yyyy-MM-dd"),
+            "endDate": param.endDate.formatString(with: "yyyy-MM-dd")
+        ]
+        Session.session(withAction: Actions.everydayStepPull, withMethod: Method.get, withParam: dict, closure: closure)
     }
     
     //MARK:-上传睡眠
@@ -92,8 +215,31 @@ public class NWHEverydayData {
      *  @param items                        数据[{偏移分钟数,睡眠类型},{}...{}]
      * ]
      */
-    public func addEverydaySleep(withParam param: [[String: Any]], closure: @escaping (_ resultCode: Int, _ message: String, _ data: Any?) -> ()){
-        Session.session(withAction: Actions.everydaySleepAdd, withMethod: Method.post, withParam: param, closure: closure)
+    public func addEverydaySleep(withParam params: [NWHSleepAddParam], closure: @escaping (_ resultCode: Int, _ message: String, _ data: Any?) -> ()){
+        var dict = [[String: Any]]()
+        for param in params{
+            var items = "["
+            for (index, tuple) in param.items.enumerated() {
+                if index != 0{
+                    items += ","
+                }
+                items += "{\(tuple.offset),\(tuple.sleepType)}"
+            }
+            items += "]"
+            let subDict: [String: Any] = [
+                "deviceId": param.deviceId,
+                "userId": param.userId,
+                "date": param.date.formatString(with: "yyyy-MM-dd HH:mm:ss"),
+                "endedDatetime": param.endedDatetime.formatString(with: "yyyy-MM-dd HH:mm:ss"),
+                "totalMinutes": "\(param.totalMinutes)",
+                "lightSleepMinutes": "\(param.lightSleepMinutes)",
+                "deepSleepMinutes": "\(param.deepSleepMinutes)",
+                "awakeSleepMinutes": "\(param.awakeSleepMinutes)",
+                "items": items
+            ]
+            dict.append(subDict)
+        }
+        Session.session(withAction: Actions.everydaySleepAdd, withMethod: Method.post, withParam: dict, closure: closure)
     }
     
     //MARK:-下拉睡眠
@@ -103,8 +249,14 @@ public class NWHEverydayData {
      *  @params fromDate                    恢复开始日期yyyy-MM-dd
      *  @params endDate                     恢复结束日期yyyy-MM-dd
      */
-    public func pullEverydaySleep(withParam param: [String: Any], closure: @escaping (_ resultCode: Int, _ message: String, _ data: Any?) -> ()){
-        Session.session(withAction: Actions.everydaySleepPull, withMethod: Method.get, withParam: param, closure: closure)
+    public func pullEverydaySleep(withParam param: NWHEverydayDataPullParam, closure: @escaping (_ resultCode: Int, _ message: String, _ data: Any?) -> ()){
+        let dict = [
+            "deviceId": param.deviceId,
+            "userId": param.userId,
+            "fromDate": param.fromDate.formatString(with: "yyyy-MM-dd"),
+            "endDate": param.endDate.formatString(with: "yyyy-MM-dd")
+        ]
+        Session.session(withAction: Actions.everydaySleepPull, withMethod: Method.get, withParam: dict, closure: closure)
     }
     
     //MARK:-上传训练
@@ -131,8 +283,60 @@ public class NWHEverydayData {
      *  @param gps                          gps数据[{longtitude,latitude,yyyy-MM-dd HH:mm:ss},{}...{}]
      * ]
      */
-    public func addEverydayTraining(withParam param: [[String: Any]], closure: @escaping (_ resultCode: Int, _ message: String, _ data: Any?) -> ()){
-        Session.session(withAction: Actions.everydayTrainingAdd, withMethod: Method.post, withParam: param, closure: closure)
+    public func addEverydayTraining(withParam params: [NWHTrainingAddParam], closure: @escaping (_ resultCode: Int, _ message: String, _ data: Any?) -> ()){
+        var dict = [[String: Any]]()
+        for param in params{
+            var steps = "["
+            for (index, step) in param.steps.enumerated(){
+                if index != 0{
+                    steps += ","
+                }
+                steps += "\(step)"
+            }
+            steps += "]"
+            
+            var heartRates = "["
+            for (index, heartrate) in param.heartRates.enumerated(){
+                if index != 0{
+                    heartRates += ","
+                }
+                heartRates += "\(heartrate)"
+            }
+            heartRates += "]"
+            
+            var gps = "["
+            for (index, tuple) in param.gps.enumerated() {
+                if index != 0 {
+                    gps += ","
+                }
+                gps += "{\(tuple.longtitude),\(tuple.latitude)," + tuple.date.formatString(with: "yyyy-MM-dd HH:mm:ss") + "}"
+            }
+            gps += "]"
+            
+            let subDict: [String: Any] = [
+                "deviceId": param.deviceId,
+                "userId": param.userId,
+                "date": param.date.formatString(with: "yyyy-MM-dd HH:mm:ss"),
+                "startedAt": param.startedAt.formatString(with: "yyyy-MM-dd HH:mm:ss"),
+                "heartRateItemIntervalSeconds": param.heartRateItemIntervalSeconds,
+                "stepItemIntervalSeconds": param.stepItemIntervalSeconds,
+                "type": "\(param.type)",
+                "durationSeconds": "\(param.durationSeconds)",
+                "calories": "\(param.calories)",
+                "distances": "\(param.distances)",
+                "averageHeartRate": "\(param.averageHeartRate)",
+                "maxHeartRate": "\(param.maxHeartRate)",
+                "burnFatMinutes": "\(param.burnFatMinutes)",
+                "aerobicMinutes": "\(param.aerobicMinutes)",
+                "limitMinutes": "\(param.limitMinutes)",
+                "mapSource": param.mapSource,
+                "steps": steps,
+                "heartRates": heartRates,
+                "gps": gps
+            ]
+            dict.append(subDict)
+        }
+        Session.session(withAction: Actions.everydayTrainingAdd, withMethod: Method.post, withParam: dict, closure: closure)
     }
     
     //MARK:-下拉训练
@@ -142,7 +346,13 @@ public class NWHEverydayData {
      *  @params fromDate                    恢复开始日期yyyy-MM-dd
      *  @params endDate                     恢复结束日期yyyy-MM-dd
      */
-    public func pullEverydayTraining(withParam param: [String: Any], closure: @escaping (_ resultCode: Int, _ message: String, _ data: Any?) -> ()){
-        Session.session(withAction: Actions.everydayTrainingPull, withMethod: Method.get, withParam: param, closure: closure)
+    public func pullEverydayTraining(withParam param: NWHEverydayDataPullParam, closure: @escaping (_ resultCode: Int, _ message: String, _ data: Any?) -> ()){
+        let dict = [
+            "deviceId": param.deviceId,
+            "userId": param.userId,
+            "fromDate": param.fromDate.formatString(with: "yyyy-MM-dd"),
+            "endDate": param.endDate.formatString(with: "yyyy-MM-dd")
+        ]
+        Session.session(withAction: Actions.everydayTrainingPull, withMethod: Method.get, withParam: dict, closure: closure)
     }
 }

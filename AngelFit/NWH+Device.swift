@@ -7,13 +7,16 @@
 //
 
 import Foundation
-//设备的类型
-public enum NWHDeviceType: Int{
-    case none = 0, band, watch, scale, jumprope, dumbball, bikeComputer, other
-}
-//电池类型
-public enum NWHDeviceBatteryType: Int {
-    case lithiumCell = 0, buttonCell
+//用户更新参数
+public struct NWHDeviceParam{
+    public var id: String
+    public var macAddress: String
+    public var uuid: String
+    public var name: String
+    public var showName: String
+    public var type: Int
+    public var batteryType: Int
+    public var totalUserdMinutes: Int
 }
 public class NWHDevice{
     //MARK:- init ++++++++++++++++++++++++++++
@@ -33,15 +36,35 @@ public class NWHDevice{
      * @param batteryType       电池类型 NWHDeviceBatteryType
      * @param totalUsedMinutes  总共使用分钟数
      */
-    public func add(withParam param: [String: Any], closure: @escaping (_ resultCode: Int, _ message: String, _ data: Any?) -> ()){
-        Session.session(withAction: Actions.deviceAdd, withMethod: Method.post, withParam: param, closure: closure)
+    public func add(withParam param: NWHDeviceParam, closure: @escaping (_ resultCode: Int, _ message: String, _ data: Any?) -> ()){
+        let dict = [
+            "id": param.id,
+            "macAddress": param.macAddress,
+            "uuid": param.uuid,
+            "name": param.name,
+            "showName": param.showName,
+            "type": "\(param.type)",
+            "batteryType": "\(param.batteryType)",
+            "totalUserdMinutes": "\(param.totalUserdMinutes)"
+        ]
+        Session.session(withAction: Actions.deviceAdd, withMethod: Method.post, withParam: dict, closure: closure)
     }
     
     //MARK:-设备更新
     /*
      * params同新增设备
      */
-    public func update(withParam param: [String: Any], closure: @escaping (_ resultCode: Int, _ message: String, _ data: Any?) -> ()){
-        Session.session(withAction: Actions.deviceUpdate, withMethod: Method.post, withParam: param, closure: closure)
+    public func update(withParam param: NWHDeviceParam, closure: @escaping (_ resultCode: Int, _ message: String, _ data: Any?) -> ()){
+        let dict = [
+            "id": param.id,
+            "macAddress": param.macAddress,
+            "uuid": param.uuid,
+            "name": param.name,
+            "showName": param.showName,
+            "type": "\(param.type)",
+            "batteryType": "\(param.batteryType)",
+            "totalUserdMinutes": "\(param.totalUserdMinutes)"
+        ]
+        Session.session(withAction: Actions.deviceUpdate, withMethod: Method.post, withParam: dict, closure: closure)
     }
 }
