@@ -211,7 +211,7 @@ extension CoreDataHandler{
         }
         
         let request: NSFetchRequest<SleepEverydayDataItem> = SleepEverydayDataItem.fetchRequest()
-        let predicate = NSPredicate(format: "sleepEverydayData.date = \(date) AND sleepEverydayData.user.userId = \(uid)")
+        let predicate = NSPredicate(format: "sleepEverydayData.date = \(date) AND sleepEverydayData.device.accessoryId = \"\(accessoryId)\"")
         request.predicate = predicate
         
         do {

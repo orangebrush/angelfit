@@ -65,7 +65,7 @@ extension CoreDataHandler{
         
         //根据用户设备列表获取设备
         let request: NSFetchRequest<HeartRateEverydayData> = HeartRateEverydayData.fetchRequest()
-        let predicate = NSPredicate(format: "device.accessoryId = \(accessoryId) AND date = \(date)")
+        let predicate = NSPredicate(format: "device.accessoryId = \"\(accessoryId)\" AND date = \(date)")
         
         request.predicate = predicate
         do{
@@ -114,7 +114,7 @@ extension CoreDataHandler{
         case .day:
             let startDate = translate(date)
             let endDate = translate(date)
-            predicate = NSPredicate(format: "device.accessoryId = \(accessoryId) AND date >= %@ AND date <= %@", startDate as CVarArg, endDate as CVarArg)
+            predicate = NSPredicate(format: "device.accessoryId = \"\(accessoryId)\" AND date >= %@ AND date <= %@", startDate as CVarArg, endDate as CVarArg)
         case .week:
             let weekday = calendar.component(.weekday, from: date)
             let startDate = translate(date, withDayOffset: -weekday)
@@ -154,7 +154,7 @@ extension CoreDataHandler{
                 return []
             }
         case .all:
-            predicate = NSPredicate(format: "device.accessoryId = \(accessoryId) ")
+            predicate = NSPredicate(format: "device.accessoryId = \"\(accessoryId)\"")
         }
         
         request.predicate = predicate
@@ -211,7 +211,7 @@ extension CoreDataHandler{
         }
         
         let request: NSFetchRequest<HeartRateEverydayDataItem> = HeartRateEverydayDataItem.fetchRequest()
-        let predicate = NSPredicate(format: "heartRateEverydayData.date = \(date) AND heartRateEverydayData.user.userId = \(uid)")
+        let predicate = NSPredicate(format: "heartRateEverydayData.date = \(date) AND heartRateEverydayData.device.accessoryId = \"\(accessoryId)\"")
         request.predicate = predicate
         
         do {

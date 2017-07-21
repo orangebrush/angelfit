@@ -12,10 +12,10 @@ import CoreData
 extension CoreDataHandler{
     
     //插入单日血压数据
-    public func insertBloodPressureEverydayData(byUserId userId: Int64? = nil, withDate date: Date = Date()) -> BloodPressureEverydayData? {
+    public func insertBloodPressureEverydayData(withAccessoryId accessoryId: String, byUserId userId: Int64? = nil, withDate date: Date = Date()) -> BloodPressureEverydayData? {
         
         //判断是否已存在当日数据
-        var bloodPressureEverydayData = selectBloodPressureEverydayData(byUserId: userId, withDate: date)
+        var bloodPressureEverydayData = selectBloodPressureEverydayData(withAccessoryId: accessoryId, byUserId: userId, withDate: date)
         if let oldResult = bloodPressureEverydayData {
             return oldResult
         }
@@ -40,10 +40,16 @@ extension CoreDataHandler{
         newResult.objectId = userActivity.objectId
         
         //获取需插入的用户
-        guard let user = selectUser(withUserId: uid) else{
+//        guard let user = selectUser(withUserId: uid) else{
+//            return nil
+//        }
+//        user.addToBloodPressureEverydayDataList(newResult)
+        
+        //获取需插入的设备
+        guard let device = selectDevice(withAccessoryId: accessoryId, byUserId: userId) else {
             return nil
         }
-        user.addToBloodPressureEverydayDataList(newResult)
+        device.addToBloodPressureEverydayDataList(newResult)
         
         guard commit() else {
             return nil
@@ -53,14 +59,14 @@ extension CoreDataHandler{
     }
     
     //根据日期获取BloodPressureEverydayData
-    public func selectBloodPressureEverydayData(byUserId userId: Int64?, withDate date: Date = Date()) -> BloodPressureEverydayData?{
+    public func selectBloodPressureEverydayData(withAccessoryId accessoryId: String, byUserId userId: Int64?, withDate date: Date = Date()) -> BloodPressureEverydayData?{
         guard let uid = checkoutUserId(withOptionUserId: userId) else {
             return nil
         }
         
         //根据用户设备列表获取设备
         let request: NSFetchRequest<BloodPressureEverydayData> = BloodPressureEverydayData.fetchRequest()
-        let predicate = NSPredicate(format: "user.userId = \(uid) AND date = \(date)")
+        let predicate = NSPredicate(format: "device.accessoryId = \"\(accessoryId)\" AND date = \(date)")
         
         request.predicate = predicate
         do{
@@ -73,7 +79,7 @@ extension CoreDataHandler{
     }
     
     //根据日期范围获取BloodPressureEverydayData
-    public func selectBloodPressureEverydayDataList(byUserId userId: Int64?, withDate date: Date = Date(), withDayOffset dayOffset: Int = 0) -> [BloodPressureEverydayData]{
+    public func selectBloodPressureEverydayDataList(withAccessoryId accessoryId: String, byUserId userId: Int64?, withDate date: Date = Date(), withDayOffset dayOffset: Int = 0) -> [BloodPressureEverydayData]{
         
         guard let uid = checkoutUserId(withOptionUserId: userId) else {
             return []
@@ -83,7 +89,7 @@ extension CoreDataHandler{
         let request: NSFetchRequest<BloodPressureEverydayData> = BloodPressureEverydayData.fetchRequest()
         let startDate = dayOffset >= 0 ? translate(date) : translate(date, withDayOffset: dayOffset)  //as NSDate
         let endDate = dayOffset >= 0 ? translate(date, withDayOffset: dayOffset) : translate(date)    //as NSDate
-        let predicate = NSPredicate(format: "user.userId = \(uid) AND date >= %@ AND date <= %@", startDate as CVarArg, endDate as CVarArg)
+        let predicate = NSPredicate(format: "device.accessoryId = \"\(accessoryId)\" AND date >= %@ AND date <= %@", startDate as CVarArg, endDate as CVarArg)
         
         request.predicate = predicate
         do{
@@ -96,7 +102,7 @@ extension CoreDataHandler{
     }
     
     //根据日期范围获取BloodPressureEverydayData 日周月年
-    public func selectBloodPressureEverydayDataList(byUserId userId: Int64?, withDate date: Date = Date(), withCDHRange cdhRange: CDHRange) -> [BloodPressureEverydayData]{
+    public func selectBloodPressureEverydayDataList(withAccessoryId accessoryId: String, byUserId userId: Int64?, withDate date: Date = Date(), withCDHRange cdhRange: CDHRange) -> [BloodPressureEverydayData]{
         
         guard let uid = userId else {
             return []
@@ -109,12 +115,12 @@ extension CoreDataHandler{
         case .day:
             let startDate = translate(date)
             let endDate = translate(date)
-            predicate = NSPredicate(format: "user.userId = \(uid) AND date >= %@ AND date <= %@", startDate as CVarArg, endDate as CVarArg)
+            predicate = NSPredicate(format: "device.accessoryId = \"\(accessoryId)\" AND date >= %@ AND date <= %@", startDate as CVarArg, endDate as CVarArg)
         case .week:
             let weekday = calendar.component(.weekday, from: date)
             let startDate = translate(date, withDayOffset: -weekday)
             let endDate = translate(date, withDayOffset: 7 - weekday)
-            predicate = NSPredicate(format: "user.userId = \(uid) AND date >= %@ AND date <= %@", startDate as CVarArg, endDate as CVarArg)
+            predicate = NSPredicate(format: "device.accessoryId = \"\(accessoryId)\" AND date >= %@ AND date <= %@", startDate as CVarArg, endDate as CVarArg)
         case .month:
             let day = calendar.component(.day, from: date)
             if let dayRange = calendar.range(of: .day, in: .month, for: date){
@@ -122,7 +128,7 @@ extension CoreDataHandler{
                 
                 let startDate = translate(date, withDayOffset: -day)
                 let endDate = translate(date, withDayOffset: daysOfMonth - day)
-                predicate = NSPredicate(format: "user.userId = \(uid) AND date >= %@ AND date <= %@", startDate as CVarArg, endDate as CVarArg)
+                predicate = NSPredicate(format: "device.accessoryId = \"\(accessoryId)\" AND date >= %@ AND date <= %@", startDate as CVarArg, endDate as CVarArg)
             }else{
                 return []
             }
@@ -138,7 +144,7 @@ extension CoreDataHandler{
                     //创建结束日期
                     if let date2 = calendar.date(from: components){
                         let endDate = translate(date2.GMT(), withDayOffset: -1)
-                        predicate = NSPredicate(format: "user.userId = \(uid) AND date >= %@ AND date <= %@", startDate as CVarArg, endDate as CVarArg)
+                        predicate = NSPredicate(format: "device.accessoryId = \"\(accessoryId)\" AND date >= %@ AND date <= %@", startDate as CVarArg, endDate as CVarArg)
                     }else{
                         return []
                     }
@@ -149,7 +155,7 @@ extension CoreDataHandler{
                 return []
             }
         case .all:
-            predicate = NSPredicate(format: "user.userId = \(uid)")
+            predicate = NSPredicate(format: "device.accessoryId = \"\(accessoryId)\"")
         }
         
         request.predicate = predicate
@@ -163,8 +169,8 @@ extension CoreDataHandler{
     }
     
     //MARK:- 根据日期删除对应userId血压数据
-    public func deleteBloodPressureEverydayData(byUserId userId: Int64, withDate date: Date = Date()){
-        guard let bloodPressureEverydayData = selectBloodPressureEverydayData(byUserId: userId, withDate: date) else {
+    public func deleteBloodPressureEverydayData(withAccessoryId accessoryId: String, byUserId userId: Int64, withDate date: Date = Date()){
+        guard let bloodPressureEverydayData = selectBloodPressureEverydayData(withAccessoryId: accessoryId, byUserId: userId, withDate: date) else {
             return
         }
         
@@ -175,9 +181,9 @@ extension CoreDataHandler{
     }
     
     //MARK:- items操作
-    public func createBloodPressureEverydayDataItem(byUserId userId: Int64?, withDate date: Date, withItemId itemId: Int16) -> BloodPressureEverydayDataItem?{
+    public func createBloodPressureEverydayDataItem(withAccessoryId accessoryId: String, byUserId userId: Int64?, withDate date: Date, withItemId itemId: Int16) -> BloodPressureEverydayDataItem?{
         //判断item是否存在
-        var bloodPressureEverydayDataItem = selectBloodPressureEverydayDataItem(byUserId: userId, withDate: date, withItemId: itemId)
+        var bloodPressureEverydayDataItem = selectBloodPressureEverydayDataItem(withAccessoryId: accessoryId, byUserId: userId, withDate: date, withItemId: itemId)
         if let oldItem = bloodPressureEverydayDataItem{
             return oldItem
         }
@@ -189,7 +195,7 @@ extension CoreDataHandler{
         newItem.id = itemId
         
         //插入BloodPressureEverydayData item列表
-        guard let bloodPressureEverydayData = selectBloodPressureEverydayData(byUserId: userId, withDate: date) else {
+        guard let bloodPressureEverydayData = selectBloodPressureEverydayData(withAccessoryId: accessoryId, byUserId: userId, withDate: date) else {
             return nil
         }
         
@@ -201,13 +207,13 @@ extension CoreDataHandler{
         return newItem
     }
     
-    public func selectBloodPressureEverydayDataItem(byUserId userId: Int64?, withDate date: Date, withItemId itemId: Int16) -> BloodPressureEverydayDataItem?{
+    public func selectBloodPressureEverydayDataItem(withAccessoryId accessoryId: String, byUserId userId: Int64?, withDate date: Date, withItemId itemId: Int16) -> BloodPressureEverydayDataItem?{
         guard let uid = userId else {
             return nil
         }
         
         let request: NSFetchRequest<BloodPressureEverydayDataItem> = BloodPressureEverydayDataItem.fetchRequest()
-        let predicate = NSPredicate(format: "bloodPressureEverydayData.date = \(date) AND bloodPressureEverydayData.user.userId = \(uid)")
+        let predicate = NSPredicate(format: "bloodPressureEverydayData.date = \(date) AND bloodPressureEverydayData.device.accessoryId = \"\(accessoryId)\"")
         request.predicate = predicate
         
         do {

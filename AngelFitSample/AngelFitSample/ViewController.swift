@@ -77,58 +77,62 @@ class ViewController: UIViewController {
 //            })
 //        })
         
-//        var param: [String: Any] =
-//            [
-//                "id": "1AESDFE2E8W9W101",
-//                "macAddress": "sefe4r5r2eko",
-//                "uuid": "12345612",
-//                "name": "id111",
-//                "showName": "ganyi's band",
-//                "type": "1",
-//                "batteryType": "\(NWHDeviceBatteryType.lithiumCell.rawValue)",
-//                "totalUsedMinutes": 123
-//        ]
-//
-//        networkHandler.device.add(withParam: param, closure: {
-//            resultCode, message, data in
-//            print(resultCode)
-//            print(message)
-//            print(data)
-//            
-//            param = [
-//                "id": "1AESDFE2E8W9W101",
-//                "macAddress": "sefe4r5r2eko",
-//                "uuid": "12345612",
-//                "name": "id1112",
-//                "showName": "ganyi's band2",
-//                "type": "1",
-//                "batteryType": "\(NWHDeviceBatteryType.lithiumCell.rawValue)",
-//                "totalUsedMinutes": 1234]
-//            networkHandler.device.update(withParam: param, closure: {
-//                resultCode, message, data in
-//                print(resultCode)
-//                print(message)
-//                print(data)
-//            })
-//        })
+        var param: [String: Any] =
+            [
+                "id": "1AESDFE2E8W9W101",
+                "macAddress": "sefe4r5r2eko",
+                "uuid": "12345612",
+                "name": "id111",
+                "showName": "ganyi's band",
+                "type": "1",
+                "batteryType": "\(NWHDeviceBatteryType.lithiumCell.rawValue)",
+                "totalUsedMinutes": 123
+        ]
+
+        //添加设备
+        networkHandler.device.add(withParam: param, closure: {
+            resultCode, message, data in
+            print(resultCode)
+            print(message)
+            print(data)
+            
+            //更新设备
+            param = [
+                "id": "1AESDFE2E8W9W101",
+                "macAddress": "sefe4r5r2eko",
+                "uuid": "12345612",
+                "name": "id1112",
+                "showName": "ganyi's band2",
+                "type": "1",
+                "batteryType": "\(NWHDeviceBatteryType.lithiumCell.rawValue)",
+                "totalUsedMinutes": 1234]
+            networkHandler.device.update(withParam: param, closure: {
+                resultCode, message, data in
+                print(resultCode)
+                print(message)
+                print(data)
+            })
+        })
         
-//        let param = [
-//            "userId": "gan0720",
-//            "password": "123456"
-//        ]
-//        networkHandler.user.add(withParam: param, closure: {
-//            resultCode, message, data in
-//            print(resultCode)
-//            print(message)
-//            print(data)
-//            
-//            networkHandler.user.logon(withUserId: "ganyi", withPassword: "123456", closure: {
-//                resultCode, message, data in
-//                print(resultCode)
-//                print(message)
-//                print(data)
-//            })
-//        })
+        //添加用户
+        let userParam = [
+            "userId": "gan0720",
+            "password": "123456"
+        ]
+        networkHandler.user.add(withParam: userParam, closure: {
+            resultCode, message, data in
+            print(resultCode)
+            print(message)
+            print(data)
+            
+            //获取用户
+            networkHandler.user.logon(withUserId: "ganyi", withPassword: "123456", closure: {
+                resultCode, message, data in
+                print(resultCode)
+                print(message)
+                print(data)
+            })
+        })
 //        let godMan = GodManager.share()
     }
     
