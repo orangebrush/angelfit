@@ -65,7 +65,7 @@ extension CoreDataHandler{
         
         //根据用户设备列表获取设备
         let request: NSFetchRequest<SportEverydayData> = SportEverydayData.fetchRequest()
-        let predicate = NSPredicate(format: "device.accessoryId = \"\(accessoryId)\" AND date = \(date)")
+        let predicate = NSPredicate(format: "device.accessoryId = \"\(accessoryId)\" AND date = %@", translate(date) as CVarArg)
         
         request.predicate = predicate
         do{

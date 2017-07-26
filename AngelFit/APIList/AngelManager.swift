@@ -59,7 +59,7 @@ public final class AngelManager: NSObject {
         getMacAddressFromBand{
             errorCode, data in
             if errorCode == ErrorCode.success{
-                self.accessoryId = data
+                self.macAddress = data
                 
                 //初始化获取deviceId&type
                 self.getDeviceInfoFromBand{
@@ -184,10 +184,11 @@ public final class AngelManager: NSObject {
                 let tempMacAddress = macList.map(){String($0,radix:16)}.reduce(""){$0+$1}.uppercased()
                 
                 //保存macAddress
-                self.accessoryId = tempMacAddress
+                self.macAddress = tempMacAddress
                 if let deviceId = self.deviceId {
                     
                     let tempAccessoryId = "1" + tempMacAddress + deviceId
+                    self.accessoryId = tempAccessoryId
                     _ = self.coredataHandler.insertDevice(withAccessoryId: tempAccessoryId, byUserId: UserManager.share().userId)
                     _ = self.coredataHandler.commit()
                 }
