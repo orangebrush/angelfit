@@ -71,7 +71,7 @@ public final class NetworkHandler {
     }
     
     //临时记录步数
-    public func updateSteps(with userId: Int, steps: Int, date: Date, closure: @escaping (_ resultCode: Int, _ message:String, _ data: Any?) -> ()){
+    public func updateSteps(withUserId userId: Int64, steps: Int, date: Date, closure: @escaping (_ resultCode: Int, _ message:String, _ data: Any?) -> ()){
         do{
             let dateStr = date.formatString(with: "yyyy-MM-dd")
             let body: [String : Any] = [

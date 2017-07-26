@@ -152,19 +152,18 @@ class ViewController: UIViewController {
         
         let angelManager = AngelManager.share()
         let accessoryId = angelManager?.accessoryId
+        let userId = UserManager.share().userId
+        let steps = Int(arc4random_uniform(5000)) + 5000
+        let target = 8000
+        let date = Date()
         
-        angelManager?.setSynchronizationHealthData{
-            complete, progress in
-            DispatchQueue.main.async {
-
-                if complete{
-
-                    //                        control.attributedTitle = NSAttributedString(string: message)
-                }else{
-                    debugPrint(progress)
-                }
-            }
-        }
+        let networkHandler = NetworkHandler.share()
+        networkHandler.updateSteps(with: Int(userId), steps: steps, date: date, closure: {
+            errorCode, message, data in
+            print(errorCode)
+            print(message)
+            print(data)
+        })
     }
 }
 
