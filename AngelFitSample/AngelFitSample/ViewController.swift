@@ -16,7 +16,7 @@ class ViewController: UIViewController {
     fileprivate let godManager = GodManager.share()
     
     fileprivate let handler = CoreDataHandler.share()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
        
