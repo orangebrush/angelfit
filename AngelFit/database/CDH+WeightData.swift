@@ -50,7 +50,7 @@ extension CoreDataHandler{
     }
     
     //获取体重 天周月年
-    public func selectWeightDataList(withUserId userId: Int64?, withDate date: Date, withCDHRange cdhRange: CDHRange) -> [WeightData]{
+    public func selectWeightDataList(withUserId userId: String?, withDate date: Date, withCDHRange cdhRange: CDHRange) -> [WeightData]{
         
         guard let uid = userId else {
             return []
@@ -63,12 +63,12 @@ extension CoreDataHandler{
         case .day:
             let startDate = translate(date)
             let endDate = translate(date)
-            predicate = NSPredicate(format: "user.userId = \(uid) AND date >= %@ AND date <= %@", startDate as CVarArg, endDate as CVarArg)
+            predicate = NSPredicate(format: "user.userId = \"\(uid)\" AND date >= %@ AND date <= %@", startDate as CVarArg, endDate as CVarArg)
         case .week:
             let weekday = calendar.component(.weekday, from: date)
             let startDate = translate(date, withDayOffset: -weekday)
             let endDate = translate(date, withDayOffset: 7 - weekday)
-            predicate = NSPredicate(format: "user.userId = \(uid) AND date >= %@ AND date <= %@", startDate as CVarArg, endDate as CVarArg)
+            predicate = NSPredicate(format: "user.userId = \"\(uid)\" AND date >= %@ AND date <= %@", startDate as CVarArg, endDate as CVarArg)
         case .month:
             let day = calendar.component(.day, from: date)
             if let dayRange = calendar.range(of: .day, in: .month, for: date){
@@ -76,7 +76,7 @@ extension CoreDataHandler{
                 
                 let startDate = translate(date, withDayOffset: -day)
                 let endDate = translate(date, withDayOffset: daysOfMonth - day)
-                predicate = NSPredicate(format: "user.userId = \(uid) AND date >= %@ AND date <= %@", startDate as CVarArg, endDate as CVarArg)
+                predicate = NSPredicate(format: "user.userId = \"\(uid)\" AND date >= %@ AND date <= %@", startDate as CVarArg, endDate as CVarArg)
             }
         case .year:
             var components = calendar.dateComponents([.year, .month, .day], from: date)
@@ -87,9 +87,9 @@ extension CoreDataHandler{
                 components.year = year + 1
             }
             let endDate = translate(calendar.date(from: components)!.GMT(), withDayOffset: -1)
-            predicate = NSPredicate(format: "user.userId = \(uid) AND date >= %@ AND date <= %@", startDate as CVarArg, endDate as CVarArg)
+            predicate = NSPredicate(format: "user.userId = \"\(uid)\" AND date >= %@ AND date <= %@", startDate as CVarArg, endDate as CVarArg)
         case .all:
-            predicate = NSPredicate(format: "user.userId = \(uid)")
+            predicate = NSPredicate(format: "user.userId = \"\(uid)\"")
         }
         
         request.predicate = predicate
@@ -103,7 +103,7 @@ extension CoreDataHandler{
     }
     
     //获取体重 偏移天数
-    public func selectWeightDataList(withUserId userId: Int64? , withDate date: Date, withDayOffset dayOffset: Int = 0) -> [WeightData]{
+    public func selectWeightDataList(withUserId userId: String? , withDate date: Date, withDayOffset dayOffset: Int = 0) -> [WeightData]{
         
         guard let uid = userId else {
             return []
@@ -112,7 +112,7 @@ extension CoreDataHandler{
         let request: NSFetchRequest<WeightData> = WeightData.fetchRequest()
         let startDate = dayOffset >= 0 ? translate(date) : translate(date, withDayOffset: dayOffset)
         let endDate = dayOffset >= 0 ? translate(date, withDayOffset: dayOffset) : translate(date)
-        let predicate = NSPredicate(format: "user.userId = \(uid) AND date >= %@ AND date <= %@", startDate as CVarArg, endDate as CVarArg)
+        let predicate = NSPredicate(format: "user.userId = \"\(uid)\" AND date >= %@ AND date <= %@", startDate as CVarArg, endDate as CVarArg)
         request.predicate = predicate
         do{
             let resultList = try context.fetch(request)

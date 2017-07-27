@@ -9,7 +9,7 @@
 import Foundation
 public class UserManager {
     
-    public var userId: Int64 = 1
+    public var userId: String = "test@funsport.com"
     
     //MARK: init--------------------------------------------
     private static var __once: () = {

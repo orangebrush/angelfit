@@ -32,7 +32,7 @@
         <attribute name="showName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="usageMinutes" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="userId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="userId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="uuid" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="version" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <relationship name="bloodPressureEverydayDataList" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="BloodPressureEverydayData" inverseName="device" inverseEntity="BloodPressureEverydayData" syncable="YES"/>
@@ -387,7 +387,7 @@
     </entity>
     <entity name="User" representedClassName="User" syncable="YES" codeGenerationType="class">
         <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="userId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="userId" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="deviceList" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Device" syncable="YES"/>
         <relationship name="goal" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Goal" inverseName="user" inverseEntity="Goal" syncable="YES"/>
         <relationship name="mindBodyStateList" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MindBodyState" inverseName="user" inverseEntity="MindBodyState" syncable="YES"/>
@@ -428,12 +428,12 @@
         <attribute name="fromTime" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="lastUpdatedTime" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="toTime" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="userId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="userId" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="UserFamily" representedClassName="UserFamily" syncable="YES" codeGenerationType="class">
-        <attribute name="isOnlineUserId" optional="YES" attributeType="Integer 64" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="isOnlineUserId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="isSyncedToServer" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="userId" optional="YES" attributeType="Integer 64" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="userId" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="users" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="User" inverseName="userFamily" inverseEntity="User" syncable="YES"/>
     </entity>
     <entity name="UserInfo" representedClassName="UserInfo" syncable="YES" codeGenerationType="class">
@@ -498,7 +498,7 @@
         <element name="UserActivity" positionX="-7344" positionY="-13011" width="128" height="193"/>
         <element name="UserActivityComment" positionX="-7722" positionY="-12870" width="128" height="118"/>
         <element name="UserActivityLiker" positionX="-7661" positionY="-12744" width="128" height="103"/>
-        <element name="UserDataInServerLog" positionX="-7346" positionY="-12726" width="128" height="105"/>
+        <element name="UserDataInServerLog" positionX="-7346" positionY="-12726" width="128" height="103"/>
         <element name="UserFamily" positionX="-7346" positionY="-12600" width="128" height="103"/>
         <element name="UserInfo" positionX="-7722" positionY="-12483" width="128" height="178"/>
         <element name="UserPhoneInfo" positionX="-7866" positionY="-12375" width="128" height="90"/>

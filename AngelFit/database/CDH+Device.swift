@@ -11,7 +11,7 @@ import CoreData
 extension CoreDataHandler{
     
     //MARK:- 插入设备
-    public func insertDevice(withAccessoryId accessoryId: String, byUserId userId: Int64? = nil) -> Device?{
+    public func insertDevice(withAccessoryId accessoryId: String, byUserId userId: String? = nil) -> Device?{
         
         //判断userId
         guard let id = checkoutUserId(withOptionUserId: userId) else {
@@ -53,7 +53,7 @@ extension CoreDataHandler{
     }
     
     //MARK:- 根据userId accessoryId获取设备
-    public func selectDevice(withAccessoryId accessoryId: String, byUserId userId: Int64? = nil) -> Device?{
+    public func selectDevice(withAccessoryId accessoryId: String, byUserId userId: String? = nil) -> Device?{
         
         //判断userId
         guard let id = checkoutUserId(withOptionUserId: userId) else {
@@ -62,7 +62,7 @@ extension CoreDataHandler{
         
         //查找
         let request: NSFetchRequest<Device> = Device.fetchRequest()
-        let predicate = NSPredicate(format: "userId = \(id) AND accessoryId = \"\(accessoryId)\"")
+        let predicate = NSPredicate(format: "userId = \"\(id)\" AND accessoryId = \"\(accessoryId)\"")
         
         request.predicate = predicate
         
@@ -80,7 +80,7 @@ extension CoreDataHandler{
     }
     
     //MARK:- 获取所有设备
-    public func selectAllDevice(byUserId userId: Int64? = nil) -> [Device]{
+    public func selectAllDevice(byUserId userId: String? = nil) -> [Device]{
         
         //判断userId
         guard let id = checkoutUserId(withOptionUserId: userId) else {
@@ -89,7 +89,7 @@ extension CoreDataHandler{
         
         //查找
         let request: NSFetchRequest<Device> = Device.fetchRequest()
-        let predicate = NSPredicate(format: "userId = \(id)")
+        let predicate = NSPredicate(format: "userId = \"\(id)\"")
         
         request.predicate = predicate
         
@@ -103,20 +103,20 @@ extension CoreDataHandler{
     }
     
     //MARK:- 获取当前设备
-    public func selectCurrentDevice(byUserId userId: Int64? = nil) -> Device?{
+    public func selectCurrentDevice(byUserId userId: String? = nil) -> Device?{
         let devices = selectAllDevice(byUserId: userId)
         return devices.last
     }
     
     //MARK:- 删除设备
-    public func deleteDevice(withAccessoryId accessoryId: Int64, byUserId userId: Int64? = nil){
+    public func deleteDevice(withAccessoryId accessoryId: String, byUserId userId: String? = nil){
         
         //判断userId
         guard let id = checkoutUserId(withOptionUserId: userId) else {
             return
         }
         
-        delete(Device.self, byConditionFormat: "userId = \(id) AND accessoryId = \(accessoryId)")
+        delete(Device.self, byConditionFormat: "userId = \"\(id)\" AND accessoryId = \"\(accessoryId)\"")
         guard commit() else {
             return
         }

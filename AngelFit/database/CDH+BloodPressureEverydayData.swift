@@ -12,7 +12,7 @@ import CoreData
 extension CoreDataHandler{
     
     //插入单日血压数据
-    public func insertBloodPressureEverydayData(withAccessoryId accessoryId: String, byUserId userId: Int64? = nil, withDate date: Date = Date()) -> BloodPressureEverydayData? {
+    public func insertBloodPressureEverydayData(withAccessoryId accessoryId: String, byUserId userId: String? = nil, withDate date: Date = Date()) -> BloodPressureEverydayData? {
         
         //判断是否已存在当日数据
         var bloodPressureEverydayData = selectBloodPressureEverydayData(withAccessoryId: accessoryId, byUserId: userId, withDate: date)
@@ -59,7 +59,7 @@ extension CoreDataHandler{
     }
     
     //根据日期获取BloodPressureEverydayData
-    public func selectBloodPressureEverydayData(withAccessoryId accessoryId: String, byUserId userId: Int64?, withDate date: Date = Date()) -> BloodPressureEverydayData?{
+    public func selectBloodPressureEverydayData(withAccessoryId accessoryId: String, byUserId userId: String?, withDate date: Date = Date()) -> BloodPressureEverydayData?{
         guard let uid = checkoutUserId(withOptionUserId: userId) else {
             return nil
         }
@@ -79,7 +79,7 @@ extension CoreDataHandler{
     }
     
     //根据日期范围获取BloodPressureEverydayData
-    public func selectBloodPressureEverydayDataList(withAccessoryId accessoryId: String, byUserId userId: Int64?, withDate date: Date = Date(), withDayOffset dayOffset: Int = 0) -> [BloodPressureEverydayData]{
+    public func selectBloodPressureEverydayDataList(withAccessoryId accessoryId: String, byUserId userId: String?, withDate date: Date = Date(), withDayOffset dayOffset: Int = 0) -> [BloodPressureEverydayData]{
         
         guard let uid = checkoutUserId(withOptionUserId: userId) else {
             return []
@@ -102,7 +102,7 @@ extension CoreDataHandler{
     }
     
     //根据日期范围获取BloodPressureEverydayData 日周月年
-    public func selectBloodPressureEverydayDataList(withAccessoryId accessoryId: String, byUserId userId: Int64?, withDate date: Date = Date(), withCDHRange cdhRange: CDHRange) -> [BloodPressureEverydayData]{
+    public func selectBloodPressureEverydayDataList(withAccessoryId accessoryId: String, byUserId userId: String?, withDate date: Date = Date(), withCDHRange cdhRange: CDHRange) -> [BloodPressureEverydayData]{
         
         guard let uid = userId else {
             return []
@@ -169,7 +169,7 @@ extension CoreDataHandler{
     }
     
     //MARK:- 根据日期删除对应userId血压数据
-    public func deleteBloodPressureEverydayData(withAccessoryId accessoryId: String, byUserId userId: Int64, withDate date: Date = Date()){
+    public func deleteBloodPressureEverydayData(withAccessoryId accessoryId: String, byUserId userId: String, withDate date: Date = Date()){
         guard let bloodPressureEverydayData = selectBloodPressureEverydayData(withAccessoryId: accessoryId, byUserId: userId, withDate: date) else {
             return
         }
@@ -181,7 +181,7 @@ extension CoreDataHandler{
     }
     
     //MARK:- items操作
-    public func createBloodPressureEverydayDataItem(withAccessoryId accessoryId: String, byUserId userId: Int64?, withDate date: Date, withItemId itemId: Int16) -> BloodPressureEverydayDataItem?{
+    public func createBloodPressureEverydayDataItem(withAccessoryId accessoryId: String, byUserId userId: String?, withDate date: Date, withItemId itemId: Int16) -> BloodPressureEverydayDataItem?{
         //判断item是否存在
         var bloodPressureEverydayDataItem = selectBloodPressureEverydayDataItem(withAccessoryId: accessoryId, byUserId: userId, withDate: date, withItemId: itemId)
         if let oldItem = bloodPressureEverydayDataItem{
@@ -207,7 +207,7 @@ extension CoreDataHandler{
         return newItem
     }
     
-    public func selectBloodPressureEverydayDataItem(withAccessoryId accessoryId: String, byUserId userId: Int64?, withDate date: Date, withItemId itemId: Int16) -> BloodPressureEverydayDataItem?{
+    public func selectBloodPressureEverydayDataItem(withAccessoryId accessoryId: String, byUserId userId: String?, withDate date: Date, withItemId itemId: Int16) -> BloodPressureEverydayDataItem?{
         guard let uid = userId else {
             return nil
         }

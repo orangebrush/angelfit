@@ -34,7 +34,7 @@ extension CoreDataHandler{
     }
     
     //获取心情 天周月年
-    public func selectMindBodyStateList(withUserId userId: Int64?, withDate date: Date, withCDHRange cdhRange: CDHRange) -> [MindBodyState]{
+    public func selectMindBodyStateList(withUserId userId: String?, withDate date: Date, withCDHRange cdhRange: CDHRange) -> [MindBodyState]{
         
         guard let uid = userId else {
             return []
@@ -47,12 +47,12 @@ extension CoreDataHandler{
         case .day:
             let startDate = translate(date)
             let endDate = translate(date)
-            predicate = NSPredicate(format: "user.userId = \(uid) AND date >= %@ AND date <= %@", startDate as CVarArg, endDate as CVarArg)
+            predicate = NSPredicate(format: "user.userId = \"\(uid)\" AND date >= %@ AND date <= %@", startDate as CVarArg, endDate as CVarArg)
         case .week:
             let weekday = calendar.component(.weekday, from: date)
             let startDate = translate(date, withDayOffset: -weekday)
             let endDate = translate(date, withDayOffset: 7 - weekday)
-            predicate = NSPredicate(format: "user.userId = \(uid) AND date >= %@ AND date <= %@", startDate as CVarArg, endDate as CVarArg)
+            predicate = NSPredicate(format: "user.userId = \"\(uid)\" AND date >= %@ AND date <= %@", startDate as CVarArg, endDate as CVarArg)
         case .month:
             let day = calendar.component(.day, from: date)
             if let dayRange = calendar.range(of: .day, in: .month, for: date){
@@ -71,9 +71,9 @@ extension CoreDataHandler{
                 components.year = year + 1
             }
             let endDate = translate(calendar.date(from: components)!.GMT(), withDayOffset: -1)
-            predicate = NSPredicate(format: "user.userId = \(uid) AND date >= %@ AND date <= %@", startDate as CVarArg, endDate as CVarArg)
+            predicate = NSPredicate(format: "user.userId = \"\(uid)\" AND date >= %@ AND date <= %@", startDate as CVarArg, endDate as CVarArg)
         case .all:
-            predicate = NSPredicate(format: "user.userId = \(uid)")
+            predicate = NSPredicate(format: "user.userId = \"\(uid)\"")
         }
         
         request.predicate = predicate
@@ -87,7 +87,7 @@ extension CoreDataHandler{
     }
     
     //获取心情 偏移天数
-    public func selectMindBodyStateList(withUserId userId: Int64? , withDate date: Date, withDayOffset dayOffset: Int = 0) -> [MindBodyState]{
+    public func selectMindBodyStateList(withUserId userId: String? , withDate date: Date, withDayOffset dayOffset: Int = 0) -> [MindBodyState]{
         
         guard let uid = userId else {
             return []
@@ -96,7 +96,7 @@ extension CoreDataHandler{
         let request: NSFetchRequest<MindBodyState> = MindBodyState.fetchRequest()
         let startDate = translate(date)
         let endDate = translate(date, withDayOffset: dayOffset)
-        let predicate = NSPredicate(format: "user.userId = \(uid) AND date >= %@ AND date <= %@", startDate as CVarArg, endDate as CVarArg)
+        let predicate = NSPredicate(format: "user.userId = \"\(uid)\" AND date >= %@ AND date <= %@", startDate as CVarArg, endDate as CVarArg)
         request.predicate = predicate
         do{
             let resultList = try context.fetch(request)

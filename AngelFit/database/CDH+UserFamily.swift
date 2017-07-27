@@ -35,9 +35,6 @@ extension CoreDataHandler{
     func selectUserFamily() -> UserFamily?{
         
         let request: NSFetchRequest<UserFamily> = UserFamily.fetchRequest()
-//        let predicate = NSPredicate()
-//        
-//        request.predicate = predicate
         
         do{
             let resultList = try context.fetch(request)
@@ -53,7 +50,7 @@ extension CoreDataHandler{
     }
     
     //切换用户
-    public func switchUser(withUserId userId: Int64?) -> User?{
+    public func switchUser(withUserId userId: String?) -> User?{
         
         guard let id = userId else {
             return nil
@@ -76,7 +73,7 @@ extension CoreDataHandler{
     }
     
     //获取主用户userId
-    public func mainUserId() -> Int64?{
+    public func mainUserId() -> String?{
         guard let userFamily = insertUserFamily() else {
             return nil
         }
@@ -85,7 +82,7 @@ extension CoreDataHandler{
     }
     
     //获取当前登录用户userId
-    public func currentUserId() -> Int64?{
+    public func currentUserId() -> String?{
         guard  let userFamily = insertUserFamily() else {
             return nil
         }

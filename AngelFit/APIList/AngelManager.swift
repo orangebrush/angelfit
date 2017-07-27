@@ -1399,7 +1399,7 @@ public final class AngelManager: NSObject {
                 return
             }
             sport.date = realDate as NSDate
-            sport.objectId = Int64(id)
+            //sport.objectId = Int64(id)
             sport.sportItemCount = Int32(itemCount)
             sport.perMinute = Int32(minuteDuration)
             sport.offset = Int32(minuteOffset)
@@ -1486,7 +1486,7 @@ public final class AngelManager: NSObject {
                 return
             }
             sleep.date = realDate as NSDate
-            sleep.objectId = id
+            //sleep.objectId = id
 
             sleep.itemsCount = Int32(itemCount)
             //sleep.packetCount = Int16(packetCount)
@@ -1561,7 +1561,7 @@ public final class AngelManager: NSObject {
                 return
             }
             heartRate.date = realDate as NSDate
-            heartRate.objectId = id
+            //heartRate.objectId = id
             //heartRate.itemCount = Int16(itemCount)
             heartRate.aerobicMinutes = Int16(aerobicMinutes)
             heartRate.aerobicThreshold = Int16(aerobicThreshld)

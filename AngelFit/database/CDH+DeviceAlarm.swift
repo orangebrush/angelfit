@@ -10,7 +10,7 @@ import Foundation
 import CoreData
 extension CoreDataHandler{
     //插入 alarm
-    public func insertDeviceAlarm(withUserId userId: Int64? = nil, withAccessoryId accessoryId: String) -> DeviceAlarm?{
+    public func insertDeviceAlarm(withUserId userId: String? = nil, withAccessoryId accessoryId: String) -> DeviceAlarm?{
         
         guard let uid = checkoutUserId(withOptionUserId: userId) else {
             return nil
@@ -51,7 +51,7 @@ extension CoreDataHandler{
     }
     
     //获取 alarm
-    public func selectDeviceAlarm(byUserId userId: Int64? = nil, byAlarmId alarmId: Int16, withAccessoryId accessoryId: Int64) -> DeviceAlarm? {
+    public func selectDeviceAlarm(byUserId userId: String? = nil, byAlarmId alarmId: Int16, withAccessoryId accessoryId: String) -> DeviceAlarm? {
         
         //判断userId
         guard let uid = checkoutUserId(withOptionUserId: userId) else {
@@ -60,7 +60,7 @@ extension CoreDataHandler{
         
         //查找
         let request: NSFetchRequest<DeviceAlarm> = DeviceAlarm.fetchRequest()
-        let predicate = NSPredicate(format: "alarmId = \(alarmId) AND device.user.userId = \(uid) AND device.accessory = \(accessoryId)")
+        let predicate = NSPredicate(format: "alarmId = \(alarmId) AND device.user.userId = \"\(uid)\" AND device.accessory = \"\(accessoryId)\"")
         
         request.predicate = predicate
         
@@ -74,7 +74,7 @@ extension CoreDataHandler{
     }
     
     //获取所有 alarm
-    public func selectAllDeviceAlarms(byUserId userId: Int64? = nil, withAccessoryId accessoryId: Int64) -> [DeviceAlarm]{
+    public func selectAllDeviceAlarms(byUserId userId: String? = nil, withAccessoryId accessoryId: String) -> [DeviceAlarm]{
         
         //判断userId
         guard let uid = checkoutUserId(withOptionUserId: userId) else {
@@ -83,7 +83,7 @@ extension CoreDataHandler{
         
         //查找
         let request: NSFetchRequest<DeviceAlarm> = DeviceAlarm.fetchRequest()
-        let predicate = NSPredicate(format: "device.user.userId = \(uid) AND device.accessory = \(accessoryId)")
+        let predicate = NSPredicate(format: "device.user.userId = \"\(uid)\" AND device.accessory = \"\(accessoryId)\"")
         
         request.predicate = predicate
         
@@ -97,7 +97,7 @@ extension CoreDataHandler{
     }
     
     //删除 alarm
-    public func deleteDeviceAlarm(byAlarmId alarmId: Int16, byUserId userId: Int64? = nil, withAccessoryId accessoryId: Int64){
+    public func deleteDeviceAlarm(byAlarmId alarmId: Int16, byUserId userId: String? = nil, withAccessoryId accessoryId: String){
         
         guard let deviceAlarm = selectDeviceAlarm(byUserId: userId, byAlarmId: alarmId, withAccessoryId: accessoryId) else {
             return

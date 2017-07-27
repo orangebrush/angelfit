@@ -9,7 +9,7 @@
 import Foundation
 
 //服务器地址
-let host = "http://192.168.2.239:8080"
+let host = "http://119.23.239.138:80"
 
 //请求类型
 public struct Method{

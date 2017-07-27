@@ -9,7 +9,7 @@
 import Foundation
 import CoreData
 extension CoreDataHandler{
-    public func insertDoctorHaSuggestion(byObjectId objectId: Int64, byUserId userId: Int64? = nil) -> DoctorHaSuggestion?{
+    public func insertDoctorHaSuggestion(byObjectId objectId: Int64, byUserId userId: String? = nil) -> DoctorHaSuggestion?{
         
         guard let userActivity = selectUserActivity(withObjectId: objectId, byUserId: userId) else{
             return nil
@@ -34,7 +34,7 @@ extension CoreDataHandler{
         return doctorHaSuggestion
     }
     
-    public func selectDoctorHaSuggestion(byId id: Int64, byObjectId objectId: Int64, byUserId userId: Int64? = nil) -> DoctorHaSuggestion?{
+    public func selectDoctorHaSuggestion(byId id: Int64, byObjectId objectId: Int64, byUserId userId: String? = nil) -> DoctorHaSuggestion?{
         
         guard let uid = checkoutUserId(withOptionUserId: userId) else {
             return nil
@@ -42,7 +42,7 @@ extension CoreDataHandler{
         
         //查找
         let request: NSFetchRequest<DoctorHaSuggestion> = DoctorHaSuggestion.fetchRequest()
-        let predicate = NSPredicate(format: "id = \(id) AND userActivity.user.userId = \(uid) AND userActivity.objectId = \(objectId)")
+        let predicate = NSPredicate(format: "id = \(id) AND userActivity.user.userId = \"\(uid)\" AND userActivity.objectId = \(objectId)")
         
         request.predicate = predicate
         
@@ -57,7 +57,7 @@ extension CoreDataHandler{
         return nil
     }
     
-    public func selectAllDoctorHaSuggestions(byObjectId objectId: Int64, byUserId userId: Int64? = nil) -> [DoctorHaSuggestion]{
+    public func selectAllDoctorHaSuggestions(byObjectId objectId: Int64, byUserId userId: String? = nil) -> [DoctorHaSuggestion]{
         
         guard let id = checkoutUserId(withOptionUserId: userId) else {
             return []
@@ -65,7 +65,7 @@ extension CoreDataHandler{
         
         //查找
         let request: NSFetchRequest<DoctorHaSuggestion> = DoctorHaSuggestion.fetchRequest()
-        let predicate = NSPredicate(format: "userActivity.user.userId = \(id) AND userActivity.objectId = \(objectId)")
+        let predicate = NSPredicate(format: "userActivity.user.userId = \"\(id)\" AND userActivity.objectId = \(objectId)")
         
         request.predicate = predicate
         
@@ -78,10 +78,10 @@ extension CoreDataHandler{
         return []
     }
     
-    public func deleteDoctorHaSuggestion(byId id: Int64, byObjectId objectId: Int64, byUserId userId: Int64? = nil){
+    public func deleteDoctorHaSuggestion(byId id: Int64, byObjectId objectId: Int64, byUserId userId: String? = nil){
         guard let uid = checkoutUserId(withOptionUserId: userId) else {
             return
         }
-        delete(UserActivityComment.self, byConditionFormat: "id = \(id), userActivity.user.userId = \(uid) AND userActivity.objectId = \(objectId)")
+        delete(UserActivityComment.self, byConditionFormat: "id = \(id), userActivity.user.userId = \"\(uid)\" AND userActivity.objectId = \(objectId)")
     }
 }

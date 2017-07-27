@@ -12,7 +12,7 @@ import CoreData
 extension CoreDataHandler{
     
     //插入单日心率数据
-    public func insertHeartRateEverydayData(withAccessoryId accessoryId: String, byUserId userId: Int64? = nil, withDate date: Date = Date()) -> HeartRateEverydayData? {
+    public func insertHeartRateEverydayData(withAccessoryId accessoryId: String, byUserId userId: String? = nil, withDate date: Date = Date()) -> HeartRateEverydayData? {
         
         //判断是否已存在当日数据
         var heartRateEverydayData = selectHeartRateEverydayData(withAccessoryId: accessoryId, byUserId: userId, withDate: date)
@@ -58,7 +58,7 @@ extension CoreDataHandler{
     }
     
     //根据日期获取HeartRateEverydayData
-    public func selectHeartRateEverydayData(withAccessoryId accessoryId: String, byUserId userId: Int64?, withDate date: Date = Date()) -> HeartRateEverydayData?{
+    public func selectHeartRateEverydayData(withAccessoryId accessoryId: String, byUserId userId: String?, withDate date: Date = Date()) -> HeartRateEverydayData?{
         guard let uid = checkoutUserId(withOptionUserId: userId) else {
             return nil
         }
@@ -78,7 +78,7 @@ extension CoreDataHandler{
     }
     
     //根据日期范围获取HeartRateEverydayData
-    public func selectHeartRateEverydayDataList(withAccessoryId accessoryId: String, byUserId userId: Int64?, withDate date: Date = Date(), withDayOffset dayOffset: Int = 0) -> [HeartRateEverydayData]{
+    public func selectHeartRateEverydayDataList(withAccessoryId accessoryId: String, byUserId userId: String?, withDate date: Date = Date(), withDayOffset dayOffset: Int = 0) -> [HeartRateEverydayData]{
         
         guard let uid = checkoutUserId(withOptionUserId: userId) else {
             return []
@@ -101,7 +101,7 @@ extension CoreDataHandler{
     }
     
     //根据日期范围获取HeartRateEverydayData 日周月年
-    public func selectHeartRateEverydayDataList(withAccessoryId accessoryId: String, byUserId userId: Int64?, withDate date: Date = Date(), withCDHRange cdhRange: CDHRange) -> [HeartRateEverydayData]{
+    public func selectHeartRateEverydayDataList(withAccessoryId accessoryId: String, byUserId userId: String?, withDate date: Date = Date(), withCDHRange cdhRange: CDHRange) -> [HeartRateEverydayData]{
         
         guard let uid = userId else {
             return []
@@ -168,7 +168,7 @@ extension CoreDataHandler{
     }
     
     //MARK:- 根据日期删除对应userId心率数据
-    public func deleteHeartRateEverydayData(withAccessoryId accessoryId: String, byUserId userId: Int64, withDate date: Date = Date()){
+    public func deleteHeartRateEverydayData(withAccessoryId accessoryId: String, byUserId userId: String, withDate date: Date = Date()){
         guard let heartRateEverydayData = selectHeartRateEverydayData(withAccessoryId: accessoryId, byUserId: userId, withDate: date) else {
             return
         }
@@ -180,7 +180,7 @@ extension CoreDataHandler{
     }
     
     //MARK:- items操作
-    public func createHeartRateEverydayDataItem(withAccessoryId accessoryId: String, byUserId userId: Int64?, withDate date: Date, withItemId itemId: Int16) -> HeartRateEverydayDataItem?{
+    public func createHeartRateEverydayDataItem(withAccessoryId accessoryId: String, byUserId userId: String?, withDate date: Date, withItemId itemId: Int16) -> HeartRateEverydayDataItem?{
         //判断item是否存在
         var heartRateEverydayDataItem = selectHeartRateEverydayDataItem(withAccessoryId: accessoryId, byUserId: userId, withDate: date, withItemId: itemId)
         if let oldItem = heartRateEverydayDataItem{
@@ -205,7 +205,7 @@ extension CoreDataHandler{
         return newItem
     }
     
-    public func selectHeartRateEverydayDataItem(withAccessoryId accessoryId: String, byUserId userId: Int64?, withDate date: Date, withItemId itemId: Int16) -> HeartRateEverydayDataItem?{
+    public func selectHeartRateEverydayDataItem(withAccessoryId accessoryId: String, byUserId userId: String?, withDate date: Date, withItemId itemId: Int16) -> HeartRateEverydayDataItem?{
         guard let uid = userId else {
             return nil
         }

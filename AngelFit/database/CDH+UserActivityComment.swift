@@ -10,7 +10,7 @@ import Foundation
 import CoreData
 extension CoreDataHandler{
     
-    public func insertUserActivityComment(byObjectId objectId: Int64, byUserId userId: Int64? = nil) -> UserActivityComment?{
+    public func insertUserActivityComment(byObjectId objectId: Int64, byUserId userId: String? = nil) -> UserActivityComment?{
         
         guard let userActivity = selectUserActivity(withObjectId: objectId, byUserId: userId) else{
             return nil
@@ -35,7 +35,7 @@ extension CoreDataHandler{
         return userActivityComment
     }
     
-    public func selectAllUserActivityComments(byObjectId objectId: Int64, byUserId userId: Int64? = nil) -> [UserActivityComment]{
+    public func selectAllUserActivityComments(byObjectId objectId: Int64, byUserId userId: String? = nil) -> [UserActivityComment]{
         
         guard let id = checkoutUserId(withOptionUserId: userId) else {
             return []
@@ -43,7 +43,7 @@ extension CoreDataHandler{
         
         //查找
         let request: NSFetchRequest<UserActivityComment> = UserActivityComment.fetchRequest()
-        let predicate = NSPredicate(format: "userActivity.user.userId = \(id) AND userActivity.objectId = \(objectId)")
+        let predicate = NSPredicate(format: "userActivity.user.userId = \"\(id)\" AND userActivity.objectId = \(objectId)")
         
         request.predicate = predicate
         
@@ -56,10 +56,10 @@ extension CoreDataHandler{
         return []
     }
     
-    public func deleteUserActivityComment(byId id: Int64, byObjectId objectId: Int64, byUserId userId: Int64? = nil){
+    public func deleteUserActivityComment(byId id: Int64, byObjectId objectId: Int64, byUserId userId: String? = nil){
         guard let uid = checkoutUserId(withOptionUserId: userId) else {
             return
         }
-        delete(UserActivityComment.self, byConditionFormat: "id = \(id), userActivity.user.userId = \(uid) AND userActivity.objectId = \(objectId)")
+        delete(UserActivityComment.self, byConditionFormat: "id = \(id), userActivity.user.userId = \"\(uid)\" AND userActivity.objectId = \(objectId)")
     }
 }

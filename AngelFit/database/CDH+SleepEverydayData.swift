@@ -12,7 +12,7 @@ import CoreData
 extension CoreDataHandler{
     
     //插入单日血压数据
-    public func insertSleepEverydayData(withAccessoryId accessoryId: String, byUserId userId: Int64? = nil, withDate date: Date = Date()) -> SleepEverydayData? {
+    public func insertSleepEverydayData(withAccessoryId accessoryId: String, byUserId userId: String? = nil, withDate date: Date = Date()) -> SleepEverydayData? {
         
         //判断是否已存在当日数据
         var sleepEverydayData = selectSleepEverydayData(withAccessoryId: accessoryId, byUserId: userId, withDate: date)
@@ -57,7 +57,7 @@ extension CoreDataHandler{
     }
     
     //根据日期获取SleepEverydayData
-    public func selectSleepEverydayData(withAccessoryId accessoryId: String, byUserId userId: Int64?, withDate date: Date = Date()) -> SleepEverydayData?{
+    public func selectSleepEverydayData(withAccessoryId accessoryId: String, byUserId userId: String?, withDate date: Date = Date()) -> SleepEverydayData?{
         guard let uid = checkoutUserId(withOptionUserId: userId) else {
             return nil
         }
@@ -77,7 +77,7 @@ extension CoreDataHandler{
     }
     
     //根据日期范围获取SleepEverydayData
-    public func selectSleepEverydayDataList(withAccessoryId accessoryId: String, byUserId userId: Int64?, withDate date: Date = Date(), withDayOffset dayOffset: Int = 0) -> [SleepEverydayData]{
+    public func selectSleepEverydayDataList(withAccessoryId accessoryId: String, byUserId userId: String?, withDate date: Date = Date(), withDayOffset dayOffset: Int = 0) -> [SleepEverydayData]{
         
         guard let uid = checkoutUserId(withOptionUserId: userId) else {
             return []
@@ -100,7 +100,7 @@ extension CoreDataHandler{
     }
     
     //根据日期范围获取SleepEverydayData 日周月年
-    public func selectSleepEverydayDataList(withAccessoryId accessoryId: String, byUserId userId: Int64?, withDate date: Date = Date(), withCDHRange cdhRange: CDHRange) -> [SleepEverydayData]{
+    public func selectSleepEverydayDataList(withAccessoryId accessoryId: String, byUserId userId: String?, withDate date: Date = Date(), withCDHRange cdhRange: CDHRange) -> [SleepEverydayData]{
         
         guard let uid = userId else {
             return []
@@ -167,7 +167,7 @@ extension CoreDataHandler{
     }
     
     //MARK:- 根据日期删除对应userId睡眠数据
-    public func deleteSleepEverydayData(withAccessoryId accessoryId: String, byUserId userId: Int64, withDate date: Date = Date()){
+    public func deleteSleepEverydayData(withAccessoryId accessoryId: String, byUserId userId: String, withDate date: Date = Date()){
         guard let sleepEverydayData = selectSleepEverydayData(withAccessoryId: accessoryId, byUserId: userId, withDate: date) else {
             return
         }
@@ -179,7 +179,7 @@ extension CoreDataHandler{
     }
     
     //MARK:- items操作
-    public func createSleepEverydayDataItem(withAccessoryId accessoryId: String, byUserId userId: Int64?, withDate date: Date, withItemId itemId: Int16) -> SleepEverydayDataItem?{
+    public func createSleepEverydayDataItem(withAccessoryId accessoryId: String, byUserId userId: String?, withDate date: Date, withItemId itemId: Int16) -> SleepEverydayDataItem?{
         //判断item是否存在
         var sleepEverydayDataItem = selectSleepEverydayDataItem(withAccessoryId: accessoryId, byUserId: userId, withDate: date, withItemId: itemId)
         if let oldItem = sleepEverydayDataItem{
@@ -205,7 +205,7 @@ extension CoreDataHandler{
         return newItem
     }
     
-    public func selectSleepEverydayDataItem(withAccessoryId accessoryId: String, byUserId userId: Int64?, withDate date: Date, withItemId itemId: Int16) -> SleepEverydayDataItem?{
+    public func selectSleepEverydayDataItem(withAccessoryId accessoryId: String, byUserId userId: String?, withDate date: Date, withItemId itemId: Int16) -> SleepEverydayDataItem?{
         guard let uid = userId else {
             return nil
         }

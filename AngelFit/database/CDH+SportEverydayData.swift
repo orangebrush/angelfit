@@ -12,7 +12,7 @@ import CoreData
 extension CoreDataHandler{
     
     //插入单日血压数据
-    public func insertSportEverydayData(withAccessoryId accessoryId: String, UserId userId: Int64? = nil, withDate date: Date = Date()) -> SportEverydayData? {
+    public func insertSportEverydayData(withAccessoryId accessoryId: String, UserId userId: String? = nil, withDate date: Date = Date()) -> SportEverydayData? {
         
         //判断是否已存在当日数据
         var sportEverydayData = selectSportEverydayData(withAccessoryId: accessoryId, byUserId: userId, withDate: date)
@@ -58,7 +58,7 @@ extension CoreDataHandler{
     }
     
     //根据日期获取SportEverydayData
-    public func selectSportEverydayData(withAccessoryId accessoryId: String, byUserId userId: Int64?, withDate date: Date = Date()) -> SportEverydayData?{
+    public func selectSportEverydayData(withAccessoryId accessoryId: String, byUserId userId: String?, withDate date: Date = Date()) -> SportEverydayData?{
         guard let uid = checkoutUserId(withOptionUserId: userId) else {
             return nil
         }
@@ -78,7 +78,7 @@ extension CoreDataHandler{
     }
     
     //根据日期范围获取SportEverydayData
-    public func selectSportEverydayDataList(withAccessoryId accessoryId: String, byUserId userId: Int64?, withDate date: Date = Date(), withDayOffset dayOffset: Int = 0) -> [SportEverydayData]{
+    public func selectSportEverydayDataList(withAccessoryId accessoryId: String, byUserId userId: String?, withDate date: Date = Date(), withDayOffset dayOffset: Int = 0) -> [SportEverydayData]{
         
         guard let uid = checkoutUserId(withOptionUserId: userId) else {
             return []
@@ -101,7 +101,7 @@ extension CoreDataHandler{
     }
     
     //根据日期范围获取SportEverydayData 日周月年
-    public func selectSportEverydayDataList(withAccessoryId accessoryId: String, byUserId userId: Int64?, withDate date: Date = Date(), withCDHRange cdhRange: CDHRange) -> [SportEverydayData]{
+    public func selectSportEverydayDataList(withAccessoryId accessoryId: String, byUserId userId: String?, withDate date: Date = Date(), withCDHRange cdhRange: CDHRange) -> [SportEverydayData]{
         
         guard let uid = userId else {
             return []
@@ -168,7 +168,7 @@ extension CoreDataHandler{
     }
     
     //MARK:- 根据日期删除对应userId运动数据
-    public func deleteSportEverydayData(withAccessoryId accessoryId: String, byUserId userId: Int64, withDate date: Date = Date()){
+    public func deleteSportEverydayData(withAccessoryId accessoryId: String, byUserId userId: String, withDate date: Date = Date()){
         guard let sportEverydayData = selectSportEverydayData(withAccessoryId: accessoryId, byUserId: userId, withDate: date) else {
             return
         }
@@ -180,7 +180,7 @@ extension CoreDataHandler{
     }
     
     //MARK:- items操作
-    public func createSportEverydayDataItem(withAccessoryId accessoryId: String, byUserId userId: Int64?, withDate date: Date, withItemId itemId: Int16) -> SportEverydayDataItem?{
+    public func createSportEverydayDataItem(withAccessoryId accessoryId: String, byUserId userId: String?, withDate date: Date, withItemId itemId: Int16) -> SportEverydayDataItem?{
         //判断item是否存在
         var sportEverydayDataItem = selectSportEverydayDataItem(withAccessoryId: accessoryId, byUserId: userId, withDate: date, withItemId: itemId)
         if let oldItem = sportEverydayDataItem{
@@ -206,7 +206,7 @@ extension CoreDataHandler{
         return newItem
     }
     
-    public func selectSportEverydayDataItem(withAccessoryId accessoryId: String, byUserId userId: Int64?, withDate date: Date, withItemId itemId: Int16) -> SportEverydayDataItem?{
+    public func selectSportEverydayDataItem(withAccessoryId accessoryId: String, byUserId userId: String?, withDate date: Date, withItemId itemId: Int16) -> SportEverydayDataItem?{
         guard let uid = userId else {
             return nil
         }

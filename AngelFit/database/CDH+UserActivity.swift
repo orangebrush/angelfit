@@ -48,7 +48,7 @@ extension CoreDataHandler{
     }
     
     //获取 device
-    public func selectUserActivity(withObjectId objectId: Int64, byUserId userId: Int64? = nil) -> UserActivity?{
+    public func selectUserActivity(withObjectId objectId: Int64, byUserId userId: String? = nil) -> UserActivity?{
         
         //判断userId
         guard let id = checkoutUserId(withOptionUserId: userId) else {
@@ -57,19 +57,19 @@ extension CoreDataHandler{
         
         //根据用户设备列表获取设备
         let request: NSFetchRequest<UserActivity> = UserActivity.fetchRequest()
-        let predicate = NSPredicate(format: "user.userId = \(id) AND objectId = \(objectId)")
+        let predicate = NSPredicate(format: "user.userId = \"\(id)\" AND objectId = \(objectId)")
         request.predicate = predicate
         do{
             let resultList = try context.fetch(request)
             return resultList.first
         }catch let error{
-            fatalError("<Core Data> select user activity error: \(error), by userId: \(id)")
+            fatalError("<Core Data> select user activity error: \(error), by userId: \"\(id)\"")
         }
         return nil
     }
     
     //MARK:- 获取所有userActivity
-    public func selectAllUserActivities(byUserId userId: Int64? = nil) -> [UserActivity]{
+    public func selectAllUserActivities(byUserId userId: String? = nil) -> [UserActivity]{
         
         //判断userId
         guard let id = checkoutUserId(withOptionUserId: userId) else {
@@ -78,19 +78,19 @@ extension CoreDataHandler{
         
         //根据用户设备列表获取设备
         let request: NSFetchRequest<UserActivity> = UserActivity.fetchRequest()
-        let predicate = NSPredicate(format: "user.userId = \(id)")
+        let predicate = NSPredicate(format: "user.userId = \"\(id)\"")
         request.predicate = predicate
         do{
             let resultList = try context.fetch(request)
             return resultList
         }catch let error{
-            fatalError("<Core Data> select all user activity error: \(error), by userId: \(id)")
+            fatalError("<Core Data> select all user activity error: \(error), by userId: \"\(id)\"")
         }
         return []
     }
     
     //删除 device
-    public func deleteUserActivity(userId id: Int16 = 1, withMacAddress macAddress: String){
-        delete(Device.self, byConditionFormat: "user.userId = \(id)")
+    public func deleteUserActivity(userId id: String, withMacAddress macAddress: String){
+        delete(Device.self, byConditionFormat: "user.userId = \"\(id)\"")
     }
 }

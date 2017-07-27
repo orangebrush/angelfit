@@ -47,7 +47,7 @@ extension CoreDataHandler{
         let request: NSFetchRequest<UserSyncToServerLog> = UserSyncToServerLog.fetchRequest()
         let startDate = dayOffset >= 0 ? translate(date) : translate(date, withDayOffset: dayOffset)
         let endDate = dayOffset >= 0 ? translate(date, withDayOffset: dayOffset) : translate(date)
-        let predicate = NSPredicate(format: "user.userId = \(uid) AND date >= %@ AND date <= %@", startDate as CVarArg, endDate as CVarArg)
+        let predicate = NSPredicate(format: "user.userId = \"\(uid)\" AND date >= %@ AND date <= %@", startDate as CVarArg, endDate as CVarArg)
         request.predicate = predicate
         do{
             let resultList = try context.fetch(request)

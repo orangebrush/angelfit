@@ -13,7 +13,7 @@ import CoreLocation
 extension CoreDataHandler{
     
     //插入单日运动数据
-    public func insertEachTrainningData(withAccessoryId accessoryId: String, byUserId userId: Int64? = nil, withDate date: Date = Date()) -> EachTrainningData? {
+    public func insertEachTrainningData(withAccessoryId accessoryId: String, byUserId userId: String? = nil, withDate date: Date = Date()) -> EachTrainningData? {
         
         //判断是否已存在当日数据
         var eachTrainningData = selectEachTrainningData(withAccessoryId: accessoryId, byUserId: userId, withDate: date)
@@ -53,7 +53,7 @@ extension CoreDataHandler{
     }
     
     //根据日期获取EachTrainningData
-    public func selectEachTrainningData(withAccessoryId accessoryId: String, byUserId userId: Int64?, withDate date: Date = Date()) -> EachTrainningData?{
+    public func selectEachTrainningData(withAccessoryId accessoryId: String, byUserId userId: String?, withDate date: Date = Date()) -> EachTrainningData?{
         guard let uid = checkoutUserId(withOptionUserId: userId) else {
             return nil
         }
@@ -73,7 +73,7 @@ extension CoreDataHandler{
     }
     
     //根据日期范围获取EachTrainningData
-    public func selectEachTrainningDataList(withAccessoryId accessoryId: String, byUserId userId: Int64?, withDate date: Date = Date(), withDayOffset dayOffset: Int = 0) -> [EachTrainningData]{
+    public func selectEachTrainningDataList(withAccessoryId accessoryId: String, byUserId userId: String?, withDate date: Date = Date(), withDayOffset dayOffset: Int = 0) -> [EachTrainningData]{
         
         guard let uid = checkoutUserId(withOptionUserId: userId) else {
             return []
@@ -96,7 +96,7 @@ extension CoreDataHandler{
     }
     
     //根据日期范围获取EachTrainningData 日周月年
-    public func selectEachTrainningDataList(withAccessoryId accessoryId: String, byUserId userId: Int64?, withDate date: Date = Date(), withCDHRange cdhRange: CDHRange) -> [EachTrainningData]{
+    public func selectEachTrainningDataList(withAccessoryId accessoryId: String, byUserId userId: String?, withDate date: Date = Date(), withCDHRange cdhRange: CDHRange) -> [EachTrainningData]{
         
         guard let uid = userId else {
             return []
@@ -163,7 +163,7 @@ extension CoreDataHandler{
     }
     
     //MARK:- 根据日期删除对应userId血压数据
-    public func deleteEachTrainningData(withAccessoryId accessoryId: String, byUserId userId: Int64, withDate date: Date = Date()){
+    public func deleteEachTrainningData(withAccessoryId accessoryId: String, byUserId userId: String, withDate date: Date = Date()){
         guard let eachTrainningData = selectEachTrainningData(withAccessoryId: accessoryId, byUserId: userId, withDate: date) else {
             return
         }
@@ -175,7 +175,7 @@ extension CoreDataHandler{
     }
     
     //MARK:- 坐标操作
-    public func createEachTrainningGPSLoggerItem(withAccessoryId accessoryId: String, byUserId userId: Int64?, withDate date: Date, withItemId itemId: Int16, withCoordinate2D coordinate: CLLocationCoordinate2D) -> EachTrainningGPSLoggerItem? {
+    public func createEachTrainningGPSLoggerItem(withAccessoryId accessoryId: String, byUserId userId: String?, withDate date: Date, withItemId itemId: Int16, withCoordinate2D coordinate: CLLocationCoordinate2D) -> EachTrainningGPSLoggerItem? {
         //判断item是否存在
         var eachTrainningGPSLoggerItem = selectEachTrainningGPSLoggerItem(withAccessoryId: accessoryId, byUserId: userId, withDate: date, withItemId: itemId)
         if let oldItem = eachTrainningGPSLoggerItem{
@@ -203,7 +203,7 @@ extension CoreDataHandler{
         return newItem
     }
     
-    public func selectEachTrainningGPSLoggerItem(withAccessoryId accessoryId: String, byUserId userId: Int64?, withDate date: Date, withItemId itemId: Int16) -> EachTrainningGPSLoggerItem? {
+    public func selectEachTrainningGPSLoggerItem(withAccessoryId accessoryId: String, byUserId userId: String?, withDate date: Date, withItemId itemId: Int16) -> EachTrainningGPSLoggerItem? {
         guard let uid = userId else {
             return nil
         }
@@ -222,7 +222,7 @@ extension CoreDataHandler{
     }
     
     //MARK:- 心率操作
-    public func createEachTrainningHeartRateItem(withAccessoryId accessoryId: String, byUserId userId: Int64?, withDate date: Date, withItemId itemId: Int16, withHeartrateValue hrValue: Int16) -> EachTrainningHeartRateItem? {
+    public func createEachTrainningHeartRateItem(withAccessoryId accessoryId: String, byUserId userId: String?, withDate date: Date, withItemId itemId: Int16, withHeartrateValue hrValue: Int16) -> EachTrainningHeartRateItem? {
         //判断item是否存在
         var eachTrainningHeartRateItem = selectEachTrainningHeartRateItem(withAccessoryId: accessoryId, byUserId: userId, withDate: date, withItemId: itemId)
         if let oldItem = eachTrainningHeartRateItem{
@@ -249,7 +249,7 @@ extension CoreDataHandler{
         return newItem
     }
     
-    public func selectEachTrainningHeartRateItem(withAccessoryId accessoryId: String, byUserId userId: Int64?, withDate date: Date, withItemId itemId: Int16) -> EachTrainningHeartRateItem? {
+    public func selectEachTrainningHeartRateItem(withAccessoryId accessoryId: String, byUserId userId: String?, withDate date: Date, withItemId itemId: Int16) -> EachTrainningHeartRateItem? {
         guard let uid = userId else {
             return nil
         }
@@ -268,7 +268,7 @@ extension CoreDataHandler{
     }
     
     //MARK:- 步数操作
-    public func createEachTrainningStepItem(withAccessoryId accessoryId: String, byUserId userId: Int64?, withDate date: Date, withItemId itemId: Int16, withSteps steps: Int16) -> EachTrainningStepItem? {
+    public func createEachTrainningStepItem(withAccessoryId accessoryId: String, byUserId userId: String?, withDate date: Date, withItemId itemId: Int16, withSteps steps: Int16) -> EachTrainningStepItem? {
         //判断item是否存在
         var eachTrainningStepItem = selectEachTrainningStepItem(withAccessoryId: accessoryId, byUserId: userId, withDate: date, withItemId: itemId)
         if let oldItem = eachTrainningStepItem{
@@ -295,7 +295,7 @@ extension CoreDataHandler{
         return newItem
     }
     
-    public func selectEachTrainningStepItem(withAccessoryId accessoryId: String, byUserId userId: Int64?, withDate date: Date, withItemId itemId: Int16) -> EachTrainningStepItem? {
+    public func selectEachTrainningStepItem(withAccessoryId accessoryId: String, byUserId userId: String?, withDate date: Date, withItemId itemId: Int16) -> EachTrainningStepItem? {
         guard let uid = userId else {
             return nil
         }

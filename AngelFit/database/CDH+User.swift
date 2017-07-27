@@ -12,9 +12,9 @@ import CoreData
 extension CoreDataHandler{
     
     //MARK:- 判断userId 默认获取mainUserId 并返回
-    func checkoutUserId(withOptionUserId userId: Int64? = nil) -> Int64?{
+    func checkoutUserId(withOptionUserId userId: String? = nil) -> String?{
         //判断userId
-        var optionId: Int64?
+        var optionId: String?
         if userId == nil {
             optionId = mainUserId()
         }else{
@@ -27,7 +27,7 @@ extension CoreDataHandler{
     }
     
     //插入用户
-    public func insertUser(withUserId userId: Int64?) -> User?{
+    public func insertUser(withUserId userId: String?) -> User?{
         
         guard let uid = userId else {
             return nil
@@ -83,14 +83,14 @@ extension CoreDataHandler{
     }
     
     //根据userId获取 user
-    func selectUser(withUserId userId: Int64?) -> User?{
+    func selectUser(withUserId userId: String?) -> User?{
         
         guard let uid = userId else {
             return nil
         }
         
         let request: NSFetchRequest<User> = User.fetchRequest()
-        let predicate = NSPredicate(format: "userId = \(uid)")
+        let predicate = NSPredicate(format: "userId = \"\(uid)\"")
         
         request.predicate = predicate
         
@@ -124,10 +124,10 @@ extension CoreDataHandler{
     }
     
     //删除 user
-    public func deleteUser(withUserId userId: Int64?){
+    public func deleteUser(withUserId userId: String?){
         guard let id = userId else {
             return
         }
-        delete(User.self, byConditionFormat: "userId = \(id)")
+        delete(User.self, byConditionFormat: "userId = \"\(id)\"")
     }
 }
