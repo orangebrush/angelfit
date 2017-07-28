@@ -8,7 +8,7 @@
 
 import Foundation
 //用户注册参数
-public class NWHUserAddParam: NSObject{
+public class NWHUserAddParam: NSObject {
     public var userId: String? = nil
     public var password: String? = nil
     public var email: String? = nil
@@ -17,19 +17,19 @@ public class NWHUserAddParam: NSObject{
     public var showName: String? = nil
 }
 //用户登陆参数
-public class NWHUserLogonParam: NSObject{
+public class NWHUserLogonParam: NSObject {
     public var userId: String?
     public var password: String?
 }
 //用户更新参数
-public struct NWHUserUpdateParam{
-    public var userId: String
-    public var password: String
-    public var email: String
-    public var weixin: String
-    public var mobile: String
-    public var showName: String
-    public var newPassword: String
+public class NWHUserUpdateParam: NSObject {
+    public var userId: String?
+    public var password: String?
+    public var email: String?
+    public var weixin: String?
+    public var mobile: String?
+    public var showName: String?
+    public var newPassword: String?
 }
 public class NWHUser: NSObject {
     //MARK:- init ++++++++++++++++++++++++++++

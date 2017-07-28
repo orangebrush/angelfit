@@ -7,16 +7,16 @@
 //
 
 import Foundation
-//用户更新参数
-public struct NWHDeviceParam{
-    public var id: String
-    public var macAddress: String
-    public var uuid: String
-    public var name: String
-    public var showName: String
-    public var type: Int
-    public var batteryType: Int
-    public var totalUserdMinutes: Int
+//设备更新参数
+public class NWHDeviceParam: NSObject{
+    public var id: String?
+    public var macAddress: String?
+    public var uuid: String?
+    public var name: String?
+    public var showName: String?
+    public var type: Int?
+    public var batteryType: Int?
+    public var totalUserdMinutes: Int?
 }
 public class NWHDevice: NSObject{
     //MARK:- init ++++++++++++++++++++++++++++

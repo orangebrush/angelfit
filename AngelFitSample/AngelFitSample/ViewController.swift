@@ -113,12 +113,8 @@ class ViewController: UIViewController {
 //                print(data)
 //            })
 //        })
-//        
-//        //添加用户
-//        let userParam = [
-//            "userId": "gan0720",
-//            "password": "123456"
-//        ]
+
+        //添加用户
         let userParam = NWHUserAddParam()
         userParam.userId = "test_ganyi"
         userParam.password = "123456"
@@ -126,20 +122,16 @@ class ViewController: UIViewController {
             resultCode, message, data in
             print(resultCode, message, data)
         })
-//        networkHandler.user.add(withParam: userParam, closure: {
-//            resultCode, message, data in
-//            print(resultCode)
-//            print(message)
-//            print(data)
-//            
-//            //获取用户
-//            networkHandler.user.logon(withUserId: "ganyi", withPassword: "123456", closure: {
-//                resultCode, message, data in
-//                print(resultCode)
-//                print(message)
-//                print(data)
-//            })
-//        })
+        
+        //用户登录
+        let logonParam = NWHUserLogonParam()
+        logonParam.userId = "test"
+        logonParam.password = "123456"
+        
+        networkHandler.user.logon(withParam: logonParam, closure: {
+            resultCode, message, data in
+            print(resultCode, message, data)
+        })
         
 //        let godMan = GodManager.share()
     }

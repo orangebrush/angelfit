@@ -8,71 +8,71 @@
 
 import Foundation
 //上传心率参数
-public struct NWHHeartrateAddParam {
-    public var deviceId: String
-    public var userId: String
-    public var date: Date
-    public var silentHeartRate: UInt
-    public var burnFatThreshold: UInt
-    public var aerobicThreshold: UInt
-    public var limitThreshold: UInt
-    public var burnFatMinutes: UInt
-    public var aerobicMinutes: UInt
-    public var limitMinutes: UInt
-    public var itemsStartTime: Date
-    public var items: [(offset: UInt, heartrate: UInt)]
+public class NWHHeartrateAddParam: NSObject {
+    public var deviceId: String?
+    public var userId: String?
+    public var date: Date?
+    public var silentHeartRate: UInt?
+    public var burnFatThreshold: UInt?
+    public var aerobicThreshold: UInt?
+    public var limitThreshold: UInt?
+    public var burnFatMinutes: UInt?
+    public var aerobicMinutes: UInt?
+    public var limitMinutes: UInt?
+    public var itemsStartTime: Date?
+    public var items: [(offset: UInt, heartrate: UInt)]?
 }
 //上传步数参数
-public struct NWHStepAddParam {
-    public var deviceId: String
-    public var userId: String
-    public var date: Date
-    public var steps: UInt
-    public var calories: UInt
-    public var distances: UInt
-    public var totalSeconds: UInt
-    public var items: [(offset: UInt, calories: UInt, steps: UInt, distanceM: UInt)]
+public class NWHStepAddParam: NSObject {
+    public var deviceId: String?
+    public var userId: String?
+    public var date: Date?
+    public var steps: UInt?
+    public var calories: UInt?
+    public var distances: UInt?
+    public var totalSeconds: UInt?
+    public var items: [(offset: UInt, calories: UInt, steps: UInt, distanceM: UInt)]?
 }
 //上传睡眠参数
-public struct NWHSleepAddParam {
-    public var deviceId: String
-    public var userId: String
-    public var date: Date
-    public var endedDatetime: Date
-    public var totalMinutes: UInt
-    public var lightSleepMinutes: UInt
-    public var deepSleepMinutes: UInt
-    public var awakeSleepMinutes: UInt
-    public var items: [(offset: UInt, sleepType: UInt)]
+public class NWHSleepAddParam: NSObject {
+    public var deviceId: String?
+    public var userId: String?
+    public var date: Date?
+    public var endedDatetime: Date?
+    public var totalMinutes: UInt?
+    public var lightSleepMinutes: UInt?
+    public var deepSleepMinutes: UInt?
+    public var awakeSleepMinutes: UInt?
+    public var items: [(offset: UInt, sleepType: UInt)]?
 }
 //上传训练参数
-public struct NWHTrainingAddParam {
-    public var deviceId: String
-    public var userId: String
-    public var date: Date
-    public var startedAt: Date
-    public var heartRateItemIntervalSeconds: UInt
-    public var stepItemIntervalSeconds: UInt
-    public var type: UInt
-    public var durationSeconds: UInt
-    public var calories: UInt
-    public var distances: UInt
-    public var averageHeartRate: UInt
-    public var maxHeartRate: UInt
-    public var burnFatMinutes: UInt
-    public var aerobicMinutes: UInt
-    public var limitMinutes: UInt
-    public var mapSource: String
-    public var steps: [UInt]
-    public var heartRates: [UInt]
-    public var gps: [(longtitude: Double, latitude: Double, date: Date)]
+public class NWHTrainingAddParam: NSObject {
+    public var deviceId: String?
+    public var userId: String?
+    public var date: Date?
+    public var startedAt: Date?
+    public var heartRateItemIntervalSeconds: UInt?
+    public var stepItemIntervalSeconds: UInt?
+    public var type: UInt?
+    public var durationSeconds: UInt?
+    public var calories: UInt?
+    public var distances: UInt?
+    public var averageHeartRate: UInt?
+    public var maxHeartRate: UInt?
+    public var burnFatMinutes: UInt?
+    public var aerobicMinutes: UInt?
+    public var limitMinutes: UInt?
+    public var mapSource: String?
+    public var steps: [UInt]?
+    public var heartRates: [UInt]?
+    public var gps: [(longtitude: Double, latitude: Double, date: Date)]?
 }
 //下拉心率参数
-public struct NWHEverydayDataPullParam {
-    public var deviceId: String
-    public var userId: String
-    public var fromDate: Date
-    public var endDate: Date
+public class NWHEverydayDataPullParam: NSObject {
+    public var deviceId: String?
+    public var userId: String?
+    public var fromDate: Date?
+    public var endDate: Date?
 }
 public class NWHEverydayData: NSObject {
     //MARK:- init ++++++++++++++++++++++++++++
@@ -101,29 +101,33 @@ public class NWHEverydayData: NSObject {
     public func addEverydayHeartrates(withParam params: [NWHHeartrateAddParam], closure: @escaping (_ resultCode: Int, _ message: String, _ data: Any?) -> ()){
         var dict = [[String: Any]]()
         for param in params{
-            var items = "["
-            for (index, tuple) in param.items.enumerated() {
-                if index != 0{
-                    items += ","
+            var itemsStr = "["
+            if let items = param.items{
+                for (index, tuple) in items.enumerated() {
+                    if index != 0{
+                        itemsStr += ","
+                    }
+                    itemsStr += "{\(tuple.offset),\(tuple.heartrate)}"
                 }
-                items += "{\(tuple.offset),\(tuple.heartrate)}"
             }
-            items += "]"
-            let subDict: [String: Any] = [
-                "deviceId": param.deviceId,
-                "userId": param.userId,
-                "date": param.date.formatString(with: "yyyy-MM-dd HH:mm:ss"),
-                "silentHeartRate": "\(param.silentHeartRate)",
-                "burnFatThreshold": "\(param.burnFatThreshold)",
-                "aerobicThreshold": "\(param.aerobicThreshold)",
-                "limitThreshold": "\(param.limitThreshold)",
-                "burnFatMinutes": "\(param.burnFatMinutes)",
-                "aerobicMinutes": "\(param.aerobicMinutes)",
-                "limitMinutes": "\(param.limitMinutes)",
-                "itemsStartTime": param.itemsStartTime.formatString(with: "yyyy-MM-dd HH:mm:ss"),
-                "items": items
-            ]
-            dict.append(subDict)
+            itemsStr += "]"
+            if let date = param.date, let itemsStartTime = param.itemsStartTime{
+                let subDict: [String: Any] = [
+                    "deviceId": param.deviceId,
+                    "userId": param.userId,
+                    "date": date.formatString(with: "yyyy-MM-dd HH:mm:ss"),
+                    "silentHeartRate": "\(param.silentHeartRate)",
+                    "burnFatThreshold": "\(param.burnFatThreshold)",
+                    "aerobicThreshold": "\(param.aerobicThreshold)",
+                    "limitThreshold": "\(param.limitThreshold)",
+                    "burnFatMinutes": "\(param.burnFatMinutes)",
+                    "aerobicMinutes": "\(param.aerobicMinutes)",
+                    "limitMinutes": "\(param.limitMinutes)",
+                    "itemsStartTime": itemsStartTime.formatString(with: "yyyy-MM-dd HH:mm:ss"),
+                    "items": itemsStr
+                ]
+                dict.append(subDict)
+            }
         }
         Session.session(withAction: Actions.everydayHeartratesAdd, withMethod: Method.post, withParam: dict, closure: closure)
     }
@@ -136,12 +140,19 @@ public class NWHEverydayData: NSObject {
      *  @params endDate                     恢复结束日期yyyy-MM-dd
      */
     public func pullEverydayHeartrates(withParam param: NWHEverydayDataPullParam, closure: @escaping (_ resultCode: Int, _ message: String, _ data: Any?) -> ()){
-        let dict = [
-            "deviceId": param.deviceId,
-            "userId": param.userId,
-            "fromDate": param.fromDate.formatString(with: "yyyy-MM-dd"),
-            "endDate": param.endDate.formatString(with: "yyyy-MM-dd")
-        ]
+        var dict = [String: Any]()
+        if let deviceId = param.deviceId {
+            dict["deviceId"] = deviceId
+        }
+        if let userId = param.userId {
+            dict["userId"] = userId
+        }
+        if let fromDate = param.fromDate{
+            dict["fromDate"] = fromDate
+        }
+        if let endDate = param.endDate {
+            dict["endDate"] = endDate
+        }
         Session.session(withAction: Actions.everydayHeartratesPull, withMethod: Method.get, withParam: dict, closure: closure)
     }
     
@@ -161,25 +172,30 @@ public class NWHEverydayData: NSObject {
     public func addEverydayStep(withParam params: [NWHStepAddParam], closure: @escaping (_ resultCode: Int, _ message: String, _ data: Any?) -> ()){
         var dict = [[String: Any]]()
         for param in params{
-            var items = "["
-            for (index, tuple) in param.items.enumerated() {
-                if index != 0{
-                    items += ","
+            var itemsStr = "["
+            if let items = param.items {
+                for (index, tuple) in items.enumerated() {
+                    if index != 0{
+                        itemsStr += ","
+                    }
+                    itemsStr += "{\(tuple.offset),\(tuple.calories),\(tuple.steps),\(tuple.distanceM)}"
                 }
-                items += "{\(tuple.offset),\(tuple.calories),\(tuple.steps),\(tuple.distanceM)}"
             }
-            items += "]"
-            let subDict: [String: Any] = [
-                "deviceId": param.deviceId,
-                "userId": param.userId,
-                "date": param.date.formatString(with: "yyyy-MM-dd HH:mm:ss"),
-                "steps": "\(param.steps)",
-                "calories": "\(param.calories)",
-                "distances": "\(param.distances)",
-                "totalSeconds": "\(param.totalSeconds)",
-                "items": items
-            ]
-            dict.append(subDict)
+            itemsStr += "]"
+            
+            if let date = param.date{
+                let subDict: [String: Any] = [
+                    "deviceId": param.deviceId,
+                    "userId": param.userId,
+                    "date": date.formatString(with: "yyyy-MM-dd HH:mm:ss"),
+                    "steps": "\(param.steps)",
+                    "calories": "\(param.calories)",
+                    "distances": "\(param.distances)",
+                    "totalSeconds": "\(param.totalSeconds)",
+                    "items": itemsStr
+                ]
+                dict.append(subDict)
+            }
         }
         Session.session(withAction: Actions.everydayStepAdd, withMethod: Method.post, withParam: dict, closure: closure)
     }
@@ -192,12 +208,19 @@ public class NWHEverydayData: NSObject {
      *  @params endDate                     恢复结束日期yyyy-MM-dd
      */
     public func pullEverydayStep(withParam param: NWHEverydayDataPullParam, closure: @escaping (_ resultCode: Int, _ message: String, _ data: Any?) -> ()){
-        let dict = [
-            "deviceId": param.deviceId,
-            "userId": param.userId,
-            "fromDate": param.fromDate.formatString(with: "yyyy-MM-dd"),
-            "endDate": param.endDate.formatString(with: "yyyy-MM-dd")
-        ]
+        var dict = [String: Any]()
+        if let deviceId = param.deviceId {
+            dict["deviceId"] = deviceId
+        }
+        if let userId = param.userId {
+            dict["userId"] = userId
+        }
+        if let fromDate = param.fromDate{
+            dict["fromDate"] = fromDate
+        }
+        if let endDate = param.endDate {
+            dict["endDate"] = endDate
+        }
         Session.session(withAction: Actions.everydayStepPull, withMethod: Method.get, withParam: dict, closure: closure)
     }
     
@@ -218,26 +241,31 @@ public class NWHEverydayData: NSObject {
     public func addEverydaySleep(withParam params: [NWHSleepAddParam], closure: @escaping (_ resultCode: Int, _ message: String, _ data: Any?) -> ()){
         var dict = [[String: Any]]()
         for param in params{
-            var items = "["
-            for (index, tuple) in param.items.enumerated() {
-                if index != 0{
-                    items += ","
+            var itemsStr = "["
+            if let items = param.items {
+                for (index, tuple) in items.enumerated() {
+                    if index != 0{
+                        itemsStr += ","
+                    }
+                    itemsStr += "{\(tuple.offset),\(tuple.sleepType)}"
                 }
-                items += "{\(tuple.offset),\(tuple.sleepType)}"
             }
-            items += "]"
-            let subDict: [String: Any] = [
-                "deviceId": param.deviceId,
-                "userId": param.userId,
-                "date": param.date.formatString(with: "yyyy-MM-dd HH:mm:ss"),
-                "endedDatetime": param.endedDatetime.formatString(with: "yyyy-MM-dd HH:mm:ss"),
-                "totalMinutes": "\(param.totalMinutes)",
-                "lightSleepMinutes": "\(param.lightSleepMinutes)",
-                "deepSleepMinutes": "\(param.deepSleepMinutes)",
-                "awakeSleepMinutes": "\(param.awakeSleepMinutes)",
-                "items": items
-            ]
-            dict.append(subDict)
+            itemsStr += "]"
+            
+            if let date = param.date, let endedDatetime = param.endedDatetime{
+                let subDict: [String: Any] = [
+                    "deviceId": param.deviceId,
+                    "userId": param.userId,
+                    "date": date.formatString(with: "yyyy-MM-dd HH:mm:ss"),
+                    "endedDatetime": endedDatetime.formatString(with: "yyyy-MM-dd HH:mm:ss"),
+                    "totalMinutes": "\(param.totalMinutes)",
+                    "lightSleepMinutes": "\(param.lightSleepMinutes)",
+                    "deepSleepMinutes": "\(param.deepSleepMinutes)",
+                    "awakeSleepMinutes": "\(param.awakeSleepMinutes)",
+                    "items": itemsStr
+                ]
+                dict.append(subDict)
+            }
         }
         Session.session(withAction: Actions.everydaySleepAdd, withMethod: Method.post, withParam: dict, closure: closure)
     }
@@ -250,12 +278,19 @@ public class NWHEverydayData: NSObject {
      *  @params endDate                     恢复结束日期yyyy-MM-dd
      */
     public func pullEverydaySleep(withParam param: NWHEverydayDataPullParam, closure: @escaping (_ resultCode: Int, _ message: String, _ data: Any?) -> ()){
-        let dict = [
-            "deviceId": param.deviceId,
-            "userId": param.userId,
-            "fromDate": param.fromDate.formatString(with: "yyyy-MM-dd"),
-            "endDate": param.endDate.formatString(with: "yyyy-MM-dd")
-        ]
+        var dict = [String: Any]()
+        if let deviceId = param.deviceId {
+            dict["deviceId"] = deviceId
+        }
+        if let userId = param.userId {
+            dict["userId"] = userId
+        }
+        if let fromDate = param.fromDate{
+            dict["fromDate"] = fromDate
+        }
+        if let endDate = param.endDate {
+            dict["endDate"] = endDate
+        }
         Session.session(withAction: Actions.everydaySleepPull, withMethod: Method.get, withParam: dict, closure: closure)
     }
     
@@ -286,55 +321,63 @@ public class NWHEverydayData: NSObject {
     public func addEverydayTraining(withParam params: [NWHTrainingAddParam], closure: @escaping (_ resultCode: Int, _ message: String, _ data: Any?) -> ()){
         var dict = [[String: Any]]()
         for param in params{
-            var steps = "["
-            for (index, step) in param.steps.enumerated(){
-                if index != 0{
-                    steps += ","
+            var stepsStr = "["
+            if let steps = param.steps{
+                for (index, step) in steps.enumerated(){
+                    if index != 0{
+                        stepsStr += ","
+                    }
+                    stepsStr += "\(step)"
                 }
-                steps += "\(step)"
             }
-            steps += "]"
+            stepsStr += "]"
             
-            var heartRates = "["
-            for (index, heartrate) in param.heartRates.enumerated(){
-                if index != 0{
-                    heartRates += ","
+            var heartRatesStr = "["
+            if let heartRates = param.heartRates{
+                for (index, heartrate) in heartRates.enumerated(){
+                    if index != 0{
+                        heartRatesStr += ","
+                    }
+                    heartRatesStr += "\(heartrate)"
                 }
-                heartRates += "\(heartrate)"
             }
-            heartRates += "]"
+            heartRatesStr += "]"
             
-            var gps = "["
-            for (index, tuple) in param.gps.enumerated() {
-                if index != 0 {
-                    gps += ","
+            var gpsStr = "["
+            if let gps = param.gps{
+                for (index, tuple) in gps.enumerated() {
+                    if index != 0 {
+                        gpsStr += ","
+                    }
+                    gpsStr += "{\(tuple.longtitude),\(tuple.latitude)," + tuple.date.formatString(with: "yyyy-MM-dd HH:mm:ss") + "}"
                 }
-                gps += "{\(tuple.longtitude),\(tuple.latitude)," + tuple.date.formatString(with: "yyyy-MM-dd HH:mm:ss") + "}"
             }
-            gps += "]"
+            gpsStr += "]"
             
-            let subDict: [String: Any] = [
-                "deviceId": param.deviceId,
-                "userId": param.userId,
-                "date": param.date.formatString(with: "yyyy-MM-dd HH:mm:ss"),
-                "startedAt": param.startedAt.formatString(with: "yyyy-MM-dd HH:mm:ss"),
-                "heartRateItemIntervalSeconds": param.heartRateItemIntervalSeconds,
-                "stepItemIntervalSeconds": param.stepItemIntervalSeconds,
-                "type": "\(param.type)",
-                "durationSeconds": "\(param.durationSeconds)",
-                "calories": "\(param.calories)",
-                "distances": "\(param.distances)",
-                "averageHeartRate": "\(param.averageHeartRate)",
-                "maxHeartRate": "\(param.maxHeartRate)",
-                "burnFatMinutes": "\(param.burnFatMinutes)",
-                "aerobicMinutes": "\(param.aerobicMinutes)",
-                "limitMinutes": "\(param.limitMinutes)",
-                "mapSource": param.mapSource,
-                "steps": steps,
-                "heartRates": heartRates,
-                "gps": gps
-            ]
-            dict.append(subDict)
+            if let date = param.date, let startedAt = param.startedAt{
+                let subDict: [String: Any] = [
+                    "deviceId": param.deviceId,
+                    "userId": param.userId,
+                    "date": date.formatString(with: "yyyy-MM-dd HH:mm:ss"),
+                    "startedAt": startedAt.formatString(with: "yyyy-MM-dd HH:mm:ss"),
+                    "heartRateItemIntervalSeconds": param.heartRateItemIntervalSeconds,
+                    "stepItemIntervalSeconds": param.stepItemIntervalSeconds,
+                    "type": "\(param.type)",
+                    "durationSeconds": "\(param.durationSeconds)",
+                    "calories": "\(param.calories)",
+                    "distances": "\(param.distances)",
+                    "averageHeartRate": "\(param.averageHeartRate)",
+                    "maxHeartRate": "\(param.maxHeartRate)",
+                    "burnFatMinutes": "\(param.burnFatMinutes)",
+                    "aerobicMinutes": "\(param.aerobicMinutes)",
+                    "limitMinutes": "\(param.limitMinutes)",
+                    "mapSource": param.mapSource,
+                    "steps": stepsStr,
+                    "heartRates": heartRatesStr,
+                    "gps": gpsStr
+                ]
+                dict.append(subDict)
+            }
         }
         Session.session(withAction: Actions.everydayTrainingAdd, withMethod: Method.post, withParam: dict, closure: closure)
     }
@@ -347,12 +390,19 @@ public class NWHEverydayData: NSObject {
      *  @params endDate                     恢复结束日期yyyy-MM-dd
      */
     public func pullEverydayTraining(withParam param: NWHEverydayDataPullParam, closure: @escaping (_ resultCode: Int, _ message: String, _ data: Any?) -> ()){
-        let dict = [
-            "deviceId": param.deviceId,
-            "userId": param.userId,
-            "fromDate": param.fromDate.formatString(with: "yyyy-MM-dd"),
-            "endDate": param.endDate.formatString(with: "yyyy-MM-dd")
-        ]
+        var dict = [String: Any]()
+        if let deviceId = param.deviceId {
+            dict["deviceId"] = deviceId
+        }
+        if let userId = param.userId {
+            dict["userId"] = userId
+        }
+        if let fromDate = param.fromDate{
+            dict["fromDate"] = fromDate
+        }
+        if let endDate = param.endDate {
+            dict["endDate"] = endDate
+        }
         Session.session(withAction: Actions.everydayTrainingPull, withMethod: Method.get, withParam: dict, closure: closure)
     }
 }
