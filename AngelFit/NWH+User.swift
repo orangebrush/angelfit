@@ -8,18 +8,18 @@
 
 import Foundation
 //用户注册参数
-public struct NWHUserAddParam{
-    public var userId: String
-    public var password: String
-    public var email: String
-    public var weixin: String
-    public var mobile: String
-    public var showName: String
+public class NWHUserAddParam: NSObject{
+    public var userId: String? = nil
+    public var password: String? = nil
+    public var email: String? = nil
+    public var weixin: String? = nil
+    public var mobile: String? = nil
+    public var showName: String? = nil
 }
 //用户登陆参数
-public struct NWHUserLogonParam{
-    public var userId: String
-    public var password: String
+public class NWHUserLogonParam: NSObject{
+    public var userId: String?
+    public var password: String?
 }
 //用户更新参数
 public struct NWHUserUpdateParam{
@@ -31,7 +31,7 @@ public struct NWHUserUpdateParam{
     public var showName: String
     public var newPassword: String
 }
-public class NWHUser {
+public class NWHUser: NSObject {
     //MARK:- init ++++++++++++++++++++++++++++
     private static let __once = NWHUser()
     public class func share() -> NWHUser{
@@ -48,14 +48,25 @@ public class NWHUser {
      * @param showName      option  昵称
      */
     public func add(withParam param: NWHUserAddParam, closure: @escaping (_ resultCode: Int, _ message: String, _ data: Any?) -> ()){
-        let dict = [
-            "userId": param.userId,
-            "password": param.password,
-            "email": param.email,
-            "weixin": param.weixin,
-            "mobile": param.mobile,
-            "showName": param.showName
-        ]
+        var dict = [String: Any]()
+        if let userId = param.userId {
+            dict["userId"] = userId
+        }
+        if let password = param.password{
+            dict["password"] = password
+        }
+        if let email = param.email{
+            dict["email"] = email
+        }
+        if let weixin = param.weixin{
+            dict["weixin"] = weixin
+        }
+        if let mobile = param.mobile{
+            dict["mobile"] = mobile
+        }
+        if let showName = param.showName{
+            dict["showName"] = showName
+        }
         Session.session(withAction: Actions.userAdd, withMethod: Method.post, withParam: dict, closure: closure)
     }
     

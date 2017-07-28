@@ -230,7 +230,7 @@
 				TargetAttributes = {
 					3203F5E51F29ED0800450C2C = {
 						CreatedOnToolsVersion = 8.3.3;
-						DevelopmentTeam = NWGF84NL9Q;
+						DevelopmentTeam = T65EE75V48;
 						ProvisioningStyle = Automatic;
 					};
 					3203F6011F29ED0800450C2C = {
@@ -360,6 +360,7 @@
 		3203F6141F29ED0800450C2C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -382,6 +383,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -409,6 +411,7 @@
 		3203F6151F29ED0800450C2C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -431,6 +434,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -452,9 +456,12 @@
 		3203F6171F29ED0800450C2C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = NWGF84NL9Q;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = T65EE75V48;
 				INFOPLIST_FILE = AngelFitOCSample/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.orangebrush.AngelFitOCSample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -464,9 +471,12 @@
 		3203F6181F29ED0800450C2C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = NWGF84NL9Q;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = T65EE75V48;
 				INFOPLIST_FILE = AngelFitOCSample/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.orangebrush.AngelFitOCSample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -542,6 +552,7 @@
 				3203F6181F29ED0800450C2C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		3203F6191F29ED0800450C2C /* Build configuration list for PBXNativeTarget "AngelFitOCSampleTests" */ = {
 			isa = XCConfigurationList;
@@ -550,6 +561,7 @@
 				3203F61B1F29ED0800450C2C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		3203F61C1F29ED0800450C2C /* Build configuration list for PBXNativeTarget "AngelFitOCSampleUITests" */ = {
 			isa = XCConfigurationList;
@@ -558,6 +570,7 @@
 				3203F61E1F29ED0800450C2C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

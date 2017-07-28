@@ -18,7 +18,7 @@ public struct NWHDeviceParam{
     public var batteryType: Int
     public var totalUserdMinutes: Int
 }
-public class NWHDevice{
+public class NWHDevice: NSObject{
     //MARK:- init ++++++++++++++++++++++++++++
     private static let __once = NWHDevice()
     public class func share() -> NWHDevice{

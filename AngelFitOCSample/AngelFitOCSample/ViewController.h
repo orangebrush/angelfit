@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <AngelFit/AngelFit.h>
 
 @interface ViewController : UIViewController
 

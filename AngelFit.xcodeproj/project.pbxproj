@@ -120,6 +120,12 @@
 		BE1F53971DC84FC500EAD9BA /* Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1F53961DC84FC500EAD9BA /* Time.swift */; };
 		BE306AED1F21CEE9001CE734 /* CDH+BloodPressureEverydayData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA1F6861EC0779A00A55E82 /* CDH+BloodPressureEverydayData.swift */; };
 		BE5476711E60369C00B1DC2D /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE5476701E60369C00B1DC2D /* Date+Extension.swift */; };
+		BE59F87F1F29F0640069D678 /* NetworkHandler.swift in Headers */ = {isa = PBXBuildFile; fileRef = 327D17AB1F1C4D20001669FC /* NetworkHandler.swift */; settings = {ATTRIBUTES = (Public, ); }; };
+		BE59F8801F29F0640069D678 /* NetworkConfigure.swift in Headers */ = {isa = PBXBuildFile; fileRef = 32F87BE11F21D48C003B21A1 /* NetworkConfigure.swift */; settings = {ATTRIBUTES = (Public, ); }; };
+		BE59F8811F29F0640069D678 /* Session.swift in Headers */ = {isa = PBXBuildFile; fileRef = 327D17AD1F1C4DA8001669FC /* Session.swift */; settings = {ATTRIBUTES = (Public, ); }; };
+		BE59F8821F29F0640069D678 /* NWH+User.swift in Headers */ = {isa = PBXBuildFile; fileRef = 327D17AF1F1CB5CF001669FC /* NWH+User.swift */; settings = {ATTRIBUTES = (Public, ); }; };
+		BE59F8831F29F0640069D678 /* NWH+Device.swift in Headers */ = {isa = PBXBuildFile; fileRef = 327D17B11F1CC03E001669FC /* NWH+Device.swift */; settings = {ATTRIBUTES = (Public, ); }; };
+		BE59F8841F29F0640069D678 /* NWH+EverydayData.swift in Headers */ = {isa = PBXBuildFile; fileRef = 327D185A1F2042A7001669FC /* NWH+EverydayData.swift */; settings = {ATTRIBUTES = (Public, ); }; };
 		BEB057301DD025D500B80678 /* Peripheral+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB0572F1DD025D500B80678 /* Peripheral+Extension.swift */; };
 		BEB057321DD02E1700B80678 /* AngelManager+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB057311DD02E1700B80678 /* AngelManager+Extension.swift */; };
 /* End PBXBuildFile section */
@@ -677,6 +683,12 @@
 				22122F791E53F8E700AA61F4 /* protocol_status.h in Headers */,
 				22DF625E1DDBFA530080B77A /* PeripheralManager.swift in Headers */,
 				22122F751E53F8E700AA61F4 /* protocol_send_notice.h in Headers */,
+				BE59F87F1F29F0640069D678 /* NetworkHandler.swift in Headers */,
+				BE59F8801F29F0640069D678 /* NetworkConfigure.swift in Headers */,
+				BE59F8811F29F0640069D678 /* Session.swift in Headers */,
+				BE59F8821F29F0640069D678 /* NWH+User.swift in Headers */,
+				BE59F8831F29F0640069D678 /* NWH+Device.swift in Headers */,
+				BE59F8841F29F0640069D678 /* NWH+EverydayData.swift in Headers */,
 				22122F5C1E53F8E700AA61F4 /* config.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

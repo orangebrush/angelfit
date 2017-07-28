@@ -47,7 +47,7 @@ public struct ResultCode{
     static let other    = 2
 }
 
-public final class NetworkHandler {
+public final class NetworkHandler: NSObject {
     
     //用户
     public lazy var user: NWHUser = {

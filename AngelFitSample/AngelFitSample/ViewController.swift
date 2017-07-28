@@ -119,6 +119,13 @@ class ViewController: UIViewController {
 //            "userId": "gan0720",
 //            "password": "123456"
 //        ]
+        let userParam = NWHUserAddParam()
+        userParam.userId = "test_ganyi"
+        userParam.password = "123456"
+        networkHandler.user.add(withParam: userParam, closure: {
+            resultCode, message, data in
+            print(resultCode, message, data)
+        })
 //        networkHandler.user.add(withParam: userParam, closure: {
 //            resultCode, message, data in
 //            print(resultCode)

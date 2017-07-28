@@ -74,7 +74,7 @@ public struct NWHEverydayDataPullParam {
     public var fromDate: Date
     public var endDate: Date
 }
-public class NWHEverydayData {
+public class NWHEverydayData: NSObject {
     //MARK:- init ++++++++++++++++++++++++++++
     private static let __once = NWHEverydayData()
     public class func share() -> NWHEverydayData{
