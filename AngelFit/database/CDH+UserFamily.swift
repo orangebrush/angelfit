@@ -22,6 +22,12 @@ extension CoreDataHandler{
                 let userId = UserManager.share().userId
                 userFamily?.isOnlineUserId = userId
                 userFamily?.userId = userId
+//                guard commit() else {
+//                    return nil
+//                }
+                
+                //插入用户
+                _ = insertUser(withUserId: userId)
                 guard commit() else {
                     return nil
                 }

@@ -104,7 +104,7 @@ public class NWHEverydayData: NSObject {
             dict["deviceId"] = deviceId
         }
         
-        Session.session(withAction: Actions.getLastAcynTime, withMethod: Method.post, withParam: dict, closure: closure)
+        Session.session(withAction: Actions.getLastAcynTime, withMethod: Method.get, withParam: dict, closure: closure)
     }
     
     //MARK:-上传心率
@@ -160,10 +160,10 @@ public class NWHEverydayData: NSObject {
     
     //MARK:-下拉心率
     /*
-     *  @params deviceId                    设备id
-     *  @params userId                      用户id
-     *  @params fromDate                    恢复开始日期yyyy-MM-dd
-     *  @params endDate                     恢复结束日期yyyy-MM-dd
+     *  @params deviceId                    require 设备id
+     *  @params userId                      option  用户id
+     *  @params fromDate                    option  恢复开始日期yyyy-MM-dd
+     *  @params endDate                     option  恢复结束日期yyyy-MM-dd
      */
     public func pullEverydayHeartrates(withParam param: NWHEverydayDataPullParam, closure: @escaping (_ resultCode: Int, _ message: String, _ data: Any?) -> ()){
         var dict = [String: Any]()
