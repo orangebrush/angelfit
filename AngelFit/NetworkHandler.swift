@@ -46,9 +46,9 @@ enum Actions{
 
 //返回码
 public struct ResultCode{
-    static let failure  = 0
-    static let success  = 1
-    static let other    = 2
+    public static let failure  = 0
+    public static let success  = 1
+    public static let other    = 2
 }
 
 public final class NetworkHandler: NSObject {
