@@ -7,6 +7,12 @@
 //
 
 import Foundation
+//获取最后更新时间参数
+public class NWHLastSyncDateParam: NSObject {
+    public var userId: String?
+    public var deviceId: String?
+}
+
 //上传心率参数
 public class NWHHeartrateAddParam: NSObject {
     public var deviceId: String?
@@ -81,6 +87,26 @@ public class NWHEverydayData: NSObject {
         return __once
     }
     
+    //MARK:-获取最后更新日期
+    /*
+     * @param userId                        require 用户id(服务器会全部转为小写)
+     * @param deviceId                      option  设备id(服务器会全部转为大写)
+     */
+    public func getLastSyncDate(withParam param: NWHLastSyncDateParam, closure: @escaping (_ resultCode: Int, _ message: String, _ data: Any?) -> ()) {
+        var dict = [String: String]()
+        guard let userId = param.userId else {
+            return
+        }
+        
+        dict["userId"] = userId
+        
+        if let deviceId = param.deviceId {
+            dict["deviceId"] = deviceId
+        }
+        
+        Session.session(withAction: Actions.getLastAcynTime, withMethod: Method.post, withParam: dict, closure: closure)
+    }
+    
     //MARK:-上传心率
     /*
      * [
@@ -98,7 +124,7 @@ public class NWHEverydayData: NSObject {
      *  @param items                        数据[{从开始时间偏移分钟数,心率值},{}...{}]
      * ]
      */
-    public func addEverydayHeartrates(withParam params: [NWHHeartrateAddParam], closure: @escaping (_ resultCode: Int, _ message: String, _ data: Any?) -> ()){
+    public func addEverydayHeartrates(withParam params: [NWHHeartrateAddParam], closure: @escaping (_ resultCode: Int, _ message: String, _ data: Any?) -> ()) {
         var dict = [[String: Any]]()
         for param in params{
             var itemsStr = "["
@@ -171,7 +197,7 @@ public class NWHEverydayData: NSObject {
      */
     public func addEverydayStep(withParam params: [NWHStepAddParam], closure: @escaping (_ resultCode: Int, _ message: String, _ data: Any?) -> ()){
         var dict = [[String: Any]]()
-        for param in params{
+        for param in params {
             var itemsStr = "["
             if let items = param.items {
                 for (index, tuple) in items.enumerated() {
@@ -299,7 +325,7 @@ public class NWHEverydayData: NSObject {
      * [
      *  @param deviceId                     require 设备id
      *  @param userId                       用户id
-     *  @param date                         require日期yyyy-MM-dd HH:mm:ss
+     *  @param date                         require日期yyyy-MM-dd HH:mm:ss(deprecated)
      *  @param startedAt                    require日期yyyy-MM-dd HH:mm:ss
      *  @param heartRateItemIntervalSeconds 心率间隔
      *  @param stepItemIntervalSeconds      步数间隔

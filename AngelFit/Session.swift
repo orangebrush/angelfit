@@ -70,7 +70,7 @@ class Session {
                 request.httpMethod = method
                 
                 //与用户相关请求采用form格式
-                if action == Actions.userLogon || action == Actions.userAdd || action == Actions.userUpdate {
+                if action == Actions.userLogon || action == Actions.userRegister || action == Actions.userModify {
                     request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
                     var form = ""
                     let dict = param as! [String: Any]
@@ -103,7 +103,7 @@ class Session {
     }
     
     //MARK:-上传图片
-    class func upload(_ image: UIImage, userid: Int64, closure: @escaping (_ resultCode: Int, _ message:String, _ data: Any?) -> ()){
+    class func upload(_ image: UIImage, userid: String, closure: @escaping (_ resultCode: Int, _ message:String, _ data: Any?) -> ()){
         
         //1.数据体
         guard let data = UIImagePNGRepresentation(image) else {
@@ -112,7 +112,7 @@ class Session {
         }
         
         //2.Request
-        let urlStr = host + Actions.setPhote + "?userid=\(userid)"
+        let urlStr = host + Actions.uploadPhoto + "?userid=\(userid)"
         guard let url = URL(string: urlStr) else{
             debugPrint("<Session> 生成url错误")
             return
@@ -128,20 +128,20 @@ class Session {
             
             
             guard error == nil else{
-                closure(0, "上传失败", nil)
+                closure(ResultCode.failure, "上传失败", nil)
                 return
             }
             
             do{
                 guard let result = try JSONSerialization.jsonObject(with: binaryData!, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String : Any] else{
-                    closure(0, "数据错误", nil)
+                    closure(ResultCode.failure, "数据错误", nil)
                     return
                 }
                 
                 debugPrint("<Session> result: \(result)")
                 
                 guard let resultCode = result["resultCode"] as? Int, let message = result["message"] as? String else {
-                    closure(0, "解析数据错误", nil)
+                    closure(ResultCode.failure, "解析数据错误", nil)
                     return
                 }
                 

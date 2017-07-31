@@ -19,9 +19,15 @@ public struct Method{
 
 //actions
 enum Actions{
-    static let userAdd              = "/user/add"               //新增用户
+    static let getVerificationCode  = "/user/getCode"           //获取验证码
+    static let confirmVerificationCode = "/confirm"             //验证验证码合法(仅修改密码使用)
+    
+    static let userRegister         = "/user/register"          //新增用户
+    static let userChangePassword   = "/user/changePassword"    //修改密码
     static let userLogon            = "/user/logon"             //用户登陆
-    static let userUpdate           = "/user/update"            //更新用户
+    static let userModify           = "/user/modify"            //更新用户信息
+    
+    static let uploadPhoto          = "/upload"                 //更新头像
     
     static let deviceAdd            = "/device/add"             //新增设备
     static let deviceUpdate         = "/device/update"          //更新设备
@@ -35,9 +41,7 @@ enum Actions{
     static let everydayTrainingAdd = "/train/recordTrains"              //post上传每日训练
     static let everydayTrainingPull = "/train/recoverTrains"            //get下拉每日训练
     
-    static let lastAcynTime = "/"    //post查询用户与设备最后更新时间
-    
-    static let setPhote = "/setPhoto"                  //更新头像
+    static let getLastAcynTime = "/user/getLastRecordDateTime"  //get查询用户与设备最后更新时间
 }
 
 //返回码
