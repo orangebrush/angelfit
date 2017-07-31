@@ -19,7 +19,9 @@ extension CoreDataHandler{
         if userFamily == nil{
             if let entityDescription = NSEntityDescription.entity(forEntityName: "UserFamily", in: context){
                 userFamily = UserFamily(entity: entityDescription, insertInto: context)
-
+                let userId = UserManager.share().userId
+                userFamily?.isOnlineUserId = userId
+                userFamily?.userId = userId
                 guard commit() else {
                     return nil
                 }
