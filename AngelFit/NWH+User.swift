@@ -125,7 +125,7 @@ public class NWHUser: NSObject {
         
         dict["email"] = email
         
-        Session.session(withAction: Actions.getVerificationCode, withMethod: Method.post, withParam: dict, closure: closure)
+        Session.session(withAction: Actions.getVerificationCode, withMethod: Method.get, withParam: dict, closure: closure)
     }
     
     //MARK:-注册
