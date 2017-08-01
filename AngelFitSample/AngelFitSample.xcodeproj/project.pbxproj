@@ -16,6 +16,7 @@
 		BE1F53611DC834E600EAD9BA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BE1F535F1DC834E600EAD9BA /* LaunchScreen.storyboard */; };
 		BE1F536C1DC834E600EAD9BA /* AngelFitSampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1F536B1DC834E600EAD9BA /* AngelFitSampleTests.swift */; };
 		BE1F53771DC834E600EAD9BA /* AngelFitSampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1F53761DC834E600EAD9BA /* AngelFitSampleUITests.swift */; };
+		BE59F8861F3015380069D678 /* headshot.png in Resources */ = {isa = PBXBuildFile; fileRef = BE59F8851F3015380069D678 /* headshot.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +66,7 @@
 		BE1F53761DC834E600EAD9BA /* AngelFitSampleUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AngelFitSampleUITests.swift; sourceTree = "<group>"; };
 		BE1F53781DC834E600EAD9BA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BE1F53901DC8438800EAD9BA /* AngelFit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AngelFit.framework; path = "../../../../Library/Developer/Xcode/DerivedData/workspace-dfzcjbyqtpnllxbtyxbqkekzctgj/Build/Products/Debug-iphoneos/AngelFit.framework"; sourceTree = "<group>"; };
+		BE59F8851F3015380069D678 /* headshot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = headshot.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,6 +128,7 @@
 		BE1F53551DC834E600EAD9BA /* AngelFitSample */ = {
 			isa = PBXGroup;
 			children = (
+				BE59F8851F3015380069D678 /* headshot.png */,
 				BE1F53561DC834E600EAD9BA /* AppDelegate.swift */,
 				BE1F53581DC834E600EAD9BA /* ViewController.swift */,
 				BE1F535A1DC834E600EAD9BA /* Main.storyboard */,
@@ -265,6 +268,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BE59F8861F3015380069D678 /* headshot.png in Resources */,
 				BE1F53611DC834E600EAD9BA /* LaunchScreen.storyboard in Resources */,
 				BE1F535E1DC834E600EAD9BA /* Assets.xcassets in Resources */,
 				BE1F535C1DC834E600EAD9BA /* Main.storyboard in Resources */,

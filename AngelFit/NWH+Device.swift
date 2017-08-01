@@ -15,7 +15,7 @@ public class NWHDeviceParam: NSObject{
     public var name: String?
     public var showName: String?
     public var type: Int?
-    public var batteryType: Int?
+    public var batteryType: String?
     public var totalUserdMinutes: Int?
 }
 public class NWHDevice: NSObject{
@@ -43,9 +43,9 @@ public class NWHDevice: NSObject{
             "uuid": param.uuid,
             "name": param.name,
             "showName": param.showName,
-            "type": "\(param.type)",
-            "batteryType": "\(param.batteryType)",
-            "totalUserdMinutes": "\(param.totalUserdMinutes)"
+            "type": "\(param.type ?? 0)",
+            "batteryType": param.batteryType,
+            "totalUserdMinutes": "\(param.totalUserdMinutes ?? 0)"
         ]
         Session.session(withAction: Actions.deviceAdd, withMethod: Method.post, withParam: dict, closure: closure)
     }

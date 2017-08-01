@@ -21,7 +21,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
        
         config()
-        createContents()
+        //createContents()
     }
 
     private func config(){
@@ -32,49 +32,62 @@ class ViewController: UIViewController {
     private func createContents(){
         
         let networkHandler = NetworkHandler.share()
+        let macaddress = "sldjflajsdlf"
+        let deviceId = "1" + macaddress + "110"
+        let userId = "283925583@qq.com"
         
-//        let param: [[String: Any]] = [[
-//            "deviceId": "1AESDFE2E8W9W101",
-//            "userId": "",
-//            "date": "2017-07-20 00:00:00",
-//            "silentHeartRate": "58",
-//            "burnFatThreshold": "90",
-//            "aerobicThreshold": "120",
-//            "limitThreshold": "136",
-//            "burnFatMinutes": "0",
-//            "aerobicMinute": "1",
-//            "limitMinutes": "0",
-//            "itemsStartTime": "2017-07-20 09:12:34",
-//            "items": "[{5,12}, {6, 89}, {5, 34}, {7, 34}]"
-//            ], [
-//                "deviceId": "1AESDFE2E8W9W101",
-//                "userId": "",
-//                "date": "2017-07-20 00:00:00",
-//                "silentHeartRate": "58",
-//                "burnFatThreshold": "90",
-//                "aerobicThreshold": "120",
-//                "limitThreshold": "136",
-//                "burnFatMinutes": "0",
-//                "aerobicMinute": "1",
-//                "limitMinutes": "0",
-//                "itemsStartTime": "2017-07-20 09:12:34",
-//                "items": "[{5,12}, {6, 89}, {5, 34}, {7, 34}]"
-//            ]]
-//        
-//        networkHandler.everyday.addEverydayHeartrates(withParam: param, closure: {
+            
+        let heartrateParam = NWHHeartrateAddParam()
+        heartrateParam.deviceId = deviceId
+        heartrateParam.userId = userId
+        heartrateParam.date = Date()
+        heartrateParam.silentHeartRate = 70
+        heartrateParam.burnFatThreshold = 123
+        heartrateParam.aerobicThreshold = 1234
+        heartrateParam.limitThreshold = 32
+        heartrateParam.burnFatMinutes = 234
+        heartrateParam.aerobicMinutes = 123
+        heartrateParam.limitMinutes = 1
+        heartrateParam.itemsStartTime = Date()
+        heartrateParam.items = [(5, 63), (6, 89), (5, 34), (5, 120)]
+        networkHandler.everyday.addEverydayHeartrates(withParam: [heartrateParam], closure: {
+            resultCode, message, data in
+            print("<add everyday>param: \(heartrateParam)\nresultCode: \(resultCode)\nmessage: \(message)\ndata: \(String(describing: data))")
+            print(data)
+            
+            let pullParam = NWHEverydayDataPullParam()
+            pullParam.userId = userId
+            pullParam.deviceId = nil
+            networkHandler.everyday.pullEverydayHeartrates(withParam: pullParam, closure: {
+                resultCode, message, data in
+                print("<pull everyday>param: \(pullParam)\nresultCode: \(resultCode)\nmessage: \(message)\ndata: \(String(describing: data))")
+                print(data)
+            })
+            
+            //获取最后同步时间
+            let lastParam = NWHLastSyncDateParam()
+            lastParam.userId = userId
+            lastParam.deviceId = deviceId
+            networkHandler.everyday.getLastSyncDate(withParam: lastParam, closure: {
+                resultCode, message, data in
+                print("<last sync>param: \(pullParam)\nresultCode: \(resultCode)\nmessage: \(message)\ndata: \(String(describing: data))")
+                if let d = data as? [String: Any?]{
+                    if let heartrateDate = d["heartRateDate"] {
+                        if let hr = heartrateDate {
+                            print(hr)
+                        }
+                    }
+                }
+            })
+        })
+        
+        //上传图片
+//        let userUploadParam = NWHUserUploadParam()
+//        userUploadParam.userId = userId
+//        userUploadParam.image = UIImage(named: "headshot")
+//        networkHandler.user.uploadPhoto(withParam: userUploadParam, closure: {
 //            resultCode, message, data in
-//            print("param: \(param)\nresultCode: \(resultCode)\nmessage: \(message)\ndata: \(data)")
-//            
-//            let pullParam: [String: Any] = [
-//                "deviceId": "1AESDFE2E8W9W101",
-//                "userId": "gan123123",
-//                "fromDate": "2017-07-19",
-//                "endDate": "2017-07-20"
-//            ]
-//            networkHandler.everyday.pullEverydayHeartrates(withParam: pullParam, closure: {
-//                resultCode, message, data in
-//                print("param: \(pullParam)\nresultCode: \(resultCode)\nmessage: \(message)\ndata: \(data)")
-//            })
+//            print("<upload> resultCode: \(resultCode)\nmessage: \(message)\ndata: \(data)")
 //        })
         
 //        var param: [String: Any] =
@@ -115,6 +128,7 @@ class ViewController: UIViewController {
 //        })
 
         //添加用户
+        /*
         let userParam = NWHUserAddParam()
         userParam.userId = "test_ganyi"
         userParam.password = "123456"
@@ -132,6 +146,7 @@ class ViewController: UIViewController {
             resultCode, message, data in
             print(resultCode, message, data)
         })
+         */
         
 //        let godMan = GodManager.share()
     }
@@ -148,21 +163,7 @@ class ViewController: UIViewController {
     //MARK:- text
     @IBAction func bandDevice(_ sender: Any) {
         
-        
-        let angelManager = AngelManager.share()
-        let accessoryId = angelManager?.accessoryId
-        let userId = UserManager.share().userId
-        let steps = Int(arc4random_uniform(5000)) + 5000
-        let target = 8000
-        let date = Date()
-        
-        let networkHandler = NetworkHandler.share()
-        networkHandler.updateSteps(with: Int(userId), steps: steps, date: date, closure: {
-            errorCode, message, data in
-            print(errorCode)
-            print(message)
-            print(data)
-        })
+        createContents()
     }
 }
 

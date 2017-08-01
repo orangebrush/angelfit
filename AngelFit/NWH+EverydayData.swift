@@ -125,7 +125,7 @@ public class NWHEverydayData: NSObject {
      * ]
      */
     public func addEverydayHeartrates(withParam params: [NWHHeartrateAddParam], closure: @escaping (_ resultCode: Int, _ message: String, _ data: Any?) -> ()) {
-        var dict = [[String: Any]]()
+        var dict = [[String: Any?]]()
         for param in params{
             var itemsStr = "["
             if let items = param.items{
@@ -138,17 +138,17 @@ public class NWHEverydayData: NSObject {
             }
             itemsStr += "]"
             if let date = param.date, let itemsStartTime = param.itemsStartTime{
-                let subDict: [String: Any] = [
+                let subDict: [String: Any?] = [
                     "deviceId": param.deviceId,
                     "userId": param.userId,
                     "date": date.formatString(with: "yyyy-MM-dd HH:mm:ss"),
-                    "silentHeartRate": "\(param.silentHeartRate)",
-                    "burnFatThreshold": "\(param.burnFatThreshold)",
-                    "aerobicThreshold": "\(param.aerobicThreshold)",
-                    "limitThreshold": "\(param.limitThreshold)",
-                    "burnFatMinutes": "\(param.burnFatMinutes)",
-                    "aerobicMinutes": "\(param.aerobicMinutes)",
-                    "limitMinutes": "\(param.limitMinutes)",
+                    "silentHeartRate": "\(param.silentHeartRate!)",
+                    "burnFatThreshold": "\(param.burnFatThreshold!)",
+                    "aerobicThreshold": "\(param.aerobicThreshold!)",
+                    "limitThreshold": "\(param.limitThreshold!)",
+                    "burnFatMinutes": "\(param.burnFatMinutes!)",
+                    "aerobicMinutes": "\(param.aerobicMinutes!)",
+                    "limitMinutes": "\(param.limitMinutes!)",
                     "itemsStartTime": itemsStartTime.formatString(with: "yyyy-MM-dd HH:mm:ss"),
                     "items": itemsStr
                 ]

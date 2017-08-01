@@ -18,8 +18,8 @@ public let kNWHDeviceTypeBikeComputer: Int  = 6 //动感单车
 public let kNWHDeviceTypeOther: Int         = 7 //其他
 
 //电池类型
-public let kNWHDeviceBatteryTypeLithiumCell: Int    = 0 //锂电池
-public let kNWHDeviceBatteryTypeButtonCell: Int     = 1 //纽扣电池
+public let kNWHDeviceBatteryTypeLithiumCell: String    = "L" //锂电池
+public let kNWHDeviceBatteryTypeButtonCell: String     = "B" //纽扣电池
 
 //地图类型
 public let kNWHEverydayDataMapTypeApple = "A"   //苹果地图
