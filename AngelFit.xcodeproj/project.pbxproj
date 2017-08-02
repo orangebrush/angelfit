@@ -57,7 +57,7 @@
 		22122F891E53F8E700AA61F4 /* vbus_evt_app.h in Headers */ = {isa = PBXBuildFile; fileRef = 22122F591E53F8E600AA61F4 /* vbus_evt_app.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		222B898F1DC7325B0056861C /* AngelFit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 222B89851DC7325B0056861C /* AngelFit.framework */; };
 		222B89941DC7325B0056861C /* AngelFitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222B89931DC7325B0056861C /* AngelFitTests.swift */; };
-		222B89961DC7325B0056861C /* AngelFit.h in Headers */ = {isa = PBXBuildFile; fileRef = 222B89881DC7325B0056861C /* AngelFit.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		222B89961DC7325B0056861C /* AngelFit.h in Headers */ = {isa = PBXBuildFile; fileRef = 222B89881DC7325B0056861C /* AngelFit.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		222B89A11DC732C80056861C /* GodManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222B89A01DC732C80056861C /* GodManager.swift */; };
 		222B89A31DC735B70056861C /* UUIDConfigure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222B89A21DC735B70056861C /* UUIDConfigure.swift */; };
 		222E7D731DC87A55001BA04A /* PeripheralManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222E7D721DC87A55001BA04A /* PeripheralManager.swift */; };
@@ -643,7 +643,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				222B89961DC7325B0056861C /* AngelFit.h in Headers */,
 				2292C3E61DC83C0B00B7472E /* GodManager.swift in Headers */,
 				2238E0E81DDC370300211F82 /* AngelManager.swift in Headers */,
 				22DF625E1DDBFA530080B77A /* PeripheralManager.swift in Headers */,
@@ -652,6 +651,9 @@
 				BE59F8821F29F0640069D678 /* NWH+User.swift in Headers */,
 				BE59F8831F29F0640069D678 /* NWH+Device.swift in Headers */,
 				BE59F8841F29F0640069D678 /* NWH+EverydayData.swift in Headers */,
+				22DF62441DDB06E10080B77A /* CFunc.h in Headers */,
+				22DF62081DD9B6900080B77A /* SF2C.h in Headers */,
+				222B89961DC7325B0056861C /* AngelFit.h in Headers */,
 				22122F5C1E53F8E700AA61F4 /* config.h in Headers */,
 				BE59F8811F29F0640069D678 /* Session.swift in Headers */,
 				22122F751E53F8E700AA61F4 /* protocol_send_notice.h in Headers */,
@@ -681,7 +683,6 @@
 				22122F671E53F8E700AA61F4 /* protocol_data.h in Headers */,
 				22122F5B1E53F8E600AA61F4 /* app_timer.h in Headers */,
 				22122F861E53F8E700AA61F4 /* protocol_write.h in Headers */,
-				22DF62441DDB06E10080B77A /* CFunc.h in Headers */,
 				2238E0EC1DDC3CC200211F82 /* CDataManager.h in Headers */,
 				22DF61DA1DD99EA20080B77A /* GCDAsyncSocket.h in Headers */,
 				22DF61DE1DD99EA20080B77A /* SocketLogC.h in Headers */,
@@ -689,7 +690,6 @@
 				22DF61DC1DD99EA20080B77A /* SocketLog.h in Headers */,
 				22DF62581DDBE9440080B77A /* Protocol_ios.h in Headers */,
 				22DF625B1DDBE9440080B77A /* Protocol_ios_port.h in Headers */,
-				22DF62081DD9B6900080B77A /* SF2C.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
