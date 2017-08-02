@@ -36,7 +36,8 @@ class ViewController: UIViewController {
         let deviceId = "1" + macaddress + "110"
         let userId = "283925583@qq.com"
         
-            
+        
+        /*
         let heartrateParam = NWHHeartrateAddParam()
         heartrateParam.deviceId = deviceId
         heartrateParam.userId = userId
@@ -79,6 +80,18 @@ class ViewController: UIViewController {
                     }
                 }
             })
+        })
+        */
+ 
+        let changePassword = NWHUserChangePasswordParam()
+        changePassword.userId = "283925583@qq.com"
+        changePassword.newPassword = "123123"
+        networkHandler.user.changePassword(withParam: changePassword, closure: {
+            resultCode, message, data in
+            
+            print(resultCode)
+            print(message)
+            print(data)
         })
         
         //上传图片

@@ -173,7 +173,7 @@ public class NWHUser: NSObject {
         dict["userId"] = userId
         dict["code"] = code
         
-        Session.session(withAction: Actions.confirmVerificationCode, withMethod: Method.post, withParam: dict, closure: closure)
+        Session.session(withAction: Actions.confirmVerificationCode, withMethod: Method.get, withParam: dict, closure: closure)
     }
     
     //MARK:-修改密码

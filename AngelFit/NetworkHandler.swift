@@ -20,7 +20,7 @@ public struct Method{
 //actions
 enum Actions{
     static let getVerificationCode  = "/user/getCode"           //获取验证码
-    static let confirmVerificationCode = "/confirm"             //验证验证码合法(仅修改密码使用)
+    static let confirmVerificationCode = "/user/confirm"             //验证验证码合法(仅修改密码使用)
     
     static let userRegister         = "/user/register"          //新增用户
     static let userChangePassword   = "/user/changePassword"    //修改密码

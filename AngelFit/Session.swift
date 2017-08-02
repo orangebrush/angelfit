@@ -13,7 +13,7 @@ class Session {
         //回调函数
         let completionHandler = {(binaryData: Data?, response: URLResponse?, error: Error?) in
             guard error == nil else{
-                closure(ResultCode.failure, "error", nil)
+                closure(ResultCode.failure, "连接服务器错误", nil)
                 debugPrint("<Session> 请求错误: \(String(describing: error))")
                 return
             }
@@ -70,7 +70,7 @@ class Session {
                 request.httpMethod = method
                 
                 //与用户相关请求采用form格式
-                if action == Actions.userLogon || action == Actions.userRegister || action == Actions.userModify {
+                if action == Actions.userLogon || action == Actions.userRegister || action == Actions.userModify || action == Actions.userChangePassword {
                     request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
                     var form = ""
                     let dict = param as! [String: Any]
