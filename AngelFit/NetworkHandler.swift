@@ -7,7 +7,6 @@
 //
 
 import Foundation
-
 //服务器地址
 let host = true ? "http://119.23.239.138:80" : "http://192.168.2.239:80"
 
@@ -19,8 +18,9 @@ public struct Method{
 
 //actions
 enum Actions{
+    static let checkExist           = "/user/exists"            //查询是否已注册
     static let getVerificationCode  = "/user/getCode"           //获取验证码
-    static let confirmVerificationCode = "/user/confirm"             //验证验证码合法(仅修改密码使用)
+    static let confirmVerificationCode = "/user/confirm"        //验证验证码合法(仅修改密码使用)
     
     static let userRegister         = "/user/register"          //新增用户
     static let userChangePassword   = "/user/changePassword"    //修改密码
@@ -31,6 +31,11 @@ enum Actions{
     
     static let deviceAdd            = "/device/add"             //新增设备
     static let deviceUpdate         = "/device/update"          //更新设备
+    static let deviceStatus         = "/deviceStatus/add"       //记录设备状态
+    static let deviceAddFunctable   = "/function/add"           //添加功能列表
+    static let deviceUpdateFunctable = "/function/update"       //更新功能列表
+    static let deviceUpdateMessage  = "/deviceMessage/update"   //更新社交列表
+    static let deviceErrorLog       = "/deviceErrorLog/add"     //记录设备错误日志
     
     static let everydayHeartratesAdd = "/heartrate/recordHeartRates"    //post上传每日心率
     static let everydayHeartratesPull = "/heartrate/recoverHeartRates"  //get下拉每日心率
@@ -46,9 +51,27 @@ enum Actions{
 
 //返回码
 public struct ResultCode{
-    public static let failure  = 0
-    public static let success  = 1
-    public static let other    = 2
+    public static let failure                   = 0
+    public static let success                   = 1
+    public static let other                     = 2
+    
+    public static let accountExist              = 10000         //用户已经存在
+    public static let userIdEmpty               = 10001         //用户标识为空
+    public static let accountNotExist           = 10002         //帐户不存在
+    public static let logonFailure              = 10003         //用户登录失败
+    public static let userIdAndDeviceIdEmpty    = 10004         //必须同时需要用户ID和设备ID
+    public static let emailAndVerifiEmpty       = 10005         //必须邮箱和验证码
+    public static let verifiInvalid             = 10006         //校验码不存在或已过期
+    public static let verifiError               = 10007         //校验码错误
+    public static let userIdNaN                 = 10008         //用户ID对象不为空，但值为空。
+    public static let passwordLengthError       = 10009         //密码长度必须大于等于5
+    public static let userIdAndPasswordEmpty    = 10010         //密码和用户帐号不能为空。
+    public static let deviceIdEmpty             = 20000         //必须要有设备标识
+    public static let deviceExist               = 20001         //设备已经存在
+    public static let errorMessageEmpty         = 20002         //设备的错误信息不能为空
+    public static let functableNotFound         = 20003         //没有找到设备的硬件能力记录
+    public static let fileEmpty                 = 20004         //上传的文件为空
+    public static let fileNotImage              = 20005         //必须是图片文件
 }
 
 public final class NetworkHandler: NSObject {
@@ -75,7 +98,7 @@ public final class NetworkHandler: NSObject {
     }
     
     //临时记录步数
-    public func updateSteps(withUserId userId: Int64, steps: Int, date: Date, closure: @escaping (_ resultCode: Int, _ message:String, _ data: Any?) -> ()){
+    public func updateSteps(withUserId userId: String, steps: Int, date: Date, closure: @escaping (_ resultCode: Int, _ message:String, _ data: Any?) -> ()){
         do{
             let dateStr = date.formatString(with: "yyyy-MM-dd")
             let body: [String : Any] = [

@@ -7,13 +7,14 @@
 //
 
 #import "ViewController.h"
-#import <AngelFit/AngelFit.h>
+//#import <AngelFit/AngelFit.h>
 #import <CoreBluetooth/CoreBluetooth.h>
+#import <AngelFitNetwork/AngelFitNetwork.h>
 
 @interface ViewController (){
 
 }
-@property (nonatomic, strong) AngelManager *angelManager;
+
 @property (nonatomic, strong) NetworkHandler *networkHandler;
 //@property (nonatomic, strong) CoredataHandler *coredateHandler;
 @end
@@ -36,31 +37,80 @@
 }
 
 - (void)config {
-    _angelManager = [AngelManager share];
-    NSLog(@"angelManager: %@", _angelManager);
     
     _networkHandler = [NetworkHandler share];
-    NSLog(@"networkhandler: %@", _networkHandler);
-
-    //添加用户请求
-    NWHUserAddParam *addParam = [[NWHUserAddParam alloc] init];
-    addParam.userId = @"test";
-    addParam.password = @"123456";
     
-    weakSelf;
-    [_networkHandler.user addWithParam:addParam closure:^(NSInteger resultCode, NSString *message, id data){
-        NSLog(@"resultCode: %ld, message: %@, data: %@", (long)resultCode, message, data);
+    NSString *userId = @"283925583@qq.com";
+    NSString *password = @"1234567";
+    NSString *macaddress = @"DES8DSKJ9IDF";
+    NSString *deviceId = [NSString stringWithFormat:@"1%@110", macaddress];
 
-        //登录用户请求
-        NWHUserLogonParam *logonParam = [[NWHUserLogonParam alloc] init];
-        logonParam.userId = @"test";
-        logonParam.password = @"123456";
-
-        [[Self networkHandler].user logonWithParam:logonParam closure:^(NSInteger resultCode, NSString *message, id data){
-            NSLog(@"resultCode: %ld, message: %@, data: %@", (long)resultCode, message, data);
-        }];
+//    NWHUserLogonParam *param = [[NWHUserLogonParam alloc] init];
+//    param.userId = userId;
+//    param.password = password;
+//    [_networkHandler.user logonWithParam:param closure:^(NSInteger resultCode, NSString *message, id data) {
+//        NSLog(@"<登录账号>%ld-%@-%@", resultCode, message, data);
+//        id height = [(NSDictionary *)data valueForKey:@"height"];
+//        NSLog(@"%@", height);
+//    }];
+//    
+//    //添加设备
+//    NWHDeviceParam *deviceParam = [[NWHDeviceParam alloc] init];
+//    deviceParam.deviceId = deviceId;
+//    deviceParam.macAddress = macaddress;
+//    deviceParam.name = @"gan";
+//    deviceParam.uuid = @"123fasafd";
+//    deviceParam.showName = @"id107 hr";
+//    [_networkHandler.device addWithParam:deviceParam closure:^(NSInteger resultCode, NSString *message, id data) {
+//        NSLog(@"<添加设备>%ld-%@-%@", resultCode, message, data);
+//    }];
+//    
+//    //上传照片
+//    NWHUserUploadParam *uploadParam = [[NWHUserUploadParam alloc] init];
+//    uploadParam.image = [UIImage imageNamed:@"headshot.png"];
+//    uploadParam.userId = userId;
+//    [_networkHandler.user uploadPhotoWithParam:uploadParam closure:^(NSInteger resultCode, NSString *message, id data) {
+//        NSLog(@"<上传照片>%ld-%@-%@", resultCode, message, data);
+//    }];
+    
+    [_networkHandler.user checkExistWithUserId:userId closure:^(NSInteger resultCode, NSString *message, id data) {
+        NSLog(@"resultCode: %ld\nmessage: %@\ndata: %@", (long)resultCode, message, data);
     }];
     
+//    param.password = @"321232132";
+//    [_networkHandler.user logonWithParam:param closure:^(NSInteger resultCode, NSString *message, id data) {
+//        NSLog(@"%ld-%@-%@", resultCode, message, data);
+//        id height = [(NSDictionary *)data valueForKey:@"height"];
+//        NSLog(@"%@", height);
+//    }];
+    
+//    //添加用户请求
+//    NWHUserRegisterParam *addParam = [[NWHUserRegisterParam alloc] init];
+//    addParam.userId = @"283925583@qq.com";
+//    addParam.password = @"123456";
+//    addParam.confirm = @"123456";
+//    
+//    weakSelf;
+//    [_networkHandler.user registerWithParam:addParam closure:^(NSInteger resultCode, NSString *message, id data){
+//        NSLog(@"resultCode: %ld, message: %@, data: %@", (long)resultCode, message, data);
+//
+//        //登录用户请求
+//        NWHUserLogonParam *logonParam = [[NWHUserLogonParam alloc] init];
+//        logonParam.userId = @"test@qq.com";
+//        logonParam.password = @"123456";
+//
+//        [[Self networkHandler].user logonWithParam:logonParam closure:^(NSInteger resultCode, NSString *message, id data){
+//            NSLog(@"resultCode: %ld, message: %@, data: %@", (long)resultCode, message, data);
+//        }];
+//    }];
+
+//    //获取验证码
+//    NWHUserVerificationCodeParam *verificationCodeParam = [[NWHUserVerificationCodeParam alloc] init];
+//    verificationCodeParam.email = @"283925583@qq.com";
+//    
+//    [_networkHandler.user getVerificationCodeWithParam:verificationCodeParam closure:^(NSInteger resultCode, NSString *message, id data) {
+//        NSLog(@"%ld--%@--%@",resultCode,message,data);
+//    }];
 }
 
 - (void)createContents {

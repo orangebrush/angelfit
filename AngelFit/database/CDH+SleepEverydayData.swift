@@ -26,7 +26,7 @@ extension CoreDataHandler{
         }
         
         //一并创建userActivity
-        guard let userActivity = insertUserActivity(withActivityType: kCDHUserActivityTypeEverydaySleep) else{
+        guard let userActivity = insertUserActivity(withActivityType: kCDHUserActivityTypeEverydaySleep, withAccessoryId: accessoryId) else{
             return nil
         }
         
@@ -211,7 +211,7 @@ extension CoreDataHandler{
         }
         
         let request: NSFetchRequest<SleepEverydayDataItem> = SleepEverydayDataItem.fetchRequest()
-        let predicate = NSPredicate(format: "sleepEverydayData.date = \(date) AND sleepEverydayData.device.accessoryId = \"\(accessoryId)\"")
+        let predicate = NSPredicate(format: "sleepEverydayData.date = %@ AND sleepEverydayData.device.accessoryId = \"\(accessoryId)\"", translate(date) as CVarArg)
         request.predicate = predicate
         
         do {

@@ -26,7 +26,7 @@ extension CoreDataHandler{
         }
         
         //一并创建userActivity
-        guard let userActivity = insertUserActivity(withActivityType: kCDHUserActivityTypeBloodPressure) else{
+        guard let userActivity = insertUserActivity(withActivityType: kCDHUserActivityTypeBloodPressure, withAccessoryId: accessoryId) else{
             return nil
         }
         
@@ -213,7 +213,7 @@ extension CoreDataHandler{
         }
         
         let request: NSFetchRequest<BloodPressureEverydayDataItem> = BloodPressureEverydayDataItem.fetchRequest()
-        let predicate = NSPredicate(format: "bloodPressureEverydayData.date = \(date) AND bloodPressureEverydayData.device.accessoryId = \"\(accessoryId)\"")
+        let predicate = NSPredicate(format: "bloodPressureEverydayData.date = %@ AND bloodPressureEverydayData.device.accessoryId = \"\(accessoryId)\"", translate(date) as CVarArg)
         request.predicate = predicate
         
         do {

@@ -27,7 +27,7 @@ extension CoreDataHandler{
         }
         
         //一并创建userActivity
-        guard let userActivity = insertUserActivity(withActivityType: kCDHUserActivityTypeTrainingData) else{
+        guard let userActivity = insertUserActivity(withActivityType: kCDHUserActivityTypeTrainingData, withAccessoryId: accessoryId) else{
             return nil
         }
         
@@ -301,7 +301,7 @@ extension CoreDataHandler{
         }
         
         let request: NSFetchRequest<EachTrainningStepItem> = EachTrainningStepItem.fetchRequest()
-        let predicate = NSPredicate(format: "eachTrainningData.date = \(date) AND eachTrainningData.device.accessoryId = \"\(accessoryId)\"")
+        let predicate = NSPredicate(format: "eachTrainningData.date = %@ AND eachTrainningData.device.accessoryId = \"\(accessoryId)\"", translate(date) as CVarArg)
         request.predicate = predicate
         
         do {

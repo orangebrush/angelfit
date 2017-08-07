@@ -10,7 +10,7 @@ import Foundation
 import CoreData
 extension CoreDataHandler{
     //添加体重
-    public func insertWeightData(withDate date: Date, withValue value: Int) -> WeightData?{
+    public func insertWeightData(withDate date: Date, withValue value: Int, withAccessoryId accessoryId: String) -> WeightData?{
         
         //转换体重数据
         let newWeight = Int32(value * 10000)
@@ -29,7 +29,7 @@ extension CoreDataHandler{
          */
         
         //一并创建userActivity
-        guard let userActivity = insertUserActivity(withActivityType: kCDHUserActivityTypeWeight) else{
+        guard let userActivity = insertUserActivity(withActivityType: kCDHUserActivityTypeWeight, withAccessoryId: accessoryId) else{
             return nil
         }
         

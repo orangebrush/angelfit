@@ -11,7 +11,7 @@ import CoreData
 //MARK:- userActivity
 extension CoreDataHandler{
     //初始化 device
-    func insertUserActivity(withActivityType activityType: Int16) -> UserActivity?{
+    func insertUserActivity(withActivityType activityType: Int16, withAccessoryId accessoryId: String) -> UserActivity?{
         
         guard let id = currentUserId() else {
             return nil
@@ -23,18 +23,20 @@ extension CoreDataHandler{
         }
         
         //获取序列id
-        var objectId: Int64 = 0
-        let userActivityList = selectAllUserActivities(byUserId: id)
-        if let lastUserActivity = userActivityList.last {
-            objectId = lastUserActivity.objectId + 1        //增1
-        }
+//        var objectId: Int64 = 0
+//        let userActivityList = selectAllUserActivities(byUserId: id)
+//        if let lastUserActivity = userActivityList.last {
+//            objectId = lastUserActivity.objectId + 1        //增1
+//        }
+        
+        
         
         //创建设备模型
         if let userActivity = NSEntityDescription.insertNewObject(forEntityName: "UserActivity", into: context) as? UserActivity{
             
             //根据type与objectId标示唯一对象
             userActivity.type = activityType
-            userActivity.objectId = objectId
+            userActivity.objectId = accessoryId
             
             //为用户添加活动项信息
             user.addToUserActivityList(userActivity)

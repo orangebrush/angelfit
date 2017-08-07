@@ -8,6 +8,7 @@
 
 import UIKit
 import AngelFit
+//import AngelFitNetwork
 import CoreBluetooth
 class ViewController: UIViewController {
     @IBOutlet weak var myTableView: UITableView!
@@ -32,12 +33,53 @@ class ViewController: UIViewController {
     private func createContents(){
         
         let networkHandler = NetworkHandler.share()
-        let macaddress = "sldjflajsdlf"
-        let deviceId = "1" + macaddress + "110"
+        let macaddress = "ASD4ID8EK2"
+        let deviceId = "1" + macaddress + "123"
         let userId = "283925583@qq.com"
         
         
+        //添加设备
+        let deviceParam = NWHDeviceParam()
+        deviceParam.id = deviceId
+        deviceParam.macAddress = macaddress
+        deviceParam.name = "id107-hr"
+        deviceParam.showName = "ganyi's band"
+        deviceParam.totalUserdMinutes = 1
+        deviceParam.type = kNWHDeviceTypeBand
+        deviceParam.batteryType = kNWHDeviceBatteryTypeLithiumCell
+        networkHandler.device.add(withParam: deviceParam, closure: {
+            resultCode, message, data in
+            print("<添加设备>resultCode: \(resultCode), message: " + message + ", data: \(String(describing: data))")
+            
+            //记录设备状态
+            let deviceStatusParam = NWHDeviceStatusParam()
+            deviceStatusParam.deviceId = deviceId
+            deviceStatusParam.batteryStatus = kNWHDeviceBatteryStatusNormal
+            deviceStatusParam.batteryVoltage = 50
+            deviceStatusParam.batteryLevel = 80
+            deviceStatusParam.totalUsedMinutes = 1
+            networkHandler.device.recordState(withParam: deviceStatusParam, closure: {
+                resultCode, message, data in
+                print("<记录设备状态>resultCode: \(resultCode), message: " + message + ", data: \(String(describing: data))")
+            })
+            
+            //更新功能列表
+            let deviceFunctable = NWHDeviceFunctableParam()
+            deviceFunctable.deviceId = deviceId
+            deviceFunctable.haveScreenDisplay180Rotate = true
+            networkHandler.device.recordFunctable(withParam: deviceFunctable, closure: {
+                resultCode, message, data in
+                print("<添加设备功能列表>resultCode: \(resultCode), message: " + message + ", data: \(String(describing: data))")
+                
+                //获取设备功能列表
+                //let deviceFunctable2 = NWHDeviceFunctableParam()
+                
+            })
+        })
+        
+        let stepAddParam = NWHStepAddParam()
         /*
+        //上传心率
         let heartrateParam = NWHHeartrateAddParam()
         heartrateParam.deviceId = deviceId
         heartrateParam.userId = userId
@@ -83,6 +125,8 @@ class ViewController: UIViewController {
         })
         */
  
+        /*
+        //修改密码
         let changePassword = NWHUserChangePasswordParam()
         changePassword.userId = "283925583@qq.com"
         changePassword.newPassword = "123123"
@@ -93,6 +137,7 @@ class ViewController: UIViewController {
             print(message)
             print(data)
         })
+         */
         
         //上传图片
 //        let userUploadParam = NWHUserUploadParam()
@@ -140,36 +185,16 @@ class ViewController: UIViewController {
 //            })
 //        })
 
-        //添加用户
-        /*
-        let userParam = NWHUserAddParam()
-        userParam.userId = "test_ganyi"
-        userParam.password = "123456"
-        networkHandler.user.add(withParam: userParam, closure: {
-            resultCode, message, data in
-            print(resultCode, message, data)
-        })
-        
-        //用户登录
-        let logonParam = NWHUserLogonParam()
-        logonParam.userId = "test"
-        logonParam.password = "123456"
-        
-        networkHandler.user.logon(withParam: logonParam, closure: {
-            resultCode, message, data in
-            print(resultCode, message, data)
-        })
-         */
-        
-//        let godMan = GodManager.share()
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
+    
+    
     @IBAction func scanDevice(_ sender: Any) {
         peripheralTuple.removeAll()
-         godManager.startScan()
+         //godManager.startScan()
     }
     
     var secClick = false
@@ -213,6 +238,7 @@ extension ViewController: GodManagerDelegate{
         print("已绑定的设备列表: \(UUIDList)")
     }
 }
+
 extension ViewController:UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return peripheralTuple.count

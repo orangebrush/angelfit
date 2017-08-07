@@ -56,8 +56,10 @@ extension CoreDataHandler{
                 //如果用户为第一个添加，则设置为主用户
                 if userFamily.users?.count == 0{
                     userFamily.userId = uid
+                    userFamily.isOnlineUserId = uid
                 }
                 
+                UserManager.share().userId = uid
                 userFamily.addToUsers(u)
                 
                 guard commit() else {

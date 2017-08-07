@@ -11,10 +11,10 @@ import CoreData
 extension CoreDataHandler{
     
     //添加心情
-    public func insertMindBodyState(withDate date: Date, withCDHMindBodyState cdhMindBodystate: CDHMindBodyState) -> MindBodyState?{
+    public func insertMindBodyState(withDate date: Date, withAccessoryId accessoryId: String, withCDHMindBodyState cdhMindBodystate: CDHMindBodyState) -> MindBodyState?{
 
         //一并创建userActivity
-        guard let userActivity = insertUserActivity(withActivityType: kCDHUserActivityTypeMood) else{
+        guard let userActivity = insertUserActivity(withActivityType: kCDHUserActivityTypeMood, withAccessoryId: accessoryId) else{
             return nil
         }
         

@@ -1378,7 +1378,7 @@ public final class AngelManager: NSObject {
             component.month = Int(month)
             component.year = Int(year)
             let optionDate = Calendar.current.date(from: component)       //日期
-            let id = userId
+            let id = self.accessoryId
             let itemCount = sportData.items_count
             let minuteDuration = sportData.head1.per_minute
             let minuteOffset = sportData.head1.minute_offset
@@ -1399,7 +1399,7 @@ public final class AngelManager: NSObject {
                 return
             }
             sport.date = realDate as NSDate
-            //sport.objectId = Int64(id)
+            sport.objectId = id
             sport.sportItemCount = Int32(itemCount)
             sport.perMinute = Int32(minuteDuration)
             sport.offset = Int32(minuteOffset)
@@ -1453,7 +1453,7 @@ public final class AngelManager: NSObject {
             component.year = Int(year)
             
             let optionDate = Calendar.current.date(from: component)       //日期
-            let id = userId
+            let id = self.accessoryId
             let itemCount = sleepData.itmes_count
             let deepSleepCount = sleepData.head2.deep_sleep_count
             let deepSleepMinute = sleepData.head2.deep_sleep_minute
@@ -1486,7 +1486,7 @@ public final class AngelManager: NSObject {
                 return
             }
             sleep.date = realDate as NSDate
-            //sleep.objectId = id
+            sleep.objectId = id
 
             sleep.itemsCount = Int32(itemCount)
             //sleep.packetCount = Int16(packetCount)
@@ -1541,7 +1541,7 @@ public final class AngelManager: NSObject {
             component.month = Int(month)
             component.year = Int(year)
             let optionDate = Calendar.current.date(from: component)       //日期
-            let id = userId
+            let id = self.accessoryId
             let itemCount = heartRateData.items_count
             let aerobicMinutes = heartRateData.head2.aerobic_mins
             let aerobicThreshld = heartRateData.head2.aerobic_threshold
@@ -1561,7 +1561,7 @@ public final class AngelManager: NSObject {
                 return
             }
             heartRate.date = realDate as NSDate
-            //heartRate.objectId = id
+            heartRate.objectId = id
             //heartRate.itemCount = Int16(itemCount)
             heartRate.aerobicMinutes = Int16(aerobicMinutes)
             heartRate.aerobicThreshold = Int16(aerobicThreshld)

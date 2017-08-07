@@ -18,26 +18,28 @@ public class NWHHeartrateAddParam: NSObject {
     public var deviceId: String?
     public var userId: String?
     public var date: Date?
-    public var silentHeartRate: UInt?
-    public var burnFatThreshold: UInt?
-    public var aerobicThreshold: UInt?
-    public var limitThreshold: UInt?
-    public var burnFatMinutes: UInt?
-    public var aerobicMinutes: UInt?
-    public var limitMinutes: UInt?
+    public var silentHeartRate: Int = 0
+    public var burnFatThreshold: Int = 0
+    public var aerobicThreshold: Int = 0
+    public var limitThreshold: Int = 0
+    public var burnFatMinutes: Int = 0
+    public var aerobicMinutes: Int = 0
+    public var limitMinutes: Int = 0
     public var itemsStartTime: Date?
-    public var items: [(offset: UInt, heartrate: UInt)]?
+    //public var items: [(offset: Int, heartrate: Int)]?
+    public var items: [[Int]]?
 }
 //上传步数参数
 public class NWHStepAddParam: NSObject {
     public var deviceId: String?
     public var userId: String?
     public var date: Date?
-    public var steps: UInt?
-    public var calories: UInt?
-    public var distances: UInt?
-    public var totalSeconds: UInt?
-    public var items: [(offset: UInt, calories: UInt, steps: UInt, distanceM: UInt)]?
+    public var steps: Int = 0
+    public var calories: Int = 0
+    public var distances: Int = 0
+    public var totalSeconds: Int = 0
+    //public var items: [(offset: NSInteger, calories: NSInteger, steps: NSInteger, distanceM: NSInteger)]?
+    public var items: [[Int]]?
 }
 //上传睡眠参数
 public class NWHSleepAddParam: NSObject {
@@ -45,11 +47,12 @@ public class NWHSleepAddParam: NSObject {
     public var userId: String?
     public var date: Date?
     public var endedDatetime: Date?
-    public var totalMinutes: UInt?
-    public var lightSleepMinutes: UInt?
-    public var deepSleepMinutes: UInt?
-    public var awakeSleepMinutes: UInt?
-    public var items: [(offset: UInt, sleepType: UInt)]?
+    public var totalMinutes: Int = 0
+    public var lightSleepMinutes: Int = 0
+    public var deepSleepMinutes: Int = 0
+    public var awakeSleepMinutes: Int = 0
+    //public var items: [(offset: Int, sleepType: Int)]?
+    public var items: [[Int]]?
 }
 //上传训练参数
 public class NWHTrainingAddParam: NSObject {
@@ -57,21 +60,22 @@ public class NWHTrainingAddParam: NSObject {
     public var userId: String?
     public var date: Date?
     public var startedAt: Date?
-    public var heartRateItemIntervalSeconds: UInt?
-    public var stepItemIntervalSeconds: UInt?
-    public var type: UInt?
-    public var durationSeconds: UInt?
-    public var calories: UInt?
-    public var distances: UInt?
-    public var averageHeartRate: UInt?
-    public var maxHeartRate: UInt?
-    public var burnFatMinutes: UInt?
-    public var aerobicMinutes: UInt?
-    public var limitMinutes: UInt?
+    public var heartRateItemIntervalSeconds: Int = 0
+    public var stepItemIntervalSeconds: Int = 0
+    public var type: Int = 0
+    public var durationSeconds: Int = 0
+    public var calories: Int = 0
+    public var distances: Int = 0
+    public var averageHeartRate: Int = 0
+    public var maxHeartRate: Int = 0
+    public var burnFatMinutes: Int = 0
+    public var aerobicMinutes: Int = 0
+    public var limitMinutes: Int = 0
     public var mapSource: String?
-    public var steps: [UInt]?
-    public var heartRates: [UInt]?
-    public var gps: [(longtitude: Double, latitude: Double, date: Date)]?
+    public var steps: [Int]?
+    public var heartRates: [Int]?
+    //public var gps: [(longtitude: Double, latitude: Double, date: Date)]?
+    public var gps: [[AnyObject]]?
 }
 //下拉心率参数
 public class NWHEverydayDataPullParam: NSObject {
@@ -94,15 +98,14 @@ public class NWHEverydayData: NSObject {
      */
     public func getLastSyncDate(withParam param: NWHLastSyncDateParam, closure: @escaping (_ resultCode: Int, _ message: String, _ data: Any?) -> ()) {
         var dict = [String: String]()
-        guard let userId = param.userId else {
+        guard let userId = param.userId, let deviceId = param.deviceId else {
+            closure(ResultCode.userIdAndDeviceIdEmpty, "userId is empty", nil)
             return
         }
         
         dict["userId"] = userId
+        dict["deviceId"] = deviceId
         
-        if let deviceId = param.deviceId {
-            dict["deviceId"] = deviceId
-        }
         
         Session.session(withAction: Actions.getLastAcynTime, withMethod: Method.get, withParam: dict, closure: closure)
     }
@@ -133,7 +136,7 @@ public class NWHEverydayData: NSObject {
                     if index != 0{
                         itemsStr += ","
                     }
-                    itemsStr += "{\(tuple.offset),\(tuple.heartrate)}"
+                    itemsStr += "{\(tuple[0]),\(tuple[1])}"
                 }
             }
             itemsStr += "]"
@@ -142,13 +145,13 @@ public class NWHEverydayData: NSObject {
                     "deviceId": param.deviceId,
                     "userId": param.userId,
                     "date": date.formatString(with: "yyyy-MM-dd HH:mm:ss"),
-                    "silentHeartRate": "\(param.silentHeartRate!)",
-                    "burnFatThreshold": "\(param.burnFatThreshold!)",
-                    "aerobicThreshold": "\(param.aerobicThreshold!)",
-                    "limitThreshold": "\(param.limitThreshold!)",
-                    "burnFatMinutes": "\(param.burnFatMinutes!)",
-                    "aerobicMinutes": "\(param.aerobicMinutes!)",
-                    "limitMinutes": "\(param.limitMinutes!)",
+                    "silentHeartRate": "\(param.silentHeartRate)",
+                    "burnFatThreshold": "\(param.burnFatThreshold)",
+                    "aerobicThreshold": "\(param.aerobicThreshold)",
+                    "limitThreshold": "\(param.limitThreshold)",
+                    "burnFatMinutes": "\(param.burnFatMinutes)",
+                    "aerobicMinutes": "\(param.aerobicMinutes)",
+                    "limitMinutes": "\(param.limitMinutes)",
                     "itemsStartTime": itemsStartTime.formatString(with: "yyyy-MM-dd HH:mm:ss"),
                     "items": itemsStr
                 ]
@@ -204,15 +207,15 @@ public class NWHEverydayData: NSObject {
                     if index != 0{
                         itemsStr += ","
                     }
-                    itemsStr += "{\(tuple.offset),\(tuple.calories),\(tuple.steps),\(tuple.distanceM)}"
+                    itemsStr += "{\(tuple[0]),\(tuple[1]),\(tuple[2]),\(tuple[3])}"
                 }
             }
             itemsStr += "]"
             
             if let date = param.date{
                 let subDict: [String: Any] = [
-                    "deviceId": param.deviceId,
-                    "userId": param.userId,
+                    "deviceId": param.deviceId!,
+                    "userId": param.userId!,
                     "date": date.formatString(with: "yyyy-MM-dd HH:mm:ss"),
                     "steps": "\(param.steps)",
                     "calories": "\(param.calories)",
@@ -273,15 +276,15 @@ public class NWHEverydayData: NSObject {
                     if index != 0{
                         itemsStr += ","
                     }
-                    itemsStr += "{\(tuple.offset),\(tuple.sleepType)}"
+                    itemsStr += "{\(tuple[0]),\(tuple[1])}"
                 }
             }
             itemsStr += "]"
             
             if let date = param.date, let endedDatetime = param.endedDatetime{
                 let subDict: [String: Any] = [
-                    "deviceId": param.deviceId,
-                    "userId": param.userId,
+                    "deviceId": param.deviceId!,
+                    "userId": param.userId!,
                     "date": date.formatString(with: "yyyy-MM-dd HH:mm:ss"),
                     "endedDatetime": endedDatetime.formatString(with: "yyyy-MM-dd HH:mm:ss"),
                     "totalMinutes": "\(param.totalMinutes)",
@@ -375,15 +378,15 @@ public class NWHEverydayData: NSObject {
                     if index != 0 {
                         gpsStr += ","
                     }
-                    gpsStr += "{\(tuple.longtitude),\(tuple.latitude)," + tuple.date.formatString(with: "yyyy-MM-dd HH:mm:ss") + "}"
+                    gpsStr += "{\(tuple[0]),\(tuple[1])," + (tuple[2] as! Date).formatString(with: "yyyy-MM-dd HH:mm:ss") + "}"
                 }
             }
             gpsStr += "]"
             
             if let date = param.date, let startedAt = param.startedAt{
                 let subDict: [String: Any] = [
-                    "deviceId": param.deviceId,
-                    "userId": param.userId,
+                    "deviceId": param.deviceId!,
+                    "userId": param.userId!,
                     "date": date.formatString(with: "yyyy-MM-dd HH:mm:ss"),
                     "startedAt": startedAt.formatString(with: "yyyy-MM-dd HH:mm:ss"),
                     "heartRateItemIntervalSeconds": param.heartRateItemIntervalSeconds,

@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+
 #import "SF2C.h"
 #import "CFunc.h"
 
@@ -26,6 +27,7 @@
 #include "vbus_evt_app.h"
 #include "protocol_sync_activity.h"
 #include "protocol_sync_activity_resolve.h"
+
 //! Project version number for AngelFit.
 FOUNDATION_EXPORT double AngelFitVersionNumber;
 

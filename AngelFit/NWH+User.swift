@@ -45,6 +45,10 @@ public class NWHUserUpdateParam: NSObject {
     public var weixin: String?
     public var mobile: String?
     public var showName: String?
+    public var heightCM: Int = 170
+    public var weightG: Int = 65
+    public var genderBoy: Bool = true
+    public var birthday: Date?
 }
 
 //用户上传头像
@@ -107,6 +111,18 @@ public class NWHUser: NSObject {
         return true
     }
     
+    //MARK:-查询邮箱是否已注册
+    public func checkExist(withUserId userId: String,  closure: @escaping (_ resultCode: Int, _ message: String, _ data: Any?) -> ()) {
+        guard isUserIdLegel(withUserId: userId) else {
+            closure(ResultCode.failure, "userid is not legel", nil)
+            return
+        }
+        let dict = [
+            "userId": userId
+        ]
+        Session.session(withAction: Actions.checkExist, withMethod: Method.get, withParam: dict, closure: closure)
+    }
+    
     //MARK:-获取验证码(用户注册与修改密码)
     /*
      * @param email         require 邮箱
@@ -114,7 +130,7 @@ public class NWHUser: NSObject {
     public func getVerificationCode(withParam param: NWHUserVerificationCodeParam, closure: @escaping (_ resultCode: Int, _ message: String, _ data: Any?) -> ()) {
         var dict = [String: Any]()
         guard let email = param.email else {
-            closure(ResultCode.failure, "email is empty", nil)
+            closure(ResultCode.emailAndVerifiEmpty, "email is empty", nil)
             return
         }
         
@@ -137,20 +153,28 @@ public class NWHUser: NSObject {
     public func register(withParam param: NWHUserRegisterParam, closure: @escaping (_ resultCode: Int, _ message: String, _ data: Any?) -> ()){
         var dict = [String: Any]()
         guard let userId = param.userId, let password = param.password, let confirm = param.confirm else {
-            closure(ResultCode.failure, "param is empty", nil)
+            closure(ResultCode.userIdAndPasswordEmpty, "param is empty", nil)
             return
         }
         
         guard isUserIdLegel(withUserId: userId) && isPasswordLegel(withPassword: password) else {
-            closure(ResultCode.failure, "param is not legel", nil)
+            closure(ResultCode.passwordLengthError, "param is not legel", nil)
             return
         }
         
         dict["userId"] = userId
         dict["password"] = password
-        dict["confirm"] = confirm
+        dict["code"] = confirm
         
-        Session.session(withAction: Actions.userRegister, withMethod: Method.post, withParam: dict, closure: closure)
+        Session.session(withAction: Actions.userRegister, withMethod: Method.post, withParam: dict, closure: {
+            resultCode, message, data in
+            if resultCode == ResultCode.success {
+                //存储用户
+                //let coredataHandler = CoreDataHandler.share()
+                //_ = coredataHandler.insertUser(withUserId: userId)
+            }
+            closure(resultCode, message, data)
+        })
     }
     
     //MARK:-核对用户验证码
@@ -212,7 +236,7 @@ public class NWHUser: NSObject {
         }
         
         guard isUserIdLegel(withUserId: userId) && isPasswordLegel(withPassword: password) else {
-            closure(ResultCode.failure, "param is not legel", nil)
+            closure(ResultCode.userIdAndPasswordEmpty, "param is not legel", nil)
             return
         }
         
@@ -220,18 +244,31 @@ public class NWHUser: NSObject {
         dict["password"] = password
         
         Session.session(withAction: Actions.userLogon, withMethod: Method.post, withParam: dict, closure: closure)
+        Session.session(withAction: Actions.userLogon, withMethod: Method.post, withParam: dict, closure: {
+            resultCode, message, data in
+            if resultCode == ResultCode.success {
+                //let coredataHandler = CoreDataHandler.share()
+                //_ = coredataHandler.insertUser(withUserId: userId)
+            }
+            closure(resultCode, message, data)
+        })
     }
     
-    //MARK:-更新
+    //MARK:-更新用户信息
     /*
      * @param userId        require 用户id
-     * @param password      require 旧密码
+     * @param password      require 密码
      * @param email         option  邮箱地址
      * @param weixin        option  微信
      * @param mobile        option  手机号
      * @param showName      option  昵称
+     * @param height        option  升高 cm 
+     * @param weight        option  体重 g
+     * @param gender        option  性别
+     * @param birthday      option  生日
      */
     public func update(withParam param: NWHUserUpdateParam, closure: @escaping (_ resultCode: Int, _ message: String, _ data: Any?) -> ()){
+        var dict = [String: Any]()
         guard let userId = param.userId, let password = param.password else {
             closure(ResultCode.failure, "userId or password is empty", nil)
             return
@@ -242,14 +279,31 @@ public class NWHUser: NSObject {
             return
         }
         
-        let dict = [
-            "userId": userId,
-            "password": password,
-            "email": param.email,
-            "weixin": param.weixin,
-            "mobile": param.mobile,
-            "showName": param.showName
-        ]
+        dict["userId"] = userId
+        dict["password"] = password
+        
+        if let email = param.email {
+            dict["email"] = email
+        }
+        if let weixin = param.weixin {
+            dict["weixin"] = weixin
+        }
+        if let mobile = param.mobile {
+            dict["mobile"] = mobile
+        }
+        if let showName = param.showName {
+            dict["showName"] = showName
+        }
+
+        dict["height"] = "\(param.heightCM)"
+    
+        dict["weight"] = "\(param.weightG)"
+        
+        dict["gender"] = param.genderBoy ? "M" : "F"
+
+        if let birthday = param.birthday {
+            dict["birthday"] = birthday.formatString(with: "yyyy-MM-dd")
+        }
         
         Session.session(withAction: Actions.userModify, withMethod: Method.post, withParam: dict, closure: closure)
     }
@@ -261,7 +315,7 @@ public class NWHUser: NSObject {
      */
     public func uploadPhoto(withParam param: NWHUserUploadParam, closure: @escaping (_ resultCode: Int, _ message: String, _ data: Any?) -> ()){
         guard let userId = param.userId, let image = param.image else {
-            closure(ResultCode.failure, "userId or image is empty", nil)
+            closure(ResultCode.userIdEmpty, "userId or image is empty", nil)
             return
         }
         Session.upload(image, userid: userId, closure: closure)

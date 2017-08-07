@@ -18,6 +18,9 @@
 		3203F6121F29ED0800450C2C /* AngelFitOCSampleUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3203F6111F29ED0800450C2C /* AngelFitOCSampleUITests.m */; };
 		3203F6201F29ED7000450C2C /* AngelFit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3203F61F1F29ED7000450C2C /* AngelFit.framework */; };
 		3203F6211F29ED7000450C2C /* AngelFit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3203F61F1F29ED7000450C2C /* AngelFit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		BEC35D0C1F31B8BE00AC0FF1 /* AngelFitNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BEC35D0B1F31B8BE00AC0FF1 /* AngelFitNetwork.framework */; };
+		BEC35D0D1F31B8BE00AC0FF1 /* AngelFitNetwork.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BEC35D0B1F31B8BE00AC0FF1 /* AngelFitNetwork.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		BEC35D1D1F33338500AC0FF1 /* headshot.png in Resources */ = {isa = PBXBuildFile; fileRef = BEC35D1C1F33338500AC0FF1 /* headshot.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,6 +48,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				3203F6211F29ED7000450C2C /* AngelFit.framework in Embed Frameworks */,
+				BEC35D0D1F31B8BE00AC0FF1 /* AngelFitNetwork.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -70,6 +74,8 @@
 		3203F6111F29ED0800450C2C /* AngelFitOCSampleUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AngelFitOCSampleUITests.m; sourceTree = "<group>"; };
 		3203F6131F29ED0800450C2C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3203F61F1F29ED7000450C2C /* AngelFit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = AngelFit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BEC35D0B1F31B8BE00AC0FF1 /* AngelFitNetwork.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = AngelFitNetwork.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BEC35D1C1F33338500AC0FF1 /* headshot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = headshot.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,6 +84,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3203F6201F29ED7000450C2C /* AngelFit.framework in Frameworks */,
+				BEC35D0C1F31B8BE00AC0FF1 /* AngelFitNetwork.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -101,6 +108,7 @@
 		3203F5DD1F29ED0800450C2C = {
 			isa = PBXGroup;
 			children = (
+				BEC35D0B1F31B8BE00AC0FF1 /* AngelFitNetwork.framework */,
 				3203F61F1F29ED7000450C2C /* AngelFit.framework */,
 				3203F5E81F29ED0800450C2C /* AngelFitOCSample */,
 				3203F6051F29ED0800450C2C /* AngelFitOCSampleTests */,
@@ -122,6 +130,7 @@
 		3203F5E81F29ED0800450C2C /* AngelFitOCSample */ = {
 			isa = PBXGroup;
 			children = (
+				BEC35D1C1F33338500AC0FF1 /* headshot.png */,
 				3203F5EC1F29ED0800450C2C /* AppDelegate.h */,
 				3203F5ED1F29ED0800450C2C /* AppDelegate.m */,
 				3203F5EF1F29ED0800450C2C /* ViewController.h */,
@@ -275,6 +284,7 @@
 				3203F5FC1F29ED0800450C2C /* LaunchScreen.storyboard in Resources */,
 				3203F5F91F29ED0800450C2C /* Assets.xcassets in Resources */,
 				3203F5F41F29ED0800450C2C /* Main.storyboard in Resources */,
+				BEC35D1D1F33338500AC0FF1 /* headshot.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -461,7 +471,7 @@
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = T65EE75V48;
 				INFOPLIST_FILE = AngelFitOCSample/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.orangebrush.AngelFitOCSample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -476,7 +486,7 @@
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = T65EE75V48;
 				INFOPLIST_FILE = AngelFitOCSample/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.orangebrush.AngelFitOCSample;
 				PRODUCT_NAME = "$(TARGET_NAME)";

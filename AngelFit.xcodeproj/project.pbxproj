@@ -651,9 +651,6 @@
 				BE59F8821F29F0640069D678 /* NWH+User.swift in Headers */,
 				BE59F8831F29F0640069D678 /* NWH+Device.swift in Headers */,
 				BE59F8841F29F0640069D678 /* NWH+EverydayData.swift in Headers */,
-				22DF62441DDB06E10080B77A /* CFunc.h in Headers */,
-				22DF62081DD9B6900080B77A /* SF2C.h in Headers */,
-				222B89961DC7325B0056861C /* AngelFit.h in Headers */,
 				22122F5C1E53F8E700AA61F4 /* config.h in Headers */,
 				BE59F8811F29F0640069D678 /* Session.swift in Headers */,
 				22122F751E53F8E700AA61F4 /* protocol_send_notice.h in Headers */,
@@ -690,6 +687,9 @@
 				22DF61DC1DD99EA20080B77A /* SocketLog.h in Headers */,
 				22DF62581DDBE9440080B77A /* Protocol_ios.h in Headers */,
 				22DF625B1DDBE9440080B77A /* Protocol_ios_port.h in Headers */,
+				22DF62441DDB06E10080B77A /* CFunc.h in Headers */,
+				22DF62081DD9B6900080B77A /* SF2C.h in Headers */,
+				222B89961DC7325B0056861C /* AngelFit.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -744,7 +744,7 @@
 				TargetAttributes = {
 					222B89841DC7325B0056861C = {
 						CreatedOnToolsVersion = 8.1;
-						DevelopmentTeam = NWGF84NL9Q;
+						DevelopmentTeam = T65EE75V48;
 						LastSwiftMigration = 0810;
 						ProvisioningStyle = Automatic;
 					};
@@ -998,7 +998,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = NWGF84NL9Q;
+				DEVELOPMENT_TEAM = T65EE75V48;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -1025,7 +1025,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = NWGF84NL9Q;
+				DEVELOPMENT_TEAM = T65EE75V48;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";

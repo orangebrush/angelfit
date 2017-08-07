@@ -17,6 +17,8 @@
 		BE1F536C1DC834E600EAD9BA /* AngelFitSampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1F536B1DC834E600EAD9BA /* AngelFitSampleTests.swift */; };
 		BE1F53771DC834E600EAD9BA /* AngelFitSampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1F53761DC834E600EAD9BA /* AngelFitSampleUITests.swift */; };
 		BE59F8861F3015380069D678 /* headshot.png in Resources */ = {isa = PBXBuildFile; fileRef = BE59F8851F3015380069D678 /* headshot.png */; };
+		BEC35D091F3187B700AC0FF1 /* AngelFitNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BEC35D081F3187B700AC0FF1 /* AngelFitNetwork.framework */; };
+		BEC35D0A1F3187B700AC0FF1 /* AngelFitNetwork.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BEC35D081F3187B700AC0FF1 /* AngelFitNetwork.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +46,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				22DF61701DD991F90080B77A /* AngelFit.framework in Embed Frameworks */,
+				BEC35D0A1F3187B700AC0FF1 /* AngelFitNetwork.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -67,6 +70,7 @@
 		BE1F53781DC834E600EAD9BA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BE1F53901DC8438800EAD9BA /* AngelFit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AngelFit.framework; path = "../../../../Library/Developer/Xcode/DerivedData/workspace-dfzcjbyqtpnllxbtyxbqkekzctgj/Build/Products/Debug-iphoneos/AngelFit.framework"; sourceTree = "<group>"; };
 		BE59F8851F3015380069D678 /* headshot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = headshot.png; sourceTree = "<group>"; };
+		BEC35D081F3187B700AC0FF1 /* AngelFitNetwork.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = AngelFitNetwork.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,6 +79,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				22DF616F1DD991F90080B77A /* AngelFit.framework in Frameworks */,
+				BEC35D091F3187B700AC0FF1 /* AngelFitNetwork.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -106,6 +111,7 @@
 		BE1F534A1DC834E600EAD9BA = {
 			isa = PBXGroup;
 			children = (
+				BEC35D081F3187B700AC0FF1 /* AngelFitNetwork.framework */,
 				22DF616E1DD991F90080B77A /* AngelFit.framework */,
 				BE1F53551DC834E600EAD9BA /* AngelFitSample */,
 				BE1F536A1DC834E600EAD9BA /* AngelFitSampleTests */,
