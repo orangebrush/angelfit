@@ -114,7 +114,7 @@ public class NWHUser: NSObject {
     //MARK:-查询邮箱是否已注册
     public func checkExist(withUserId userId: String,  closure: @escaping (_ resultCode: Int, _ message: String, _ data: Any?) -> ()) {
         guard isUserIdLegel(withUserId: userId) else {
-            closure(ResultCode.failure, "userid is not legel", nil)
+            closure(ResultCode.userIdNaN, "userid is not legel", nil)
             return
         }
         let dict = [
@@ -133,6 +133,7 @@ public class NWHUser: NSObject {
             closure(ResultCode.emailAndVerifiEmpty, "email is empty", nil)
             return
         }
+        
         
         guard isUserIdLegel(withUserId: email) else {
             closure(ResultCode.failure, "param is not legel", nil)
