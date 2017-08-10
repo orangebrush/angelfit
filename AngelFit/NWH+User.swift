@@ -7,6 +7,7 @@
 //
 
 import Foundation
+
 //用户验证码参数
 public class NWHUserVerificationCodeParam: NSObject {
     public var email: String? = nil
