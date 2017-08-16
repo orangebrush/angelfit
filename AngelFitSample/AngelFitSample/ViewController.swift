@@ -8,7 +8,6 @@
 
 import UIKit
 import AngelFit
-//import AngelFitNetwork
 import CoreBluetooth
 class ViewController: UIViewController {
     @IBOutlet weak var myTableView: UITableView!
@@ -27,7 +26,7 @@ class ViewController: UIViewController {
 
     private func config(){
         
-        godManager.delegate = self
+        //godManager.delegate = self
     }
     
     private func createContents(){
@@ -36,48 +35,66 @@ class ViewController: UIViewController {
         let macaddress = "ASD4ID8EK2"
         let deviceId = "1" + macaddress + "123"
         let userId = "283925583@qq.com"
+        let password = "123456"
         
         
-        //添加设备
-        let deviceParam = NWHDeviceParam()
-        deviceParam.id = deviceId
-        deviceParam.macAddress = macaddress
-        deviceParam.name = "id107-hr"
-        deviceParam.showName = "ganyi's band"
-        deviceParam.totalUserdMinutes = 1
-        deviceParam.type = kNWHDeviceTypeBand
-        deviceParam.batteryType = kNWHDeviceBatteryTypeLithiumCell
-        networkHandler.device.add(withParam: deviceParam, closure: {
+        let updateParam = NWHUserUpdateParam()
+        updateParam.userId = userId
+        updateParam.password = password
+        updateParam.showName = "888_16"
+        networkHandler.user.update(withParam: updateParam, closure: {
             resultCode, message, data in
-            print("<添加设备>resultCode: \(resultCode), message: " + message + ", data: \(String(describing: data))")
+            print("<update>\(resultCode)--\(message)--\(data)")
             
-            //记录设备状态
-            let deviceStatusParam = NWHDeviceStatusParam()
-            deviceStatusParam.deviceId = deviceId
-            deviceStatusParam.batteryStatus = kNWHDeviceBatteryStatusNormal
-            deviceStatusParam.batteryVoltage = 50
-            deviceStatusParam.batteryLevel = 80
-            deviceStatusParam.totalUsedMinutes = 1
-            networkHandler.device.recordState(withParam: deviceStatusParam, closure: {
+            let logonParam = NWHUserLogonParam()
+            logonParam.userId = userId
+            logonParam.password = password
+            networkHandler.user.logon(withParam: logonParam, closure: {
                 resultCode, message, data in
-                print("<记录设备状态>resultCode: \(resultCode), message: " + message + ", data: \(String(describing: data))")
-            })
-            
-            //更新功能列表
-            let deviceFunctable = NWHDeviceFunctableParam()
-            deviceFunctable.deviceId = deviceId
-            deviceFunctable.haveScreenDisplay180Rotate = true
-            networkHandler.device.recordFunctable(withParam: deviceFunctable, closure: {
-                resultCode, message, data in
-                print("<添加设备功能列表>resultCode: \(resultCode), message: " + message + ", data: \(String(describing: data))")
-                
-                //获取设备功能列表
-                //let deviceFunctable2 = NWHDeviceFunctableParam()
-                
+                print("<logon>\(resultCode)--\(message)--\(data)")
             })
         })
         
-        let stepAddParam = NWHStepAddParam()
+//        //添加设备
+//        let deviceParam = NWHDeviceParam()
+//        deviceParam.id = deviceId
+//        deviceParam.macAddress = macaddress
+//        deviceParam.name = "id107-hr"
+//        deviceParam.showName = "ganyi's band"
+//        deviceParam.totalUserdMinutes = 1
+//        deviceParam.type = kNWHDeviceTypeBand
+//        deviceParam.batteryType = kNWHDeviceBatteryTypeLithiumCell
+//        networkHandler.device.add(withParam: deviceParam, closure: {
+//            resultCode, message, data in
+//            print("<添加设备>resultCode: \(resultCode), message: " + message + ", data: \(String(describing: data))")
+//            
+//            //记录设备状态
+//            let deviceStatusParam = NWHDeviceStatusParam()
+//            deviceStatusParam.deviceId = deviceId
+//            deviceStatusParam.batteryStatus = kNWHDeviceBatteryStatusNormal
+//            deviceStatusParam.batteryVoltage = 50
+//            deviceStatusParam.batteryLevel = 80
+//            deviceStatusParam.totalUsedMinutes = 1
+//            networkHandler.device.recordState(withParam: deviceStatusParam, closure: {
+//                resultCode, message, data in
+//                print("<记录设备状态>resultCode: \(resultCode), message: " + message + ", data: \(String(describing: data))")
+//            })
+//            
+//            //更新功能列表
+//            let deviceFunctable = NWHDeviceFunctableParam()
+//            deviceFunctable.deviceId = deviceId
+//            deviceFunctable.haveScreenDisplay180Rotate = true
+//            networkHandler.device.recordFunctable(withParam: deviceFunctable, closure: {
+//                resultCode, message, data in
+//                print("<添加设备功能列表>resultCode: \(resultCode), message: " + message + ", data: \(String(describing: data))")
+//                
+//                //获取设备功能列表
+//                //let deviceFunctable2 = NWHDeviceFunctableParam()
+//                
+//            })
+//        })
+//        
+//        let stepAddParam = NWHStepAddParam()
         /*
         //上传心率
         let heartrateParam = NWHHeartrateAddParam()

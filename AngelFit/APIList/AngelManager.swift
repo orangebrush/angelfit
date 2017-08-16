@@ -623,14 +623,14 @@ public final class AngelManager: NSObject {
     
     //MARK:- 设置公英制
     /*
-    public func setUnit(_ unitsType: Set<UnitType>, macAddress: String? = nil, closure:(_ success:Bool) ->()){
+    public func setUnit(_ unitsType: Set<UnitType>, accessoryId: String? = nil, closure:(_ success:Bool) ->()){
         
         //为空直接返回失败
-        var realMacAddress: String!
-        if let md = macAddress{
-            realMacAddress = md
-        }else if let md = self.accessoryId{
-            realMacAddress = md
+        var realAccessoryId: String!
+        if let ai = accessoryId{
+            realAccessoryId = ai
+        }else if let ai = self.accessoryId{
+            realAccessoryId = ai
         }else{
             closure(false)
             return
@@ -664,8 +664,9 @@ public final class AngelManager: NSObject {
         
         //创建单位模型
         let userId = UserManager.share().userId
-        let device = coredataHandler.selectDevice(withAccessoryId: realMacAddress, byUserId: userId)
-        let unit = coredataHandler.selectUnit(userId: UserManager.share().userId, withMacAddress: realMacAddress)
+        let device = coredataHandler.selectDevice(withAccessoryId: realAccessoryId, byUserId: userId)
+        let user = coredataHandler.selectUser(withUserId: userId)
+        let unit = user?.unitSetting
         //赋值
         unitsType.forEach(){
             body in
@@ -673,28 +674,28 @@ public final class AngelManager: NSObject {
             switch body{
             case .distance_KM:
                 setUnit.dist_uint = 0x01
-                unit?.distance = 0x01
+                unit?.metricBritishUnit = 0x01
             case .distance_MI:
                 setUnit.dist_uint = 0x02
                 unit?.distance = 0x02
             case  .langure_EN:
                 setUnit.language = 0x02
-                unit?.language = 0x02
+                unit?.lang = 0x02
             case .langure_ZH:
                 setUnit.language = 0x01
-                unit?.language = 0x01
+                unit?.lang = 0x01
             case .temp_C:
                 setUnit.temp = 0x01
-                unit?.temperature = 0x01
+                unit?.tempUint = 0x01
             case .temp_F:
                 setUnit.temp = 0x02
-                unit?.temperature = 0x02
+                unit?.tempUint = 0x02
             case .timeFormat_12:
                 setUnit.is_12hour_format = 0x02
-                unit?.timeFormat = 0x02
+                unit?.isTimeFormat24H = 0x02
             case .timeFormat_24:
                 setUnit.is_12hour_format = 0x01
-                unit?.timeFormat = 0x01
+                unit?.isTimeFormat24H = 0x01
             case .weight_LB:
                 setUnit.weight_uint = 0x02
                 unit?.weight = 0x02
@@ -707,12 +708,12 @@ public final class AngelManager: NSObject {
         /*
          stride 为步长，根据身高和男女运算，详情见协议 70是默认的
          */
-        guard let user = coredataHandler.selectUser(userId: UserManager.share().userId) else{
+        guard user != nil else{
             closure(false)
             return
         }
-        let height = user.height
-        let gender = user.gender
+        let height = user?.height
+        let gender = user?.gender
         if gender == 1{
             setUnit.stride = UInt8(Double(height) * 0.415)
         }else{
@@ -738,21 +739,20 @@ public final class AngelManager: NSObject {
         
         closure(true)
     }
+    */
     
     //MARK:- 获取公英制
-    public func getUnit(_ macAddress: String? = nil, closure: (Unit?)->()){
-        var realMacAddress: String!
-        if let md = macAddress{
-            realMacAddress = md
-        }else if let md = self.accessoryId{
-            realMacAddress = md
+    public func getUnit(_ userId: String? = nil, closure: (UnitSetting?)->()){
+        var realUserId: String!
+        if let uid = userId{
+            realUserId = uid
         }else{
-            closure(nil)
-            return
+            realUserId = UserManager.share().userId
         }
-        closure(coredataHandler.selectUnit(userId: UserManager.share().userId, withMacAddress: realMacAddress))
+        
+        let user = coredataHandler.selectUser(withUserId: realUserId)
+        closure(user?.unitSetting)
     }
-     */
     
     //设置目标
     public func setGoal(_ goal:GoalDataModel , closure: @escaping (_ success:Bool) ->()){
