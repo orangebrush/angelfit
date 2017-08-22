@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   type = "0"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "AngelFit/APIList/SatanManager.swift"
+            timestampString = "515062458.324795"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "661"
+            endingLineNumber = "661"
+            landmarkName = "setSynchronizationActiveData(_:closure:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "AngelFit/APIList/SatanManager.swift"
+            timestampString = "515062671.195041"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "272"
+            endingLineNumber = "272"
+            landmarkName = "appSwitchStart(withParam:closure:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "AngelFit/Session.swift"
+            timestampString = "523447457.604242"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "28"
+            endingLineNumber = "28"
+            landmarkName = "session(withAction:withMethod:withParam:closure:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "static AngelFit.Session.(session (withAction : Swift.String, withMethod : Swift.String, withParam : Any, closure : (Swift.Int, Swift.String, Swift.Optional&lt;Any&gt;) -&gt; ()) -&gt; ()).(closure #1)"
+                  moduleName = "AngelFit"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ganyi/Documents/git/angelfit/AngelFit/Session.swift"
+                  timestampString = "523447458.134824"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "29"
+                  endingLineNumber = "29"
+                  offsetFromSymbolStart = "1140">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "static AngelFit.Session.(session (withAction : Swift.String, withMethod : Swift.String, withParam : Any, closure : (Swift.Int, Swift.String, Swift.Optional&lt;Any&gt;) -&gt; ()) -&gt; ()).(closure #1)"
+                  moduleName = "AngelFit"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ganyi/Documents/git/angelfit/AngelFit/Session.swift"
+                  timestampString = "523447458.136249"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "29"
+                  endingLineNumber = "29"
+                  offsetFromSymbolStart = "1420">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "static AngelFitNetwork.Session.(session (withAction : Swift.String, withMethod : Swift.String, withParam : Any, closure : (Swift.Int, Swift.String, Swift.Optional&lt;Any&gt;) -&gt; ()) -&gt; ()).(closure #1)"
+                  moduleName = "AngelFitNetwork"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ganyi/Documents/git/angelfit/AngelFit/Session.swift"
+                  timestampString = "523447458.137585"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "29"
+                  endingLineNumber = "29"
+                  offsetFromSymbolStart = "1140">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "static AngelFitNetwork.Session.(session (withAction : Swift.String, withMethod : Swift.String, withParam : Any, closure : (Swift.Int, Swift.String, Swift.Optional&lt;Any&gt;) -&gt; ()) -&gt; ()).(closure #1)"
+                  moduleName = "AngelFitNetwork"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ganyi/Documents/git/angelfit/AngelFit/Session.swift"
+                  timestampString = "523447458.139254"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "29"
+                  endingLineNumber = "29"
+                  offsetFromSymbolStart = "1420">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>

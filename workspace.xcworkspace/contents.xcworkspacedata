@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <FileRef
+      location = "group:AngelFitNetwork/AngelFitNetwork.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "container:AngelFit.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:AngelFitSample/AngelFitSample.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:AngelFitOCSample/AngelFitOCSample.xcodeproj">
+   </FileRef>
+</Workspace>
