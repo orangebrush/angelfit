@@ -224,17 +224,18 @@ public final class AngelManager: NSObject {
                     device?.isRebooted = deviceInfo.reboot_flag == 0x01 ? true : false
                     device?.runMode = Int16(deviceInfo.mode)
                     device?.accessoryId = accessoryId
+                    
                     //象征性初始化
                     swiftSynchronizationConfig = { data in
                         
                     }
+                    
                     if deviceInfo.reboot_flag == 0x01 {
                         //如果有重启标志==1,同步设备信息
                         self.setSynchronizationConfig(){
                             complete in
                         }
                     }
-                    
                     
                     guard self.coredataHandler.commit() else{
                         closure(ErrorCode.failure, "commit fail")
@@ -246,7 +247,6 @@ public final class AngelManager: NSObject {
             
             var ret_code:UInt32 = 0
             vbus_tx_evt(VBUS_EVT_BASE_APP_GET, VBUS_EVT_APP_GET_DEVICE_INFO, &ret_code)
-            
         case .funcTable:
             
             //为空直接返回失败
@@ -1663,22 +1663,23 @@ public final class AngelManager: NSObject {
         protocol_sync_config_start()
     }
     
-    /*
+    
     //设置闹钟
-    public func updateAlarm(_ macAddress: String? = nil, alarmId: Int16, customAlarm: CustomAlarm, closure: (_ success: Bool)->()){
+    public func updateAlarm(_ accessoryId: String? = nil, alarmId: Int16, customAlarm: CustomAlarm, closure: (_ success: Bool)->()){
       
-        //判断mac地址是否存在
-        var realMacAddress: String!
-        if let md = macAddress{
-            realMacAddress = md
-        }else if let md = self.accessoryId{
-            realMacAddress = md
+        //判断设备id是否存在
+        var realAccessoryId: String!
+        if let ai = accessoryId{
+            realAccessoryId = ai
+        }else if let ai = self.accessoryId{
+            realAccessoryId = ai
         }else{
             closure(false)
             return
         }
         
-        let alarmList = coredataHandler.selectAlarm(userId: UserManager.share().userId, alarmId: alarmId, withMacAddress: realMacAddress)
+        let userId = UserManager.share().userId
+        let alarmList = coredataHandler.selectAllDeviceAlarms(byUserId: userId, withAccessoryId: realAccessoryId)
         debug("update alarmList:", alarmList)
         guard !alarmList.isEmpty else {
             closure(false)
@@ -1688,14 +1689,12 @@ public final class AngelManager: NSObject {
         let alarm = alarmList[0]
         alarm.hour = Int16(customAlarm.hour)
         alarm.minute = Int16(customAlarm.minute)
-        alarm.duration = customAlarm.duration
-        alarm.repeatList = Int16(customAlarm.repeatList.reduce(0x00){$0 | 0x01 << $1})
-        alarm.synchronize = false
+        alarm.snoozeDurationMinute = customAlarm.duration
+        alarm.repetition = !customAlarm.repeatList.isEmpty //Int16(customAlarm.repeatList.reduce(0x00){$0 | 0x01 << $1})
+        alarm.isSynced = false
         alarm.type = customAlarm.type
-        alarm.id = alarmId
-        debug("?????????????????????")
-        debug(alarm.repeatList)
-        debug(customAlarm.repeatList)
+        alarm.alarmId = alarmId
+
         guard coredataHandler.commit() else {
             closure(false)
             return
@@ -1704,112 +1703,115 @@ public final class AngelManager: NSObject {
     }
     
     //MARK:- 添加闹钟
-    public func addAlarm(_ macAddress: String? = nil, customAlarm: CustomAlarm, closure: @escaping (_ success: Bool, _ alarmId: Int16?)->()){
+    public func addAlarm(_ accessoryId: String? = nil, customAlarm: CustomAlarm, closure: @escaping (_ success: Bool, _ alarmId: Int16?)->()){
         
-        //判断mac地址是否存在
-        var realMacAddress: String!
-        if let md = macAddress{
-            realMacAddress = md
-        }else if let md = self.accessoryId{
-            realMacAddress = md
+        //判断设备id是否存在
+        var realAccessoryId: String!
+        if let ai = accessoryId{
+            realAccessoryId = ai
+        }else if let ai = self.accessoryId{
+            realAccessoryId = ai
         }else{
             closure(false, nil)
             return
         }
         //数据库操作
-        guard let alarm = coredataHandler.insertAlarm(userId: UserManager.share().userId, withMacAddress: realMacAddress) else{
+        let userId = UserManager.share().userId
+        
+        guard let alarm = coredataHandler.insertDeviceAlarm(withUserId: userId, withAccessoryId: realAccessoryId) else{
             closure(false, nil)
             return
         }
         
-        updateAlarm(realMacAddress, alarmId: alarm.id, customAlarm: customAlarm){
+        updateAlarm(realAccessoryId, alarmId: alarm.alarmId, customAlarm: customAlarm){
             success in
-            closure(true, alarm.id)
+            closure(true, alarm.alarmId)
         }
-        
-        
     }
     
     //MARK:- 删除闹钟
-    public func deleteAlarm(_ macAddress: String? = nil, alarmId: Int16, closure:(_ complete: Bool)->()){
+    public func deleteAlarm(_ accessoryId: String? = nil, alarmId: Int16, closure:(_ complete: Bool)->()){
         
-        //判断mac地址是否存在
-        var realMacAddress: String!
-        if let md = macAddress{
-            realMacAddress = md
-        }else if let md = self.accessoryId{
-            realMacAddress = md
+        //判断设备id是否存在
+        var realAccessoryId: String!
+        if let ai = accessoryId{
+            realAccessoryId = ai
+        }else if let ai = self.accessoryId{
+            realAccessoryId = ai
         }else{
             closure(false)
             return
         }
         
         //数据库操作
-        let alarmList = coredataHandler.selectAlarm(userId: UserManager.share().userId, alarmId: alarmId, withMacAddress: realMacAddress)
-        
-        guard !alarmList.isEmpty else {
+        let userId = UserManager.share().userId
+        guard let deviceAlarm = coredataHandler.selectDeviceAlarm(byUserId: userId, byAlarmId: alarmId, withAccessoryId: realAccessoryId) else {
             closure(false)
             return
         }
         
-        let coreDataAlarmModel = alarmList[0]
+        let coreDataAlarmModel = deviceAlarm
         var alarm = protocol_set_alarm()
-        alarm.alarm_id = UInt8(coreDataAlarmModel.id)
+        alarm.alarm_id = UInt8(coreDataAlarmModel.alarmId)
         alarm.repeat = 0
         alarm.type = UInt8(coreDataAlarmModel.type)
         alarm.hour = UInt8(coreDataAlarmModel.hour)
         alarm.minute = UInt8(coreDataAlarmModel.minute)
-        alarm.tsnooze_duration = UInt8(coreDataAlarmModel.duration)
+        alarm.tsnooze_duration = UInt8(coreDataAlarmModel.snoozeDurationMinute)
         alarm.status = 0xAA
         let length = UInt32(MemoryLayout<UInt8>.size * 9)
         var ret_code: UInt32 = 0
         vbus_tx_data(VBUS_EVT_BASE_APP_SET,VBUS_EVT_APP_SET_ALARM, &alarm, length, &ret_code)
         if ret_code == 0 {
-            coredataHandler.deleteAlarm(userId: UserManager.share().userId, alarmId: alarmId, withMacAddress: realMacAddress)
+            coredataHandler.deleteDeviceAlarm(byAlarmId: alarmId, byUserId: userId, withAccessoryId: realAccessoryId)
             closure(true)
         }
     }
     
     //MARK:- 获取闹钟
-    public func getAlarm(_ macAddress: String? = nil, alarmId: Int16, closure: (Alarm?)->()){
-        //判断mac地址是否存在
-        var realMacAddress: String!
-        if let md = macAddress{
-            realMacAddress = md
-        }else if let md = self.accessoryId{
-            realMacAddress = md
+    public func getAlarm(_ accessoryId: String? = nil, alarmId: Int16, closure: (DeviceAlarm?)->()){
+        //判断设备id是否存在
+        var realAccessoryId: String!
+        if let ai = accessoryId{
+            realAccessoryId = ai
+        }else if let ai = self.accessoryId{
+            realAccessoryId = ai
         }else{
             closure(nil)
             return
         }
         
-        closure(coredataHandler.selectAlarm(userId: UserManager.share().userId, alarmId: alarmId, withMacAddress: realMacAddress).first)
+        let userId = UserManager.share().userId
+        let deviceAlarm = coredataHandler.selectDeviceAlarm(byUserId: userId, byAlarmId: alarmId, withAccessoryId: realAccessoryId)
+        closure(deviceAlarm)
     }
     
     //MARK:- 获取所有闹钟
-    public func getAllAlarms(closure: ([Alarm])->()){
-        //判断mac地址是否存在
-        var realMacAddress: String!
-        if let md = accessoryId{
-            realMacAddress = md
-        }else if let md = self.accessoryId{
-            realMacAddress = md
+    public func getAllAlarms(closure: ([DeviceAlarm])->()){
+        //判断设备id是否存在
+        var realAccessoryId: String!
+        if let ai = accessoryId{
+            realAccessoryId = ai
+        }else if let ai = self.accessoryId{
+            realAccessoryId = ai
         }else{
             closure([])
             return
         }
         
-        closure(coredataHandler.selectAllAlarm(userId: UserManager.share().userId, withMacAddress: realMacAddress))
+        let userId = UserManager.share().userId
+        let list = coredataHandler.selectAllDeviceAlarms(byUserId: userId, withAccessoryId: realAccessoryId)
+        closure(list)
     }
     
     //同步闹钟数据
-    public func setSynchronizationAlarm(_ macAddress: String? = nil, closure:@escaping (_ success:Bool) -> ()){
-        //判断mac地址是否存在
-        var realMacAddress: String!
-        if let md = macAddress{
-            realMacAddress = md
-        }else if let md = self.accessoryId{
-            realMacAddress = md
+    public func setSynchronizationAlarm(_ accessoryId: String? = nil, closure:@escaping (_ success:Bool) -> ()){
+        //判断设备id是否存在
+        var realAccessoryId: String!
+        if let ai = accessoryId{
+            realAccessoryId = ai
+        }else if let ai = self.accessoryId{
+            realAccessoryId = ai
         }else{
             closure(false)
             return
@@ -1819,18 +1821,20 @@ public final class AngelManager: NSObject {
         protocol_set_alarm_clean()
     //2.再添加 添加的闹钟是从数据库获取的
         //获取所有闹钟
-        let alarmList = coredataHandler.selectAllAlarm(userId: UserManager.share().userId, withMacAddress: realMacAddress)
+        let userId = UserManager.share().userId
+
+        let alarmList = coredataHandler.selectAllDeviceAlarms(byUserId: userId, withAccessoryId: realAccessoryId)
         print("alarmList: \(alarmList)")
         alarmList.forEach(){
             localAlarm in
             var alarm = protocol_set_alarm()
             alarm.hour = UInt8(localAlarm.hour)
             alarm.minute = UInt8(localAlarm.minute)
-            alarm.alarm_id = UInt8(localAlarm.id)
-            alarm.tsnooze_duration = UInt8(localAlarm.duration)
+            alarm.alarm_id = UInt8(localAlarm.alarmId)
+            alarm.tsnooze_duration = UInt8(localAlarm.snoozeDurationMinute)
             alarm.type = UInt8(localAlarm.type)
             alarm.repeat = 0xFF // UInt8(localAlarm.repeatList)
-            alarm.status = UInt8(localAlarm.status)
+            alarm.status = UInt8(localAlarm.faultingState)
             protocol_set_alarm_add(alarm)
             
             print("set alarm: \(alarm)")
@@ -1840,10 +1844,10 @@ public final class AngelManager: NSObject {
         swiftSynchronizationAlarm = { complete in
             
             closure(complete)
-            let alarmList = self.coredataHandler.selectAllAlarm(userId: UserManager.share().userId, withMacAddress: realMacAddress)
+            let alarmList = self.coredataHandler.selectAllDeviceAlarms(byUserId: userId, withAccessoryId: realAccessoryId)
             alarmList.forEach(){
                 localAlarm in
-                localAlarm.synchronize = true
+                localAlarm.isSynced = true
             }
             guard self.coredataHandler.commit() else {
                 return
@@ -1851,7 +1855,6 @@ public final class AngelManager: NSObject {
         }
         protocol_set_alarm_start_sync()
     }
-     */
     
     //获取总开关状态
     public func getNoticeStatus(_ closure:@escaping (_ status:Bool) -> ()){
@@ -1914,6 +1917,7 @@ public final class AngelManager: NSObject {
             return
         }
         
+     
         guard open else {
             closure(false)
             return

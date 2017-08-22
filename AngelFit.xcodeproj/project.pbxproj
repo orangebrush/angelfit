@@ -128,6 +128,7 @@
 		BE59F8841F29F0640069D678 /* NWH+EverydayData.swift in Headers */ = {isa = PBXBuildFile; fileRef = 327D185A1F2042A7001669FC /* NWH+EverydayData.swift */; settings = {ATTRIBUTES = (Public, ); }; };
 		BEB057301DD025D500B80678 /* Peripheral+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB0572F1DD025D500B80678 /* Peripheral+Extension.swift */; };
 		BEB057321DD02E1700B80678 /* AngelManager+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB057311DD02E1700B80678 /* AngelManager+Extension.swift */; };
+		BEE9FCCA1F44347100A0C053 /* CDH+DeviceAlarm.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA1F6881EC078E700A55E82 /* CDH+DeviceAlarm.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -803,6 +804,7 @@
 				22122F821E53F8E700AA61F4 /* protocol_util.c in Sources */,
 				327D184A1F1DB7E4001669FC /* CDH+Device.swift in Sources */,
 				32E2E15D1DE5777500DC2C89 /* AngelManager.swift in Sources */,
+				BEE9FCCA1F44347100A0C053 /* CDH+DeviceAlarm.swift in Sources */,
 				222E7D731DC87A55001BA04A /* PeripheralManager.swift in Sources */,
 				22DF62031DD9B63C0080B77A /* CBridgingManager.swift in Sources */,
 				327D17AC1F1C4D20001669FC /* NetworkHandler.swift in Sources */,

@@ -37,7 +37,7 @@ class ViewController: UIViewController {
         let userId = "283925583@qq.com"
         let password = "123456"
         
-        
+        /*
         let updateParam = NWHUserUpdateParam()
         updateParam.userId = userId
         updateParam.password = password
@@ -54,6 +54,15 @@ class ViewController: UIViewController {
                 print("<logon>\(resultCode)--\(message)--\(data)")
             })
         })
+        */
+        
+        //json解析
+        let dataStr = "{\"items\" : [[123, 456, 789], [321, 654, 987]]}"
+        
+        let data = dataStr.data(using: .utf8)
+        print("data: \(data!)")
+        let result = try! JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.allowFragments)
+        print("result: \(result)")
         
 //        //添加设备
 //        let deviceParam = NWHDeviceParam()

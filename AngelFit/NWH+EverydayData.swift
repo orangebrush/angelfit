@@ -72,6 +72,7 @@ public class NWHTrainingAddParam: NSObject {
     public var aerobicMinutes: Int = 0
     public var limitMinutes: Int = 0
     public var mapSource: String?
+    public var stepCount: Int = 0
     public var steps: [Int]?
     public var heartRates: [Int]?
     //public var gps: [(longtitude: Double, latitude: Double, date: Date)]?
@@ -401,6 +402,7 @@ public class NWHEverydayData: NSObject {
                     "aerobicMinutes": "\(param.aerobicMinutes)",
                     "limitMinutes": "\(param.limitMinutes)",
                     "mapSource": param.mapSource,
+                    "stepCount": param.stepCount,
                     "steps": stepsStr,
                     "heartRates": heartRatesStr,
                     "gps": gpsStr
